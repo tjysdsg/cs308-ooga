@@ -1,0 +1,49 @@
+{
+  "name" : "Sunny Level",
+  "id" :  "sunny_day",
+  "background" : "sunny_day",
+  "height" : 50,
+  "width" : 500,
+  "objects" : [
+    {
+      "type" : "goomba",
+      "x" : 234,
+      "y" : 50
+    },
+    {
+      "type" : "goomba",
+      "x" : 200,
+      "y" : 50
+    },
+    {
+      "type" : "hitbox",
+      "x" : 250,
+      "y" : 0,
+      "height" : 50,
+      "width" : 100,
+      "visible": false,
+      "onCollide" : [
+        {
+          "with" : "player",
+          "action" : "show_text",
+          "payload" : "Mario, shes in another castle"
+        }
+      ]
+    },
+    {
+      "type" : "floor",
+      "x" : 0,
+      "y" : 400
+    },
+    {
+      "type" : "wall",
+      "x" : 450,
+      "y" : 50
+    },
+    {
+      "type" : "advance_level_hitbox",
+      "x" : 450,
+      "y" : 50
+    }
+  ]
+}

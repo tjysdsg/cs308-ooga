@@ -1,0 +1,36 @@
+{
+  "objects": [
+    {
+      "type": "goomba",
+      "height": 50,
+      "width": 50,
+      "onCollide": [
+        {
+          "with": "thing",
+          "action": "change_imageID",
+          "payload": "squirrel"
+        }
+      ],
+      "components": [
+        ""
+      ],
+      "imageID": "marioimage"
+    },
+    {
+      "type": "advance_level2",
+      "height": 50,
+      "width": 50
+    },
+    {
+      "type": "advance_level_hitbox",
+      "action": "advance_level",
+      "payload": ""
+    },
+    {
+      "type": "hitbox",
+      "height": 20,
+      "action": "advance_level",
+      "payload": ""
+    }
+  ]
+}
