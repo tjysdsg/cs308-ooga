@@ -280,41 +280,40 @@ settings pretty dope, Java isn't that bad lol.
 
 1. If player is already on top of a block, pressing the down key will activate a movement that is not falling.
 
-    When handling event, check if player object is colliding with the top surface of another game object. If it is, 
+    When handling event, check if player object is colliding with the top surface of another game object. If it is, continue with implementation of event handler.
 
 2. Create instances of a predefined game object and place them at certain locations.
 
-    explain
+    Call `clone()` in the game object's class with the new locations.    
 
 3. Set a specific game object to be the target all enemies attack.
 
-    expla
+    For all attacking game objects, set their attribute "attacking" in the config files to the target object.
 
 4. A game object starts to move when player reaches certain area. 
 
-    explain
+    Set `onCollide` attribute to hitboc representing the area to a move-object action handler specifying the moving object.
 
 5. A game object moves with a specified horizontal speed (alla Flappy Bird).
 
-    explain
+    Set horizontal speed attribute of game object in config file. 
 
 6. Powerups modify a game object. 
 
     Create game objects in config files that are variations of the original game object. Replace the original with these variatins in-game on the screen when powerups are activated (e.g. star mario vs. regular mario).
 
-    explain
 
 7. Different images represent a game object at different times. For example, player looks different when falling than when walking.
 
-    
+    Set change-image action handler in config files referencing game object and image.
 
 8. The player can "grab" certain game objects i.e. come into contact with them and have them move with the player when user holds a specified key.
 
-    explain
+    Add a `grabbable` attribute to game objects that can be grabbed. Make custom event handler for specified key.
 
 9. Player has a limited amount of time to complete action. Otherwise, dies.
 
-    explain
+    Have a `timer` attribute in level config attribute that specifies time left before player dies.
     
 10. Player slides on the ground.
 
