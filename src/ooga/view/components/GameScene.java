@@ -3,7 +3,7 @@ package ooga.view.components;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import ooga.model.ModelController;
-import ooga.model.ObservableModel;
+import ooga.model.observables.ObservableModel;
 import ooga.view.util.ObservableResource;
 
 /** A scene in which games are actually tracked and played. */

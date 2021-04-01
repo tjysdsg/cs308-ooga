@@ -2,20 +2,14 @@
 
 ## Introduction
 
-*This section describes the problem your team is trying to solve by writing this program, the primary design goals of the project
+* This section describes the problem your team is trying to solve by writing this program, the primary design goals of the project
 (i.e., where is it most flexible), and the primary architecture of the design (i.e., what is closed and what is open). Discuss
-the design at a high-level (i.e., without referencing specific classes, data structures, or code).*
+the design at a high-level (i.e., without referencing specific classes, data structures, or code).
 
-The primary goal of this product is to design a game architecture for 2D scroller games that allows for a great deal of flexibility in game design. In order to accomplish this, the project will be as data driven as possible allowing users to create files containing information about levels, game objects, camera positioning and more. Additionally game objects will be designed as generally and flexibly as possible, allowing them to be injected with components altering their functionailty. This program will thus implement a large number of features but provide users with a great deal of control over how their games will be structured via modification of configuration files.
+* The primary goal of this product is to design a game architecture for 2D scroller games that allows for a great deal of flexibility in game design. In order to accomplish this, the project will be as data driven as possible allowing users to create files containing information about levels, game objects, camera positioning and more. Additionally game objects will be designed as generally and flexibly as possible, allowing them to be injected with components altering their functionailty. This program will thus implement a large number of features but provide users with a great deal of control over how their games will be structured via modification of configuration files.
 
 ## Overview
 
-*This section serves as a map of your design for other programmers to gain a general understanding of how and why the program was
-divided up, and how the individual parts work together to provide the desired functionality. Describe specific modules you intend
-to create, their purpose with regards to the program's functionality, and how they collaborate with each other, focusing
-specifically on each one's API. Include a picture of how the modules are related (these pictures can be hand drawn and
-scanned in, created with a standard drawing program, or screen shots from a UML design program). Discuss specific classes,
-methods, and data structures, but not individual lines of code.*
 
 ***
 
