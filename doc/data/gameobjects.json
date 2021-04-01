@@ -23,14 +23,30 @@
     },
     {
       "type": "advance_level_hitbox",
-      "action": "advance_level",
-      "payload": ""
+      "action": "set_image",
+      "payload": "background"
     },
     {
       "type": "hitbox",
       "height": 20,
       "action": "advance_level",
       "payload": ""
+    },
+    {
+      "type" : "mario",
+      "onCollide": [
+        {
+          "with" : "goomba",
+          "action" : "jump",
+        }, {
+          "with" : "spiky goomba",
+          "action" : "dies"
+        }
+      ]
+    },
+    {
+      "type": "spiky goomba",
+      "on"
     }
   ]
 }

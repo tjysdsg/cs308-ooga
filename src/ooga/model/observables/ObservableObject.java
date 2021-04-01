@@ -1,4 +1,4 @@
-package ooga.model;
+package ooga.model.observables;
 
 import java.util.function.Consumer;
 

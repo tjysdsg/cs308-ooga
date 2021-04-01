@@ -1,4 +1,4 @@
-package ooga.model.component;
+package ooga.model.components;
 
 public abstract class Component {
 

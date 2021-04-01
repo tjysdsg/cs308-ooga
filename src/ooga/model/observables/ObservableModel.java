@@ -1,6 +1,8 @@
-package ooga.model;
+package ooga.model.observables;
 
 import java.util.function.Consumer;
+import ooga.model.Level;
+import ooga.model.ModelController;
 
 public interface ObservableModel {
 

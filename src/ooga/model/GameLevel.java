@@ -1,6 +1,6 @@
 package ooga.model;
 
-public class GameLevel implements Level {
+class GameLevel implements Level {
   Configuration gameConfiguration;
   private String name;
   int levelID;
