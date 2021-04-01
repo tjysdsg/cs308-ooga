@@ -275,3 +275,47 @@ primary color, the secondary color, the background color (hopefully not to light
 mode cuz that'd tick me off). Once the change is made, it is saved in the system
 preferences as that for that specific game. Yessir auto saving and loading for
 settings pretty dope, Java isn't that bad lol.
+
+## Liam 
+
+1. If player is already on top of a block, pressing the down key will activate a movement that is not falling.
+
+    When handling event, check if player object is colliding with the top surface of another game object. If it is, 
+
+2. Create instances of a predefined game object and place them at certain locations.
+
+    explain
+
+3. Set a specific game object to be the target all enemies attack.
+
+    expla
+
+4. A game object starts to move when player reaches certain area. 
+
+    explain
+
+5. A game object moves with a specified horizontal speed (alla Flappy Bird).
+
+    explain
+
+6. Powerups modify a game object. 
+
+    Create game objects in config files that are variations of the original game object. Replace the original with these variatins in-game on the screen when powerups are activated (e.g. star mario vs. regular mario).
+
+    explain
+
+7. Different images represent a game object at different times. For example, player looks different when falling than when walking.
+
+    
+
+8. The player can "grab" certain game objects i.e. come into contact with them and have them move with the player when user holds a specified key.
+
+    explain
+
+9. Player has a limited amount of time to complete action. Otherwise, dies.
+
+    explain
+    
+10. Player slides on the ground.
+
+    Change image of player object and momentarily change horizontal speed. Once player covers certain distance, reset image and speed.
