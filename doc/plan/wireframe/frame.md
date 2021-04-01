@@ -15,4 +15,4 @@ Buttons and color priorities
 
 ![node list](img/nodelist.gif)
 
-
+I have others but recording the gifs is annoying
