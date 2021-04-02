@@ -1,12 +1,15 @@
 package ooga.view.components;
 
 import com.jfoenix.controls.JFXButton;
+import java.util.function.Consumer;
+import javafx.animation.*;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.util.*;
 import ooga.view.util.ObservableResource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +18,8 @@ import org.kordamp.ikonli.javafx.FontIcon;
 public class SplashScreen extends Scene {
   private static final Logger logger = LogManager.getLogger(SplashScreen.class);
   private StackPane root;
+  private Runnable exitCallback;
+  private Button exitGame;
 
   public SplashScreen(int width, int height, ObservableResource resources) {
     super(new StackPane(), width, height, Color.BLACK);
@@ -35,7 +40,7 @@ public class SplashScreen extends Scene {
     settings.getStyleClass().addAll("primary", "settings_button");
     settings.setGraphic(new FontIcon());
 
-    JFXButton exitGame = new JFXButton();
+    exitGame = new JFXButton();
     exitGame.textProperty().bind(resources.getStringBinding("Exit"));
     exitGame.getStyleClass().addAll("secondary", "exit");
     exitGame.setGraphic(new FontIcon());
@@ -44,6 +49,29 @@ public class SplashScreen extends Scene {
     VBox.setVgrow(exitGame, Priority.ALWAYS);
     vbox.getChildren().addAll(title, resume, settings, exitGame);
 
+    createExitCall();
+
     root.getChildren().add(vbox);
+  }
+
+  public void createExitCall() {
+    FadeTransition ft = new FadeTransition(Duration.millis(1000), root);
+    ft.setFromValue(1.0);
+    ft.setToValue(0.05);
+    ft.setOnFinished(
+        e -> {
+          if (exitCallback != null) {
+            exitCallback.run();
+          }
+        });
+    exitGame.setOnAction(e -> ft.play());
+  }
+
+  public void setOnExit(Runnable run) {
+    this.exitCallback = run;
+  }
+
+  public void setOnSettings(Consumer<StackPane> callback) {
+    callback.accept(root);
   }
 }

@@ -35,9 +35,11 @@ public class View {
     // this.modelController = model.getController();
 
     StackPane pane = new StackPane();
-    Scene scene = new SplashScreen(HEIGHT, WIDTH, resources);
+    SplashScreen scene = new SplashScreen(HEIGHT, WIDTH, resources);
     scene.getStylesheets().add(getClass().getResource(RESOURCES + "main.css").toExternalForm());
     stage.setScene(scene);
+
+    scene.setOnExit( () -> stage.close());
 
     logger.info("Displaying Splash Screen");
     stage.show();
