@@ -79,6 +79,11 @@
       <artifactId>guava</artifactId>
       <version>30.1.1-jre</version>
     </dependency>
+    <dependency>
+      <groupId>fr.brouillard.oss</groupId>
+      <artifactId>cssfx</artifactId>
+      <version>11.4.0</version>
+    </dependency>
 </dependencies>
 
 <build>
