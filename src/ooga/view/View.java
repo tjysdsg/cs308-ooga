@@ -10,9 +10,12 @@ import ooga.model.Model;
 import ooga.model.ModelController;
 import ooga.model.ModelFactory;
 import ooga.model.observables.ObservableModel;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 public class View {
   public static final String RESOURCES = "resources/";
+  private static final Logger logger = LogManager.getLogger(View.class);
   Model model;
   ModelController modelController;
 
@@ -32,8 +35,10 @@ public class View {
     primary.getStyleClass().add("primary");
     JFXButton secondary = new JFXButton("Secondary");
     secondary.getStyleClass().add("secondary");
+
     hbox.getChildren().addAll(defaultb, primary, secondary);
     pane.getChildren().add(hbox);
+    logger.info("Displaying Stage");
     stage.show();
   }
 }
