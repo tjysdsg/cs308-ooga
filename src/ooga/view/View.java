@@ -1,5 +1,9 @@
 package ooga.view;
 
+import fr.brouillard.oss.cssfx.CSSFX;
+import java.util.ResourceBundle;
+import ooga.view.util.ObservableResource;
+import ooga.view.components.SplashScreen;
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
@@ -14,31 +18,28 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 public class View {
+  public static final int HEIGHT = 700;
+  public static final int WIDTH = 700;
   public static final String RESOURCES = "resources/";
+  public static final String DEFAULT_RESOURCES = "ooga.view.resources.languages.";
   private static final Logger logger = LogManager.getLogger(View.class);
-  Model model;
-  ModelController modelController;
+  private Model model;
+  private ModelController modelController;
+  private ObservableResource resources;
 
   public View(Stage stage) {
+    CSSFX.start();
     ObservableModel model = ModelFactory.createObservableModel();
+    this.resources = new ObservableResource();
+    resources.setResources(ResourceBundle.getBundle(DEFAULT_RESOURCES + "English"));
     // this.modelController = model.getController();
+
     StackPane pane = new StackPane();
-    Scene scene = new Scene(pane, 500, 300, Color.BLACK);
+    Scene scene = new SplashScreen(HEIGHT, WIDTH, resources);
     scene.getStylesheets().add(getClass().getResource(RESOURCES + "main.css").toExternalForm());
     stage.setScene(scene);
-    HBox hbox = new HBox();
 
-    hbox.getStyleClass().add("buttons-pane");
-
-    JFXButton defaultb = new JFXButton("Default");
-    JFXButton primary = new JFXButton("Primary");
-    primary.getStyleClass().add("primary");
-    JFXButton secondary = new JFXButton("Secondary");
-    secondary.getStyleClass().add("secondary");
-
-    hbox.getChildren().addAll(defaultb, primary, secondary);
-    pane.getChildren().add(hbox);
-    logger.info("Displaying Stage");
+    logger.info("Displaying Splash Screen");
     stage.show();
   }
 }

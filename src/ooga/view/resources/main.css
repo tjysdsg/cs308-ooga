@@ -2,15 +2,8 @@
   -fx-background-color: #1f1b24;
   -secondary-color: #bb86fc;
   -primary-color: #1f1b24;
-}
-
-JFXButton {
-  -fx-background-color: #29262b;
-  -fx-min-width: 20;
-  -fx-min-height: 20;
-  -jfx-button-type: RAISED;
-  -fx-text-fill: #ffffffff;
-  -fx-padding: 12;
+  -fx-font-size: 10;
+  -fx-font-family: "DejaVu Sans Light";
 }
 
 .primary {
@@ -23,9 +16,89 @@ JFXButton {
   -fx-text-fill: #ffffffff;
 }
 
+
+JFXDialog {
+  -fx-background-color: #29262b;
+}
+
+JFXTextField {
+  -fx-text-fill: #FFFFFF;
+  -jfx-focus-color: -secondary-color;
+}
+
+JFXButton {
+  -fx-background-color: #29262b;
+  -fx-min-width: 20;
+  -fx-min-height: 20;
+  -jfx-button-type: RAISED;
+  -fx-text-fill: #ffffffff;
+  -fx-padding: 12;
+}
+
+
+.primary .ikonli-font-icon {
+  -fx-icon-color: #ffffff;
+  -fx-padding: 90;
+}
+
+.primary:hover .ikonli-font-icon {
+  -fx-icon-color: -secondary-color;
+}
+
+
+.splashscreen {
+  -fx-alignment: CENTER;
+  -fx-spacing: 30;
+  -fx-padding: 0 150 30 150;
+  -fx-font-size: 20;
+  -fx-max-width: 1000;
+  -fx-max-height: 1000;
+  -fx-icon-size: 30;
+}
+
+.splash_title {
+  -fx-font-size: 2em;
+  -fx-padding: 50 0 75 0;
+  -fx-text-fill: #ffffff;
+  -fx-font-family: "DejaVu Sans Light";
+  -fx-font-weight: bold;
+}
+
+.load_library .ikonli-font-icon  {
+  -fx-icon-code: "mdi2f-folder";
+}
+
+.settings_button .ikonli-font-icon  {
+  -fx-icon-code: "mdi2w-wrench";
+  -fx-icon-color: #ffffffff;
+}
+
+
+.splashscreen JFXButton {
+  -fx-max-width: 500;
+  -fx-content-display: LEFT;
+  -fx-max-height: 125;
+  -fx-pref-height: 100;
+  -fx-font-size: 1.2em;
+  /*-fx-alignment: BASELINE-LEFT;
+  -fx-graphic-text-gap: 30; */
+  -fx-font-family: "DejaVu Sans Light";
+}
+
+.ikonli-font-icon {
+  -fx-text-alignment: LEFT;
+  -fx-alignment: BASELINE-LEFT;
+}
+
+
 .buttons-pane {
   -fx-spacing: 10;
   -fx-alignment: center;
+  -fx-fill-height: true;
+}
+
+.buttons-pane JFXButton {
+  -fx-max-width: Infinity;
 }
 
 .drawer-menu {
@@ -43,16 +116,15 @@ JFXButton {
   -fx-fill-width: true;
 }
 
-.pause-menu Label{
+.pause-menu Label {
   -fx-text-fill: #ffffff;
   -fx-padding: 0 0 20 0;
-  -fx-font-size: 20;
 }
 
 .pause-menu > JFXButton {
   -fx-max-width: Infinity;
 }
-
+/* Turn to special primary*/
 .pause-menu > .primary {
   -fx-border-color: -secondary-color;
   -fx-border-width: 2;
@@ -60,24 +132,25 @@ JFXButton {
   -fx-background-radius: 5 5 5 5;
 }
 
-.pause-menu > .resume .ikonli-font-icon {
+.special.primary {
+  -fx-border-color: -secondary-color;
+  -fx-border-width: 2;
+  -fx-border-radius: 5 5 5 5;
+  -fx-background-radius: 5 5 5 5;
+}
+
+.resume .ikonli-font-icon {
   -fx-icon-code: "mdi2p-play";
   -fx-icon-color: #ffffffff;
   -fx-icon-size: 20;
 }
 
-.pause-menu > .resume:hover .ikonli-font-icon {
-  -fx-icon-color: -secondary-color;
-}
-
-.pause-menu > .exit:hover .ikonli-font-icon {
-  -fx-icon-color: #29262b;
-}
-
-.pause-menu > .exit .ikonli-font-icon {
-  -fx-icon-code: "mdi2e-exit-to-app";
+.secondary:hover .ikonli-font-icon {
   -fx-icon-color: #ffffffff;
-  -fx-icon-size: 20;
+}
+
+.exit .ikonli-font-icon {
+  -fx-icon-code: "mdi2e-exit-to-app";
 }
 
 .drawer-menu > .primary {
@@ -121,13 +194,4 @@ JFXButton {
   -fx-border-color: -secondary-color;
   -fx-border-radius: 10 10 10 10;
   -fx-background-radius: 10 10 10 10;
-}
-
-JFXDialog {
-  -fx-background-color: #29262b;
-}
-
-JFXTextField {
-  -fx-text-fill: #FFFFFF;
-  -jfx-focus-color: -secondary-color;
 }
