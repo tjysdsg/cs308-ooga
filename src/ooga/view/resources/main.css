@@ -1,0 +1,133 @@
+.root {
+  -fx-background-color: #1f1b24;
+  -secondary-color: #bb86fc;
+  -primary-color: #1f1b24;
+}
+
+JFXButton {
+  -fx-background-color: #29262b;
+  -fx-min-width: 20;
+  -fx-min-height: 20;
+  -jfx-button-type: RAISED;
+  -fx-text-fill: #ffffffff;
+  -fx-padding: 12;
+}
+
+.primary {
+  -fx-background-color: -primary-color;
+  -fx-text-fill: #ffffffff;
+}
+
+.secondary {
+  -fx-background-color: -secondary-color;
+  -fx-text-fill: #ffffffff;
+}
+
+.buttons-pane {
+  -fx-spacing: 10;
+  -fx-alignment: center;
+}
+
+.drawer-menu {
+  -fx-spacing: 10;
+  -fx-background-color: #121212;
+  -fx-fill-width: true;
+  -fx-alignment: TOP_CENTER;
+}
+
+.pause-menu {
+  -fx-spacing: 10;
+  -fx-padding: 50;
+  -fx-background-color: #121212;
+  -fx-alignment: TOP_CENTER;
+  -fx-fill-width: true;
+}
+
+.pause-menu Label{
+  -fx-text-fill: #ffffff;
+  -fx-padding: 0 0 20 0;
+  -fx-font-size: 20;
+}
+
+.pause-menu > JFXButton {
+  -fx-max-width: Infinity;
+}
+
+.pause-menu > .primary {
+  -fx-border-color: -secondary-color;
+  -fx-border-width: 2;
+  -fx-border-radius: 5 5 5 5;
+  -fx-background-radius: 5 5 5 5;
+}
+
+.pause-menu > .resume .ikonli-font-icon {
+  -fx-icon-code: "mdi2p-play";
+  -fx-icon-color: #ffffffff;
+  -fx-icon-size: 20;
+}
+
+.pause-menu > .resume:hover .ikonli-font-icon {
+  -fx-icon-color: -secondary-color;
+}
+
+.pause-menu > .exit:hover .ikonli-font-icon {
+  -fx-icon-color: #29262b;
+}
+
+.pause-menu > .exit .ikonli-font-icon {
+  -fx-icon-code: "mdi2e-exit-to-app";
+  -fx-icon-color: #ffffffff;
+  -fx-icon-size: 20;
+}
+
+.drawer-menu > .primary {
+  -fx-border-color: -secondary-color;
+  -fx-border-width: 2;
+  -fx-border-radius: 10 10 10 10;
+  -fx-background-radius: 10 10 10 10;
+}
+
+/* JFXSlider */
+.jfx-slider > .track {
+  -fx-background-color: #ffffffff;
+}
+
+.jfx-slider > .animated-thumb {
+  -fx-background-color: #ffffffff;
+  -fx-text-fill: #000000;
+}
+
+.jfx-slider .slider-value {
+  -fx-fill: black;
+  -fx-stroke: black;
+}
+
+.jfx-slider > .colored-track {
+  -fx-background-color: black;
+}
+
+.jfx-slider > .thumb {
+  -fx-background-color: #8e8e8e;
+}
+
+.toast {
+  -fx-background-color: #ffffff;
+  -fx-padding: 10;
+  -fx-border-radius: 10 10 0 0;
+  -fx-background-radius: 10 10 0 0;
+}
+
+.nodeslist > .inactive {
+  -fx-border-color: -secondary-color;
+  -fx-border-radius: 10 10 10 10;
+  -fx-background-radius: 10 10 10 10;
+}
+
+JFXDialog {
+  -fx-background-color: #29262b;
+}
+
+JFXTextField {
+  -fx-text-fill: #FFFFFF;
+  -jfx-focus-color: -secondary-color;
+}
