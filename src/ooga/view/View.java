@@ -23,7 +23,9 @@ public class View {
   public static final String RESOURCES = "resources/";
   public static final String DEFAULT_RESOURCES = "ooga.view.resources.languages.";
   private static final Logger logger = LogManager.getLogger(View.class);
+
   private Model model;
+  private Runnable exitApplication;
   private ModelController modelController;
   private ObservableResource resources;
 
@@ -35,13 +37,16 @@ public class View {
     // this.modelController = model.getController();
 
     StackPane pane = new StackPane();
-    SplashScreen scene = new SplashScreen(HEIGHT, WIDTH, resources);
-    scene.getStylesheets().add(getClass().getResource(RESOURCES + "main.css").toExternalForm());
-    stage.setScene(scene);
-
-    scene.setOnExit( () -> stage.close());
+    SplashScreen splashScreen = new SplashScreen(HEIGHT, WIDTH, resources);
+    splashScreen.getStylesheets().add(getClass().getResource(RESOURCES + "main.css").toExternalForm());
+    exitApplication = () -> {
+      stage.close();
+      logger.info("Exited Application");
+    };
+    splashScreen.setOnExit(exitApplication);
 
     logger.info("Displaying Splash Screen");
+    stage.setScene(splashScreen);
     stage.show();
   }
 }
