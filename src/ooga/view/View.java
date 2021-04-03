@@ -2,20 +2,16 @@ package ooga.view;
 
 import fr.brouillard.oss.cssfx.CSSFX;
 import java.util.ResourceBundle;
-import ooga.view.util.ObservableResource;
-import ooga.view.components.SplashScreen;
-import com.jfoenix.controls.JFXButton;
-import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import ooga.model.Model;
 import ooga.model.ModelController;
 import ooga.model.ModelFactory;
 import ooga.model.observables.ObservableModel;
-import org.apache.logging.log4j.Logger;
+import ooga.view.components.SplashScreen;
+import ooga.view.util.ObservableResource;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class View {
   public static final int HEIGHT = 700;
@@ -38,11 +34,14 @@ public class View {
 
     StackPane pane = new StackPane();
     SplashScreen splashScreen = new SplashScreen(HEIGHT, WIDTH, resources);
-    splashScreen.getStylesheets().add(getClass().getResource(RESOURCES + "main.css").toExternalForm());
-    exitApplication = () -> {
-      stage.close();
-      logger.info("Exited Application");
-    };
+    splashScreen
+        .getStylesheets()
+        .add(getClass().getResource(RESOURCES + "main.css").toExternalForm());
+    exitApplication =
+        () -> {
+          stage.close();
+          logger.info("Exited Application");
+        };
     splashScreen.setOnExit(exitApplication);
 
     logger.info("Displaying Splash Screen");
