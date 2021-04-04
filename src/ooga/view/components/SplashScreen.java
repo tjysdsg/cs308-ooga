@@ -2,14 +2,12 @@ package ooga.view.components;
 
 import com.jfoenix.controls.JFXButton;
 import java.util.function.Consumer;
-import javafx.animation.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.util.*;
 import ooga.view.util.ObservableResource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,22 +47,13 @@ public class SplashScreen extends Scene {
     VBox.setVgrow(exitGame, Priority.ALWAYS);
     vbox.getChildren().addAll(title, resume, settings, exitGame);
 
-    createExitCall();
-
-    root.getChildren().add(vbox);
-  }
-
-  public void createExitCall() {
-    FadeTransition ft = new FadeTransition(Duration.millis(1000), root);
-    ft.setFromValue(1.0);
-    ft.setToValue(0.05);
-    ft.setOnFinished(
+    exitGame.setOnAction(
         e -> {
           if (exitCallback != null) {
             exitCallback.run();
           }
         });
-    exitGame.setOnAction(e -> ft.play());
+    root.getChildren().add(vbox);
   }
 
   public void setOnExit(Runnable run) {

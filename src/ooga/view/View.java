@@ -2,11 +2,12 @@ package ooga.view;
 
 import fr.brouillard.oss.cssfx.CSSFX;
 import java.util.ResourceBundle;
+import javafx.animation.*;
+import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.*;
 import ooga.model.Model;
-import ooga.model.ModelFactory;
-import ooga.model.observables.ObservableModel;
 import ooga.view.components.SplashScreen;
 import ooga.view.util.ObservableResource;
 import org.apache.logging.log4j.LogManager;
@@ -23,9 +24,14 @@ public class View {
   private Runnable exitApplication;
   private ModelController modelController;
   private ObservableResource resources;
+  private Scene currentScene;
+  private FadeTransition fadeOutTransition;
+  private FadeTransition fadeInTransition;
+  private Stage stage;
 
   public View(Stage stage) {
     CSSFX.start();
+    this.stage = stage;
     this.resources = new ObservableResource();
     resources.setResources(ResourceBundle.getBundle(DEFAULT_RESOURCES + "English"));
     // this.modelController = model.getController();
@@ -35,15 +41,44 @@ public class View {
     splashScreen
         .getStylesheets()
         .add(getClass().getResource(RESOURCES + "main.css").toExternalForm());
+    createAnimations();
+    setScene(splashScreen);
+
     exitApplication =
         () -> {
-          stage.close();
-          logger.info("Exited Application");
+          fadeOutTransition.setNode(currentScene.getRoot());
+          fadeOutTransition.play();
+          fadeOutTransition.setOnFinished(
+              e -> {
+                stage.close();
+                logger.info("Exited Application");
+              });
         };
     splashScreen.setOnExit(exitApplication);
 
     logger.info("Displaying Splash Screen");
     stage.setScene(splashScreen);
     stage.show();
+  }
+
+  private void createAnimations() {
+    fadeOutTransition = new FadeTransition(Duration.millis(1000));
+    fadeOutTransition.setFromValue(1.0);
+    fadeOutTransition.setToValue(0.05);
+
+    fadeInTransition = new FadeTransition(Duration.millis(1000));
+    fadeInTransition.setFromValue(0.05);
+    fadeInTransition.setToValue(1.0);
+  }
+
+  private void setScene(Scene scene) {
+    if (currentScene != null) {
+      fadeOutTransition.setNode(currentScene.getRoot());
+      fadeOutTransition.play();
+    }
+    fadeInTransition.setNode(scene.getRoot());
+    stage.setScene(scene);
+    fadeInTransition.play();
+    this.currentScene = scene;
   }
 }
