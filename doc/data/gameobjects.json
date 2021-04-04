@@ -12,7 +12,18 @@
         }
       ],
       "components": [
-        ""
+        {
+          "type": "PlayerController",
+          "walkSpeed": 20
+        },
+        {
+          "type": "collidble"
+        },
+        {
+          "type":"RigidBody"
+        },
+        "Damagable",
+        "Flyable"
       ],
       "imageID": "marioimage"
     },
@@ -45,8 +56,7 @@
       ]
     },
     {
-      "type": "spiky goomba",
-      "on"
+      "type": "spiky goomba"
     }
   ]
 }

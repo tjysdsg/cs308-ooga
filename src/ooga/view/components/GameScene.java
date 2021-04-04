@@ -2,7 +2,7 @@ package ooga.view.components;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import ooga.model.ModelController;
+import ooga.view.ModelController;
 import ooga.model.observables.ObservableModel;
 import ooga.view.util.ObservableResource;
 
@@ -14,7 +14,7 @@ public class GameScene extends Scene {
   public GameScene(ObservableModel game, ObservableResource resources) {
     super(new Pane());
     this.game = game;
-    this.controller = game.getController();
+    //this.controller = game.getController();
   }
 
   public void pauseGame() {}
