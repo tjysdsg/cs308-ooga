@@ -7,7 +7,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import ooga.model.Model;
-import ooga.model.ModelController;
 import ooga.model.ModelFactory;
 import ooga.model.observables.ObservableModel;
 import org.apache.logging.log4j.Logger;
@@ -20,7 +19,6 @@ public class View {
   ModelController modelController;
 
   public View(Stage stage) {
-    ObservableModel model = ModelFactory.createObservableModel();
     // this.modelController = model.getController();
     StackPane pane = new StackPane();
     Scene scene = new Scene(pane, 500, 300, Color.BLACK);
