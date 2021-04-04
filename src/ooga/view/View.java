@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import ooga.model.Model;
-import ooga.model.ModelController;
 import ooga.model.ModelFactory;
 import ooga.model.observables.ObservableModel;
 import ooga.view.components.SplashScreen;
@@ -27,7 +26,6 @@ public class View {
 
   public View(Stage stage) {
     CSSFX.start();
-    ObservableModel model = ModelFactory.createObservableModel();
     this.resources = new ObservableResource();
     resources.setResources(ResourceBundle.getBundle(DEFAULT_RESOURCES + "English"));
     // this.modelController = model.getController();
