@@ -27,6 +27,20 @@ public class ComponentManager {
     return (List<T>) existingComponents.get(componentClass);
   }
 
+  public void registerExistingComponent(GameObject owner, Component component) {
+    component.setOwner(owner);
+    component.setId(idManager.getNewId());
+    existingComponents.put(component.getClass(), component);
+  }
+
+  public void registerExistingComponents(List<GameObject> gameObjects) {
+    for (GameObject go : gameObjects) {
+      for (Component comp : go.getComponents()) {
+        registerExistingComponent(go, comp);
+      }
+    }
+  }
+
   public <T extends Component> T createComponent(
       GameObject owner, Class<T> componentClass
   ) {

@@ -15,6 +15,7 @@ class GameLevel implements Level {
   private String name;
   int levelID;
   List<BaseSystem> systems;
+  List<GameObject> gameObjects;
 
   EntityManager entityManager;
   ComponentManager componentManager;
@@ -30,6 +31,10 @@ class GameLevel implements Level {
     for (var s : systems) {
       s.registerAllInputs(inputSystem);
     }
+  }
+
+  public void init() {
+    componentManager.registerExistingComponents(gameObjects);
   }
 
   public void handleCode(String k, boolean on) {

@@ -4,7 +4,7 @@ import ooga.model.GameObject;
 
 public class Component {
 
-  private GameObject owner;
+  private transient GameObject owner;
   private int id;
 
   public Component(int id, GameObject owner) {
@@ -15,7 +15,15 @@ public class Component {
     return id;
   }
 
+  public void setId(int id) {
+    this.id = id;
+  }
+
   public GameObject getOwner() {
     return owner;
+  }
+
+  public void setOwner(GameObject owner) {
+    this.owner = owner;
   }
 }
