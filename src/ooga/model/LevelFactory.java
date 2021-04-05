@@ -1,12 +1,42 @@
 package ooga.model;
 
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+import com.squareup.moshi.Types;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import ooga.model.objects.GameObjectFactory;
+import ooga.model.objects.ObjectFactory;
+
 public class LevelFactory {
-  public LevelFactory(String ObjectsFile) {
+
+  Map<String, ObjectFactory> typeMap = new HashMap<>();
+
+  public LevelFactory(String ObjectsFile) throws IOException {
     // Load the presets for the levels
+    Moshi moshi = new Moshi.Builder().build();
+//    Moshi thing = new Moshi.Builder().add(PolymorphicJsonAdapterFactory.of(HandOfCards.class
+
+    Type type = Types.newParameterizedType(List.class, GameObjectFactory.class);
+    JsonAdapter<List<GameObjectFactory>> adapter = moshi.adapter(type);
+
+    List<GameObjectFactory> factories = adapter.fromJson(ObjectsFile);
+
+    for (ObjectFactory factory : factories) {
+      typeMap.put(factory.getType(), factory);
+    }
   }
 
   Level buildLevel(String levelFile) {
     // Use the object Factory to create the game objects
+//    JSObject
     return null;
+  }
+
+  public static void main(String[] args) throws IOException {
+    LevelFactory fact = new LevelFactory("gameobjects.json");
   }
 }
