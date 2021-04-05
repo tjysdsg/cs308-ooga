@@ -57,21 +57,3 @@ public class GSelectionScene extends Scene {
 }
 
 
-class GameItem extends VBox {
-  public GameItem(String gamePath) {
-    getStyleClass().addAll("game-item");
-    JFXButton game = new JFXButton();
-    game.getStyleClass().addAll("game-item-button", "primary");
-    game.setGraphic(new FontIcon());
-    VBox.setVgrow(game, Priority.ALWAYS);
-    Label label = new Label();
-    if (!gamePath.isEmpty()) {
-      game.setStyle("-fx-background-image: url('file:" + gamePath + "thumbnail.jpg');");
-      label.setText("VERY LONG LABEL FOR THIS THING");
-    } else {
-      label.setText("Add Game");
-    }
-    label.getStyleClass().add("game-item-label");
-    getChildren().addAll(game, label);
-  }
-}
