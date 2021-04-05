@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 class GameItem extends VBox {
+  private Runnable onClick;
   public GameItem(String gamePath) {
     getStyleClass().addAll("game-item");
     JFXButton game = new JFXButton();
@@ -21,7 +22,19 @@ class GameItem extends VBox {
     } else {
       label.setText("Add Game");
     }
+    game.setOnAction(e -> notifyAction());
     label.getStyleClass().add("game-item-label");
     getChildren().addAll(game, label);
+    setOnMouseClicked( e -> notifyAction());
+  }
+
+  public void setOnAction(Runnable r) {
+    this.onClick = r;
+  }
+
+  private void notifyAction() {
+    if (this.onClick != null) {
+      onClick.run();
+    }
   }
 }
