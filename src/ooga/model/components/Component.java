@@ -10,4 +10,12 @@ public class Component {
   public Component(int id, GameObject owner) {
     this.owner = owner;
   }
+
+  public int getId() {
+    return id;
+  }
+
+  public GameObject getOwner() {
+    return owner;
+  }
 }
