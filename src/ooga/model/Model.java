@@ -7,16 +7,15 @@ import ooga.model.observables.ObservableModel;
 import ooga.model.observables.ObservableObject;
 
 public class Model implements ObservableModel {
-  Multimap<String, Runnable> functionMap;
+
+  GameLevel level;
+
   public Model() {
     String name = Preconditions.checkNotNull("osjfa");
   }
 
-  public void handleCode(String k) {
-    var v = functionMap.get(k);
-    for(Runnable func : v) {
-      func.run();
-    }
+  public void handleCode(String k, boolean on) {
+    level.handleCode(k, on);
   }
 
   public void step() {

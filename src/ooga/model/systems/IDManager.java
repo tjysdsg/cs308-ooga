@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 // TODO: implement methods
-public class IDManager extends BaseSystem {
+public class IDManager {
 
   private List<Integer> ids;
 
-  @Override
-  public void init() {
+  public IDManager() {
     ids = new ArrayList<>();
   }
 

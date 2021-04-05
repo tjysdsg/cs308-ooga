@@ -5,17 +5,12 @@ import ooga.model.GameObject;
 /**
  * System for creating, accessing, updating, and deleting entities
  */
-public class EntityManager extends BaseSystem {
+public class EntityManager {
 
   private IDManager idManager;
 
-  @Override
-  public void init() {
+  public EntityManager() {
     idManager = new IDManager();
-  }
-
-  @Override
-  public void update() {
   }
 
   public GameObject createEntity(String name) {

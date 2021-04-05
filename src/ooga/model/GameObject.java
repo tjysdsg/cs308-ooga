@@ -60,4 +60,12 @@ public class GameObject implements ObservableObject {
   public String objectId() {
     return null;
   }
+
+  public List<Component> getComponents() {
+    return components;
+  }
+
+  public void addComponent(Component component) {
+    this.components.add(component);
+  }
 }
