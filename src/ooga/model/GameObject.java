@@ -1,8 +1,21 @@
 package ooga.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import ooga.model.components.Component;
 import ooga.model.observables.ObservableObject;
 
 public class GameObject implements ObservableObject {
+
+  private List<Component> components;
+  private final int id;
+  private final String name;
+
+  GameObject(int id, String name) {
+    this.id = id;
+    this.name = name;
+    this.components = new ArrayList<>();
+  }
 
   boolean isA(String type) {
     return false;
