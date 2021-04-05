@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import javafx.util.*;
 import ooga.model.Model;
 import ooga.view.components.SplashScreen;
+import ooga.view.components.GSelectionScene;
 import ooga.view.util.ObservableResource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -55,9 +56,13 @@ public class View {
               });
         };
     splashScreen.setOnExit(exitApplication);
+    GSelectionScene gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);
+    gameSelection
+        .getStylesheets()
+        .add(getClass().getResource(RESOURCES + "main.css").toExternalForm());
 
     logger.info("Displaying Splash Screen");
-    stage.setScene(splashScreen);
+    stage.setScene(gameSelection);
     stage.show();
   }
 
