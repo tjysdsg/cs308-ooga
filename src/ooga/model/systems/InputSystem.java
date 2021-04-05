@@ -8,7 +8,7 @@ public class InputSystem {
   private Multimap<String, Consumer<Boolean>> functionMaps;
 
   public void registerInput(String code, Consumer<Boolean> runnable) {
-
+    // TODO:
   }
 
   public void handleCode(String code, boolean on) {

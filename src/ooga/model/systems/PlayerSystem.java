@@ -1,5 +1,6 @@
 package ooga.model.systems;
 
+import java.util.function.Consumer;
 import ooga.model.components.PlayerComponent;
 
 public class PlayerSystem extends BaseSystem {
@@ -9,8 +10,8 @@ public class PlayerSystem extends BaseSystem {
   }
 
   public void init() {
-    addMapping("right", this::handleRight);
-    addMapping("jump", this::handleJump);
+    addMapping("right", (Consumer<Boolean>) this::handleRight);
+    addMapping("jump", (Consumer<Boolean>) this::handleJump);
   }
 
   void handleRight(boolean on) {
