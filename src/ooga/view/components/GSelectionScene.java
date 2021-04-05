@@ -28,9 +28,13 @@ public class GSelectionScene extends Scene {
     this.gamesList = new FlowPane();
     gamesList.getStyleClass().add("game-selection");
 
+
+    // TODO: Retrieve from prefs.
     GameItem currentGame = new GameItem("/home/joshu/Pictures/");
     JFXButton addGame = new JFXButton();
     GameItem otherGame = new GameItem("/home/joshu/Pictures/");
+    currentGame.setOnAction( () -> System.out.println("View Game"));
+    otherGame.setOnAction( () -> System.out.println("View Game"));
 
     VBox addGameItem = new VBox();
     addGameItem.getStyleClass().addAll("game-item");
@@ -45,12 +49,16 @@ public class GSelectionScene extends Scene {
     gameSelectionTitle.getStyleClass().add("title-heading");
 
     addGameItem.getStyleClass().addAll("add-game");
+    GSelectionView gameView = new GSelectionView();
     gamesList.getChildren().addAll(currentGame, otherGame);
     gamesList.getChildren().add(addGameItem);
     HBox.setHgrow(gamesList, Priority.ALWAYS);
 
+    HBox gameBrowser = new HBox();
+    gameBrowser.getChildren().addAll(gamesList, gameView);
+
     //TODO: gamesList is going to be in an hbox with the drawer menu thing
-    gameSelectionCon.getChildren().addAll(gameSelectionTitle, gamesList);
+    gameSelectionCon.getChildren().addAll(gameSelectionTitle, gameBrowser);
 
     this.root.getChildren().add(gameSelectionCon);
   }

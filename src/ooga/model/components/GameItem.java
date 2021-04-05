@@ -9,7 +9,10 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 class GameItem extends VBox {
   private Runnable onClick;
+  private String directory;
+
   public GameItem(String gamePath) {
+    this.directory = gamePath;
     getStyleClass().addAll("game-item");
     JFXButton game = new JFXButton();
     game.getStyleClass().addAll("game-item-button", "primary");
@@ -36,5 +39,9 @@ class GameItem extends VBox {
     if (this.onClick != null) {
       onClick.run();
     }
+  }
+
+  public String getDirectory() {
+    return this.directory;
   }
 }
