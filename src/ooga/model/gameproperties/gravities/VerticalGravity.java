@@ -1,4 +1,4 @@
-package ooga.model.properties.gravities;
+package ooga.model.gameproperties.gravities;
 
 import ooga.model.Vector;
 
