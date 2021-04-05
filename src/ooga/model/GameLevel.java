@@ -1,6 +1,8 @@
 package ooga.model;
 
 import java.util.List;
+import ooga.model.systems.ComponentManager;
+import ooga.model.systems.EntityManager;
 
 // TODO: implement methods
 class GameLevel implements Level {

@@ -11,7 +11,7 @@ public class GameObject implements ObservableObject {
   private final int id;
   private final String name;
 
-  GameObject(int id, String name) {
+  public GameObject(int id, String name) {
     this.id = id;
     this.name = name;
     this.components = new ArrayList<>();
