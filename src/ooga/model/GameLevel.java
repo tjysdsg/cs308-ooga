@@ -14,14 +14,18 @@ class GameLevel implements Level {
   Configuration gameConfiguration;
   private String name;
   int levelID;
-  List<BaseSystem> systems;
   List<GameObject> gameObjects;
 
-  EntityManager entityManager;
-  ComponentManager componentManager;
-  InputSystem inputSystem;
+  private transient List<BaseSystem> systems;
+  private transient EntityManager entityManager;
+  private transient ComponentManager componentManager;
+  private transient InputSystem inputSystem;
 
+  // MUST BE HERE!!! MOSHI USES THIS
   public GameLevel() {
+  }
+
+  public void init() {
     entityManager = new EntityManager();
     componentManager = new ComponentManager();
     inputSystem = new InputSystem();
@@ -31,9 +35,7 @@ class GameLevel implements Level {
     for (var s : systems) {
       s.registerAllInputs(inputSystem);
     }
-  }
 
-  public void init() {
     componentManager.registerExistingComponents(gameObjects);
   }
 
