@@ -1,4 +1,4 @@
-package ooga.model.properties;
+package ooga.model.gameproperties;
 
 
 import ooga.model.Vector;
