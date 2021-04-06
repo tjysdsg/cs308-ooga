@@ -1,5 +1,14 @@
 {
-	"Author": "Baloon Jumpers"
-	"DateCreated": "March 1, 2021",
-	"Levels": "Different Levels, Are here"
+	"author": "A Balloon Dude",
+	"dateCreated": "March 1, 2021",
+	"Levels": [
+		"sunny side up",
+		"Stop this nonsense",
+		"Whatttt"
+	],
+	"tags": [
+		"arcade",
+		"classic",
+		"mmo"
+	]
 }
