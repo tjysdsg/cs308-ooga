@@ -50,4 +50,8 @@ class GameItem extends VBox {
       onClick.accept(this.directory);
     }
   }
+
+  private String getDirectory() {
+    return this.directory;
+  }
 }
