@@ -1,0 +1,19 @@
+{
+  "name" : "Sunny Level",
+  "id" :  "sunny_day",
+  "background" : "sunny_day",
+  "height" : 50,
+  "width" : 500,
+  "objectInstances" : [
+    {
+      "type" : "goomba",
+      "x" : 234,
+      "y" : 50
+    },
+    {
+      "type" : "goomba",
+      "x" : 200,
+      "y" : 50
+    }
+  ]
+}
