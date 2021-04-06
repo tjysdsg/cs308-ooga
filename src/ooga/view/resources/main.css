@@ -193,7 +193,7 @@ ScrollPane {
 
 
 .splashscreen JFXButton {
-  -fx-max-width: 100;
+  -fx-max-width: 300;
   -fx-content-display: LEFT;
   -fx-max-height: 125;
   -fx-pref-height: 100;

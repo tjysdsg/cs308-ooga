@@ -55,6 +55,7 @@ class GSelectionView extends VBox {
     String content = null;
     try {
       content = Files.readString(Path.of(directory.getPath() + "/meta.json"));
+      // TODO: Set Meta data of game on view
       MetaGame metadata = jsonAdapter.fromJson(content);
       logger.debug("MetaData created: {}", metadata);
     } catch (IOException e) {

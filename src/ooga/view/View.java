@@ -39,6 +39,7 @@ public class View {
 
     StackPane pane = new StackPane();
     SplashScreen splashScreen = new SplashScreen(HEIGHT, WIDTH, resources);
+    GSelectionScene gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);
     splashScreen
         .getStylesheets()
         .add(getClass().getResource(RESOURCES + "main.css").toExternalForm());
@@ -56,13 +57,11 @@ public class View {
               });
         };
     splashScreen.setOnExit(exitApplication);
-    GSelectionScene gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);
+    splashScreen.setOnPlay( () -> setScene(gameSelection));
     gameSelection
         .getStylesheets()
         .add(getClass().getResource(RESOURCES + "main.css").toExternalForm());
-
     logger.info("Displaying Splash Screen");
-    stage.setScene(gameSelection);
     stage.show();
   }
 
@@ -71,19 +70,26 @@ public class View {
     fadeOutTransition.setFromValue(1.0);
     fadeOutTransition.setToValue(0.05);
 
-    fadeInTransition = new FadeTransition(Duration.millis(1000));
+    fadeInTransition = new FadeTransition(Duration.millis(800));
     fadeInTransition.setFromValue(0.05);
     fadeInTransition.setToValue(1.0);
   }
 
   private void setScene(Scene scene) {
-    if (currentScene != null) {
+    if (this.currentScene != null) {
       fadeOutTransition.setNode(currentScene.getRoot());
       fadeOutTransition.play();
+      fadeOutTransition.setOnFinished( e -> {
+        stage.setScene(null);
+        stage.setScene(scene);
+        fadeInTransition.setNode(scene.getRoot());
+        fadeInTransition.play();
+      });
+    } else {
+      stage.setScene(scene);
+      fadeInTransition.setNode(scene.getRoot());
+      fadeInTransition.play();
     }
-    fadeInTransition.setNode(scene.getRoot());
-    stage.setScene(scene);
-    fadeInTransition.play();
     this.currentScene = scene;
   }
 }

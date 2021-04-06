@@ -73,7 +73,7 @@ public class GSelectionScene extends Scene {
     gameSelectionCon.getChildren().addAll(gameSelectionTitle, gameBrowser);
 
     this.root.getChildren().add(gameSelectionCon);
-     createItem("/home/joshu/schoolStuff/308/ooga_team08/data/Jumping Baloons");
+     createItem("/home/joshu/schoolStuff/308/ooga_team08/data/Jumping Baloons/");
     // createItem("/home/joshu/schoolStuff/308/ooga_team08/data/Ultimate Game");
   }
 

@@ -18,6 +18,7 @@ public class SplashScreen extends Scene {
   private StackPane root;
   private Runnable exitCallback;
   private Button exitGame;
+  private Runnable runCallback;
 
   public SplashScreen(int width, int height, ObservableResource resources) {
     super(new StackPane(), width, height, Color.BLACK);
@@ -53,11 +54,23 @@ public class SplashScreen extends Scene {
             exitCallback.run();
           }
         });
+
+    resume.setOnAction(
+        e -> {
+          if (runCallback != null) {
+            runCallback.run();
+          }
+        });
+
     root.getChildren().add(vbox);
   }
 
   public void setOnExit(Runnable run) {
     this.exitCallback = run;
+  }
+
+  public void setOnPlay(Runnable run) {
+    this.runCallback = run;
   }
 
   public void setOnSettings(Consumer<StackPane> callback) {
