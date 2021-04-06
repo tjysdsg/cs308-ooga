@@ -8,6 +8,9 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory;
+import ooga.model.components.Component;
 import ooga.model.objects.GameObjectFactory;
 import ooga.model.objects.ObjectFactory;
 
@@ -17,8 +20,7 @@ public class LevelFactory {
 
   public LevelFactory(String ObjectsFile) throws IOException {
     // Load the presets for the levels
-    Moshi moshi = new Moshi.Builder().build();
-//    Moshi thing = new Moshi.Builder().add(PolymorphicJsonAdapterFactory.of(HandOfCards.class
+    Moshi moshi = new Moshi.Builder().add(PolymorphicJsonAdapterFactory.of(Component.class, "type")).build();
 
     Type type = Types.newParameterizedType(List.class, GameObjectFactory.class);
     JsonAdapter<List<GameObjectFactory>> adapter = moshi.adapter(type);
