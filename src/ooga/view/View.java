@@ -1,6 +1,8 @@
 package ooga.view;
 
 import fr.brouillard.oss.cssfx.CSSFX;
+import java.awt.event.FocusAdapter;
+import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.*;
 import javafx.scene.Scene;
@@ -8,13 +10,15 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.*;
 import ooga.model.Model;
+import ooga.view.components.gameselection.GSelectionScene;
 import ooga.view.components.SplashScreen;
-import ooga.view.components.GSelectionScene;
 import ooga.view.util.ObservableResource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class View {
+  private static final double FADE_OPACITY = 0.1;
+  private static final int TRANSITION_SPEED = 700; //milliseconds
   public static final int HEIGHT = 700;
   public static final int WIDTH = 700;
   public static final String RESOURCES = "resources/";
@@ -37,12 +41,8 @@ public class View {
     resources.setResources(ResourceBundle.getBundle(DEFAULT_RESOURCES + "English"));
     // this.modelController = model.getController();
 
-    StackPane pane = new StackPane();
     SplashScreen splashScreen = new SplashScreen(HEIGHT, WIDTH, resources);
     GSelectionScene gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);
-    splashScreen
-        .getStylesheets()
-        .add(getClass().getResource(RESOURCES + "main.css").toExternalForm());
     createAnimations();
     setScene(splashScreen);
 
@@ -57,21 +57,28 @@ public class View {
               });
         };
     splashScreen.setOnExit(exitApplication);
-    splashScreen.setOnPlay( () -> setScene(gameSelection));
-    gameSelection
-        .getStylesheets()
-        .add(getClass().getResource(RESOURCES + "main.css").toExternalForm());
+    splashScreen.setOnPlay(() -> setScene(gameSelection));
+
+    final URL cssFileURL = getClass().getResource(RESOURCES + "main.css");
+    if (cssFileURL != null) {
+      final String cssFile = cssFileURL.toExternalForm();
+      gameSelection.getStylesheets().add(cssFile);
+      splashScreen.getStylesheets().add(cssFile);
+    } else {
+      logger.warn("Css file could not be loaded");
+    }
+
     logger.info("Displaying Splash Screen");
     stage.show();
   }
 
   private void createAnimations() {
-    fadeOutTransition = new FadeTransition(Duration.millis(700));
+    fadeOutTransition = new FadeTransition(Duration.millis(TRANSITION_SPEED));
     fadeOutTransition.setFromValue(1.0);
-    fadeOutTransition.setToValue(0.05);
+    fadeOutTransition.setToValue(FADE_OPACITY);
 
-    fadeInTransition = new FadeTransition(Duration.millis(700));
-    fadeInTransition.setFromValue(0.05);
+    fadeInTransition = new FadeTransition(Duration.millis(TRANSITION_SPEED));
+    fadeInTransition.setFromValue(FADE_OPACITY);
     fadeInTransition.setToValue(1.0);
   }
 
@@ -79,12 +86,13 @@ public class View {
     if (this.currentScene != null) {
       fadeOutTransition.setNode(currentScene.getRoot());
       fadeOutTransition.play();
-      fadeOutTransition.setOnFinished( e -> {
-        stage.setScene(scene);
-        scene.getRoot().setStyle("-fx-opacity: 0.05");
-        fadeInTransition.setNode(scene.getRoot());
-        fadeInTransition.play();
-      });
+      fadeOutTransition.setOnFinished(
+          e -> {
+            scene.getRoot().setStyle("-fx-opacity: " + FADE_OPACITY);
+            fadeInTransition.setNode(scene.getRoot());
+            stage.setScene(scene);
+            fadeInTransition.play();
+          });
     } else {
       stage.setScene(scene);
       fadeInTransition.setNode(scene.getRoot());

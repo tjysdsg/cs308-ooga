@@ -1,4 +1,4 @@
-package ooga.view.components;
+package ooga.view.components.gameselection;
 
 import com.jfoenix.controls.JFXButton;
 import java.io.File;
@@ -10,7 +10,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 
-class GameItem extends VBox {
+public class GameItem extends VBox {
   private Consumer<String> onClick;
   private String directory;
   private String encodedPath;

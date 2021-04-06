@@ -1,4 +1,4 @@
-package ooga.view.components;
+package ooga.view.components.gameselection;
 
 import com.jfoenix.controls.JFXButton;
 import java.io.File;

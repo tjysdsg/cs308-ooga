@@ -1,4 +1,4 @@
-package ooga.view.components;
+package ooga.view.components.gameselection;
 
 import com.jfoenix.controls.JFXButton;
 import com.squareup.moshi.JsonAdapter;
@@ -10,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
-import javafx.scene.layout.*;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import ooga.view.util.MetaGame;
@@ -20,7 +19,7 @@ import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 class GSelectionView extends VBox {
-  private static final Logger logger = LogManager.getLogger(SplashScreen.class);
+  private static final Logger logger = LogManager.getLogger(GSelectionView.class);
   private String directory = "/home/joshu/Pictures/";
   private ImageView thumbnail;
   private double IMAGE_DIM = 200;
