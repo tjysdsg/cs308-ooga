@@ -1,8 +1,11 @@
 package ooga.model;
 
-import com.google.common.collect.Multimap;
 import java.util.List;
-import ooga.model.components.Component;
+import java.util.Map;
+
+import ooga.model.objects.GameObject;
+import ooga.model.objects.ObjectFactory;
+import ooga.model.objects.ObjectInstance;
 import ooga.model.systems.BaseSystem;
 import ooga.model.systems.ComponentManager;
 import ooga.model.systems.EntityManager;
@@ -11,10 +14,11 @@ import ooga.model.systems.InputSystem;
 // TODO: implement methods
 class GameLevel implements Level {
 
-  Configuration gameConfiguration;
+  transient Configuration gameConfiguration;
   private String name;
   int levelID;
   List<GameObject> gameObjects;
+  List<ObjectInstance> objectInstances;
 
   private transient List<BaseSystem> systems;
   private transient EntityManager entityManager;
@@ -67,5 +71,11 @@ class GameLevel implements Level {
   @Override
   public ComponentManager getComponentManager() {
     return componentManager;
+  }
+
+  public void applyPresets(ObjectFactory factory) {
+    for (ObjectInstance instance : objectInstances) {
+      factory.buildObject(instance);
+    }
   }
 }

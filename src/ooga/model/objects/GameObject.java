@@ -10,6 +10,8 @@ public class GameObject implements ObservableObject {
   private List<Component> components;
   private final int id;
   private final String name;
+  private double x, y;
+  private double height, width;
 
   public GameObject(int id, String name) {
     this.id = id;
@@ -26,14 +28,22 @@ public class GameObject implements ObservableObject {
 
   }
 
+  public void setX(double x) {
+    this.x = x;
+  }
+
+  public void setY(double y) {
+    this.y = y;
+  }
+
   @Override
   public double getX() {
-    return 0;
+    return x;
   }
 
   @Override
   public double getY() {
-    return 0;
+    return y;
   }
 
   @Override
@@ -59,6 +69,11 @@ public class GameObject implements ObservableObject {
   @Override
   public String objectId() {
     return null;
+  }
+
+  @Override
+  public String getType() {
+    return name;
   }
 
   public List<Component> getComponents() {
