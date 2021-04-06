@@ -1,13 +1,8 @@
 package ooga.view.components.gameselection;
 
 import com.jfoenix.controls.JFXButton;
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.Priority;
@@ -22,18 +17,16 @@ class GSelectionView extends VBox {
   private static final Logger logger = LogManager.getLogger(GSelectionView.class);
   private String directory = "/home/joshu/Pictures/";
   private ImageView thumbnail;
-  private double IMAGE_DIM = 200;
+  private static double IMAGE_DIM = 200;
   private Label gameTitleLabel;
   private ObservableResource resources;
   private Button playGame;
-  private JsonAdapter<MetaGame> jsonAdapter;
+  private MetaGame metadata;
 
   public GSelectionView(ObservableResource resources) {
     this.thumbnail = new ImageView();
     this.gameTitleLabel = new Label();
     this.resources = resources;
-    Moshi moshi = new Moshi.Builder().build();
-    this.jsonAdapter = moshi.adapter(MetaGame.class);
 
     thumbnail.getStyleClass().addAll("game-selection-thumbnail");
     getStyleClass().addAll("game-selection-view");
@@ -49,17 +42,9 @@ class GSelectionView extends VBox {
     getChildren().addAll(gameTitleLabel, thumbnail, playGame);
   }
 
-  // TODO: Move to factory
   private void readMetaData(File directory) {
-    String content = null;
-    try {
-      content = Files.readString(Path.of(directory.getPath() + "/meta.json"));
-      // TODO: Set Meta data of game on view
-      MetaGame metadata = jsonAdapter.fromJson(content);
-      logger.debug("MetaData created: {}", metadata);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    // TODO: Set Meta data of game on view
+    this.metadata = MetaGame.createMetaDataFromDirectory(directory);
   }
 
   public void setDirectory(String directory) {

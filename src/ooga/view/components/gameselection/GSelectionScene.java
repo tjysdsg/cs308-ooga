@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.function.Consumer;
 import java.util.prefs.Preferences;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -27,6 +28,7 @@ public class GSelectionScene extends Scene {
   private GSelectionView gameView;
   private ObservableResource resources;
   private Preferences prefs;
+  private Consumer<String> gameSelectionCallback;
 
   public GSelectionScene(int width, int height, ObservableResource resources) {
     super(new StackPane(), width, height, Color.BLACK);
@@ -56,5 +58,7 @@ public class GSelectionScene extends Scene {
     // createItem("/home/joshu/schoolStuff/308/ooga_team08/data/Ultimate Game");
   }
 
-
+  public void setOnGameSelected(Consumer<String> callBack) {
+    this.gameSelectionCallback = callBack;
+  }
 }
