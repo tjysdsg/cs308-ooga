@@ -15,6 +15,7 @@ import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory;
 import ooga.model.components.Component;
 import ooga.model.components.PlayerComponent;
 import ooga.model.objects.GameObject;
+import ooga.model.objects.GameObjectAdapter;
 import ooga.model.objects.ObjectFactory;
 
 public class LevelFactory {
@@ -48,7 +49,7 @@ public class LevelFactory {
   "background" : "sunny_day",
   "height" : 50,
   "width" : 500,
-  "objectInstances" : [
+  "gameObjects" : [
     {
       "type" : "goomba",
       "x" : 234,
@@ -93,13 +94,12 @@ public class LevelFactory {
     // Use the object Factory to create the game objects
 //    JSObject
 
-    Moshi moshi = new Moshi.Builder().build();
+    GameObjectAdapter adapter = new GameObjectAdapter(objectFactory);
+    Moshi moshi = new Moshi.Builder().add(adapter).build();
     JsonAdapter<GameLevel> levelAdapter = moshi.adapter(GameLevel.class);
 
     GameLevel newLevel = levelAdapter.fromJson(levelTest);
-
-    newLevel.applyPresets(objectFactory);
-    newLevel.init();
+    //newLevel.init();
 
     return newLevel;
     // TODO: FIXME: OLIVER: REMEMBER TO CALL level.init()

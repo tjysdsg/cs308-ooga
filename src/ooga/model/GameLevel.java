@@ -18,7 +18,6 @@ class GameLevel implements Level {
   private String name;
   int levelID;
   List<GameObject> gameObjects;
-  List<ObjectInstance> objectInstances;
 
   private transient List<BaseSystem> systems;
   private transient EntityManager entityManager;
@@ -71,11 +70,5 @@ class GameLevel implements Level {
   @Override
   public ComponentManager getComponentManager() {
     return componentManager;
-  }
-
-  public void applyPresets(ObjectFactory factory) {
-    for (ObjectInstance instance : objectInstances) {
-      factory.buildObject(instance);
-    }
   }
 }

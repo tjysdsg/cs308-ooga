@@ -2,13 +2,19 @@ package ooga.model.objects;
 
 public class ObjectInstance {
     private String type;
-    private int x, y;
+    private double x, y;
 
-    public int getX() {
+    public ObjectInstance(String type, double x, double y) {
+        this.type = type;
+        this.x = x;
+        this.y = y;
+    }
+
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
