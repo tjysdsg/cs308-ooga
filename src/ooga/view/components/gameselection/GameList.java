@@ -6,11 +6,13 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.prefs.Preferences;
+import javafx.beans.binding.StringBinding;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
+import ooga.view.util.ObservableResource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -21,10 +23,12 @@ public class GameList extends FlowPane {
   private static final Logger logger = LogManager.getLogger(GameList.class);
   private Consumer<String> selectionCallback;
   private Preferences prefs;
+  private StringBinding directoryTitle;
 
-  public GameList() {
+  public GameList(ObservableResource resources) {
     presentDirectories = new HashSet<>();
     getStyleClass().add("game-selection");
+    this.directoryTitle = resources.getStringBinding("SelectGameDirectory");
     this.prefs = Preferences.userNodeForPackage(GameList.class);
     VBox addGameItem = new VBox();
     JFXButton addGame = new JFXButton();
@@ -32,7 +36,8 @@ public class GameList extends FlowPane {
     addGame.getStyleClass().addAll("add-game", "primary");
     initSelection(addGame);
 
-    Label addGameLabel = new Label("Add Game");
+    Label addGameLabel = new Label();
+    addGameLabel.textProperty().bind(resources.getStringBinding("AddGame"));
     addGameLabel.getStyleClass().addAll("game-item-label");
     addGameItem.getStyleClass().addAll("add-game", "game-item");
 
@@ -46,6 +51,7 @@ public class GameList extends FlowPane {
         e -> {
           String dirPreset = prefs.get("last_selection_dir", System.getProperty("user.home"));
           dirChooser.setInitialDirectory(new File(dirPreset));
+          dirChooser.setTitle(directoryTitle.getValue());
           File selectedDir = dirChooser.showDialog(getScene().getWindow());
           if (selectedDir != null) {
             String newDir = selectedDir.getPath() + "/";

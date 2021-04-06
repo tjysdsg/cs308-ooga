@@ -34,7 +34,7 @@ public class GSelectionScene extends Scene {
     super(new StackPane(), width, height, Color.BLACK);
     this.root = (StackPane) getRoot();
     this.resources = resources;
-    gamesList = new GameList();
+    gamesList = new GameList(resources);
     this.gameView = new GSelectionView(resources);
     gamesList.setOnSelection(gameView::setDirectory);
     VBox gameSelectionCon = new VBox();
