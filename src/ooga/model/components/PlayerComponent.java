@@ -1,7 +1,7 @@
 package ooga.model.components;
 
 import com.google.common.collect.Multimap;
-import ooga.model.GameObject;
+import ooga.model.objects.GameObject;
 
 public class PlayerComponent extends Component {
 

@@ -1,6 +1,6 @@
 package ooga.model.systems;
 
-import ooga.model.GameObject;
+import ooga.model.objects.GameObject;
 
 /**
  * System for creating, accessing, updating, and deleting entities

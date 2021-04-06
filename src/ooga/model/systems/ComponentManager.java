@@ -7,8 +7,8 @@ import com.google.common.collect.Multimaps;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
-import ooga.model.GameObject;
 import ooga.model.components.Component;
+import ooga.model.objects.GameObject;
 
 /**
  * System for creating, accessing, updating, and deleting components

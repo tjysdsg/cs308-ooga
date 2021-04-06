@@ -1,6 +1,6 @@
 package ooga.model.components;
 
-import ooga.model.GameObject;
+import ooga.model.objects.GameObject;
 
 public class Component {
 

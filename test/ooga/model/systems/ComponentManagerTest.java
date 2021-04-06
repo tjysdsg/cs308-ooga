@@ -3,7 +3,7 @@ package ooga.model.systems;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import ooga.model.GameObject;
+import ooga.model.objects.GameObject;
 import ooga.model.components.Component;
 import ooga.model.components.PlayerComponent;
 import org.junit.jupiter.api.BeforeEach;
