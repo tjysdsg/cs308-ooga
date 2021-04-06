@@ -23,45 +23,25 @@ import org.kordamp.ikonli.javafx.FontIcon;
 public class GSelectionScene extends Scene {
   private static final Logger logger = LogManager.getLogger(GSelectionScene.class);
   private StackPane root;
-  private FlowPane gamesList;
+  private GameList gamesList;
   private GSelectionView gameView;
   private ObservableResource resources;
   private Preferences prefs;
-  private Set<String> presentDirectories;
 
   public GSelectionScene(int width, int height, ObservableResource resources) {
     super(new StackPane(), width, height, Color.BLACK);
     this.root = (StackPane) getRoot();
     this.resources = resources;
-    this.prefs = Preferences.userNodeForPackage(GSelectionScene.class);
-    this.presentDirectories = new HashSet<>();
-    VBox gameSelectionCon = new VBox();
-
-    this.gamesList = new FlowPane();
-    gamesList.getStyleClass().add("game-selection");
-
-    // TODO: Retrieve from prefs.
-    JFXButton addGame = new JFXButton();
-    initSelection(addGame);
+    gamesList = new GameList();
     this.gameView = new GSelectionView(resources);
-
-    VBox addGameItem = new VBox();
-    addGameItem.getStyleClass().addAll("game-item");
-    addGame.setGraphic(new FontIcon());
-    addGame.getStyleClass().addAll("add-game", "primary");
-
-    Label addGameLabel = new Label("Add Game");
-    addGameLabel.getStyleClass().addAll("game-item-label");
-    addGameItem.getChildren().addAll(addGame, addGameLabel);
+    gamesList.setOnSelection(gameView::setDirectory);
+    VBox gameSelectionCon = new VBox();
 
     Label gameSelectionTitle = new Label("Game Selection Is Dope");
     gameSelectionTitle.getStyleClass().add("title-heading");
 
     ScrollPane gameListScroll = new ScrollPane();
     gameListScroll.setContent(gamesList);
-    addGameItem.getStyleClass().addAll("add-game");
-
-    gamesList.getChildren().add(addGameItem);
     HBox.setHgrow(gamesList, Priority.ALWAYS);
 
     HBox gameBrowser = new HBox();
@@ -69,38 +49,12 @@ public class GSelectionScene extends Scene {
     HBox.setHgrow(gameListScroll, Priority.ALWAYS);
     gameBrowser.getChildren().addAll(gameListScroll, gameView);
 
-    // TODO: gamesList is going to be in an hbox with the drawer menu thing
     gameSelectionCon.getChildren().addAll(gameSelectionTitle, gameBrowser);
 
     this.root.getChildren().add(gameSelectionCon);
-     createItem("/home/joshu/schoolStuff/308/ooga_team08/data/Jumping Baloons/");
+     gamesList.createItem("/home/joshu/schoolStuff/308/ooga_team08/data/Jumping Baloons/");
     // createItem("/home/joshu/schoolStuff/308/ooga_team08/data/Ultimate Game");
   }
 
-  private void createItem(String directory) {
-    //TODO: Add check for directories without games.
-    if (presentDirectories.contains(directory)){
-      return;
-    }
-    GameItem newGame = new GameItem(directory);
-    gamesList.getChildren().add(0, newGame);
-    newGame.setOnAction(gameView::setDirectory);
-    presentDirectories.add(directory);
-    logger.debug("Adding Game: " + directory);
-  }
 
-  private void initSelection(Button addGame) {
-    DirectoryChooser dirChooser = new DirectoryChooser();
-    addGame.setOnAction(
-        e -> {
-          String dirPreset = prefs.get("last_selection_dir", System.getProperty("user.home"));
-          dirChooser.setInitialDirectory(new File(dirPreset));
-          File selectedDir = dirChooser.showDialog(getWindow());
-          if (selectedDir != null) {
-            String newDir = selectedDir.getPath() + "/";
-            prefs.put("last_selection_dir", newDir);
-            createItem(newDir);
-          }
-        });
-  }
 }
