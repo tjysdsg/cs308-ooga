@@ -48,6 +48,9 @@ public class GSelectionScene extends Scene {
     Label gameSelectionTitle = new Label("Game Selection Is Dope");
     gameSelectionTitle.getStyleClass().add("title-heading");
 
+    ScrollPane gameListScroll = new ScrollPane();
+    gameListScroll.setContent(gamesList);
+
     addGameItem.getStyleClass().addAll("add-game");
     GSelectionView gameView = new GSelectionView();
     gamesList.getChildren().addAll(currentGame, otherGame);
@@ -55,7 +58,9 @@ public class GSelectionScene extends Scene {
     HBox.setHgrow(gamesList, Priority.ALWAYS);
 
     HBox gameBrowser = new HBox();
-    gameBrowser.getChildren().addAll(gamesList, gameView);
+    VBox.setVgrow(gameBrowser, Priority.ALWAYS);
+    HBox.setHgrow(gameListScroll, Priority.ALWAYS);
+    gameBrowser.getChildren().addAll(gameListScroll, gameView);
 
     //TODO: gamesList is going to be in an hbox with the drawer menu thing
     gameSelectionCon.getChildren().addAll(gameSelectionTitle, gameBrowser);

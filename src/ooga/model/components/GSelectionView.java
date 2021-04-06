@@ -20,6 +20,7 @@ class GSelectionView extends VBox {
 
   public GSelectionView() {
     this.thumbnail = new ImageView();
+    thumbnail.getStyleClass().addAll("game-selection-thumbnail");
     getStyleClass().addAll("game-selection-view");
     setDirectory(directory);
     JFXButton playGame = new JFXButton();
