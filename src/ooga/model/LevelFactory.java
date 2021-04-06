@@ -36,6 +36,9 @@ public class LevelFactory {
     // Use the object Factory to create the game objects
 //    JSObject
     return null;
+    // TODO: FIXME: OLIVER: REMEMBER TO CALL level.init()
+    //level.init();
+    return null;
   }
 
   public static void main(String[] args) throws IOException {
