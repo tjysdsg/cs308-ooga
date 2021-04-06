@@ -43,7 +43,7 @@ JFXButton {
   -fx-spacing: 20;
   -fx-alignment: TOP_CENTER;
   -fx-max-height: Infinity;
-  -fx-max-width: 500;
+  -fx-pref-width: 400;
   -fx-background-color: -primary-color;
 }
 
@@ -155,6 +155,12 @@ ScrollPane {
 .game-selection .add-game .ikonli-font-icon{
   -fx-icon-code: "mdi2f-folder-plus-outline";
   -fx-icon-size: 50;
+}
+
+.game-selection-title {
+  -fx-font-size: 3em;
+  -fx-text-fill: #ffffff;
+  -fx-font-weight: bolder;
 }
 
 .splash_title {

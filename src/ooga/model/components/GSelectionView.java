@@ -17,26 +17,26 @@ class GSelectionView extends VBox {
   private String directory = "/home/joshu/Pictures/";
   private ImageView thumbnail;
   private double IMAGE_DIM = 200;
+  private Label gameTitleLabel;
 
   public GSelectionView() {
     this.thumbnail = new ImageView();
     thumbnail.getStyleClass().addAll("game-selection-thumbnail");
     getStyleClass().addAll("game-selection-view");
     setDirectory(directory);
+
     JFXButton playGame = new JFXButton();
-    playGame.getStyleClass().addAll("game-item-button", "primary");
+    playGame.getStyleClass().addAll("game-item-button", "secondary", "special");
     playGame.setGraphic(new FontIcon());
 
     VBox.setVgrow(playGame, Priority.ALWAYS);
-
-    Label label = new Label();
+    gameTitleLabel = new Label();
     // playGame.setStyle("-fx-background-image: url('file:" + gamePath + "thumbnail.jpg');");
 
-    label.setText("VERY LONG LABEL FOR THIS THING");
-    label.setText("Add Game");
-    label.getStyleClass().add("game-item-label");
+    gameTitleLabel.setText("Game Title");
+    gameTitleLabel.getStyleClass().add("game-selection-title");
 
-    getChildren().addAll(thumbnail, playGame, label);
+    getChildren().addAll(gameTitleLabel, thumbnail, playGame);
   }
 
   public void setDirectory(String directory) {
