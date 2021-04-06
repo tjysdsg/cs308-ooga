@@ -66,11 +66,11 @@ public class View {
   }
 
   private void createAnimations() {
-    fadeOutTransition = new FadeTransition(Duration.millis(1000));
+    fadeOutTransition = new FadeTransition(Duration.millis(700));
     fadeOutTransition.setFromValue(1.0);
     fadeOutTransition.setToValue(0.05);
 
-    fadeInTransition = new FadeTransition(Duration.millis(800));
+    fadeInTransition = new FadeTransition(Duration.millis(700));
     fadeInTransition.setFromValue(0.05);
     fadeInTransition.setToValue(1.0);
   }
@@ -80,8 +80,8 @@ public class View {
       fadeOutTransition.setNode(currentScene.getRoot());
       fadeOutTransition.play();
       fadeOutTransition.setOnFinished( e -> {
-        stage.setScene(null);
         stage.setScene(scene);
+        scene.getRoot().setStyle("-fx-opacity: 0.05");
         fadeInTransition.setNode(scene.getRoot());
         fadeInTransition.play();
       });
