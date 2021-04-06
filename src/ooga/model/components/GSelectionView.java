@@ -1,5 +1,6 @@
 package ooga.view.components;
 
+import ooga.view.util.ObservableResource;
 import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.net.MalformedURLException;
@@ -18,9 +19,13 @@ class GSelectionView extends VBox {
   private ImageView thumbnail;
   private double IMAGE_DIM = 200;
   private Label gameTitleLabel;
+  private ObservableResource resources;
 
-  public GSelectionView() {
+  public GSelectionView(ObservableResource resources) {
     this.thumbnail = new ImageView();
+    gameTitleLabel = new Label();
+    this.resources = resources;
+
     thumbnail.getStyleClass().addAll("game-selection-thumbnail");
     getStyleClass().addAll("game-selection-view");
     setDirectory(directory);
@@ -30,10 +35,8 @@ class GSelectionView extends VBox {
     playGame.setGraphic(new FontIcon());
 
     VBox.setVgrow(playGame, Priority.ALWAYS);
-    gameTitleLabel = new Label();
     // playGame.setStyle("-fx-background-image: url('file:" + gamePath + "thumbnail.jpg');");
 
-    gameTitleLabel.setText("Game Title");
     gameTitleLabel.getStyleClass().add("game-selection-title");
 
     getChildren().addAll(gameTitleLabel, thumbnail, playGame);
@@ -47,6 +50,8 @@ class GSelectionView extends VBox {
       Image image =
           new Image(fileImage.toURI().toURL().toExternalForm(), IMAGE_DIM, IMAGE_DIM, false, true);
       this.thumbnail.setImage(image);
+      String gameName = fileImage.getParentFile().getName();
+      gameTitleLabel.setText(gameName);
       logger.info("GSelection View set to: " + directory);
     } catch (MalformedURLException e) {
       e.printStackTrace();

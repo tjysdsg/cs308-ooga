@@ -52,7 +52,7 @@ public class GSelectionScene extends Scene {
     gameListScroll.setContent(gamesList);
 
     addGameItem.getStyleClass().addAll("add-game");
-    GSelectionView gameView = new GSelectionView();
+    GSelectionView gameView = new GSelectionView(resources);
     gamesList.getChildren().addAll(currentGame, otherGame);
     gamesList.getChildren().add(addGameItem);
     HBox.setHgrow(gamesList, Priority.ALWAYS);
