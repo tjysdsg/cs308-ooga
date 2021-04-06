@@ -2,16 +2,12 @@ package ooga.view.components;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.Scene;
-import com.jfoenix.controls.JFXScrollPane;
-import javafx.geometry.HPos;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.*;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import ooga.view.util.ObservableResource;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -28,13 +24,14 @@ public class GSelectionScene extends Scene {
     this.gamesList = new FlowPane();
     gamesList.getStyleClass().add("game-selection");
 
-
     // TODO: Retrieve from prefs.
-    GameItem currentGame = new GameItem("/home/joshu/Pictures/");
+    GameItem currentGame =
+        new GameItem("/home/joshu/schoolStuff/308/ooga_team08/data/Jumping Baloons/");
     JFXButton addGame = new JFXButton();
-    GameItem otherGame = new GameItem("/home/joshu/Pictures/");
-    currentGame.setOnAction( () -> System.out.println("View Game"));
-    otherGame.setOnAction( () -> System.out.println("View Game"));
+    GameItem otherGame = new GameItem("/home/joshu/schoolStuff/308/ooga_team08/data/Ultimate Game/");
+    GSelectionView gameView = new GSelectionView(resources);
+    currentGame.setOnAction(gameView::setDirectory);
+    otherGame.setOnAction(gameView::setDirectory);
 
     VBox addGameItem = new VBox();
     addGameItem.getStyleClass().addAll("game-item");
@@ -52,7 +49,6 @@ public class GSelectionScene extends Scene {
     gameListScroll.setContent(gamesList);
 
     addGameItem.getStyleClass().addAll("add-game");
-    GSelectionView gameView = new GSelectionView(resources);
     gamesList.getChildren().addAll(currentGame, otherGame);
     gamesList.getChildren().add(addGameItem);
     HBox.setHgrow(gamesList, Priority.ALWAYS);
@@ -62,11 +58,9 @@ public class GSelectionScene extends Scene {
     HBox.setHgrow(gameListScroll, Priority.ALWAYS);
     gameBrowser.getChildren().addAll(gameListScroll, gameView);
 
-    //TODO: gamesList is going to be in an hbox with the drawer menu thing
+    // TODO: gamesList is going to be in an hbox with the drawer menu thing
     gameSelectionCon.getChildren().addAll(gameSelectionTitle, gameBrowser);
 
     this.root.getChildren().add(gameSelectionCon);
   }
 }
-
-

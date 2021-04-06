@@ -28,7 +28,6 @@ class GSelectionView extends VBox {
 
     thumbnail.getStyleClass().addAll("game-selection-thumbnail");
     getStyleClass().addAll("game-selection-view");
-    setDirectory(directory);
 
     JFXButton playGame = new JFXButton();
     playGame.getStyleClass().addAll("game-item-button", "secondary", "special");
@@ -52,7 +51,7 @@ class GSelectionView extends VBox {
       this.thumbnail.setImage(image);
       String gameName = fileImage.getParentFile().getName();
       gameTitleLabel.setText(gameName);
-      logger.info("GSelection View set to: " + directory);
+      logger.debug("GSelection View set to: " + directory);
     } catch (MalformedURLException e) {
       e.printStackTrace();
     }
