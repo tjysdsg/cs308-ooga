@@ -22,7 +22,7 @@ import ooga.model.objects.ObjectFactory;
 
 public class LevelFactory {
 
-  ObjectFactory objectFactory;
+  private JsonAdapter<GameLevel> levelAdapter;
 
   public LevelFactory(File objectsDir) throws IOException {
     if (!objectsDir.isDirectory()) {
@@ -32,9 +32,9 @@ public class LevelFactory {
     Map<String, GameObject> presetMap = new HashMap<>();
 
     Moshi moshi = new Moshi.Builder().add(
-            PolymorphicJsonAdapterFactory
-                    .of(Component.class, "type")
-                    .withSubtype(PlayerComponent.class, "PlayerComponent")).build();
+        PolymorphicJsonAdapterFactory
+            .of(Component.class, "type")
+            .withSubtype(PlayerComponent.class, "PlayerComponent")).build();
 
     Type type = Types.newParameterizedType(List.class, GameObject.class);
     JsonAdapter<List<GameObject>> adapter = moshi.adapter(type);
@@ -45,10 +45,15 @@ public class LevelFactory {
       addObjects(objectFile, adapter, presetMap);
     }
 
-    objectFactory = new ObjectFactory(presetMap);
+    ObjectFactory objectFactory = new ObjectFactory(presetMap);
+
+    GameObjectAdapter objectAdapter = new GameObjectAdapter(objectFactory);
+    Moshi objectMoshi = new Moshi.Builder().add(objectAdapter).build();
+    levelAdapter = objectMoshi.adapter(GameLevel.class);
   }
 
-  private void addObjects(File objectsFile, JsonAdapter<List<GameObject>> adapter, Map<String, GameObject> presetMap) throws IOException {
+  private void addObjects(File objectsFile, JsonAdapter<List<GameObject>> adapter,
+      Map<String, GameObject> presetMap) throws IOException {
     String objectsText = fileToString(objectsFile);
 
     List<GameObject> objectPresets = adapter.fromJson(objectsText);
@@ -60,15 +65,10 @@ public class LevelFactory {
 
   private String fileToString(File toConvert) throws IOException {
     Path filePath = toConvert.toPath();
-    String fileText = Files.readString(filePath);
-    return fileText;
+    return Files.readString(filePath);
   }
 
   Level buildLevel(File levelFile) throws IOException {
-    GameObjectAdapter adapter = new GameObjectAdapter(objectFactory);
-    Moshi moshi = new Moshi.Builder().add(adapter).build();
-    JsonAdapter<GameLevel> levelAdapter = moshi.adapter(GameLevel.class);
-
     String levelText = fileToString(levelFile);
 
     GameLevel newLevel = levelAdapter.fromJson(levelText);
