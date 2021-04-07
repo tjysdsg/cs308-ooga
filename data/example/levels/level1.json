@@ -4,14 +4,14 @@
   "background" : "sunny_day",
   "height" : 50,
   "width" : 500,
-  "objectInstances" : [
+  "objects" : [
     {
-      "type" : "goomba",
+      "name" : "goomba",
       "x" : 234,
       "y" : 50
     },
     {
-      "type" : "goomba",
+      "name" : "goomba",
       "x" : 200,
       "y" : 50
     }

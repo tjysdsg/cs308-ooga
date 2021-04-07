@@ -16,7 +16,7 @@ public class ObjectFactory {
 
     public GameObject buildObject(ObjectInstance instance) {
 
-        String name = instance.getType();
+        String name = instance.getName();
 
         GameObject toClone = presetMap.get(name);
 

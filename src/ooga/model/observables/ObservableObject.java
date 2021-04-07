@@ -12,7 +12,7 @@ public interface ObservableObject {
   int getMode();
   boolean isVisible();
   String objectId();
-  String getType();
+  String getName();
 }
 
 /*

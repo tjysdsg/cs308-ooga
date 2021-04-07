@@ -1,11 +1,11 @@
 package ooga.model.objects;
 
 public class ObjectInstance {
-    private String type;
+    private String name;
     private double x, y;
 
-    public ObjectInstance(String type, double x, double y) {
-        this.type = type;
+    public ObjectInstance(String name, double x, double y) {
+        this.name = name;
         this.x = x;
         this.y = y;
     }
@@ -18,7 +18,7 @@ public class ObjectInstance {
         return y;
     }
 
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 }

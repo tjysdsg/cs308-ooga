@@ -3,8 +3,6 @@ package ooga.model.objects;
 import com.squareup.moshi.FromJson;
 import com.squareup.moshi.ToJson;
 
-import java.util.Map;
-
 public class GameObjectAdapter {
 
     private ObjectFactory objectFactory;
@@ -21,7 +19,7 @@ public class GameObjectAdapter {
 
     @ToJson
     ObjectInstance objectToJson(GameObject object) {
-        ObjectInstance json = new ObjectInstance(object.getType(),
+        ObjectInstance json = new ObjectInstance(object.getName(),
                 object.getX(), object.getY());
         return json;
     }

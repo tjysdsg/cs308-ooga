@@ -3,6 +3,7 @@ package ooga.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.squareup.moshi.Json;
 import ooga.model.objects.GameObject;
 import ooga.model.systems.BaseSystem;
 import ooga.model.systems.ComponentBasedSystem;
@@ -17,7 +18,7 @@ class GameLevel implements Level {
   transient Configuration gameConfiguration;
   private String name;
   int levelID;
-  List<GameObject> gameObjects;
+  @Json(name = "objects") List<GameObject> gameObjects;
 
   private transient List<BaseSystem> systems;
   private transient EntityManager entityManager;
@@ -34,7 +35,7 @@ class GameLevel implements Level {
     inputManager = new InputManager();
 
     // TODO: create game objects here
-    gameObjects = entityManager.getEntities();
+    //gameObjects = entityManager.getEntities();
 
     // TODO: load configs and create components
 
@@ -73,7 +74,7 @@ class GameLevel implements Level {
 
   @Override
   public List<GameObject> generateObjects() {
-    return null;
+    return gameObjects;
   }
 
   @Override
