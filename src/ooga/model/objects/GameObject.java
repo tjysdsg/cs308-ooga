@@ -6,7 +6,7 @@ import ooga.model.Vector;
 import ooga.model.components.Component;
 import ooga.model.observables.ObservableObject;
 
-public class GameObject implements ObservableObject {
+public class GameObject implements ObservableObject, Comparable<GameObject> {
 
   private List<Component> components;
   private final int id;
@@ -21,7 +21,7 @@ public class GameObject implements ObservableObject {
     this.components = new ArrayList<>();
   }
 
-  boolean isA(String type) {
+  public boolean isA(String type) {
     return false;
   }
 
@@ -100,5 +100,11 @@ public class GameObject implements ObservableObject {
 
   public void setVelocityY(double velocityY) {
     this.velocity.setY(velocityY);
+  }
+
+  @Override
+  public int compareTo(GameObject o) {
+    double diff = this.getX() - o.getX();
+    return (int) Math.signum(diff);
   }
 }
