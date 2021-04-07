@@ -59,6 +59,13 @@ class GameLevel implements Level {
   }
 
   @Override
+  public void update(double deltaTime) {
+    for (System s : systems) {
+      s.update(deltaTime);
+    }
+  }
+
+  @Override
   public List<GameObject> generateObjects() {
     return null;
   }

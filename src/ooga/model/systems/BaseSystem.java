@@ -34,7 +34,6 @@ public abstract class BaseSystem<T extends Component> implements System {
   public abstract void init();
 
   @Override
-  public void update() {
-
+  public void update(double deltaTime) {
   }
 }
