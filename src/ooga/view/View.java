@@ -45,7 +45,7 @@ public class View {
     GSelectionScene gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);
     createAnimations();
     setScene(splashScreen);
-
+    gameSelection.setOnGameSelected(e -> logger.info("Game Selected {}", e));
     exitApplication =
         () -> {
           fadeOutTransition.setNode(currentScene.getRoot());
