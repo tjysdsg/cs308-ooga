@@ -23,6 +23,7 @@ public class SplashScreen extends Scene {
   public SplashScreen(int width, int height, ObservableResource resources) {
     super(new StackPane(), width, height, Color.BLACK);
     this.root = (StackPane) getRoot();
+    this.root.setId("splash-screen");
     VBox vbox = new VBox();
 
     Label title = new Label("Ting & Friends");
@@ -30,16 +31,19 @@ public class SplashScreen extends Scene {
     vbox.getStyleClass().add("splashscreen");
 
     JFXButton resume = new JFXButton();
+    resume.setId("load-game-splash");
     resume.textProperty().bind(resources.getStringBinding("LoadGame"));
     resume.getStyleClass().addAll("special", "primary", "load_library");
     resume.setGraphic(new FontIcon());
 
     JFXButton settings = new JFXButton();
+    settings.setId("settings-splash");
     settings.textProperty().bind(resources.getStringBinding("Settings"));
     settings.getStyleClass().addAll("primary", "settings_button");
     settings.setGraphic(new FontIcon());
 
     exitGame = new JFXButton();
+    exitGame.setId("exit-splash");
     exitGame.textProperty().bind(resources.getStringBinding("Exit"));
     exitGame.getStyleClass().addAll("secondary", "exit");
     exitGame.setGraphic(new FontIcon());

@@ -35,6 +35,7 @@ class GSelectionView extends VBox {
   private Consumer<String> playRequestedCallback;
 
   public GSelectionView(ObservableResource resources) {
+    setId("selection-view");
     this.thumbnail = new ImageView();
     this.gameTitleLabel = new Label();
     this.resources = resources;
