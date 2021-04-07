@@ -30,7 +30,7 @@ public class GSelectionScene extends Scene {
     this.gameView = new GSelectionView(resources);
     gamesList.setOnSelection(gameView::setDirectory);
     VBox gameSelectionCon = new VBox();
-    root.setId("#selection-scene");
+    root.setId("selection-scene");
     Label gameSelectionTitle = new Label();
     gameSelectionTitle.textProperty().bind(resources.getStringBinding("GameSelection"));
     gameSelectionTitle.getStyleClass().add("title-heading");
