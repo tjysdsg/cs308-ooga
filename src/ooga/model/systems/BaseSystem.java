@@ -14,6 +14,7 @@ public abstract class BaseSystem implements System {
 
   public BaseSystem() {
     keymaps = new HashMap<>();
+    actionMaps = new HashMap<>();
   }
 
   protected void addMapping(String code, Consumer<Boolean> callback) {
