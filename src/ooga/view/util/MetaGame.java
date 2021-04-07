@@ -22,6 +22,18 @@ public class MetaGame {
   private static final JsonAdapter<MetaGame> adapter = new Moshi.Builder().build()
       .adapter(MetaGame.class);
 
+  public String getDateCreated() {
+    return dateCreated;
+  }
+
+  public List<String> getLevels() {
+    return levels;
+  }
+
+  public List<String> getTags() {
+    return tags;
+  }
+
   // Do not remove! Moshi needs this :).
   public MetaGame() {
   }
@@ -34,6 +46,10 @@ public class MetaGame {
         .add("Levels", levels)
         .add("Tags", tags)
         .toString();
+  }
+
+  public String getAuthor() {
+    return this.author;
   }
 
   public static MetaGame createMetaDataFromDirectory(File directory) {

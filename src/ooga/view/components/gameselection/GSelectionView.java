@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import ooga.view.util.LabelPair;
 import ooga.view.util.MetaGame;
 import ooga.view.util.ObservableResource;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +16,11 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 class GSelectionView extends VBox {
   private static final Logger logger = LogManager.getLogger(GSelectionView.class);
+  private final LabelPair gameDateLabel;
+  private final LabelPair gameAuthorLabel;
+  private final LabelPair gameLevelsLabel;
+  private final LabelPair gameTagsLabel;
+
   private String directory = "/home/joshu/Pictures/";
   private ImageView thumbnail;
   private static double IMAGE_DIM = 200;
@@ -27,7 +33,10 @@ class GSelectionView extends VBox {
     this.thumbnail = new ImageView();
     this.gameTitleLabel = new Label();
     this.resources = resources;
-
+    this.gameAuthorLabel = new LabelPair(resources.getStringBinding("GameAuthor"));
+    this.gameDateLabel = new LabelPair(resources.getStringBinding("DateCreated"));
+    this.gameTagsLabel = new LabelPair(resources.getStringBinding("GameTags"));
+    this.gameLevelsLabel = new LabelPair(resources.getStringBinding("GameLevels"));
     thumbnail.getStyleClass().addAll("game-selection-thumbnail");
     getStyleClass().addAll("game-selection-view");
 
@@ -39,12 +48,16 @@ class GSelectionView extends VBox {
 
     gameTitleLabel.getStyleClass().add("game-selection-title");
 
-    getChildren().addAll(gameTitleLabel, thumbnail, playGame);
+    getChildren().addAll(gameTitleLabel, thumbnail, playGame, gameAuthorLabel, gameDateLabel, gameTagsLabel, gameLevelsLabel);
   }
 
   private void readMetaData(File directory) {
     // TODO: Set Meta data of game on view
     this.metadata = MetaGame.createMetaDataFromDirectory(directory);
+    gameAuthorLabel.setValue(metadata.getAuthor());
+    gameDateLabel.setValue(metadata.getDateCreated());
+    gameLevelsLabel.setValue(metadata.getLevels().toString());
+    gameTagsLabel.setValue(metadata.getTags().toString());
   }
 
   public void setDirectory(String directory) {

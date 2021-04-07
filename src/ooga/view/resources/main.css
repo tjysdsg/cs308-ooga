@@ -8,6 +8,7 @@
   -fx-font-family: "DejaVu Sans Light";
 }
 
+
 .primary {
   -fx-background-color: -primary-color;
   -fx-text-fill: #ffffffff;
@@ -23,6 +24,12 @@ JFXDialog {
   -fx-background-color: #29262b;
 }
 
+Label {
+  -fx-text-fill: #ffffff;
+  -fx-font-size: 20;
+  -fx-padding: 10;
+}
+
 JFXTextField {
   -fx-text-fill: #FFFFFF;
   -jfx-focus-color: -secondary-color;
@@ -35,6 +42,10 @@ JFXButton {
   -jfx-button-type: RAISED;
   -fx-text-fill: #ffffffff;
   -fx-padding: 12;
+}
+
+.value-label {
+  -fx-max-width: 180;
 }
 
 .game-selection-view {
