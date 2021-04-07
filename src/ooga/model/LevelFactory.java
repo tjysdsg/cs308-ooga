@@ -21,60 +21,60 @@ import ooga.model.objects.ObjectFactory;
 public class LevelFactory {
 
   String presetTest = """
-           [
+       [
+          {
+            "name": "goomba",
+            "height": 50,
+            "width": 50,
+            "imageID": "marioimage",
+            "components" : [
               {
-                "name": "goomba",
-                "height": 50,
-                "width": 50,
-                "imageID": "marioimage",
-                "components" : [
-                  {
-                    "type" : "PlayerComponent"
-                  }
-                ]
-              },
-              {
-                "name": "advance_level2",
-                "height": 50,
-                "width": 50,
-                "imageID": "marioimage"
+                "type" : "PlayerComponent"
               }
-           ]
-          """;
+            ]
+          },
+          {
+            "name": "advance_level2",
+            "height": 50,
+            "width": 50,
+            "imageID": "marioimage"
+          }
+       ]
+      """;
 
   String levelTest = """
-{
-  "name" : "Sunny Level",
-  "id" :  "sunny_day",
-  "background" : "sunny_day",
-  "height" : 50,
-  "width" : 500,
-  "gameObjects" : [
-    {
-      "type" : "goomba",
-      "x" : 234,
-      "y" : 50
-    },
-    {
-      "type" : "goomba",
-      "x" : 200,
-      "y" : 50
-    }
-  ]
-}
-""";
+      {
+        "name" : "Sunny Level",
+        "id" :  "sunny_day",
+        "background" : "sunny_day",
+        "height" : 50,
+        "width" : 500,
+        "gameObjects" : [
+          {
+            "type" : "goomba",
+            "x" : 234,
+            "y" : 50
+          },
+          {
+            "type" : "goomba",
+            "x" : 200,
+            "y" : 50
+          }
+        ]
+      }
+      """;
 
   //String RESOURCES = "/Users/Student/Desktop/OOGA/data/";
 
-//  Map<String, GameObject> presetMap = new HashMap<>();
+  //  Map<String, GameObject> presetMap = new HashMap<>();
   ObjectFactory objectFactory;
 
   public LevelFactory(File objectsDir) throws IOException {
     // Load the presets for the levels
     Moshi moshi = new Moshi.Builder().add(
-            PolymorphicJsonAdapterFactory
-                    .of(Component.class, "type")
-                    .withSubtype(PlayerComponent.class, "PlayerComponent")).build();
+        PolymorphicJsonAdapterFactory
+            .of(Component.class, "type")
+            .withSubtype(PlayerComponent.class, "PlayerComponent")).build();
 
     Type type = Types.newParameterizedType(List.class, GameObject.class);
     JsonAdapter<List<GameObject>> adapter = moshi.adapter(type);
@@ -99,11 +99,9 @@ public class LevelFactory {
     JsonAdapter<GameLevel> levelAdapter = moshi.adapter(GameLevel.class);
 
     GameLevel newLevel = levelAdapter.fromJson(levelTest);
-    //newLevel.init();
+    newLevel.init(); // MUST CALL level.init()
 
     return newLevel;
-    // TODO: FIXME: OLIVER: REMEMBER TO CALL level.init()
-    //level.init();
   }
 
   public static void main(String[] args) throws IOException {

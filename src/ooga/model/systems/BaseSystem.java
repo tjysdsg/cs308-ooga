@@ -27,8 +27,8 @@ public abstract class BaseSystem<T extends Component> implements System {
     keymaps.put(code, callback);
   }
 
-  public void registerAllInputs(InputSystem inputSystem) {
-    keymaps.forEach(inputSystem::registerInput);
+  public void registerAllInputs(InputManager inputManager) {
+    keymaps.forEach(inputManager::registerInput);
   }
 
   public abstract void init();

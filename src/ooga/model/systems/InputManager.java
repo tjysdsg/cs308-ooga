@@ -3,7 +3,7 @@ package ooga.model.systems;
 import com.google.common.collect.Multimap;
 import java.util.function.Consumer;
 
-public class InputSystem {
+public class InputManager {
 
   private Multimap<String, Consumer<Boolean>> functionMaps;
 
