@@ -11,6 +11,10 @@ public class GameObjectBasedSystem extends BaseSystem {
     gameObjects = entityManager.getEntities();
   }
 
+  protected List<GameObject> getTrackedGameObjects() {
+    return gameObjects;
+  }
+
   @Override
   public void update(double deltaTime) {
   }

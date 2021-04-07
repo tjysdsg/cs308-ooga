@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ooga.model.objects.GameObject;
+import ooga.model.systems.BaseSystem;
 import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentManager;
 import ooga.model.systems.EntityManager;
 import ooga.model.systems.InputManager;
+import ooga.model.systems.TransformSystem;
 
 // TODO: implement methods
 class GameLevel implements Level {
@@ -17,7 +19,7 @@ class GameLevel implements Level {
   int levelID;
   List<GameObject> gameObjects;
 
-  private transient List<ComponentBasedSystem> systems;
+  private transient List<BaseSystem> systems;
   private transient EntityManager entityManager;
   private transient ComponentManager componentManager;
   private transient InputManager inputManager;
@@ -31,14 +33,14 @@ class GameLevel implements Level {
     componentManager = new ComponentManager();
     inputManager = new InputManager();
 
-    systems = new ArrayList<>();
-
     // TODO: create game objects here
     gameObjects = entityManager.getEntities();
 
     // TODO: load configs and create components
 
-    // TODO: add systems here systems.add();
+    // TODO: create systems here and add them to systems
+    systems = new ArrayList<>();
+    systems.add(new TransformSystem(entityManager));
 
     for (var s : systems) {
       s.registerAllInputs(inputManager);
