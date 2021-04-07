@@ -70,6 +70,7 @@ public class GameList extends FlowPane {
     getChildren().add(0, newGame);
     newGame.setOnAction(this::notifySelection);
     presentDirectories.add(directory);
+    notifySelection(directory);
     logger.debug("Adding Game: {}", directory);
   }
 

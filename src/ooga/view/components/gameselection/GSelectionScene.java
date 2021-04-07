@@ -31,7 +31,8 @@ public class GSelectionScene extends Scene {
     gamesList.setOnSelection(gameView::setDirectory);
     VBox gameSelectionCon = new VBox();
 
-    Label gameSelectionTitle = new Label("Game Selection Is Dope");
+    Label gameSelectionTitle = new Label();
+    gameSelectionTitle.textProperty().bind(resources.getStringBinding("GameSelection"));
     gameSelectionTitle.getStyleClass().add("title-heading");
 
     ScrollPane gameListScroll = new ScrollPane();
@@ -46,7 +47,7 @@ public class GSelectionScene extends Scene {
     gameSelectionCon.getChildren().addAll(gameSelectionTitle, gameBrowser);
 
     this.root.getChildren().add(gameSelectionCon);
-    gamesList.createItem("/home/joshu/schoolStuff/308/ooga_team08/data/Jumping Baloons/");
+    //gamesList.createItem("/home/joshu/schoolStuff/308/ooga_team08/data/Jumping Baloons/");
     // createItem("/home/joshu/schoolStuff/308/ooga_team08/data/Ultimate Game");
   }
 
