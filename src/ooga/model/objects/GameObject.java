@@ -2,6 +2,7 @@ package ooga.model.objects;
 
 import java.util.ArrayList;
 import java.util.List;
+import ooga.model.Vector;
 import ooga.model.components.Component;
 import ooga.model.observables.ObservableObject;
 
@@ -11,6 +12,7 @@ public class GameObject implements ObservableObject {
   private final int id;
   private final String name;
   private double x, y;
+  private Vector velocity;
   private double height, width;
 
   public GameObject(int id, String name) {
@@ -23,9 +25,9 @@ public class GameObject implements ObservableObject {
     return false;
   }
 
+  // FIXME: since we use systems to update data, do we need this?
   @Override
   public void setOnUpdate(Runnable callback) {
-
   }
 
   public void setX(double x) {
@@ -82,5 +84,21 @@ public class GameObject implements ObservableObject {
 
   public void addComponent(Component component) {
     this.components.add(component);
+  }
+
+  public Vector getVelocity() {
+    return velocity;
+  }
+
+  public void setVelocity(Vector velocity) {
+    this.velocity = velocity;
+  }
+
+  public void setVelocityX(double velocityX) {
+    this.velocity.setX(velocityX);
+  }
+
+  public void setVelocityY(double velocityY) {
+    this.velocity.setY(velocityY);
   }
 }

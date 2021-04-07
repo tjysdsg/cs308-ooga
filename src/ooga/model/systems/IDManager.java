@@ -1,27 +1,27 @@
 package ooga.model.systems;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
-// TODO: implement methods
 public class IDManager {
 
-  private List<Integer> ids;
+  // a unique ID generator based on https://stackoverflow.com/a/5563932/7730917
+
+  private AtomicInteger counter = new AtomicInteger();
 
   public IDManager() {
-    ids = new ArrayList<>();
   }
 
   /**
    * Return a new unique ID
    */
   public int getNewId() {
-    return 0;
+    return counter.getAndIncrement();
   }
 
   /**
    * Remove an ID
    */
-  public void removeId() {
+  public void removeId(int id) {
+    // TODO: implement this
   }
 }

@@ -3,7 +3,7 @@ package ooga.model.systems;
 import java.util.function.Consumer;
 import ooga.model.components.PlayerComponent;
 
-public class PlayerSystem extends BaseSystem {
+public class PlayerSystem extends ComponentBasedSystem {
 
   public PlayerSystem(ComponentManager componentManager) {
     super(componentManager, PlayerComponent.class);

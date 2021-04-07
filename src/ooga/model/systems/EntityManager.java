@@ -1,5 +1,9 @@
 package ooga.model.systems;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import ooga.model.objects.GameObject;
 
 /**
@@ -8,12 +12,21 @@ import ooga.model.objects.GameObject;
 public class EntityManager {
 
   private IDManager idManager;
+  private Map<Integer, GameObject> entities;
 
   public EntityManager() {
     idManager = new IDManager();
+    entities = new HashMap<>();
+  }
+
+  public List<GameObject> getEntities() {
+    return new ArrayList<GameObject>(entities.values());
   }
 
   public GameObject createEntity(String name) {
-    return new GameObject(idManager.getNewId(), name);
+    int id = idManager.getNewId();
+    GameObject ret = new GameObject(id, name);
+    entities.put(id, ret);
+    return ret;
   }
 }
