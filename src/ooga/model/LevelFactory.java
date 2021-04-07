@@ -7,6 +7,8 @@ import com.squareup.moshi.Types;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,57 +22,15 @@ import ooga.model.objects.ObjectFactory;
 
 public class LevelFactory {
 
-  String presetTest = """
-           [
-              {
-                "name": "goomba",
-                "height": 50,
-                "width": 50,
-                "imageID": "marioimage",
-                "components" : [
-                  {
-                    "type" : "PlayerComponent"
-                  }
-                ]
-              },
-              {
-                "name": "advance_level2",
-                "height": 50,
-                "width": 50,
-                "imageID": "marioimage"
-              }
-           ]
-          """;
-
-  String levelTest = """
-{
-  "name" : "Sunny Level",
-  "id" :  "sunny_day",
-  "background" : "sunny_day",
-  "height" : 50,
-  "width" : 500,
-  "gameObjects" : [
-    {
-      "type" : "goomba",
-      "x" : 234,
-      "y" : 50
-    },
-    {
-      "type" : "goomba",
-      "x" : 200,
-      "y" : 50
-    }
-  ]
-}
-""";
-
-  //String RESOURCES = "/Users/Student/Desktop/OOGA/data/";
-
-//  Map<String, GameObject> presetMap = new HashMap<>();
   ObjectFactory objectFactory;
 
   public LevelFactory(File objectsDir) throws IOException {
-    // Load the presets for the levels
+    if (!objectsDir.isDirectory()) {
+      throw new RuntimeException("Objects Path must be a Directory");
+    }
+
+    Map<String, GameObject> presetMap = new HashMap<>();
+
     Moshi moshi = new Moshi.Builder().add(
             PolymorphicJsonAdapterFactory
                     .of(Component.class, "type")
@@ -79,35 +39,40 @@ public class LevelFactory {
     Type type = Types.newParameterizedType(List.class, GameObject.class);
     JsonAdapter<List<GameObject>> adapter = moshi.adapter(type);
 
-    //File file = new File(RESOURCES + ObjectsFile);
-    List<GameObject> objectPresets = adapter.fromJson(presetTest);
+    File[] objectFiles = objectsDir.listFiles((dir, name) -> name.contains(".json"));
 
-    Map<String, GameObject> presetMap = new HashMap<>();
-    for (GameObject object : objectPresets) {
-      presetMap.put(object.getType(), object);
+    for (File objectFile : objectFiles) {
+      addObjects(objectFile, adapter, presetMap);
     }
 
     objectFactory = new ObjectFactory(presetMap);
   }
 
-  Level buildLevel(String levelFile) throws IOException {
-    // Use the object Factory to create the game objects
-//    JSObject
+  private void addObjects(File objectsFile, JsonAdapter<List<GameObject>> adapter, Map<String, GameObject> presetMap) throws IOException {
+    String objectsText = fileToString(objectsFile);
 
+    List<GameObject> objectPresets = adapter.fromJson(objectsText);
+
+    for (GameObject object : objectPresets) {
+      presetMap.put(object.getType(), object);
+    }
+  }
+
+  private String fileToString(File toConvert) throws IOException {
+    Path filePath = toConvert.toPath();
+    String fileText = Files.readString(filePath);
+    return fileText;
+  }
+
+  Level buildLevel(File levelFile) throws IOException {
     GameObjectAdapter adapter = new GameObjectAdapter(objectFactory);
     Moshi moshi = new Moshi.Builder().add(adapter).build();
     JsonAdapter<GameLevel> levelAdapter = moshi.adapter(GameLevel.class);
 
-    GameLevel newLevel = levelAdapter.fromJson(levelTest);
-    //newLevel.init();
+    String levelText = fileToString(levelFile);
 
+    GameLevel newLevel = levelAdapter.fromJson(levelText);
+    newLevel.init();
     return newLevel;
-    // TODO: FIXME: OLIVER: REMEMBER TO CALL level.init()
-    //level.init();
-  }
-
-  public static void main(String[] args) throws IOException {
-    LevelFactory fact = new LevelFactory(new File("thing"));
-    fact.buildLevel(null);
   }
 }
