@@ -7,12 +7,16 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class LevelFactoryTest {
 
     LevelFactory factory;
     String exampleDir = "example/";
     String objectDirectory = exampleDir + "objects";
-    String basicLevel = exampleDir + "levels/level1.json";
+
+    String basicLevelFile = exampleDir + "levels/level1.json";
+    int basicLevelObjectsCount = 2;
 
     @BeforeEach
     void setup() throws IOException, URISyntaxException {
@@ -21,7 +25,9 @@ public class LevelFactoryTest {
 
     @Test
     void buildBasicLevelTest() throws URISyntaxException, IOException {
-        factory.buildLevel(getFile(basicLevel));
+        Level basicLevel = factory.buildLevel(getFile(basicLevelFile));
+
+        assertEquals(basicLevelObjectsCount, basicLevel.generateObjects().size());
     }
 
 

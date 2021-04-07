@@ -54,7 +54,7 @@ public class LevelFactory {
     List<GameObject> objectPresets = adapter.fromJson(objectsText);
 
     for (GameObject object : objectPresets) {
-      presetMap.put(object.getType(), object);
+      presetMap.put(object.getName(), object);
     }
   }
 
