@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ooga.model.objects.GameObject;
-import ooga.model.systems.BaseSystem;
+import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentManager;
 import ooga.model.systems.EntityManager;
 import ooga.model.systems.InputManager;
@@ -17,7 +17,7 @@ class GameLevel implements Level {
   int levelID;
   List<GameObject> gameObjects;
 
-  private transient List<BaseSystem> systems;
+  private transient List<ComponentBasedSystem> systems;
   private transient EntityManager entityManager;
   private transient ComponentManager componentManager;
   private transient InputManager inputManager;
