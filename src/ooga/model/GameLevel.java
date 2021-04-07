@@ -32,9 +32,13 @@ class GameLevel implements Level {
     inputManager = new InputManager();
 
     systems = new ArrayList<>();
-    // TODO: add systems here systems.add();
+
+    // TODO: create game objects here
+    gameObjects = entityManager.getEntities();
 
     // TODO: load configs and create components
+
+    // TODO: add systems here systems.add();
 
     for (var s : systems) {
       s.registerAllInputs(inputManager);
