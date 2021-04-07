@@ -35,7 +35,7 @@ public class GameList extends FlowPane {
     addGame.setGraphic(new FontIcon());
     addGame.getStyleClass().addAll("add-game", "primary");
     initSelection(addGame);
-
+    addGame.setId("add-game-button");
     Label addGameLabel = new Label();
     addGameLabel.textProperty().bind(resources.getStringBinding("AddGame"));
     addGameLabel.getStyleClass().addAll("game-item-label");

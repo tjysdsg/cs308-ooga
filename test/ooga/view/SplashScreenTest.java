@@ -26,6 +26,7 @@ class TestViewManaging {
     private View view;
     private Stage stage;
     private static final Predicate<Node> verifyFade = node -> node.getOpacity() < 1;
+    private static final Predicate<Node> isPresent = Node::isVisible;
 
     @Start
     private void start(Stage stage) {
@@ -44,9 +45,16 @@ class TestViewManaging {
         FxAssert.verifyThat("#settings-splash", LabeledMatchers.hasText("Settings"));
     }
 
-    /**
-     * @param robot - Will be injected by the test runner.
-     */
+    @Test
+    void gameSelectAppears(FxRobot robot) {
+        robot.clickOn("#load-game-splash");
+        WaitForAsyncUtils.sleep(300, TimeUnit.MILLISECONDS);
+        FxAssert.verifyThat("#splash-screen", verifyFade);
+        WaitForAsyncUtils.sleep(1, TimeUnit.SECONDS);
+        FxAssert.verifyThat("#selection-scene", isPresent);
+        FxAssert.verifyThat("#add-game-button", isPresent);
+    }
+
     @Test
     void exitApplicationWorks(FxRobot robot) {
         robot.clickOn("#exit-splash");
