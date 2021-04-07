@@ -3,6 +3,7 @@ package ooga.model.objects;
 import java.util.ArrayList;
 import java.util.List;
 import ooga.model.Vector;
+import ooga.model.actions.ActionInfo;
 import ooga.model.components.Component;
 import ooga.model.observables.ObservableObject;
 
@@ -14,13 +15,16 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   private double x, y;
   private Vector velocity;
   private double height, width;
+  List<ActionInfo> onCollide;
 
   public GameObject(int id, String name) {
     this.id = id;
     this.name = name;
     this.components = new ArrayList<>();
   }
-
+  public List<ActionInfo> getActions() {
+    return this.onCollide;
+  }
   public boolean isA(String type) {
     return false;
   }
