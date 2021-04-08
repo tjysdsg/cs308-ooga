@@ -17,7 +17,8 @@ class GameLevel implements Level {
 
   private String name;
   int levelID;
-  @Json(name = "objects") List<GameObject> gameObjects;
+  @Json(name = "objects")
+  List<GameObject> gameObjects;
 
   private transient List<BaseSystem> systems;
   private transient EntityManager entityManager;
@@ -30,18 +31,18 @@ class GameLevel implements Level {
   }
 
   public void init() {
+    // NOTE: Before calling this method, make sure the followings:
+    // - game objects are all created
+    // - components are all created
+
     entityManager = new EntityManager();
     componentManager = new ComponentManager();
     inputManager = new InputManager();
     actionManager = new ActionManager();
-    // TODO: create game objects here
-    //gameObjects = entityManager.getEntities();
 
-    // TODO: load configs and create components
-
-    // TODO: create systems here and add them to systems
     systems = new ArrayList<>();
     systems.add(new TransformSystem(entityManager));
+    // TODO: create other systems and add them to the list
 
     for (var s : systems) {
       s.registerAllInputs(inputManager);
@@ -58,13 +59,13 @@ class GameLevel implements Level {
 
   @Override
   public String getName() {
-    return null;
+    return name;
   }
 
   //TODO: Probably won't need this. And can remove
   @Override
   public int getID() {
-    return 0;
+    return levelID;
   }
 
   @Override
