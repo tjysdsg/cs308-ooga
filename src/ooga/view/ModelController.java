@@ -23,4 +23,6 @@ public interface ModelController {
    * @param actions - The action that will result from the pressed key
    */
   void setStrokeMapping(String code, String action);
+  List<String> getLevels();
+  void step();
 }
