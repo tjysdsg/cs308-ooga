@@ -193,6 +193,31 @@ ScrollPane {
   -fx-padding: 20 20 0 20;
 }
 
+
+JFXDialogLayout {
+  -fx-background-color: -primary-color;
+  -fx-max-height: Infinity;
+  -fx-max-width: Infinity;
+}
+
+JFXDialog {
+}
+
+JFXDialogLayout Label {
+  -fx-text-fill: white;
+  -fx-font-size: 20;
+}
+
+.medium-font {
+  -fx-font-size: 15;
+}
+
+.error .ikonli-font-icon {
+  -fx-icon-code: "mdi2c-close-box-outline";
+  -fx-icon-size: 30;
+  -fx-icon-color: -secondary-color;
+}
+
 .load_library .ikonli-font-icon  {
   -fx-icon-code: "mdi2f-folder";
 }
