@@ -3,10 +3,9 @@ package ooga.model.systems;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
-import ooga.model.System;
 import ooga.model.util.CollisionAction;
 
-public abstract class BaseSystem implements System {
+public abstract class BaseSystem {
 
   private Map<String, Consumer<Boolean>> keymaps;
 

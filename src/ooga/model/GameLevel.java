@@ -69,7 +69,7 @@ class GameLevel implements Level {
 
   @Override
   public void update(double deltaTime) {
-    for (System s : systems) {
+    for (BaseSystem s : systems) {
       s.update(deltaTime);
     }
   }
