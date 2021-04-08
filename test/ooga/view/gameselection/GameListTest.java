@@ -1,9 +1,7 @@
 package ooga.view.gameselection;
 
-import static ooga.view.TestUtils.isPresent;
 
 import java.io.File;
-import org.apache.logging.log4j.core.util.Assert;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +12,6 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import ooga.view.components.gameselection.GameList;
 import ooga.view.util.ObservableResource;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxAssert;
@@ -63,7 +60,6 @@ public class GameListTest {
   }
 
   @Test
-  @Disabled("Some reason not thread safe")
   void addCorrectGameDirectory(FxRobot robot) {
     File file = new File("data/Jumping Baloons");
     WaitForAsyncUtils.asyncFx(() -> gameList.createItem(file.getAbsolutePath() + "/"));

@@ -9,6 +9,7 @@ import org.testfx.api.FxAssert;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
+import org.testfx.matcher.base.NodeMatchers;
 
 @ExtendWith(ApplicationExtension.class)
 class TestGameSelectionScene {
@@ -21,15 +22,8 @@ class TestGameSelectionScene {
   }
 
   @Test
-  void splashScreenButtonsVisible(FxRobot robot) {
-    FxAssert.verifyThat("#load-game-splash", isPresent);
-  }
-
-  @Test
-  void gameSelectAppears(FxRobot robot) {
-  }
-
-  @Test
-  void exitApplicationWorks(FxRobot robot) {
+  void neededComponentsVisible(FxRobot robot) {
+    FxAssert.verifyThat("#add-game-button", NodeMatchers.isVisible());
+    FxAssert.verifyThat("#add-game-button", NodeMatchers.isVisible());
   }
 }
