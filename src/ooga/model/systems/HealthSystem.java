@@ -7,7 +7,7 @@ import ooga.model.objects.GameObject;
 /**
  * Managing the Health System and the destroy detection.
  */
-public class HealthSystem extends GameObjectBasedSystem {
+public class HealthSystem extends EntitySystem {
   protected List<GameObject> gameObjects;
   protected EntityManager entityManager;
 
