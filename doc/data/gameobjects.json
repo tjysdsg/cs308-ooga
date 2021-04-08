@@ -47,8 +47,9 @@
       "type" : "mario",
       "onCollide": [
         {
-          "with" : "goomba",
-          "action" : "jump",
+          "with" : "enemy",
+          "action" : "jump_self",
+          "position": "top"
         }, {
           "with" : "spiky goomba",
           "action" : "dies"

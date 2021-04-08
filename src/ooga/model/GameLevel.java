@@ -5,8 +5,8 @@ import java.util.List;
 
 import com.squareup.moshi.Json;
 import ooga.model.objects.GameObject;
+import ooga.model.systems.ActionManager;
 import ooga.model.systems.BaseSystem;
-import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentManager;
 import ooga.model.systems.EntityManager;
 import ooga.model.systems.InputManager;
@@ -15,7 +15,6 @@ import ooga.model.systems.TransformSystem;
 // TODO: implement methods
 class GameLevel implements Level {
 
-  transient Configuration gameConfiguration;
   private String name;
   int levelID;
   @Json(name = "objects") List<GameObject> gameObjects;
@@ -24,6 +23,7 @@ class GameLevel implements Level {
   private transient EntityManager entityManager;
   private transient ComponentManager componentManager;
   private transient InputManager inputManager;
+  private transient ActionManager actionManager;
 
   // MUST BE HERE!!! MOSHI USES THIS
   public GameLevel() {
@@ -33,7 +33,7 @@ class GameLevel implements Level {
     entityManager = new EntityManager();
     componentManager = new ComponentManager();
     inputManager = new InputManager();
-
+    actionManager = new ActionManager();
     // TODO: create game objects here
     //gameObjects = entityManager.getEntities();
 
@@ -45,8 +45,10 @@ class GameLevel implements Level {
 
     for (var s : systems) {
       s.registerAllInputs(inputManager);
+      s.registerAllActions(actionManager);
     }
 
+    // TODO: Move to Moshi adapter
     componentManager.registerExistingComponents(gameObjects);
   }
 
