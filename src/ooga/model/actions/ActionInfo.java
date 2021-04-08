@@ -4,12 +4,12 @@ import java.util.Objects;
 
 public class ActionInfo {
 
-  private String with = "Enemy";
-  private String position = "Left";
-  private String action = "jump_self";
-  private String payload = "50";
+  private String with;
+  private String position;
+  private String action;
+  private Payload payload;
 
-  public ActionInfo(String with, String position, String action, String payload) {
+  public ActionInfo(String with, String position, String action, Payload payload) {
     this.with = with;
     this.position = position;
     this.action = action;
@@ -31,7 +31,7 @@ public class ActionInfo {
     return this.action;
   }
 
-  public String getPayload() {
+  public Payload getPayload() {
     return payload;
   }
 }

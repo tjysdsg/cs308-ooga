@@ -3,7 +3,7 @@ package ooga.model.systems;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
-import ooga.model.util.CollisionAction;
+import ooga.model.actions.CollisionAction;
 
 public abstract class BaseSystem {
 
