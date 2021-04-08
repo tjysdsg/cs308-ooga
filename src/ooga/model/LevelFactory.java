@@ -65,9 +65,14 @@ public class LevelFactory {
     }
   }
 
-  private String fileToString(File toConvert) throws IOException {
+  private String fileToString(File toConvert) throws FileNotFoundException {
     Path filePath = toConvert.toPath();
-    return Files.readString(filePath);
+
+    try {
+      return Files.readString(filePath);
+    } catch (IOException e) {
+      throw new FileNotFoundException(toConvert.getName());
+    }
   }
 
   Level buildLevel(File levelFile) throws FileNotFoundException, InvalidDataFileException {
