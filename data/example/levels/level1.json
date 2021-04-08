@@ -1,3 +1,4 @@
+
 {
   "name" : "Sunny Level",
   "id" :  "sunny_day",
@@ -7,13 +8,13 @@
   "objects" : [
     {
       "name" : "goomba",
-      "x" : 234,
-      "y" : 50
+      "x" : 334,
+      "y" : 25
     },
     {
       "name" : "goomba",
-      "x" : 200,
-      "y" : 50
+      "x" : 150,
+      "y" : 45
     }
   ]
 }
