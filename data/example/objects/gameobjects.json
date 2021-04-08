@@ -1,0 +1,22 @@
+
+
+[
+  {
+    "name": "goomba",
+    "height": 50,
+    "width": 30,
+    "imageID": "goombaimage",
+    "components" : [
+      {
+        "type" : "PlayerComponent"
+      }
+    ]
+  },
+  {
+    "name": "mario",
+    "height": 50,
+    "width": 50,
+    "imageID": "marioimage"
+  }
+]
+
