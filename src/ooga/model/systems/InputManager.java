@@ -5,14 +5,14 @@ import java.util.function.Consumer;
 
 public class InputManager {
 
-  private Multimap<String, Consumer<Boolean>> functionMaps;
+  private Multimap<String, Consumer<Boolean>> inputHandlerMap;
 
-  public void registerInput(String code, Consumer<Boolean> runnable) {
-    // TODO:
+  public void registerInput(String code, Consumer<Boolean> callback) {
+    inputHandlerMap.put(code, callback);
   }
 
   public void handleCode(String code, boolean on) {
-    functionMaps.get(code).forEach(e -> e.accept(on));
+    inputHandlerMap.get(code).forEach(e -> e.accept(on));
   }
 
 }
