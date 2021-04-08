@@ -29,4 +29,11 @@ public class EntityManager {
     entities.put(id, ret);
     return ret;
   }
+  public GameObject getEntity(int ID){
+    return entities.get(ID);
+  }
+  public void deleteGameObject(int ID){
+    entities.remove(ID);
+  }
+
 }
