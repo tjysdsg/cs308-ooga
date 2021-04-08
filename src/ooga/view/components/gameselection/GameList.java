@@ -1,6 +1,7 @@
 package ooga.view.components.gameselection;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,24 +11,30 @@ import javafx.beans.binding.StringBinding;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
+import ooga.model.ModelFactory;
+import ooga.view.components.DialogFactory;
 import ooga.view.util.ObservableResource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class GameList extends FlowPane {
-
+  private StackPane dialogPane;
   private Set<String> presentDirectories;
   private static final Logger logger = LogManager.getLogger(GameList.class);
   private Consumer<String> selectionCallback;
+  private ObservableResource resources;
   private Preferences prefs;
   private StringBinding directoryTitle;
 
-  public GameList(ObservableResource resources) {
+  public GameList(ObservableResource resources, StackPane dialogPane) {
     presentDirectories = new HashSet<>();
     getStyleClass().add("game-selection");
+    this.dialogPane = dialogPane;
+    this.resources = resources;
     this.directoryTitle = resources.getStringBinding("SelectGameDirectory");
     this.prefs = Preferences.userNodeForPackage(GameList.class);
     VBox addGameItem = new VBox();
@@ -62,8 +69,17 @@ public class GameList extends FlowPane {
   }
 
   public void createItem(String directory) {
-    //TODO: Add check for directories without games.
+    // TODO: Add check for directories without games.
     if (presentDirectories.contains(directory)) {
+      return;
+    }
+    File gameDir = new File(directory);
+    boolean correctDir = ModelFactory.verifyGameDirectory(gameDir);
+    if (!correctDir) {
+      JFXDialog dialog = DialogFactory.createErrorDialog("Error Loading Directory", resources);
+      // TODO: Move to setOnError Callback
+      dialog.show(dialogPane);
+      logger.info("Invalid directory specified {}", directory);
       return;
     }
     GameItem newGame = new GameItem(directory);
@@ -75,7 +91,7 @@ public class GameList extends FlowPane {
   }
 
   private void notifySelection(String path) {
-    if(selectionCallback != null) {
+    if (selectionCallback != null) {
       selectionCallback.accept(path);
     } else {
       logger.warn("Callback not set on GameList selection notification");
