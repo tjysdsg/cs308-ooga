@@ -1,14 +1,29 @@
 package ooga.model.components;
 
-import com.google.common.collect.Multimap;
-import ooga.model.GameObject;
+import ooga.model.objects.GameObject;
 
-//P LAYER WHAKADING COMPONETN
-public abstract class Component {
-  private Multimap<String, Runnable> functionMaps;
-  private GameObject obj;
+public class Component {
 
-  public Component(GameObject obj) {
-    this.obj = obj;
+  private transient GameObject owner;
+  private int id;
+
+  public Component(int id, GameObject owner) {
+    this.owner = owner;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public GameObject getOwner() {
+    return owner;
+  }
+
+  public void setOwner(GameObject owner) {
+    this.owner = owner;
   }
 }

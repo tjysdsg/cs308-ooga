@@ -1,6 +1,5 @@
 package ooga;
 
-import fr.brouillard.oss.cssfx.CSSFX;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import ooga.view.View;
@@ -17,7 +16,6 @@ public class Main extends Application {
 
   @Override
   public void start(Stage stage) {
-    CSSFX.start();
     View view = new View(stage);
   }
 }

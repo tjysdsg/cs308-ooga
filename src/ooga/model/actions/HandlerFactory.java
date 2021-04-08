@@ -1,6 +1,6 @@
 package ooga.model.actions;
 
-import ooga.model.GameObject;
+import ooga.model.objects.GameObject;
 import ooga.model.Model;
 
 public interface HandlerFactory {

@@ -1,0 +1,13 @@
+[
+  {
+    "name": "goomba",
+    "height": 50,
+    "width": 50,
+    "imageID": "marioimage",
+    "components" : [
+      {
+        "type" : "PlayerComponent"
+      }
+    ]
+  }
+]
