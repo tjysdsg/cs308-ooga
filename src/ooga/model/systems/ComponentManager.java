@@ -35,6 +35,9 @@ public class ComponentManager {
     addComponentToMap(component);
   }
 
+  /**
+   * @apiNote This doesn't remove the component from its parent's component list
+   */
   public <T> void removeComponent(Class<T> componentType, int id) {
     Map<Integer, Component> idCompMap = existingComponents.get(componentType);
     if (idCompMap != null) {

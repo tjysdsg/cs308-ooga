@@ -2,6 +2,7 @@ package ooga.model.systems;
 
 import java.util.List;
 import ooga.model.components.Component;
+import ooga.model.objects.GameObject;
 
 // TODO: implement methods
 public class ComponentMapper<T extends Component> {
@@ -24,6 +25,16 @@ public class ComponentMapper<T extends Component> {
    * @param entityId ID of the entity that possess the component
    */
   public T get(int entityId) {
+    GameObject entity = entityManager.getEntity(entityId);
+    if (entity == null) {
+      return null;
+    }
+
+    for (Component component : entity.getComponents()) {
+      if (component.getClass() == componentClass) {
+        return (T) component;
+      }
+    }
     return null;
   }
 
@@ -34,7 +45,7 @@ public class ComponentMapper<T extends Component> {
    * @return the instance of the component
    */
   public T create(int entityId) {
-    return null;
+    return componentManager.createComponent(entityManager.getEntity(entityId), componentClass);
   }
 
   /**
@@ -43,6 +54,12 @@ public class ComponentMapper<T extends Component> {
    * @param entityId ID of the entity that possess the component
    */
   public void remove(int entityId) {
+    GameObject entity = entityManager.getEntity(entityId);
+    T comp = get(entityId);
+    if (comp != null) {
+      componentManager.removeComponent(componentClass, comp.getId());
+      entity.removeComponent(comp.getId());
+    }
   }
 
   public List<T> getComponents() {

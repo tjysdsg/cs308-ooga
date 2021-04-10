@@ -96,6 +96,10 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
     this.components.add(component);
   }
 
+  public void removeComponent(int id) {
+    components.removeIf(comp -> comp.getId() == id);
+  }
+
   public Vector getVelocity() {
     return velocity;
   }
