@@ -37,6 +37,9 @@ public class EntityManager {
     return entities.get(ID);
   }
 
+  /**
+   * Delete entity from EntityManager, and remove the components it has from ComponentManager
+   */
   public void deleteGameObject(int ID) {
     // FIXME: how to invalidate the references to the removed GameObject and Components?
     GameObject entity = entities.get(ID);
