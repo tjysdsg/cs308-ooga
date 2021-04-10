@@ -49,6 +49,18 @@ public class ComponentManagerTest {
   }
 
   @Test
+  void testRemoveComponent() {
+    componentManager.createComponent(go, PlayerComponent.class);
+    componentManager.createComponent(go, PlayerComponent.class);
+    componentManager.createComponent(go, PlayerComponent.class);
+    Component comp = componentManager.createComponent(go, PlayerComponent.class);
+
+    componentManager.removeComponent(PlayerComponent.class, comp.getId());
+    var comps = componentManager.getComponents(PlayerComponent.class);
+    assertEquals(3, comps.size());
+  }
+
+  @Test
   void testComponentRegistering() {
     Component comp1 = new PlayerComponent(9999, null);
     Component comp2 = new PlayerComponent(9999, null);

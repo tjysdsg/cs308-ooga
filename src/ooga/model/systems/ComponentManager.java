@@ -35,6 +35,15 @@ public class ComponentManager {
     addComponentToMap(component);
   }
 
+  public <T> void removeComponent(Class<T> componentType, int id) {
+    Map<Integer, Component> idCompMap = existingComponents.get(componentType);
+    if (idCompMap != null) {
+      idCompMap.remove(id);
+    } else {
+      // TODO: log warning
+    }
+  }
+
   private void addComponentToMap(Component component) {
     int id = component.getId();
     Map<Integer, Component> idCompMap = existingComponents.get(component.getClass());
