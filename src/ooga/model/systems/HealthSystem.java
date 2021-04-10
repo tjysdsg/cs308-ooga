@@ -1,19 +1,18 @@
 package ooga.model.systems;
 
 import java.util.List;
+import ooga.model.components.HealthComponent;
 import ooga.model.objects.GameObject;
 
-/** 
- *
- * Managing the Health System and the destroy detection. 
- * */
-public class HealthSystem extends EntitySystem {
-  protected List<GameObject> gameObjects;
-  protected EntityManager entityManager;
+/**
+ * Managing the Health System and the destroy detection.
+ */
+public class HealthSystem extends ComponentBasedSystem<HealthComponent> {
 
-  public HealthSystem(EntityManager entityManager) {
-    super(entityManager);
-    this.entityManager = entityManager;
+  public HealthSystem(
+      ComponentManager componentManager, Class<HealthComponent> componentType
+  ) {
+    super(componentManager, componentType);
   }
 
   // TODO: How to access the Game Object Health
