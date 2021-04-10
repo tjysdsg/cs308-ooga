@@ -10,6 +10,7 @@ import ooga.model.systems.BaseSystem;
 import ooga.model.systems.ComponentManager;
 import ooga.model.systems.EntityManager;
 import ooga.model.systems.InputManager;
+import ooga.model.systems.PlayerSystem;
 import ooga.model.systems.TransformSystem;
 
 // TODO: implement methods
@@ -42,6 +43,7 @@ class GameLevel implements Level {
 
     systems = new ArrayList<>();
     systems.add(new TransformSystem(entityManager));
+    systems.add(new PlayerSystem(entityManager, componentManager));
     // TODO: create other systems and add them to the list
 
     for (var s : systems) {

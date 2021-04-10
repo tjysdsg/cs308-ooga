@@ -1,12 +1,14 @@
 package ooga.model.systems;
 
+import ooga.model.annotations.Track;
 import ooga.model.components.PlayerComponent;
 import ooga.model.objects.GameObject;
 
-public class PlayerSystem extends ComponentBasedSystem<PlayerComponent> {
+@Track(PlayerComponent.class)
+public class PlayerSystem extends ComponentBasedSystem {
 
-  public PlayerSystem(ComponentManager componentManager) {
-    super(componentManager, PlayerComponent.class);
+  public PlayerSystem(EntityManager entityManager, ComponentManager componentManager) {
+    super(entityManager, componentManager);
   }
 
   public void init() {
@@ -16,7 +18,6 @@ public class PlayerSystem extends ComponentBasedSystem<PlayerComponent> {
   }
 
   public void handleJump(GameObject obj) {
-
   }
 
   void handleRight(boolean on) {
@@ -24,5 +25,9 @@ public class PlayerSystem extends ComponentBasedSystem<PlayerComponent> {
 
 
   void handleJump(boolean on) {
+  }
+
+  @Override
+  public void update(double deltaTime) {
   }
 }

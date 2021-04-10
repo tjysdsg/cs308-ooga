@@ -23,9 +23,11 @@ class TestComponent extends Component {
 public class ComponentManagerTest {
 
   ComponentManager componentManager;
+  EntityManager entityManager;
   GameObject go;
 
   ComponentManagerTest() {
+    entityManager = new EntityManager();
     componentManager = new ComponentManager();
   }
 
@@ -42,9 +44,9 @@ public class ComponentManagerTest {
 
   @Test
   void testSystemGetComponent() {
-    PlayerSystem playerSystem = new PlayerSystem(componentManager);
+    PlayerSystem playerSystem = new PlayerSystem(entityManager, componentManager);
     componentManager.createComponent(go, PlayerComponent.class);
-    var comps = playerSystem.getComponents();
+    var comps = playerSystem.getComponentMapper(PlayerComponent.class).getComponents();
     assertEquals(1, comps.size());
   }
 
