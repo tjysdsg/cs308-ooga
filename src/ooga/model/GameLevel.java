@@ -19,6 +19,10 @@ class GameLevel implements Level {
 
   private String name;
   int levelID;
+
+  // TODO: use EntityManager and ComponentManager to create entities and components in Moshi
+  //  adapter, then remove GameLevel.gameObjects, so entities can be properly deleted (now the
+  //  deleted entities are still in GameLevel.gameObjects
   @Json(name = "objects")
   List<GameObject> gameObjects;
 
@@ -53,7 +57,8 @@ class GameLevel implements Level {
       s.registerAllActions(actionManager);
     }
 
-    // TODO: Move to Moshi adapter
+    // TODO: use EntityManager and ComponentManager to create entities and components in Moshi
+    //  adapter, and remove this:
     componentManager.registerExistingComponents(gameObjects);
   }
 
