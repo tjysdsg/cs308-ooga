@@ -5,6 +5,7 @@ import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
@@ -16,6 +17,7 @@ import java.util.Map;
 import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory;
 import ooga.model.components.Component;
 import ooga.model.components.PlayerComponent;
+import ooga.model.exceptions.InvalidDataFileException;
 import ooga.model.objects.GameObject;
 import ooga.model.objects.GameObjectAdapter;
 import ooga.model.objects.ObjectFactory;
@@ -63,15 +65,32 @@ public class LevelFactory {
     }
   }
 
-  private String fileToString(File toConvert) throws IOException {
+  private String fileToString(File toConvert) throws FileNotFoundException {
     Path filePath = toConvert.toPath();
-    return Files.readString(filePath);
+
+    try {
+      return Files.readString(filePath);
+    } catch (IOException e) {
+      throw new FileNotFoundException(toConvert.getName());
+    }
   }
 
-  Level buildLevel(File levelFile) throws IOException {
-    String levelText = fileToString(levelFile);
+  Level buildLevel(File levelFile) throws FileNotFoundException, InvalidDataFileException {
 
-    GameLevel newLevel = levelAdapter.fromJson(levelText);
+    String levelText;
+    try {
+      levelText = fileToString(levelFile);
+    } catch (IOException e) {
+      throw new FileNotFoundException(levelFile.getName());
+    }
+
+    GameLevel newLevel;
+    try {
+      newLevel = levelAdapter.fromJson(levelText);
+    } catch (IOException e) {
+      throw new InvalidDataFileException(levelFile.getName());
+    }
+
     newLevel.init();
     return newLevel;
   }
