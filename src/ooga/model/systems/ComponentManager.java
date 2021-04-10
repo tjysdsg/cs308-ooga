@@ -1,12 +1,10 @@
 package ooga.model.systems;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.MultimapBuilder;
-import com.google.common.collect.Multimaps;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import ooga.model.components.Component;
 import ooga.model.objects.GameObject;
 
@@ -16,21 +14,37 @@ import ooga.model.objects.GameObject;
 public class ComponentManager {
 
   private IDManager idManager;
-  private Multimap<Class, Component> existingComponents;
+  private Map<Class, Map<Integer, Component>> existingComponents;
 
   public ComponentManager() {
     idManager = new IDManager();
-    existingComponents = MultimapBuilder.hashKeys().arrayListValues().build();
+    existingComponents = new HashMap<>();
   }
 
   public <T> List<T> getComponents(Class<T> componentClass) {
-    return (List<T>) existingComponents.get(componentClass);
+    Map<Integer, Component> components = existingComponents.get(componentClass);
+    if (components == null) {
+      return new ArrayList<T>();
+    }
+    return (List<T>) new ArrayList<>(components.values());
   }
 
   public void registerExistingComponent(GameObject owner, Component component) {
     component.setOwner(owner);
     component.setId(idManager.getNewId());
-    existingComponents.put(component.getClass(), component);
+    addComponentToMap(component);
+  }
+
+  private void addComponentToMap(Component component) {
+    int id = component.getId();
+    Map<Integer, Component> idCompMap = existingComponents.get(component.getClass());
+    if (idCompMap != null) {
+      idCompMap.put(id, component);
+    } else {
+      idCompMap = new HashMap<>();
+      idCompMap.put(id, component);
+      existingComponents.put(component.getClass(), idCompMap);
+    }
   }
 
   public void registerExistingComponents(List<GameObject> gameObjects) {
@@ -50,7 +64,7 @@ public class ComponentManager {
       var constructor = componentClass.getConstructor(int.class, GameObject.class);
       ret = constructor.newInstance(idManager.getNewId(), owner);
       owner.addComponent(ret);
-      existingComponents.put(componentClass, ret);
+      addComponentToMap(ret);
     } catch (NoSuchMethodException e) {
       System.out.println(
           "Cannot find a valid constructor in component class: " + componentClass.getName()
