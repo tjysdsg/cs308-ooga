@@ -36,6 +36,54 @@ and `ComponentBasedSystem`.
 
 # Details
 
+## How to add a new component-based system
+
+Create a class which extends `ComponentBasedSystem`, then annotate it with `@Track()` to specify
+which Component type(s) the system wants to use. Also, implement `update()`.
+
+```java
+import ooga.model.components.HealthComponent;
+import ooga.model.systems.ComponentBasedSystem;
+
+@Track({HealthComponent.class, PlayerComponent.class})
+// @Track(HealthComponent.class)
+class XXXSystem extends ComponentBasedSystem {
+
+  @Override
+  public void update(double deltaTime) {
+    destroyDetection();
+  }
+}
+```
+
+To get all the components of a specific type (using `HealthComponent` as an example), you can use
+a `ComponentMapper<T>`. This class is quite useful, and will be the main gateway for systems and
+components to communicate. It can be obtained using `ComponentBasedSystem.getComponentMapper()` with
+a specified component type:
+
+```java
+import ooga.model.components.HealthComponent;
+import ooga.model.components.PlayerComponent;
+
+@Track({HealthComponent.class, PlayerComponent.class})
+// @Track(HealthComponent.class)
+class XXXSystem extends ComponentBasedSystem {
+
+  ComponentMapper<HealthComponent> healthCompMapper;
+  ComponentMapper<PlayerComponent> playerCompMapper;
+
+  public XXXSystem() {
+    healthCompMapper = getComponentMapper(HealthComponent.class);
+    playerCompMapper = getComponentMapper(PlayerComponent.class);
+    List<HealthComponent> comps = healthCompMapper.getComponents();
+    PlayerComponent comp1 = playerCompMapper.get(entityID);
+  }
+}
+```
+
+Also, you can create and remove a component type in a game object,
+see `systems/ComponentMapper.java`
+
 ## Entity/Component Manager
 
 ## Input handling
