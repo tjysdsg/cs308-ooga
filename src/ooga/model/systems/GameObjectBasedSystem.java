@@ -3,7 +3,7 @@ package ooga.model.systems;
 import java.util.List;
 import ooga.model.objects.GameObject;
 
-public class GameObjectBasedSystem extends BaseSystem {
+public abstract class GameObjectBasedSystem extends BaseSystem {
 
   private List<GameObject> gameObjects;
 
@@ -13,9 +13,5 @@ public class GameObjectBasedSystem extends BaseSystem {
 
   protected List<GameObject> getTrackedGameObjects() {
     return gameObjects;
-  }
-
-  @Override
-  public void update(double deltaTime) {
   }
 }

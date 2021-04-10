@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import ooga.model.components.Component;
 import ooga.model.objects.GameObject;
 
 /**
@@ -13,10 +14,12 @@ public class EntityManager {
 
   private IDManager idManager;
   private Map<Integer, GameObject> entities;
+  private ComponentManager componentManager;
 
-  public EntityManager() {
+  public EntityManager(ComponentManager componentManager) {
     idManager = new IDManager();
     entities = new HashMap<>();
+    this.componentManager = componentManager;
   }
 
   public List<GameObject> getEntities() {
@@ -29,10 +32,20 @@ public class EntityManager {
     entities.put(id, ret);
     return ret;
   }
-  public GameObject getEntity(int ID){
+
+  public GameObject getEntity(int ID) {
     return entities.get(ID);
   }
-  public void deleteGameObject(int ID){
+
+  public void deleteGameObject(int ID) {
+    // FIXME: how to invalidate the references to the removed GameObject and Components?
+    GameObject entity = entities.get(ID);
+
+    // remove all of its components
+    for (Component component : entity.getComponents()) {
+      componentManager.removeComponent(component.getClass(), component.getId());
+    }
+
     entities.remove(ID);
   }
 

@@ -9,6 +9,7 @@ import ooga.model.systems.ActionManager;
 import ooga.model.systems.BaseSystem;
 import ooga.model.systems.ComponentManager;
 import ooga.model.systems.EntityManager;
+import ooga.model.systems.HealthSystem;
 import ooga.model.systems.InputManager;
 import ooga.model.systems.PlayerSystem;
 import ooga.model.systems.TransformSystem;
@@ -36,13 +37,14 @@ class GameLevel implements Level {
     // - game objects are all created
     // - components are all created
 
-    entityManager = new EntityManager();
     componentManager = new ComponentManager();
+    entityManager = new EntityManager(componentManager);
     inputManager = new InputManager();
     actionManager = new ActionManager();
 
     systems = new ArrayList<>();
     systems.add(new TransformSystem(entityManager));
+    systems.add(new HealthSystem(entityManager, componentManager));
     systems.add(new PlayerSystem(entityManager, componentManager));
     // TODO: create other systems and add them to the list
 

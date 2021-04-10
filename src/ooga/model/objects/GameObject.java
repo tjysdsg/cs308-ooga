@@ -22,9 +22,11 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
     this.name = name;
     this.components = new ArrayList<>();
   }
+
   public List<ActionInfo> getActions() {
     return this.onCollide;
   }
+
   public boolean isA(String type) {
     return false;
   }
@@ -32,6 +34,10 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   // FIXME: since we use systems to update data, do we need this?
   @Override
   public void setOnUpdate(Runnable callback) {
+  }
+
+  public int getId() {
+    return id;
   }
 
   public void setX(double x) {
