@@ -1,7 +1,5 @@
 package ooga.model.systems;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import ooga.model.objects.GameObject;
 import ooga.model.components.Component;
@@ -27,8 +25,8 @@ public class ComponentManagerTest {
   GameObject go;
 
   ComponentManagerTest() {
-    entityManager = new EntityManager();
     componentManager = new ComponentManager();
+    entityManager = new EntityManager(componentManager);
   }
 
   @BeforeEach

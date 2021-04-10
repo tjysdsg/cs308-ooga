@@ -11,9 +11,11 @@ import org.junit.jupiter.api.Test;
 public class TransformSystemTest {
 
   EntityManager entityManager;
+  ComponentManager componentManager;
 
   TransformSystemTest() {
-    entityManager = new EntityManager();
+    componentManager = new ComponentManager();
+    entityManager = new EntityManager(componentManager);
   }
 
   @BeforeEach
