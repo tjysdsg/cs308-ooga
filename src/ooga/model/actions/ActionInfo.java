@@ -7,9 +7,9 @@ public class ActionInfo {
   private String with;
   private String position;
   private String action;
-  private Payload payload;
+  private String payload;
 
-  public ActionInfo(String with, String position, String action, Payload payload) {
+  public ActionInfo(String with, String position, String action, String payload) {
     this.with = with;
     this.position = position;
     this.action = action;
@@ -31,7 +31,7 @@ public class ActionInfo {
     return this.action;
   }
 
-  public Payload getPayload() {
+  public String getPayload() {
     return payload;
   }
 }

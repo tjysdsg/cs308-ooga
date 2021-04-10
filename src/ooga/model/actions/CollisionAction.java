@@ -6,9 +6,9 @@ public class CollisionAction {
 
   private GameObject self;
   private GameObject hitter;
-  private Payload payload;
+  private String payload;
 
-  public CollisionAction(GameObject self, GameObject hitter, Payload payload) {
+  public CollisionAction(GameObject self, GameObject hitter, String payload) {
     this.self = self;
     this.hitter = hitter;
     this.payload = payload;
@@ -22,7 +22,7 @@ public class CollisionAction {
     return hitter;
   }
 
-  public Payload getPayload() {
+  public String getPayload() {
     return payload;
   }
 }
