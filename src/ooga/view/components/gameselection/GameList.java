@@ -22,6 +22,7 @@ import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class GameList extends FlowPane {
+  private final String GAME_DIRS_KEY = "game_dirs";
   private StackPane dialogPane;
   private Set<String> presentDirectories;
   private static final Logger logger = LogManager.getLogger(GameList.class);
@@ -54,6 +55,17 @@ public class GameList extends FlowPane {
 
   private void initSelection(Button addGame) {
     DirectoryChooser dirChooser = new DirectoryChooser();
+
+    String gameDirs = prefs.get(GAME_DIRS_KEY, "");
+    logger.debug("Loaded Prev_Games as {}", gameDirs);
+
+    if (!gameDirs.isBlank()) {
+      for (String game : gameDirs.split(":")) {
+        logger.debug("Adding game {}", game);
+        createItem(game);
+      }
+    }
+
     addGame.setOnAction(
         e -> {
           String dirPreset = prefs.get("last_selection_dir", System.getProperty("user.home"));
@@ -87,7 +99,19 @@ public class GameList extends FlowPane {
     newGame.setOnAction(this::notifySelection);
     presentDirectories.add(directory);
     notifySelection(directory);
-    logger.debug("Adding Game: {}", directory);
+
+    String gameDirs = prefs.get(GAME_DIRS_KEY, "");
+    if (gameDirs.isBlank()) {
+      gameDirs = directory;
+    } else {
+      if (!gameDirs.contains(directory)) {
+        gameDirs += ":" + directory;
+      }
+    }
+    prefs.put(GAME_DIRS_KEY, gameDirs);
+    logger.debug("Updated Prev_Games to {}", gameDirs);
+
+    logger.info("Adding Game: {}", directory);
   }
 
   private void notifySelection(String path) {
