@@ -54,6 +54,17 @@ public class GameList extends FlowPane {
 
   private void initSelection(Button addGame) {
     DirectoryChooser dirChooser = new DirectoryChooser();
+
+    String game_dirs = prefs.get("game_dirs", "");
+    logger.info("Loaded Prev_Games as {}", game_dirs);
+
+    if (!game_dirs.isBlank()) {
+      for (String game : game_dirs.split(":")) {
+        logger.info("Adding game {}", game);
+        createItem(game);
+      }
+    }
+
     addGame.setOnAction(
         e -> {
           String dirPreset = prefs.get("last_selection_dir", System.getProperty("user.home"));
@@ -87,7 +98,19 @@ public class GameList extends FlowPane {
     newGame.setOnAction(this::notifySelection);
     presentDirectories.add(directory);
     notifySelection(directory);
-    logger.debug("Adding Game: {}", directory);
+
+    String game_dirs = prefs.get("prev_games", "");
+    if (game_dirs.isBlank()) {
+      game_dirs = directory;
+    } else {
+      if (!game_dirs.contains(directory)) {
+        game_dirs += ":" + directory;
+      }
+    }
+    prefs.put("game_dirs", game_dirs);
+    logger.info("Updated Prev_Games to {}", game_dirs);
+
+    logger.info("Adding Game: {}", directory);
   }
 
   private void notifySelection(String path) {
