@@ -1,6 +1,7 @@
 package ooga.view;
 
 import fr.brouillard.oss.cssfx.CSSFX;
+import ooga.view.components.game.GameScene;
 import java.awt.event.FocusAdapter;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,7 +46,7 @@ public class View {
     GSelectionScene gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);
     createAnimations();
     setScene(splashScreen);
-    gameSelection.setOnGameSelected(e -> logger.info("Game Selected {}", e));
+    gameSelection.setOnGameSelected(this::startGame);
     exitApplication =
         () -> {
           fadeOutTransition.setNode(currentScene.getRoot());
@@ -70,6 +71,14 @@ public class View {
 
     logger.info("Displaying Splash Screen");
     stage.show();
+  }
+
+  private void startGame(String directory) {
+    logger.info("Game Selected {}", directory);
+    //TODO: Have a check if a game is currently playing and ask
+    // if want to quit
+    GameScene newGame = new GameScene(directory, resources);
+    setScene(newGame);
   }
 
   private void createAnimations() {
