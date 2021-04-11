@@ -14,6 +14,7 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   private final String name;
   private double x, y;
   private Vector velocity;
+  private boolean collideable = true;
   private double height, width;
   List<ActionInfo> onCollide;
 
@@ -32,6 +33,10 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   // FIXME: since we use systems to update data, do we need this?
   @Override
   public void setOnUpdate(Runnable callback) {
+  }
+
+  public boolean isCollideable() {
+    return collideable;
   }
 
   public void setX(double x) {
