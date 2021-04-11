@@ -38,6 +38,8 @@ and `ComponentBasedSystem`.
 
 ## How to add a new component-based system
 
+TODO: adding a new component type
+
 Create a class which extends `ComponentBasedSystem`, then annotate it with `@Track()` to specify
 which Component type(s) the system wants to use. Also, implement `update()`.
 

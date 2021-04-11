@@ -5,13 +5,13 @@ import ooga.model.objects.GameObject;
 
 public abstract class GameObjectBasedSystem extends BaseSystem {
 
-  private List<GameObject> gameObjects;
+  EntityManager entityManager;
 
   public GameObjectBasedSystem(EntityManager entityManager) {
-    gameObjects = entityManager.getEntities();
+    this.entityManager = entityManager;
   }
 
   protected List<GameObject> getTrackedGameObjects() {
-    return gameObjects;
+    return entityManager.getEntities();
   }
 }
