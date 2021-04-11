@@ -22,6 +22,7 @@ import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class GameList extends FlowPane {
+  private final String GAME_DIRS_KEY = "game_dirs";
   private StackPane dialogPane;
   private Set<String> presentDirectories;
   private static final Logger logger = LogManager.getLogger(GameList.class);
@@ -55,7 +56,7 @@ public class GameList extends FlowPane {
   private void initSelection(Button addGame) {
     DirectoryChooser dirChooser = new DirectoryChooser();
 
-    String game_dirs = prefs.get("game_dirs", "");
+    String game_dirs = prefs.get(GAME_DIRS_KEY, "");
     logger.info("Loaded Prev_Games as {}", game_dirs);
 
     if (!game_dirs.isBlank()) {
@@ -99,7 +100,7 @@ public class GameList extends FlowPane {
     presentDirectories.add(directory);
     notifySelection(directory);
 
-    String game_dirs = prefs.get("prev_games", "");
+    String game_dirs = prefs.get(GAME_DIRS_KEY, "");
     if (game_dirs.isBlank()) {
       game_dirs = directory;
     } else {
@@ -107,7 +108,7 @@ public class GameList extends FlowPane {
         game_dirs += ":" + directory;
       }
     }
-    prefs.put("game_dirs", game_dirs);
+    prefs.put(GAME_DIRS_KEY, game_dirs);
     logger.info("Updated Prev_Games to {}", game_dirs);
 
     logger.info("Adding Game: {}", directory);
