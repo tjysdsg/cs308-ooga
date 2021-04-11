@@ -34,6 +34,7 @@ public class View {
   private FadeTransition fadeOutTransition;
   private FadeTransition fadeInTransition;
   private Stage stage;
+  private String cssFile;
 
   public View(Stage stage) {
     CSSFX.start();
@@ -62,7 +63,7 @@ public class View {
 
     final URL cssFileURL = getClass().getResource(RESOURCES + "main.css");
     if (cssFileURL != null) {
-      final String cssFile = cssFileURL.toExternalForm();
+      this.cssFile = cssFileURL.toExternalForm();
       gameSelection.getStylesheets().add(cssFile);
       splashScreen.getStylesheets().add(cssFile);
     } else {
@@ -78,6 +79,9 @@ public class View {
     //TODO: Have a check if a game is currently playing and ask
     // if want to quit
     GameScene newGame = new GameScene(directory, resources);
+    if (!cssFile.isBlank()) {
+      newGame.getStylesheets().add(cssFile);
+    }
     setScene(newGame);
   }
 
