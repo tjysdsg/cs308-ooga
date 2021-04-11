@@ -23,7 +23,7 @@ public class HealthSystem extends ComponentBasedSystem {
    * @param delta    Health to add, can be negative
    */
   public void changeHealth(int entityId, double delta) {
-    componentMapper.get(entityId).increment(delta);
+    componentMapper.get(entityId).healthIncrement(delta);
   }
 
   protected void destroyObject(int entityId) {
