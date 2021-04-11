@@ -56,11 +56,11 @@ public class GameList extends FlowPane {
   private void initSelection(Button addGame) {
     DirectoryChooser dirChooser = new DirectoryChooser();
 
-    String game_dirs = prefs.get(GAME_DIRS_KEY, "");
-    logger.info("Loaded Prev_Games as {}", game_dirs);
+    String gameDirs = prefs.get(GAME_DIRS_KEY, "");
+    logger.info("Loaded Prev_Games as {}", gameDirs);
 
-    if (!game_dirs.isBlank()) {
-      for (String game : game_dirs.split(":")) {
+    if (!gameDirs.isBlank()) {
+      for (String game : gameDirs.split(":")) {
         logger.info("Adding game {}", game);
         createItem(game);
       }
@@ -100,16 +100,16 @@ public class GameList extends FlowPane {
     presentDirectories.add(directory);
     notifySelection(directory);
 
-    String game_dirs = prefs.get(GAME_DIRS_KEY, "");
-    if (game_dirs.isBlank()) {
-      game_dirs = directory;
+    String gameDirs = prefs.get(GAME_DIRS_KEY, "");
+    if (gameDirs.isBlank()) {
+      gameDirs = directory;
     } else {
-      if (!game_dirs.contains(directory)) {
-        game_dirs += ":" + directory;
+      if (!gameDirs.contains(directory)) {
+        gameDirs += ":" + directory;
       }
     }
-    prefs.put(GAME_DIRS_KEY, game_dirs);
-    logger.info("Updated Prev_Games to {}", game_dirs);
+    prefs.put(GAME_DIRS_KEY, gameDirs);
+    logger.info("Updated Prev_Games to {}", gameDirs);
 
     logger.info("Adding Game: {}", directory);
   }
