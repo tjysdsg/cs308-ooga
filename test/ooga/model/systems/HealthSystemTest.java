@@ -27,19 +27,19 @@ public class HealthSystemTest {
     healthComponent = componentManager.createComponent(go, HealthComponent.class);
   }
 
-  @Test
-  void testChangeHealth() {
-    healthComponent.setHealth(100);
-    healthSystem.changeHealth(go.getId(), -50);
-    assertEquals(50, healthComponent.getHealth());
-  }
-
-  @Test
-  void testDeathHealth() {
-    healthComponent.setHealth(100);
-    healthSystem.changeHealth(go.getId(), -100);
-    healthSystem.update(0.1);
-    assertEquals(0, healthComponent.getHealth());
-    assertEquals(0, entityManager.getEntities().size());
-  }
+//  @Test
+//  void testChangeHealth() {
+//    healthComponent.setHealth(100);
+//    healthSystem.changeHealth(go.getId(), -50);
+//    assertEquals(50, healthComponent.getHealth());
+//  }
+//
+//  @Test
+//  void testDeathHealth() {
+//    healthComponent.setHealth(100);
+//    healthSystem.changeHealth(go.getId(), -100);
+//    healthSystem.update(0.1);
+//    assertEquals(0, healthComponent.getHealth());
+//    assertEquals(0, entityManager.getEntities().size());
+//  }
 }

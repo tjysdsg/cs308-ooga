@@ -10,7 +10,6 @@ public class ArmorSystem extends ComponentBasedSystem{
 
     @Override
     public void update(double deltaTime) {
-
     }
 
 }

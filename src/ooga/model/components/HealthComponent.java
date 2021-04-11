@@ -10,8 +10,16 @@ public class HealthComponent extends Component {
     super(id, owner);
   }
 
-  public void healthIncrement(double delta) {
-    health += delta;
+  public void healthIncrement(double delta, boolean increase) {
+      if(increase){
+          if(delta>=0){
+              health+=delta;
+          }
+          return;
+      }
+      if(delta<0){
+          health+=delta;
+      }
   }
 
   public double getHealth() {
