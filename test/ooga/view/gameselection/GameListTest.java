@@ -7,6 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
+
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -26,6 +29,7 @@ public class GameListTest {
 
   private Stage stage;
   private GameList gameList;
+  private Preferences prefs;
 
   @Start
   private void start(Stage stage) {
@@ -33,6 +37,9 @@ public class GameListTest {
     StackPane rootPane = new StackPane();
     Scene scene = new Scene(rootPane);
     stage.setScene(scene);
+
+    prefs = Preferences.userNodeForPackage(GameList.class);
+
     ObservableResource resources = new ObservableResource();
     ResourceBundle resBundle = ResourceBundle.getBundle("ooga.view.resources.languages.English");
     resources.setResources(resBundle);
@@ -69,5 +76,30 @@ public class GameListTest {
 
   @Test
   void exitApplicationWorks(FxRobot robot) {
+  }
+
+  @Test
+  void testGameCaching(FxRobot robot) {
+    clearPreferences();
+    addCorrectGameDirectory(robot);
+    exitApplicationWorks(robot);
+
+    File file = new File("data/Jumping Baloons");
+    assertEquals(prefs.get("game_dirs", ""), file.getAbsolutePath() + "/");
+
+    start(stage);
+    FxAssert.verifyThat("Jumping Baloons", NodeMatchers.isVisible());
+  }
+
+  void loadPreviousGames() {
+
+  }
+
+  void clearPreferences() {
+    try {
+      prefs.clear();
+    } catch (BackingStoreException e) {
+      e.printStackTrace();
+    }
   }
 }
