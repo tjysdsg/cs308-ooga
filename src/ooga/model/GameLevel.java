@@ -7,8 +7,7 @@ import com.squareup.moshi.Json;
 import ooga.model.objects.GameObject;
 import ooga.model.systems.ActionManager;
 import ooga.model.systems.BaseSystem;
-import ooga.model.systems.ComponentManager;
-import ooga.model.systems.EntityManager;
+import ooga.model.systems.ECManager;
 import ooga.model.systems.HealthSystem;
 import ooga.model.systems.InputManager;
 import ooga.model.systems.PlayerSystem;
@@ -27,8 +26,7 @@ class GameLevel implements Level {
   List<GameObject> gameObjects;
 
   private transient List<BaseSystem> systems;
-  private transient EntityManager entityManager;
-  private transient ComponentManager componentManager;
+  private transient ECManager ecManager;
   private transient InputManager inputManager;
   private transient ActionManager actionManager;
 
@@ -41,15 +39,14 @@ class GameLevel implements Level {
     // - game objects are all created
     // - components are all created
 
-    componentManager = new ComponentManager();
-    entityManager = new EntityManager(componentManager);
+    ecManager = new ECManager();
     inputManager = new InputManager();
     actionManager = new ActionManager();
 
     systems = new ArrayList<>();
-    systems.add(new TransformSystem(entityManager));
-    systems.add(new HealthSystem(entityManager, componentManager));
-    systems.add(new PlayerSystem(entityManager, componentManager));
+    systems.add(new TransformSystem(ecManager));
+    systems.add(new HealthSystem(ecManager));
+    systems.add(new PlayerSystem(ecManager));
     // TODO: create other systems and add them to the list
 
     for (var s : systems) {
@@ -59,7 +56,7 @@ class GameLevel implements Level {
 
     // TODO: use EntityManager and ComponentManager to create entities and components in Moshi
     //  adapter, and remove this:
-    componentManager.registerExistingComponents(gameObjects);
+    ecManager.registerExistingComponents(gameObjects);
   }
 
   public void handleCode(String k, boolean on) {
@@ -90,12 +87,7 @@ class GameLevel implements Level {
   }
 
   @Override
-  public EntityManager getEntityManager() {
-    return entityManager;
-  }
-
-  @Override
-  public ComponentManager getComponentManager() {
-    return componentManager;
+  public ECManager getECManager() {
+    return ecManager;
   }
 }

@@ -11,20 +11,18 @@ import org.junit.jupiter.api.Test;
 
 public class HealthSystemTest {
 
-  EntityManager entityManager;
-  ComponentManager componentManager;
+  ECManager ecManager;
   GameObject go;
   HealthSystem healthSystem;
   HealthComponent healthComponent;
 
   @BeforeEach
   void setup() {
-    componentManager = new ComponentManager();
-    entityManager = new EntityManager(componentManager);
-    healthSystem = new HealthSystem(entityManager, componentManager);
+    ecManager = new ECManager();
+    healthSystem = new HealthSystem(ecManager);
 
-    go = entityManager.createEntity("test entity");
-    healthComponent = componentManager.createComponent(go, HealthComponent.class);
+    go = ecManager.createEntity("test entity");
+    healthComponent = ecManager.createComponent(go, HealthComponent.class);
   }
 
   @Test
@@ -40,6 +38,6 @@ public class HealthSystemTest {
     healthSystem.changeHealth(go.getId(), -100);
     healthSystem.update(0.1);
     assertEquals(0, healthComponent.getHealth());
-    assertEquals(0, entityManager.getEntities().size());
+    assertEquals(0, ecManager.getEntities().size());
   }
 }

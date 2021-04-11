@@ -11,8 +11,8 @@ public class HealthSystem extends ComponentBasedSystem {
 
   ComponentMapper<HealthComponent> componentMapper;
 
-  public HealthSystem(EntityManager entityManager, ComponentManager componentManager) {
-    super(entityManager, componentManager);
+  public HealthSystem(ECManager ecManager) {
+    super(ecManager);
     componentMapper = getComponentMapper(HealthComponent.class);
   }
 
@@ -27,7 +27,7 @@ public class HealthSystem extends ComponentBasedSystem {
   }
 
   protected void destroyObject(int entityId) {
-    getEntityManager().deleteGameObject(entityId);
+    getECManager().deleteGameObject(entityId);
   }
 
   public void destroyDetection() {

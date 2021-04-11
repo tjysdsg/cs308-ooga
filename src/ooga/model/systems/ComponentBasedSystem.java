@@ -7,15 +7,11 @@ import ooga.model.components.Component;
 
 public abstract class ComponentBasedSystem extends BaseSystem {
 
-  private ComponentManager componentManager;
-  private EntityManager entityManager;
+  private ECManager ecManager;
   private Map<Class<? extends Component>, ComponentMapper<? extends Component>> componentMappers;
 
-  public ComponentBasedSystem(
-      EntityManager entityManager, ComponentManager componentManager
-  ) {
-    this.entityManager = entityManager;
-    this.componentManager = componentManager;
+  public ComponentBasedSystem(ECManager ecManager) {
+    this.ecManager = ecManager;
 
     /* build componentMappers,
      * so that subclasses can use getComponentMapper() to get ComponentMapper of a specific
@@ -29,7 +25,7 @@ public abstract class ComponentBasedSystem extends BaseSystem {
       trackedComponents = tracked.value();
       for (Class<? extends Component> compType : trackedComponents) {
         componentMappers.put(
-            compType, new ComponentMapper<>(entityManager, componentManager, compType)
+            compType, new ComponentMapper<>(ecManager, compType)
         );
       }
     }
@@ -47,12 +43,8 @@ public abstract class ComponentBasedSystem extends BaseSystem {
     return ret;
   }
 
-  protected EntityManager getEntityManager() {
-    return entityManager;
-  }
-
-  protected ComponentManager getComponentManager() {
-    return componentManager;
+  protected ECManager getECManager() {
+    return ecManager;
   }
 
 }

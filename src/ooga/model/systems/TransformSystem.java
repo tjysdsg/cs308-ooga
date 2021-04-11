@@ -9,8 +9,8 @@ import ooga.model.objects.GameObject;
  */
 public class TransformSystem extends GameObjectBasedSystem {
 
-  public TransformSystem(EntityManager entityManager) {
-    super(entityManager);
+  public TransformSystem(ECManager ecManager) {
+    super(ecManager);
   }
 
   @Override

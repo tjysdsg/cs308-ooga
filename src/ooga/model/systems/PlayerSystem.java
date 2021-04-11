@@ -7,8 +7,8 @@ import ooga.model.objects.GameObject;
 @Track(PlayerComponent.class)
 public class PlayerSystem extends ComponentBasedSystem {
 
-  public PlayerSystem(EntityManager entityManager, ComponentManager componentManager) {
-    super(entityManager, componentManager);
+  public PlayerSystem(ECManager ecManager) {
+    super(ecManager);
   }
 
   public void init() {
