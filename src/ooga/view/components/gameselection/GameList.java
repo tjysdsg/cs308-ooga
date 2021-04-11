@@ -57,11 +57,11 @@ public class GameList extends FlowPane {
     DirectoryChooser dirChooser = new DirectoryChooser();
 
     String gameDirs = prefs.get(GAME_DIRS_KEY, "");
-    logger.info("Loaded Prev_Games as {}", gameDirs);
+    logger.debug("Loaded Prev_Games as {}", gameDirs);
 
     if (!gameDirs.isBlank()) {
       for (String game : gameDirs.split(":")) {
-        logger.info("Adding game {}", game);
+        logger.debug("Adding game {}", game);
         createItem(game);
       }
     }
@@ -109,7 +109,7 @@ public class GameList extends FlowPane {
       }
     }
     prefs.put(GAME_DIRS_KEY, gameDirs);
-    logger.info("Updated Prev_Games to {}", gameDirs);
+    logger.debug("Updated Prev_Games to {}", gameDirs);
 
     logger.info("Adding Game: {}", directory);
   }
