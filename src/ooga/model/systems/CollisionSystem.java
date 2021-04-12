@@ -25,7 +25,7 @@ public class CollisionSystem extends GameObjectBasedSystem{
     List<GameObject> collidableObjects = new ArrayList<>();
 
     for(GameObject gameObject: objects){
-      if(gameObject.isA("collidable")){
+      if(gameObject.isCollidable()){
         collidableObjects.add(gameObject);
       }
     }

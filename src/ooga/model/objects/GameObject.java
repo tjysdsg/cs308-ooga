@@ -14,7 +14,7 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   private final String name;
   private double x, y;
   private Vector velocity;
-  private boolean collideable = true;
+  private boolean collidable = true;
   private double height, width;
   List<ActionInfo> onCollide;
 
@@ -42,7 +42,7 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   }
 
   public boolean isCollidable() {
-    return collideable;
+    return collidable;
   }
 
   public void setX(double x) {
