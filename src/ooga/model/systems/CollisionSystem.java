@@ -60,6 +60,41 @@ public class CollisionSystem extends GameObjectBasedSystem{
   }
 
   public void collide(GameObject collidingObject, GameObject collidedObject) {
+    String collidingObjectDirection = detectCollisionDirection(collidingObject, collidedObject);
+    String collidedObjectDirection = detectCollisionDirection(collidedObject, collidingObject);
+  }
+
+  private String detectCollisionDirection(GameObject collidingObject, GameObject collidedObject) {
+    double x = collidedObject.getX();
+    double y = collidedObject.getY();
+    double width = collidedObject.getWidth();
+    double height = collidedObject.getHeight();
+
+    if(((collidingObject.getX()-x) < 0) == ((collidingObject.getY() -y) < 0)){
+      return handleCornerCase(collidingObject, collidedObject);
+    }
+
+    if(collidingObject.getY() > y && collidingObject.getX() > x && collidingObject.getX() < x + width){
+      return "bottom";
+    }
+
+    if(collidedObject.getY() < y && collidingObject.getX() > x && collidingObject.getX() < x + width){
+      return "top";
+    }
+
+    if(collidingObject.getX() < x && collidingObject.getY() > y && collidingObject.getY() < y+ height){
+      return "left";
+    }
+
+    if(collidingObject.getX() > x && collidingObject.getY() > y && collidingObject.getY() < y+ height){
+      return "right";
+    }
+
+    return "";
+  }
+
+  private String handleCornerCase(GameObject collidingObject, GameObject collidedObject) {
+    return "";
   }
 
 }
