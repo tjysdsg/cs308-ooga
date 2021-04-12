@@ -1,5 +1,6 @@
 package ooga.view.components.game;
 
+import ooga.model.observables.ObservableObject;
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.Group;
@@ -25,5 +26,13 @@ public class GameArea extends AnchorPane {
   public void setCameraCenter(ObjectView center) {
     DoubleProperty prop = center.translateXProperty();
     objectsPane.translateXProperty().bind(prop.multiply(-1));
+  }
+
+  public void addObject(ObservableObject object) {
+    objectsPane.getChildren().add(new ObjectView(object));
+  }
+
+  public void removeObject(ObservableObject object) {
+    objectsPane.getChildren().remove(object);
   }
 }
