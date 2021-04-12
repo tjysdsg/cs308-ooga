@@ -17,10 +17,9 @@ class GameLevel implements Level {
 
   private String name;
   int levelID;
-  @Json(name = "objects") List<GameObject> gameObjects;
 
   private transient List<BaseSystem> systems;
-  private transient EntityManager entityManager;
+  @Json(name = "objects") private EntityManager entityManager;
   private transient ComponentManager componentManager;
   private transient InputManager inputManager;
   private transient ActionManager actionManager;
@@ -30,7 +29,7 @@ class GameLevel implements Level {
   }
 
   public void init() {
-    entityManager = new EntityManager();
+//    entityManager = new EntityManager();
     componentManager = new ComponentManager();
     inputManager = new InputManager();
     actionManager = new ActionManager();
@@ -49,7 +48,7 @@ class GameLevel implements Level {
     }
 
     // TODO: Move to Moshi adapter
-    componentManager.registerExistingComponents(gameObjects);
+//    componentManager.registerExistingComponents(gameObjects);
   }
 
   public void handleCode(String k, boolean on) {
@@ -76,7 +75,7 @@ class GameLevel implements Level {
 
   @Override
   public List<GameObject> generateObjects() {
-    return gameObjects;
+    return entityManager.getEntities();
   }
 
   @Override

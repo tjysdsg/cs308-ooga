@@ -13,8 +13,7 @@ public class GameObjectAdapter {
 
     @FromJson
     GameObject objectFromJson(ObjectInstance instance) {
-        GameObject object = objectFactory.buildObject(instance);
-        return object;
+        return objectFactory.buildObject(instance);
     }
 
     @ToJson

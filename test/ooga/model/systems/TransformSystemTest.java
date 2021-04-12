@@ -13,7 +13,7 @@ public class TransformSystemTest {
   EntityManager entityManager;
 
   TransformSystemTest() {
-    entityManager = new EntityManager();
+    entityManager = new EntityManager(null);
   }
 
   @BeforeEach

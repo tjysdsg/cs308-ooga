@@ -7,11 +7,15 @@ import com.squareup.moshi.Moshi;
 import java.io.IOException;
 import java.util.Map;
 import ooga.model.exceptions.TypeNotFoundException;
+import ooga.model.systems.IDManager;
 
 public class ObjectFactory {
 
+    private IDManager idManager = new IDManager();
     private Map<String, GameObject> presetMap;
     private final JsonAdapter<GameObject> objectAdapter;
+    private final String ID_SETTER = "(?<=\"id\":).d?";
+
     public ObjectFactory(Map<String, GameObject> presetMap) {
         this.presetMap = Preconditions.checkNotNull(presetMap, "Preset Map shouldn't be null");
         Moshi moshi = new Moshi.Builder().build();
@@ -24,7 +28,9 @@ public class ObjectFactory {
         if (toClone == null) {
             throw new TypeNotFoundException(name);
         }
+
         String serializedObject = objectAdapter.toJson(toClone);
+        serializedObject = serializedObject.replaceAll(ID_SETTER, String.valueOf(idManager.getNewId()));
 
         GameObject clone;
         try {

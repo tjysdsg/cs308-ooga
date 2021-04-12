@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import ooga.model.objects.GameObject;
+import ooga.model.objects.ObjectFactory;
+import ooga.model.objects.ObjectInstance;
 
 /**
  * System for creating, accessing, updating, and deleting entities
@@ -13,8 +15,10 @@ public class EntityManager {
 
   private IDManager idManager;
   private Map<Integer, GameObject> entities;
+  private ObjectFactory factory;
 
-  public EntityManager() {
+  public EntityManager(ObjectFactory factory) {
+    this.factory = factory;
     idManager = new IDManager();
     entities = new HashMap<>();
   }
@@ -25,7 +29,8 @@ public class EntityManager {
 
   public GameObject createEntity(String name) {
     int id = idManager.getNewId();
-    GameObject ret = new GameObject(id, name);
+   GameObject ret = new GameObject(id, name);
+
     entities.put(id, ret);
     return ret;
   }
@@ -36,4 +41,8 @@ public class EntityManager {
     entities.remove(ID);
   }
 
+  public void addEntity(ObjectInstance instance) {
+    GameObject newObject = factory.buildObject(instance);
+    entities.put(newObject.getId(), newObject);
+  }
 }

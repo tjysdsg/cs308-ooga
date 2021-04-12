@@ -111,4 +111,8 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
     double diff = this.getX() - o.getX();
     return (int) Math.signum(diff);
   }
+
+  public int getId() {
+    return id;
+  }
 }
