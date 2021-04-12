@@ -5,8 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import ooga.model.Vector;
 import ooga.model.objects.GameObject;
+import ooga.model.objects.ObjectFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
 
 public class TransformSystemTest {
 
