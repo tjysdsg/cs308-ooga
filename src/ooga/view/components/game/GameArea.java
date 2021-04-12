@@ -31,4 +31,8 @@ public class GameArea extends AnchorPane {
     AnchorPane.setBottomAnchor(objectsPane, BOTTOM_EDGE);
     AnchorPane.setLeftAnchor(objectsPane, LEFT_EDGE);
   }
+
+  public void setCameraCenter(ObjectView center) {
+
+  }
 }
