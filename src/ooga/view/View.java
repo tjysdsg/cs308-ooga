@@ -41,12 +41,20 @@ public class View {
     this.stage = stage;
     this.resources = new ObservableResource();
     resources.setResources(ResourceBundle.getBundle(DEFAULT_RESOURCES + "English"));
-    // this.modelController = model.getController();
-
     SplashScreen splashScreen = new SplashScreen(HEIGHT, WIDTH, resources);
     GSelectionScene gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);
+    // this.modelController = model.getController();
+    final URL cssFileURL = getClass().getResource(RESOURCES + "main.css");
+    if (cssFileURL != null) {
+      this.cssFile = cssFileURL.toExternalForm();
+      gameSelection.getStylesheets().add(cssFile);
+      splashScreen.getStylesheets().add(cssFile);
+    } else {
+      logger.warn("Css file could not be loaded");
+    }
     createAnimations();
-    setScene(splashScreen);
+    //setScene(splashScreen);
+    startGame("");
     gameSelection.setOnGameSelected(this::startGame);
     exitApplication =
         () -> {
@@ -61,14 +69,6 @@ public class View {
     splashScreen.setOnExit(exitApplication);
     splashScreen.setOnPlay(() -> setScene(gameSelection));
 
-    final URL cssFileURL = getClass().getResource(RESOURCES + "main.css");
-    if (cssFileURL != null) {
-      this.cssFile = cssFileURL.toExternalForm();
-      gameSelection.getStylesheets().add(cssFile);
-      splashScreen.getStylesheets().add(cssFile);
-    } else {
-      logger.warn("Css file could not be loaded");
-    }
 
     logger.info("Displaying Splash Screen");
     stage.show();
