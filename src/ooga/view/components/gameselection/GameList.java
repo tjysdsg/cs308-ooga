@@ -96,7 +96,7 @@ public class GameList extends FlowPane {
     }
     GameItem newGame = new GameItem(directory);
     getChildren().add(0, newGame);
-    newGame.setOnAction(this::notifySelection);
+    newGame.setOnLeftClick(this::notifySelection);
     presentDirectories.add(directory);
     notifySelection(directory);
 

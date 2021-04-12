@@ -1,20 +1,23 @@
 package ooga.view.components.gameselection;
 
 import com.jfoenix.controls.JFXButton;
+
+import javafx.scene.input.MouseEvent;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.function.Consumer;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class GameItem extends VBox {
-  private Consumer<String> onClick;
+  private Consumer<String> onLeftClick;
   private String directory;
   private String encodedPath;
   private String gameLabel;
+  private Consumer<GameItem> onRightClick;
 
   public GameItem(String gamePath) {
     this.directory = gamePath;
@@ -35,19 +38,28 @@ public class GameItem extends VBox {
       game.setStyle("-fx-background-image: url('" + encodedPath + "thumbnail.jpg');");
       label.setText(gameLabel);
     }
-    game.setOnAction(e -> notifyAction());
+    game.setOnMouseClicked(e -> notifyAction(e));
     label.getStyleClass().add("game-item-label");
     getChildren().addAll(game, label);
-    setOnMouseClicked(e -> notifyAction());
+//    setOnMouseClicked(e -> game.cl);
   }
 
-  public void setOnAction(Consumer<String> callback) {
-    this.onClick = callback;
+  public void setOnLeftClick(Consumer<String> callback) {
+    this.onLeftClick = callback;
+  }
+  public void setOnRightClick(Consumer<GameItem> callback) {
+    onRightClick = callback;
   }
 
-  private void notifyAction() {
-    if (this.onClick != null) {
-      onClick.accept(this.directory);
+  private void notifyAction(MouseEvent e) {
+    if (e.getButton() == MouseButton.PRIMARY) {
+      if (this.onLeftClick != null) {
+        onLeftClick.accept(this.directory);
+      }
+    } else if(e.getButton() == MouseButton.SECONDARY) {
+      if (this.onRightClick != null) {
+        onRightClick.accept(this);
+      }
     }
   }
 
