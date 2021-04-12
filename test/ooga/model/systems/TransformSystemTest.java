@@ -13,7 +13,7 @@ public class TransformSystemTest {
   ECManager ecManager;
 
   TransformSystemTest() {
-    ecManager = new ECManager();
+    ecManager = new ECManager(null);
   }
 
   @BeforeEach

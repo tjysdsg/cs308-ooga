@@ -21,7 +21,7 @@ public class ComponentMapperTest {
 
   @BeforeEach
   void setup() {
-    ecManager = new ECManager();
+    ecManager = new ECManager(null);
 
     go1 = ecManager.createEntity("test entity 1");
     go2 = ecManager.createEntity("test entity 2");

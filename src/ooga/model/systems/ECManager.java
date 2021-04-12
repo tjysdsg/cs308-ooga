@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import ooga.model.components.Component;
 import ooga.model.objects.GameObject;
+import ooga.model.objects.ObjectFactory;
+import ooga.model.objects.ObjectInstance;
 
 /**
  * System for creating, accessing, updating, and deleting entities/components.
@@ -16,8 +18,10 @@ public class ECManager {
   private IDManager idManager;
   private Map<Integer, GameObject> entities;
   private Map<Class, Map<Integer, Component>> existingComponents;
+  private ObjectFactory factory;
 
-  public ECManager() {
+  public ECManager(ObjectFactory factory) {
+    this.factory = factory;
     idManager = new IDManager();
     entities = new HashMap<>();
     existingComponents = new HashMap<>();
@@ -51,6 +55,11 @@ public class ECManager {
     }
 
     entities.remove(ID);
+  }
+
+  public void addEntity(ObjectInstance instance) {
+    GameObject newObject = factory.buildObject(instance);
+    entities.put(newObject.getId(), newObject);
   }
 
   public <T> List<T> getComponents(Class<T> componentClass) {

@@ -18,45 +18,30 @@ class GameLevel implements Level {
 
   private String name;
   int levelID;
-
-  // TODO: use EntityManager and ComponentManager to create entities and components in Moshi
-  //  adapter, then remove GameLevel.gameObjects, so entities can be properly deleted (now the
-  //  deleted entities are still in GameLevel.gameObjects
+  private transient List<BaseSystem> systems = new ArrayList<>();
   @Json(name = "objects")
-  List<GameObject> gameObjects;
-
-  private transient List<BaseSystem> systems;
-  private transient ECManager ecManager;
-  private transient InputManager inputManager;
-  private transient ActionManager actionManager;
+  private ECManager ecManager;
+  private transient InputManager inputManager = new InputManager();
+  private transient ActionManager actionManager = new ActionManager();
 
   // MUST BE HERE!!! MOSHI USES THIS
   public GameLevel() {
   }
 
   public void init() {
-    // NOTE: Before calling this method, make sure the followings:
-    // - game objects are all created
-    // - components are all created
+    // TODO: create game objects here
 
-    ecManager = new ECManager();
-    inputManager = new InputManager();
-    actionManager = new ActionManager();
+    // TODO: load configs and create components
 
-    systems = new ArrayList<>();
+    // TODO: create systems here and add them to systems
     systems.add(new TransformSystem(ecManager));
     systems.add(new HealthSystem(ecManager));
     systems.add(new PlayerSystem(ecManager));
-    // TODO: create other systems and add them to the list
 
     for (var s : systems) {
       s.registerAllInputs(inputManager);
       s.registerAllActions(actionManager);
     }
-
-    // TODO: use EntityManager and ComponentManager to create entities and components in Moshi
-    //  adapter, and remove this:
-    ecManager.registerExistingComponents(gameObjects);
   }
 
   public void handleCode(String k, boolean on) {
@@ -83,7 +68,7 @@ class GameLevel implements Level {
 
   @Override
   public List<GameObject> generateObjects() {
-    return gameObjects;
+    return ecManager.getEntities();
   }
 
   @Override
