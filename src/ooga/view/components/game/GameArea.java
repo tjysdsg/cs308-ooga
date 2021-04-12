@@ -15,24 +15,15 @@ public class GameArea extends AnchorPane {
     this.objectsPane = new StackPane();
     getStyleClass().add("game-area");
     objectsPane.setStyle("-fx-background-color: green");
-    JFXButton addGame = new JFXButton();
-    JFXButton removeGame = new JFXButton();
-    removeGame.setTranslateX(100);
-    addGame.setOnAction(
-        e -> {
-          double x = addGame.getTranslateX();
-          addGame.setTranslateX(x + 10);
-        });
+
     objectsPane.setTranslateX(LEFT_EDGE);
-    objectsPane.getChildren().addAll(addGame, removeGame);
     getChildren().add(objectsPane);
-    DoubleProperty prop = addGame.translateXProperty();
-    objectsPane.translateXProperty().bind(prop.multiply(-1));
     AnchorPane.setBottomAnchor(objectsPane, BOTTOM_EDGE);
     AnchorPane.setLeftAnchor(objectsPane, LEFT_EDGE);
   }
 
   public void setCameraCenter(ObjectView center) {
-
+    DoubleProperty prop = center.translateXProperty();
+    objectsPane.translateXProperty().bind(prop.multiply(-1));
   }
 }
