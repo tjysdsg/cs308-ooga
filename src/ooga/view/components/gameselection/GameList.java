@@ -30,6 +30,7 @@ public class GameList extends FlowPane {
   private ObservableResource resources;
   private Preferences prefs;
   private StringBinding directoryTitle;
+  private Consumer<String> onRun;
 
   public GameList(ObservableResource resources, StackPane dialogPane) {
     presentDirectories = new HashSet<>();
@@ -116,7 +117,7 @@ public class GameList extends FlowPane {
 
       getChildren().remove(newGame);
     });
-
+    newGame.setOnRun(this::notifyRun);
     presentDirectories.add(directory);
     notifySelection(directory);
 
@@ -142,7 +143,19 @@ public class GameList extends FlowPane {
     }
   }
 
+  private void notifyRun(String path) {
+    if (onRun != null) {
+      onRun.accept(path);
+    } else {
+      logger.warn("Callback not set on GameList run notification");
+    }
+  }
+
   public void setOnSelection(Consumer<String> selectionCallback) {
     this.selectionCallback = selectionCallback;
+  }
+
+  public void setOnRun(Consumer<String> runCallback) {
+    this.onRun = runCallback;
   }
 }

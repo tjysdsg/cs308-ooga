@@ -18,6 +18,7 @@ public class GameItem extends VBox {
   private String encodedPath;
   private String gameLabel;
   private Consumer<String> onDelete;
+  private Consumer<String> onRun;
 
   public GameItem(String gamePath) {
     this.directory = gamePath;
@@ -78,6 +79,10 @@ public class GameItem extends VBox {
     onDelete = callback;
   }
 
+  public void setOnRun(Consumer<String> callback) {
+    onRun = callback;
+  }
+
   private void notifyDelete() {
     if (this.onDelete != null) {
       onDelete.accept(directory);
@@ -90,8 +95,14 @@ public class GameItem extends VBox {
     }
   }
 
+  private void notifyRun() {
+    if (this.onRun != null) {
+      onRun.accept(this.directory);
+    }
+  }
+
   private void handleRun() {
-    notifyAction();
+    notifyRun();
   }
 
   private void handleDelete() {
