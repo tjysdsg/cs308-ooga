@@ -1,23 +1,23 @@
 package ooga.view.components.gameselection;
 
 import com.jfoenix.controls.JFXButton;
-
-import javafx.scene.input.MouseEvent;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.util.function.Consumer;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
+import javafx.scene.layout.*;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class GameItem extends VBox {
-  private Consumer<String> onLeftClick;
+  private Consumer<String> onClick;
   private String directory;
   private String encodedPath;
   private String gameLabel;
-  private Consumer<GameItem> onRightClick;
+  private Consumer<String> onDelete;
 
   public GameItem(String gamePath) {
     this.directory = gamePath;
@@ -38,30 +38,66 @@ public class GameItem extends VBox {
       game.setStyle("-fx-background-image: url('" + encodedPath + "thumbnail.jpg');");
       label.setText(gameLabel);
     }
-    game.setOnMouseClicked(e -> notifyAction(e));
+    game.setOnAction(e -> notifyAction());
+
+    ContextMenu menu = new ContextMenu();
+    menu.getStyleClass().addAll( "game-context-menu");
+    menu.getItems().add(createMenuItem("Run"));
+    menu.getItems().add(createMenuItem("Delete"));
+    game.setContextMenu(menu);
+
     label.getStyleClass().add("game-item-label");
     getChildren().addAll(game, label);
-//    setOnMouseClicked(e -> game.cl);
+    setOnMouseClicked(e -> notifyAction());
   }
 
-  public void setOnLeftClick(Consumer<String> callback) {
-    this.onLeftClick = callback;
-  }
-  public void setOnRightClick(Consumer<GameItem> callback) {
-    onRightClick = callback;
+  private MenuItem createMenuItem(String run) {
+    MenuItem item = new MenuItem(run);
+    item.getStyleClass().addAll("game-context-menu-item");
+    item.setOnAction((e) -> {
+      try {
+        Method handler = getClass().getDeclaredMethod("handle" + run);
+        handler.setAccessible(true);
+        handler.invoke(this);
+      } catch (NoSuchMethodException noSuchMethodException) {
+        noSuchMethodException.printStackTrace();
+      } catch (IllegalAccessException illegalAccessException) {
+        illegalAccessException.printStackTrace();
+      } catch (InvocationTargetException invocationTargetException) {
+        invocationTargetException.printStackTrace();
+      }
+    });
+    return item;
   }
 
-  private void notifyAction(MouseEvent e) {
-    if (e.getButton() == MouseButton.PRIMARY) {
-      if (this.onLeftClick != null) {
-        onLeftClick.accept(this.directory);
-      }
-    } else if(e.getButton() == MouseButton.SECONDARY) {
-      if (this.onRightClick != null) {
-        onRightClick.accept(this);
-      }
+  public void setOnAction(Consumer<String> callback) {
+    this.onClick = callback;
+  }
+
+  public void setOnDelete(Consumer<String> callback) {
+    onDelete = callback;
+  }
+
+  private void notifyDelete() {
+    if (this.onDelete != null) {
+      onDelete.accept(directory);
     }
   }
+
+  private void notifyAction() {
+    if (this.onClick != null) {
+      onClick.accept(this.directory);
+    }
+  }
+
+  private void handleRun() {
+    notifyAction();
+  }
+
+  private void handleDelete() {
+    notifyDelete();
+  }
+
 
   private String getDirectory() {
     return this.directory;
