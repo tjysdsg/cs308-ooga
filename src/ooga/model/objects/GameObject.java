@@ -41,7 +41,7 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
     return id;
   }
 
-  public boolean isCollideable() {
+  public boolean isCollidable() {
     return collideable;
   }
 

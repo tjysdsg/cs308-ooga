@@ -17,7 +17,7 @@ public class CollisionSystem extends GameObjectBasedSystem{
 
   @Override
   public void update(double deltaTime) {
-
+    checkCollisions();
   }
 
   private void checkCollisions() {
