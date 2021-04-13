@@ -52,7 +52,7 @@ public class CollisionSystem extends GameObjectBasedSystem{
       if(x + width < collidedObject.getX()){
         return;
       }
-      else if(collidedObject.getY() >= y && collidedObject.getY() <= y+height){
+      else if(collidedObject.getY() >= y && collidedObject.getY() <= y+height || y>=collidedObject.getY() && y<= collidedObject.getY()+collidedObject.getHeight()){
         collide(collidingObject, collidedObject);
       }
 
