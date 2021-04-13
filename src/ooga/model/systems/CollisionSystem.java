@@ -70,30 +70,40 @@ public class CollisionSystem extends GameObjectBasedSystem{
     double width = collidedObject.getWidth();
     double height = collidedObject.getHeight();
 
-    if(((collidingObject.getX()-x) < 0) == ((collidingObject.getY() -y) < 0)){
-      return handleCornerCase(collidingObject, collidedObject);
+    double lComp = 0;
+    double rComp = 0;
+    double tComp = 0;
+    double bComp = 0;
+
+    if(collidingObject.getX() <= x){
+      rComp = Math.max(0, Math.min(y+height,collidingObject.getY()+collidingObject.getHeight()) - Math.max(y, collidingObject.getY()));
+    }
+    if(collidingObject.getX()+collidingObject.getWidth() >= x + width){
+      lComp = Math.max(0, Math.min(y+height,collidingObject.getY()+collidingObject.getHeight()) - Math.max(y, collidingObject.getY()));
+    }
+    if(collidingObject.getY() >= y){
+      tComp= Math.max(0, Math.min(x+width,collidingObject.getX()+collidingObject.getWidth()) - Math.max(x, collidingObject.getX()));
+    }
+    if(collidingObject.getY()+collidingObject.getHeight() <= y+height){
+      bComp =  Math.max(0, Math.min(x+width,collidingObject.getX()+collidingObject.getWidth()) - Math.max(x, collidingObject.getX()));
     }
 
-    if(collidingObject.getY() > y && collidingObject.getX() > x && collidingObject.getX() < x + width){
-      return "bottom";
-    }
-
-    if(collidedObject.getY() < y && collidingObject.getX() > x && collidingObject.getX() < x + width){
-      return "top";
-    }
-
-    if(collidingObject.getX() < x && collidingObject.getY() > y && collidingObject.getY() < y+ height){
-      return "left";
-    }
-
-    if(collidingObject.getX() > x && collidingObject.getY() > y && collidingObject.getY() < y+ height){
-      return "right";
-    }
-
-    return "";
+    return calculateCollisionDirection(lComp,rComp,tComp,bComp);
   }
 
-  private String handleCornerCase(GameObject collidingObject, GameObject collidedObject) {
+  private String calculateCollisionDirection(double lComp, double rComp, double tComp, double bComp) {
+    if(lComp >= rComp && lComp>= tComp && lComp >=bComp){
+      return "left";
+    }
+    if(rComp >= lComp && rComp >= tComp && rComp >= bComp){
+      return "right";
+    }
+    if(tComp >= lComp && tComp >= rComp && tComp >= bComp){
+      return "top";
+    }
+    if(bComp >= lComp && bComp >= rComp && bComp >=tComp){
+      return "bottom";
+    }
     return "";
   }
 
