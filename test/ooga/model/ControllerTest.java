@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ControllerTest {
 
@@ -37,5 +38,7 @@ public class ControllerTest {
     @Test
     void creatingGameTest() {
         assertDoesNotThrow(() -> controller.setGame(new File("data/example")));
+        assertEquals(1, levelChanges);
+        assertEquals(2, numObjects);
     }
 }
