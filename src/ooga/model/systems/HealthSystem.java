@@ -22,8 +22,8 @@ public class HealthSystem extends ComponentBasedSystem {
    * @param entityId ID of the entity whose health is changed
    * @param delta    Health to add, can be negative
    */
-  public void changeHealth(int entityId, double delta) {
-    componentMapper.get(entityId).increment(delta);
+  public void changeHealth(int entityId, double delta, boolean increase) {
+    componentMapper.get(entityId).healthIncrement(delta, increase);
   }
 
   protected void destroyObject(int entityId) {
