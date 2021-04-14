@@ -1,10 +1,13 @@
-package ooga.model.systems;
+package ooga.model.systems.creature;
 
 import java.util.List;
 import ooga.model.annotations.Track;
 import ooga.model.components.PlayerComponent;
 import ooga.model.components.PlayerComponent.HorizontalMovementStatus;
 import ooga.model.objects.GameObject;
+import ooga.model.systems.ComponentBasedSystem;
+import ooga.model.systems.ComponentMapper;
+import ooga.model.systems.ECManager;
 
 // TODO: add tests for this
 @Track(PlayerComponent.class)

@@ -1,7 +1,9 @@
-package ooga.model.systems;
+package ooga.model.systems.creature;
 
 import ooga.model.components.MovementSquenceComponent;
 import ooga.model.components.PlayerComponent;
+import ooga.model.systems.ComponentMapper;
+import ooga.model.systems.ECManager;
 
 import java.util.List;
 
