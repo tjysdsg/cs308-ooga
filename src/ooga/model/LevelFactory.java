@@ -22,12 +22,13 @@ import ooga.model.objects.EntityManagerAdapter;
 import ooga.model.exceptions.NotADirectoryException;
 import ooga.model.objects.GameObject;
 import ooga.model.objects.ObjectFactory;
+import ooga.model.util.FileReader;
 
 public class LevelFactory {
 
   private JsonAdapter<GameLevel> levelAdapter;
 
-  public LevelFactory(File objectsDir) throws IOException {
+  public LevelFactory(File objectsDir) throws FileNotFoundException {
     if (!objectsDir.isDirectory()) {
       throw new NotADirectoryException(objectsDir.getName());
     }
@@ -56,31 +57,27 @@ public class LevelFactory {
   }
 
   private void addObjects(File objectsFile, JsonAdapter<List<GameObject>> adapter,
-      Map<String, GameObject> presetMap) throws IOException {
-    String objectsText = fileToString(objectsFile);
+      Map<String, GameObject> presetMap) throws FileNotFoundException, InvalidDataFileException {
+    String objectsText = FileReader.readFile(objectsFile);
 
-    List<GameObject> objectPresets = adapter.fromJson(objectsText);
+    List<GameObject> objectPresets;
+    try {
+      objectPresets = adapter.fromJson(objectsText);
+    } catch (IOException e) {
+      throw new InvalidDataFileException(objectsFile.getName());
+    }
 
     for (GameObject object : objectPresets) {
       presetMap.put(object.getName(), object);
     }
   }
 
-  private String fileToString(File toConvert) throws FileNotFoundException {
-    Path filePath = toConvert.toPath();
 
-    try {
-      return Files.readString(filePath);
-    } catch (IOException e) {
-      throw new FileNotFoundException(toConvert.getName());
-    }
-  }
 
-  Level buildLevel(File levelFile)
-          throws FileNotFoundException, InvalidDataFileException {
+  Level buildLevel(File levelFile) throws FileNotFoundException, InvalidDataFileException {
     String levelText;
     try {
-      levelText = fileToString(levelFile);
+      levelText = FileReader.readFile(levelFile);
     } catch (IOException e) {
       throw new FileNotFoundException(levelFile.getName());
     }
