@@ -53,7 +53,7 @@ public class Model implements ObservableModel {
 
     File configFile;
     try {
-      configFile = FileReader.getFile(levelsDir, CONFIG_FILE_NAME);
+      configFile = FileReader.getFile(directory, CONFIG_FILE_NAME);
     } catch (FileNotFoundException e) {
       throw new RequiredFileNotFoundException(CONFIG_FILE_NAME);
     }

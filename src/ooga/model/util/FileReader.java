@@ -23,12 +23,12 @@ public class FileReader {
         if (!directory.isDirectory()) {
             throw new NotADirectoryException(directory.getName());
         }
-        File[] levelMatches = directory.listFiles((file, s) -> s.equals(fileName));
+        File[] matches = directory.listFiles((file, s) -> s.equals(fileName));
 
-        if (levelMatches == null) {
+        if (matches == null) {
             throw new FileNotFoundException();
         }
 
-        return levelMatches[0];
+        return matches[0];
     }
 }
