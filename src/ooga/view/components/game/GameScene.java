@@ -1,12 +1,12 @@
 package ooga.view.components.game;
 
-import javafx.scene.paint.Color;
-import com.jfoenix.controls.JFXButton;
+import java.util.function.Consumer;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.AnchorPane;
-import ooga.view.ModelController;
+import javafx.scene.paint.Color;
 import ooga.model.observables.ObservableModel;
+import ooga.view.ModelController;
 import ooga.view.util.ObservableResource;
 
 /** A scene in which games are actually tracked and played. */
@@ -17,6 +17,7 @@ public class GameScene extends Scene {
   private ObservableModel game;
   private ModelController controller;
   private String directory;
+  private Consumer<StackPane> onEscape;
 
   public GameScene(String directory, ObservableResource resources) {
     super(new StackPane(), WIDTH, HEIGHT, Color.BLACK);
@@ -24,9 +25,38 @@ public class GameScene extends Scene {
     root.getStyleClass().add("game-scene");
     GameArea gameArea = new GameArea();
     this.directory = directory;
-    //this.controller = game.getController();
+    // this.controller = game.getController();
     root.getChildren().add(gameArea);
+    gameArea.requestFocus();
+    setOnKeyPressed(e -> handlePress(e.getCode()));
+    setOnKeyReleased(e -> handleRelease(e.getCode()));
   }
+
+  private void handlePress(KeyCode code) {
+    if (code == KeyCode.ESCAPE) {
+      notifyEscape();
+      return;
+    }
+  }
+
+  private void notifyEscape() {
+    if (this.onEscape != null) {
+      onEscape.accept(this.root);
+    }
+  }
+
+  /**
+   * Notify that the user has tried to escape the game.
+   *
+   * <p>Passes a reference of the root to allow the parent to show a pause menu or anything else
+   *
+   * @param callback - The callback that will be called.
+   */
+  public void setOnEscape(Consumer<StackPane> callback) {
+    this.onEscape = callback;
+  }
+
+  private void handleRelease(KeyCode code) {}
 
   public void pauseGame() {}
 
