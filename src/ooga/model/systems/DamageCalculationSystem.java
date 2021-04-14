@@ -3,12 +3,12 @@ package ooga.model.systems;
 import ooga.model.components.EquipmentComponent;
 import ooga.model.components.PayloadMultiplier;
 
-public class damageCalculationSystem extends ComponentBasedSystem{
+public class DamageCalculationSystem extends ComponentBasedSystem{
     //TODO: discuss whether a new class is needed for the weapon/armor
     ComponentMapper<EquipmentComponent> attackPowerMapper;
     ComponentMapper<PayloadMultiplier> multiplierMapper;
     ComponentMapper<EquipmentComponent> armorMapper;
-    public damageCalculationSystem(ECManager ecManager) {
+    public DamageCalculationSystem(ECManager ecManager) {
         super(ecManager);
         attackPowerMapper=getComponentMapper(EquipmentComponent.class);
         multiplierMapper=getComponentMapper(PayloadMultiplier.class);
