@@ -2,6 +2,8 @@ package ooga.view.components.gameselection;
 
 import com.jfoenix.controls.JFXButton;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.util.function.Consumer;
 import javafx.scene.control.*;
@@ -15,6 +17,8 @@ public class GameItem extends VBox {
   private String directory;
   private String encodedPath;
   private String gameLabel;
+  private Consumer<String> onDelete;
+  private Consumer<String> onRun;
 
   public GameItem(String gamePath) {
     this.directory = gamePath;
@@ -36,13 +40,53 @@ public class GameItem extends VBox {
       label.setText(gameLabel);
     }
     game.setOnAction(e -> notifyAction());
+
+    ContextMenu menu = new ContextMenu();
+    menu.getStyleClass().addAll( "game-context-menu");
+    menu.getItems().add(createMenuItem("Run"));
+    menu.getItems().add(createMenuItem("Delete"));
+    game.setContextMenu(menu);
+
     label.getStyleClass().add("game-item-label");
     getChildren().addAll(game, label);
     setOnMouseClicked(e -> notifyAction());
   }
 
+  private MenuItem createMenuItem(String run) {
+    MenuItem item = new MenuItem(run);
+    item.getStyleClass().addAll("game-context-menu-item");
+    item.setOnAction((e) -> {
+      try {
+        Method handler = getClass().getDeclaredMethod("handle" + run);
+        handler.setAccessible(true);
+        handler.invoke(this);
+      } catch (NoSuchMethodException noSuchMethodException) {
+        noSuchMethodException.printStackTrace();
+      } catch (IllegalAccessException illegalAccessException) {
+        illegalAccessException.printStackTrace();
+      } catch (InvocationTargetException invocationTargetException) {
+        invocationTargetException.printStackTrace();
+      }
+    });
+    return item;
+  }
+
   public void setOnAction(Consumer<String> callback) {
     this.onClick = callback;
+  }
+
+  public void setOnDelete(Consumer<String> callback) {
+    onDelete = callback;
+  }
+
+  public void setOnRun(Consumer<String> callback) {
+    onRun = callback;
+  }
+
+  private void notifyDelete() {
+    if (this.onDelete != null) {
+      onDelete.accept(directory);
+    }
   }
 
   private void notifyAction() {
@@ -50,6 +94,21 @@ public class GameItem extends VBox {
       onClick.accept(this.directory);
     }
   }
+
+  private void notifyRun() {
+    if (this.onRun != null) {
+      onRun.accept(this.directory);
+    }
+  }
+
+  private void handleRun() {
+    notifyRun();
+  }
+
+  private void handleDelete() {
+    notifyDelete();
+  }
+
 
   private String getDirectory() {
     return this.directory;

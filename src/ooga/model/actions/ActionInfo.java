@@ -21,9 +21,10 @@ public class ActionInfo {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof ActionInfo that)) {
+    if (!(o instanceof ActionInfo)) {
       return false;
     }
+    ActionInfo that = (ActionInfo) o;
     return Objects.equals(with, that.with) && Objects.equals(position, that.position);
   }
 

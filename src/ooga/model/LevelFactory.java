@@ -19,6 +19,7 @@ import ooga.model.components.Component;
 import ooga.model.components.PlayerComponent;
 import ooga.model.exceptions.InvalidDataFileException;
 import ooga.model.objects.EntityManagerAdapter;
+import ooga.model.exceptions.NotADirectoryException;
 import ooga.model.objects.GameObject;
 import ooga.model.objects.ObjectFactory;
 
@@ -28,7 +29,7 @@ public class LevelFactory {
 
   public LevelFactory(File objectsDir) throws IOException {
     if (!objectsDir.isDirectory()) {
-      throw new RuntimeException("Objects Path must be a Directory");
+      throw new NotADirectoryException(objectsDir.getName());
     }
 
     Map<String, GameObject> presetMap = new HashMap<>();
@@ -75,8 +76,8 @@ public class LevelFactory {
     }
   }
 
-  Level buildLevel(File levelFile) throws FileNotFoundException, InvalidDataFileException {
-
+  Level buildLevel(File levelFile)
+          throws FileNotFoundException, InvalidDataFileException {
     String levelText;
     try {
       levelText = fileToString(levelFile);

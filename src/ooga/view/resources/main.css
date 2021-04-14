@@ -147,6 +147,23 @@ ScrollPane {
   -fx-max-height: 170;
 }
 
+.game-context-menu {
+  -fx-background-color: -primary-color;
+}
+
+.game-context-menu-item .label {
+  -fx-text-fill: #ffffff;
+  -fx-font-size: 15;
+}
+
+.game-context-menu-item:focused {
+  -fx-background-color: -primary-color;
+}
+
+.game-context-menu-item:hover {
+  -fx-background-color: -secondary-color;
+}
+
 .game-item:hover .game-item-label {
   -fx-text-fill: -secondary-color;
 }
