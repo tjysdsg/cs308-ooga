@@ -54,5 +54,6 @@ public class GSelectionScene extends Scene {
 
   public void setOnGameSelected(Consumer<String> callBack) {
     this.gameView.setOnPlayRequested(callBack);
+    this.gamesList.setOnRun(callBack);
   }
 }
