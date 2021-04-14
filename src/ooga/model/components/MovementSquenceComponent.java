@@ -54,6 +54,7 @@ public class MovementSquenceComponent extends PlayerComponent {
         if (actionIndex>=actionSequence.size()){
             actionIndex=0;
         }
+        execAction(actionSequence.get(actionIndex),deltaTime);
     }
 
 

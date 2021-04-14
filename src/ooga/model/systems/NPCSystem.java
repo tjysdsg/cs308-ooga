@@ -3,6 +3,8 @@ package ooga.model.systems;
 import ooga.model.components.MovementSquenceComponent;
 import ooga.model.components.PlayerComponent;
 
+import java.util.List;
+
 public class NPCSystem extends PlayerSystem{
     protected ComponentMapper<MovementSquenceComponent> movementSequenceMapper;
 
@@ -16,7 +18,17 @@ public class NPCSystem extends PlayerSystem{
         initPlayerType(PlayerComponent.PlayerType.NEUTRAL);
     }
 
-    private void moveRight()
+    private List<MovementSquenceComponent> getMovements(){
+        return movementSequenceMapper.getComponents();
+    }
+
+    @Override
+    public void update(double deltaTime){
+        for(MovementSquenceComponent m: getMovements()){
+            m.update(deltaTime);
+        }
+    }
+
 
 
 }
