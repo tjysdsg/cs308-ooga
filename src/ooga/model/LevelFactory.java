@@ -8,11 +8,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory;
 import ooga.model.components.Component;
@@ -22,11 +21,19 @@ import ooga.model.objects.EntityManagerAdapter;
 import ooga.model.exceptions.NotADirectoryException;
 import ooga.model.objects.GameObject;
 import ooga.model.objects.ObjectFactory;
+import ooga.model.observables.ObservableObject;
 import ooga.model.util.FileReader;
 
 public class LevelFactory {
 
   private JsonAdapter<GameLevel> levelAdapter;
+  private ObjectFactory objectFactory;
+  private Consumer<ObservableObject> newObjectCallback;
+
+  public LevelFactory(File objectsDir , Consumer<ObservableObject> newObjectCallback) throws FileNotFoundException {
+    this(objectsDir);
+    this.newObjectCallback = newObjectCallback;
+  }
 
   public LevelFactory(File objectsDir) throws FileNotFoundException {
     if (!objectsDir.isDirectory()) {
@@ -49,11 +56,7 @@ public class LevelFactory {
       addObjects(objectFile, adapter, presetMap);
     }
 
-    ObjectFactory objectFactory = new ObjectFactory(presetMap);
-
-    EntityManagerAdapter entityManagerAdapter = new EntityManagerAdapter(objectFactory);
-    Moshi objectMoshi = new Moshi.Builder().add(entityManagerAdapter).build();
-    levelAdapter = objectMoshi.adapter(GameLevel.class);
+    objectFactory = new ObjectFactory(presetMap);
   }
 
   private void addObjects(File objectsFile, JsonAdapter<List<GameObject>> adapter,
@@ -75,6 +78,10 @@ public class LevelFactory {
 
 
   Level buildLevel(File levelFile) throws FileNotFoundException, InvalidDataFileException {
+    EntityManagerAdapter entityManagerAdapter = new EntityManagerAdapter(objectFactory, newObjectCallback);
+    Moshi objectMoshi = new Moshi.Builder().add(entityManagerAdapter).build();
+    JsonAdapter<GameLevel> levelAdapter = objectMoshi.adapter(GameLevel.class);
+
     String levelText;
     try {
       levelText = FileReader.readFile(levelFile);

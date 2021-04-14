@@ -1,11 +1,10 @@
 package ooga.view;
 
 import java.io.File;
-import java.io.FilenameFilter;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
 import ooga.model.Model;
-import ooga.model.exceptions.NotADirectoryException;
 
 public class Controller implements ModelController {
   private Map<String, String> code2action; // code -> actions
@@ -16,9 +15,11 @@ public class Controller implements ModelController {
   }
   // TODO: proxy model
   @Override
-  public void setLevel(String levelName) {
-    // model.setLevel(levelName);
+  public void setCurrentLevel(String levelName) throws FileNotFoundException {
+    model.setCurrentLevel(levelName);
   }
+
+
 
   // TODO:Wait for the model
   @Override
@@ -34,7 +35,7 @@ public class Controller implements ModelController {
 
   // from model
   @Override
-  public List<String> getAvailbleActions() {
+  public List<String> getAvailableActions() {
     return null;
   }
 
@@ -54,5 +55,10 @@ public class Controller implements ModelController {
   @Override
   public void step() {
     model.step();
+  }
+
+  @Override
+  public void setGame(File gameDirectory) throws FileNotFoundException {
+    model.setGame(gameDirectory);
   }
 }

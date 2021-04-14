@@ -1,10 +1,11 @@
 package ooga.view;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public interface ModelController {
-  void setLevel(String levelName);
+  void setCurrentLevel(String levelName) throws FileNotFoundException;
 
   void handleKeyPress(String code);
 
@@ -15,7 +16,7 @@ public interface ModelController {
    *
    * @return The strokes that can be used to trigger actions.
    */
-  List<String> getAvailbleActions();
+  List<String> getAvailableActions();
 
   /**
    * Set the stroke mapping for a certain action
@@ -26,4 +27,5 @@ public interface ModelController {
   void setStrokeMapping(String code, String action);
   List<String> getLevels();
   void step();
+  void setGame(File gameDirectory) throws FileNotFoundException;
 }

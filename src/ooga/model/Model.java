@@ -43,7 +43,7 @@ public class Model implements ObservableModel {
       throw new DirectoryNotFoundException(OBJECTS_DIRECTORY_NAME);
     }
 
-    levelFactory = new LevelFactory(objectsDir);
+    levelFactory = new LevelFactory(objectsDir, newObjectCallback);
 
     try {
       levelsDir = FileReader.getFile(directory, LEVELS_DIRECTORY_NAME);
