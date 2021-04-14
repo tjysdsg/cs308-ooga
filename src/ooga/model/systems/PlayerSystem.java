@@ -26,6 +26,9 @@ public class PlayerSystem extends ComponentBasedSystem {
     addMapping("left", this::handleLeft);
     addMapping("jump", this::handleJump);
     addCollisionMapping("jump_self", event -> doJump(event.getSelf()));
+
+    // TODO: add this to 'onCollide' of player in the config files
+    addCollisionMapping("player_grounded", event -> onGrounded(event.getSelf()));
   }
 
   public List<PlayerComponent> getPlayers() {
@@ -42,6 +45,14 @@ public class PlayerSystem extends ComponentBasedSystem {
         p.setHorizontalStatus(HorizontalMovementStatus.STILL);
       }
     }
+  }
+
+  /**
+   * Callback when the player touches ground
+   */
+  private void onGrounded(GameObject go) {
+    PlayerComponent p = componentMapper.get(go.getId());
+    p.setVerticalStatus(VerticalMovementStatus.GROUNDED);
   }
 
   private void handleRight(boolean on) {
