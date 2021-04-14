@@ -10,7 +10,7 @@ import ooga.model.objects.GameObject;
 @Track(PlayerComponent.class)
 public class PlayerSystem extends ComponentBasedSystem {
 
-  private ComponentMapper<PlayerComponent> componentMapper;
+  protected ComponentMapper<PlayerComponent> componentMapper;
   // TODO: support active and inactive players
 
   public PlayerSystem(ECManager ecManager) {
@@ -23,6 +23,7 @@ public class PlayerSystem extends ComponentBasedSystem {
     addMapping("left", this::handleLeft);
     addMapping("jump", this::handleJump);
     addCollisionMapping("jump_self", event -> handleJump(event.getSelf()));
+    initPlayerType(PlayerComponent.PlayerType.PLAYER);
   }
 
   public List<PlayerComponent> getPlayers() {
@@ -56,6 +57,13 @@ public class PlayerSystem extends ComponentBasedSystem {
     List<PlayerComponent> players = getPlayers();
     for (PlayerComponent p : players) {
       // TODO: implement jumping mechanism
+    }
+  }
+
+  public void initPlayerType(PlayerComponent.PlayerType playerType){
+    List<PlayerComponent> players= getPlayers();
+    for(PlayerComponent p: players){
+      p.setPlayerType(playerType);
     }
   }
 

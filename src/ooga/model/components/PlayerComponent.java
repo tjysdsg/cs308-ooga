@@ -63,18 +63,30 @@ public class PlayerComponent extends Component {
   /**
    * which horizontal the player is facing, 1 for right, -1 for left
    */
-  private int direction = RIGHT_DIRECTION;
+  protected int direction = RIGHT_DIRECTION;
 
+
+  protected PlayerType playerType = PlayerType.PLAYER;
+
+  protected CharacterStatus characterStatus = CharacterStatus.Active;
 
   /**
    * Status of the player in terms of vertical movement
    */
-  private VerticalMovementStatus verticalStatus = VerticalMovementStatus.GROUNDED;
+  protected VerticalMovementStatus verticalStatus = VerticalMovementStatus.GROUNDED;
 
   /**
    * Status of the player in terms of horizontal movement
    */
-  private HorizontalMovementStatus horizontalStatus = HorizontalMovementStatus.STILL;
+  protected HorizontalMovementStatus horizontalStatus = HorizontalMovementStatus.STILL;
+
+  public void setPlayerType(PlayerType playerType){
+    this.playerType=playerType;
+  }
+
+  public void setCharacterStatus (CharacterStatus characterStatus){
+    this.characterStatus= characterStatus;
+  }
 
   /**
    * Max horizontal movement speed
