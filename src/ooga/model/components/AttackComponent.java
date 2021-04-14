@@ -24,4 +24,8 @@ public class AttackComponent extends Component {
         counter=counter%frequency;
     }
 
+    public void reset(){
+        counter=0;
+    }
+
 }

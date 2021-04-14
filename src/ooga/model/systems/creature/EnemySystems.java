@@ -1,17 +1,22 @@
 package ooga.model.systems.creature;
 
+import com.google.common.collect.ListMultimap;
 import ooga.model.Vector;
 import ooga.model.components.HateComponent;
+import ooga.model.components.PlayerComponent;
 import ooga.model.objects.GameObject;
 import ooga.model.systems.ComponentMapper;
 import ooga.model.systems.ECManager;
 
 import java.util.List;
+import java.util.Map;
 
 public class EnemySystems extends PlayerSystem{
     private ComponentMapper<HateComponent> hateMapper;
+
     public EnemySystems(ECManager ecManager) {
         super(ecManager);
+        hateMapper = getComponentMapper(HateComponent.class);
     }
 
     //TODO: put these thing into Hate system when the system design is done
@@ -26,11 +31,9 @@ public class EnemySystems extends PlayerSystem{
      */
     public void loopHate(){
         List<HateComponent> hateAll= hateMapper.getComponents();
+        List<PlayerComponent> playerComponents = getPlayers();
         for(int i=0;i<hateAll.size();i++){
-            for(int j=i+1;j<hateAll.size();j++){
-                if(i==j ){
-                    continue;
-                }
+            for(int j=0;j<playerComponents.size();j++){
                 detectHate(hateAll.get(i),hateAll.get(j));
             }
         }
