@@ -3,8 +3,7 @@ package ooga.model;
 import java.util.List;
 
 import ooga.model.objects.GameObject;
-import ooga.model.systems.ComponentManager;
-import ooga.model.systems.EntityManager;
+import ooga.model.systems.ECManager;
 
 public interface Level {
 
@@ -16,7 +15,5 @@ public interface Level {
 
   List<GameObject> generateObjects();
 
-  EntityManager getEntityManager();
-
-  ComponentManager getComponentManager();
+  ECManager getECManager();
 }

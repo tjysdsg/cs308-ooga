@@ -10,12 +10,10 @@ import org.junit.jupiter.api.Test;
 
 public class TransformSystemTest {
 
-  EntityManager entityManager;
-  ComponentManager componentManager;
+  ECManager ecManager;
 
   TransformSystemTest() {
-    componentManager = new ComponentManager();
-    entityManager = new EntityManager(componentManager);
+    ecManager = new ECManager(null);
   }
 
   @BeforeEach
@@ -24,14 +22,14 @@ public class TransformSystemTest {
 
   @Test
   void testPositionUpdating() {
-    GameObject go1 = entityManager.createEntity("go1");
+    GameObject go1 = ecManager.createEntity("go1");
     assertNotNull(go1);
     go1.setVelocity(new Vector(5, 10));
-    GameObject go2 = entityManager.createEntity("go2");
+    GameObject go2 = ecManager.createEntity("go2");
     assertNotNull(go2);
     go2.setVelocity(new Vector(-5, 0));
 
-    TransformSystem transformSystem = new TransformSystem(entityManager);
+    TransformSystem transformSystem = new TransformSystem(ecManager);
     transformSystem.update(0.1);
 
     assertEquals(0.5, go1.getX());

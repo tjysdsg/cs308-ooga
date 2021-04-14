@@ -7,18 +7,59 @@ import java.util.List;
 import java.util.Map;
 import ooga.model.components.Component;
 import ooga.model.objects.GameObject;
+import ooga.model.objects.ObjectFactory;
+import ooga.model.objects.ObjectInstance;
 
 /**
- * System for creating, accessing, updating, and deleting components
+ * System for creating, accessing, updating, and deleting entities/components.
  */
-public class ComponentManager {
+public class ECManager {
 
   private IDManager idManager;
+  private Map<Integer, GameObject> entities;
   private Map<Class, Map<Integer, Component>> existingComponents;
+  private ObjectFactory factory;
 
-  public ComponentManager() {
+  public ECManager(ObjectFactory factory) {
+    this.factory = factory;
     idManager = new IDManager();
+    entities = new HashMap<>();
     existingComponents = new HashMap<>();
+  }
+
+  public List<GameObject> getEntities() {
+    return new ArrayList<>(entities.values());
+  }
+
+  public GameObject createEntity(String name) {
+    int id = idManager.getNewId();
+    GameObject ret = new GameObject(id, name);
+    entities.put(id, ret);
+    return ret;
+  }
+
+  public GameObject getEntity(int ID) {
+    return entities.get(ID);
+  }
+
+  /**
+   * Delete entity from EntityManager, and remove the components it has from ComponentManager
+   */
+  public void deleteGameObject(int ID) {
+    // FIXME: how to invalidate the references to the removed GameObject and Components?
+    GameObject entity = entities.get(ID);
+
+    // remove all of its components
+    for (Component component : entity.getComponents()) {
+      removeComponent(component.getClass(), component.getId());
+    }
+
+    entities.remove(ID);
+  }
+
+  public void addEntity(ObjectInstance instance) {
+    GameObject newObject = factory.buildObject(instance);
+    entities.put(newObject.getId(), newObject);
   }
 
   public <T> List<T> getComponents(Class<T> componentClass) {

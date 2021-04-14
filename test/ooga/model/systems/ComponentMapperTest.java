@@ -13,8 +13,7 @@ import org.junit.jupiter.api.Test;
 
 public class ComponentMapperTest {
 
-  EntityManager entityManager;
-  ComponentManager componentManager;
+  ECManager ecManager;
   GameObject go1;
   GameObject go2;
   PlayerComponent comp;
@@ -22,15 +21,14 @@ public class ComponentMapperTest {
 
   @BeforeEach
   void setup() {
-    componentManager = new ComponentManager();
-    entityManager = new EntityManager(componentManager);
+    ecManager = new ECManager(null);
 
-    go1 = entityManager.createEntity("test entity 1");
-    go2 = entityManager.createEntity("test entity 2");
-    comp = componentManager.createComponent(go1, PlayerComponent.class);
-    componentManager.createComponent(go2, PlayerComponent.class);
+    go1 = ecManager.createEntity("test entity 1");
+    go2 = ecManager.createEntity("test entity 2");
+    comp = ecManager.createComponent(go1, PlayerComponent.class);
+    ecManager.createComponent(go2, PlayerComponent.class);
 
-    componentMapper = new ComponentMapper<>(entityManager, componentManager, PlayerComponent.class);
+    componentMapper = new ComponentMapper<>(ecManager, PlayerComponent.class);
   }
 
   @Test
@@ -45,7 +43,7 @@ public class ComponentMapperTest {
 
     // returns null if not found
     ComponentMapper<HealthComponent> tmpMapper = new ComponentMapper<>(
-        entityManager, componentManager, HealthComponent.class
+        ecManager, HealthComponent.class
     );
     assertNull(tmpMapper.get(go1.getId()));
   }

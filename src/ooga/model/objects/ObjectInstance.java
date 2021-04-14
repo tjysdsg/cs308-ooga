@@ -10,6 +10,12 @@ public class ObjectInstance {
         this.y = y;
     }
 
+    public ObjectInstance(GameObject object) {
+        this.name = object.getName();
+        this.x = object.getX();
+        this.y = object.getY();
+    }
+
     public double getX() {
         return x;
     }

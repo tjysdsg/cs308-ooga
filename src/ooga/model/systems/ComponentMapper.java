@@ -7,15 +7,13 @@ import ooga.model.objects.GameObject;
 // TODO: implement methods
 public class ComponentMapper<T extends Component> {
 
-  private EntityManager entityManager;
-  private ComponentManager componentManager;
+  private ECManager ecManager;
   private Class<T> componentClass;
 
   public ComponentMapper(
-      EntityManager entityManager, ComponentManager componentManager, Class<T> componentClass
+      ECManager ecManager, Class<T> componentClass
   ) {
-    this.entityManager = entityManager;
-    this.componentManager = componentManager;
+    this.ecManager = ecManager;
     this.componentClass = componentClass;
   }
 
@@ -25,7 +23,7 @@ public class ComponentMapper<T extends Component> {
    * @param entityId ID of the entity that possess the component
    */
   public T get(int entityId) {
-    GameObject entity = entityManager.getEntity(entityId);
+    GameObject entity = ecManager.getEntity(entityId);
     if (entity == null) {
       return null;
     }
@@ -45,7 +43,7 @@ public class ComponentMapper<T extends Component> {
    * @return the instance of the component
    */
   public T create(int entityId) {
-    return componentManager.createComponent(entityManager.getEntity(entityId), componentClass);
+    return ecManager.createComponent(ecManager.getEntity(entityId), componentClass);
   }
 
   /**
@@ -54,16 +52,16 @@ public class ComponentMapper<T extends Component> {
    * @param entityId ID of the entity that possess the component
    */
   public void remove(int entityId) {
-    GameObject entity = entityManager.getEntity(entityId);
+    GameObject entity = ecManager.getEntity(entityId);
     T comp = get(entityId);
     if (comp != null) {
-      componentManager.removeComponent(componentClass, comp.getId());
+      ecManager.removeComponent(componentClass, comp.getId());
       entity.removeComponent(comp.getId());
     }
   }
 
   public List<T> getComponents() {
     // NOTE: putting method call here can make sure that newly added components mid-game are included
-    return componentManager.getComponents(componentClass);
+    return ecManager.getComponents(componentClass);
   }
 }
