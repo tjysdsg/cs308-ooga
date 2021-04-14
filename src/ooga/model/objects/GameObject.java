@@ -14,6 +14,7 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   private final String name;
   private double x, y;
   private Vector velocity;
+  private boolean collidable = true;
   private double height, width;
   List<ActionInfo> onCollide;
 
@@ -22,9 +23,11 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
     this.name = name;
     this.components = new ArrayList<>();
   }
+
   public List<ActionInfo> getActions() {
     return this.onCollide;
   }
+
   public boolean isA(String type) {
     return false;
   }
@@ -32,6 +35,14 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   // FIXME: since we use systems to update data, do we need this?
   @Override
   public void setOnUpdate(Runnable callback) {
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public boolean isCollidable() {
+    return collidable;
   }
 
   public void setX(double x) {
@@ -88,6 +99,10 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
 
   public void addComponent(Component component) {
     this.components.add(component);
+  }
+
+  public void removeComponent(int id) {
+    components.removeIf(comp -> comp.getId() == id);
   }
 
   public Vector getVelocity() {

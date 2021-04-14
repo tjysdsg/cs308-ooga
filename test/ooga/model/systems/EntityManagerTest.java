@@ -1,7 +1,6 @@
 package ooga.model.systems;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
@@ -11,11 +10,11 @@ import org.junit.jupiter.api.Test;
 
 public class EntityManagerTest {
 
-  EntityManager entityManager;
+  ECManager ecManager;
   GameObject go;
 
   EntityManagerTest() {
-    entityManager = new EntityManager();
+    ecManager = new ECManager(null);
   }
 
   @BeforeEach
@@ -24,7 +23,7 @@ public class EntityManagerTest {
 
   @Test
   void testCreateEntity() {
-    go = entityManager.createEntity("Test game object");
+    go = ecManager.createEntity("Test game object");
     assertNotNull(go);
   }
 
@@ -32,11 +31,11 @@ public class EntityManagerTest {
   void testGetAllEntities() {
     int numGOs = 10;
     for (int i = 0; i < numGOs; ++i) {
-      go = entityManager.createEntity(Integer.toString(i));
+      go = ecManager.createEntity(Integer.toString(i));
       assertNotNull(go);
     }
 
-    List<GameObject> objects = entityManager.getEntities();
+    List<GameObject> objects = ecManager.getEntities();
     assertEquals(numGOs, objects.size());
   }
 

@@ -1,4 +1,4 @@
-package ooga.model.util;
+package ooga.model.actions;
 
 import ooga.model.objects.GameObject;
 
@@ -11,6 +11,7 @@ public class CollisionAction {
   public CollisionAction(GameObject self, GameObject hitter, String payload) {
     this.self = self;
     this.hitter = hitter;
+    this.payload = payload;
   }
 
   public GameObject getSelf() {

@@ -1,7 +1,5 @@
 package ooga.model.systems;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import ooga.model.objects.GameObject;
 import ooga.model.components.Component;
@@ -22,11 +20,11 @@ class TestComponent extends Component {
 
 public class ComponentManagerTest {
 
-  ComponentManager componentManager;
+  ECManager ecManager;
   GameObject go;
 
   ComponentManagerTest() {
-    componentManager = new ComponentManager();
+    ecManager = new ECManager(null);
   }
 
   @BeforeEach
@@ -36,16 +34,28 @@ public class ComponentManagerTest {
 
   @Test
   void testCreateComponent() {
-    TestComponent component = componentManager.createComponent(go, TestComponent.class);
+    TestComponent component = ecManager.createComponent(go, TestComponent.class);
     assertNotNull(component);
   }
 
   @Test
   void testSystemGetComponent() {
-    PlayerSystem playerSystem = new PlayerSystem(componentManager);
-    componentManager.createComponent(go, PlayerComponent.class);
-    var comps = playerSystem.getComponents();
+    PlayerSystem playerSystem = new PlayerSystem(ecManager);
+    ecManager.createComponent(go, PlayerComponent.class);
+    var comps = playerSystem.getComponentMapper(PlayerComponent.class).getComponents();
     assertEquals(1, comps.size());
+  }
+
+  @Test
+  void testRemoveComponent() {
+    ecManager.createComponent(go, PlayerComponent.class);
+    ecManager.createComponent(go, PlayerComponent.class);
+    ecManager.createComponent(go, PlayerComponent.class);
+    Component comp = ecManager.createComponent(go, PlayerComponent.class);
+
+    ecManager.removeComponent(PlayerComponent.class, comp.getId());
+    var comps = ecManager.getComponents(PlayerComponent.class);
+    assertEquals(3, comps.size());
   }
 
   @Test
@@ -55,7 +65,7 @@ public class ComponentManagerTest {
     go.addComponent(comp1);
     go.addComponent(comp2);
 
-    componentManager.registerExistingComponents(List.of(go));
+    ecManager.registerExistingComponents(List.of(go));
     assertNotEquals(9999, comp1.getId());
     assertNotEquals(9999, comp2.getId());
     assertEquals(go, comp1.getOwner());

@@ -30,6 +30,7 @@ public class GameList extends FlowPane {
   private ObservableResource resources;
   private Preferences prefs;
   private StringBinding directoryTitle;
+  private Consumer<String> onRun;
 
   public GameList(ObservableResource resources, StackPane dialogPane) {
     presentDirectories = new HashSet<>();
@@ -95,8 +96,28 @@ public class GameList extends FlowPane {
       return;
     }
     GameItem newGame = new GameItem(directory);
+
     getChildren().add(0, newGame);
     newGame.setOnAction(this::notifySelection);
+    newGame.setOnDelete((path) ->  {
+      presentDirectories.remove(path);
+
+      String game_dirs = prefs.get(GAME_DIRS_KEY, "");
+      game_dirs = game_dirs.replace(path, "");
+
+      while (!game_dirs.replaceAll("::", ":").equals(game_dirs)) {
+        game_dirs = game_dirs.replaceAll("::", ":");
+      }
+
+      game_dirs = game_dirs.replaceAll("^:|:$", "");
+
+      logger.debug("Game Directories is now: {}", game_dirs);
+
+      prefs.put(GAME_DIRS_KEY, game_dirs);
+
+      getChildren().remove(newGame);
+    });
+    newGame.setOnRun(this::notifyRun);
     presentDirectories.add(directory);
     notifySelection(directory);
 
@@ -122,7 +143,19 @@ public class GameList extends FlowPane {
     }
   }
 
+  private void notifyRun(String path) {
+    if (onRun != null) {
+      onRun.accept(path);
+    } else {
+      logger.warn("Callback not set on GameList run notification");
+    }
+  }
+
   public void setOnSelection(Consumer<String> selectionCallback) {
     this.selectionCallback = selectionCallback;
+  }
+
+  public void setOnRun(Consumer<String> runCallback) {
+    this.onRun = runCallback;
   }
 }
