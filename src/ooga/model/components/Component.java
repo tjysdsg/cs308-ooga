@@ -8,6 +8,7 @@ public class Component {
   private int id;
 
   public Component(int id, GameObject owner) {
+    this.id = id;
     this.owner = owner;
   }
 

@@ -7,9 +7,10 @@ import com.squareup.moshi.Json;
 import ooga.model.objects.GameObject;
 import ooga.model.systems.ActionManager;
 import ooga.model.systems.BaseSystem;
-import ooga.model.systems.ComponentManager;
-import ooga.model.systems.EntityManager;
+import ooga.model.systems.ECManager;
+import ooga.model.systems.HealthSystem;
 import ooga.model.systems.InputManager;
+import ooga.model.systems.PlayerSystem;
 import ooga.model.systems.TransformSystem;
 
 // TODO: implement methods
@@ -17,39 +18,30 @@ class GameLevel implements Level {
 
   private String name;
   int levelID;
-  @Json(name = "objects") List<GameObject> gameObjects;
-
-  private transient List<BaseSystem> systems;
-  private transient EntityManager entityManager;
-  private transient ComponentManager componentManager;
-  private transient InputManager inputManager;
-  private transient ActionManager actionManager;
+  private transient List<BaseSystem> systems = new ArrayList<>();
+  @Json(name = "objects")
+  private ECManager ecManager;
+  private transient InputManager inputManager = new InputManager();
+  private transient ActionManager actionManager = new ActionManager();
 
   // MUST BE HERE!!! MOSHI USES THIS
   public GameLevel() {
   }
 
   public void init() {
-    entityManager = new EntityManager();
-    componentManager = new ComponentManager();
-    inputManager = new InputManager();
-    actionManager = new ActionManager();
     // TODO: create game objects here
-    //gameObjects = entityManager.getEntities();
 
     // TODO: load configs and create components
 
     // TODO: create systems here and add them to systems
-    systems = new ArrayList<>();
-    systems.add(new TransformSystem(entityManager));
+    systems.add(new TransformSystem(ecManager));
+    systems.add(new HealthSystem(ecManager));
+    systems.add(new PlayerSystem(ecManager));
 
     for (var s : systems) {
       s.registerAllInputs(inputManager);
       s.registerAllActions(actionManager);
     }
-
-    // TODO: Move to Moshi adapter
-    componentManager.registerExistingComponents(gameObjects);
   }
 
   public void handleCode(String k, boolean on) {
@@ -58,34 +50,29 @@ class GameLevel implements Level {
 
   @Override
   public String getName() {
-    return null;
+    return name;
   }
 
   //TODO: Probably won't need this. And can remove
   @Override
   public int getID() {
-    return 0;
+    return levelID;
   }
 
   @Override
   public void update(double deltaTime) {
-    for (System s : systems) {
+    for (BaseSystem s : systems) {
       s.update(deltaTime);
     }
   }
 
   @Override
   public List<GameObject> generateObjects() {
-    return gameObjects;
+    return ecManager.getEntities();
   }
 
   @Override
-  public EntityManager getEntityManager() {
-    return entityManager;
-  }
-
-  @Override
-  public ComponentManager getComponentManager() {
-    return componentManager;
+  public ECManager getECManager() {
+    return ecManager;
   }
 }

@@ -11,6 +11,7 @@
           "payload": "squirrel"
         }
       ],
+      "collideable": true,
       "components": [
         {
           "type": "PlayerController",
@@ -50,9 +51,15 @@
           "with" : "enemy",
           "action" : "jump_self",
           "position": "top"
-        }, {
+        },
+        {
           "with" : "spiky goomba",
           "action" : "dies"
+        },
+        {
+          "with" : "enemy",
+          "action": "change_image",
+          "payload": "attacked_mario"
         }
       ]
     },

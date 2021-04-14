@@ -18,9 +18,9 @@ import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory;
 import ooga.model.components.Component;
 import ooga.model.components.PlayerComponent;
 import ooga.model.exceptions.InvalidDataFileException;
+import ooga.model.objects.EntityManagerAdapter;
 import ooga.model.exceptions.NotADirectoryException;
 import ooga.model.objects.GameObject;
-import ooga.model.objects.GameObjectAdapter;
 import ooga.model.objects.ObjectFactory;
 
 public class LevelFactory {
@@ -50,8 +50,8 @@ public class LevelFactory {
 
     ObjectFactory objectFactory = new ObjectFactory(presetMap);
 
-    GameObjectAdapter objectAdapter = new GameObjectAdapter(objectFactory);
-    Moshi objectMoshi = new Moshi.Builder().add(objectAdapter).build();
+    EntityManagerAdapter entityManagerAdapter = new EntityManagerAdapter(objectFactory);
+    Moshi objectMoshi = new Moshi.Builder().add(entityManagerAdapter).build();
     levelAdapter = objectMoshi.adapter(GameLevel.class);
   }
 
