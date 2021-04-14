@@ -1,5 +1,6 @@
 package ooga.view;
 
+import java.io.File;
 import java.util.List;
 
 public interface ModelController {
