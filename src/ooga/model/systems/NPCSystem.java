@@ -10,7 +10,8 @@ public class NPCSystem extends PlayerSystem{
         super(ecManager);
     }
 
+    @Override
     public void init(){
-
+        initPlayerType(PlayerComponent.PlayerType.NEUTRAL);
     }
 }
