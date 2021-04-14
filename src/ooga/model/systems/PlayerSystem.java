@@ -4,6 +4,7 @@ import java.util.List;
 import ooga.model.annotations.Track;
 import ooga.model.components.PlayerComponent;
 import ooga.model.components.PlayerComponent.HorizontalMovementStatus;
+import ooga.model.components.PlayerComponent.VerticalMovementStatus;
 import ooga.model.objects.GameObject;
 
 // TODO: add tests for this
@@ -11,6 +12,8 @@ import ooga.model.objects.GameObject;
 public class PlayerSystem extends ComponentBasedSystem {
 
   private ComponentMapper<PlayerComponent> componentMapper;
+  // TODO: support customizing gravitational acceleration
+  private double gravitationalAcceleration = 9.8;
   // TODO: support active and inactive players
 
   public PlayerSystem(ECManager ecManager) {
@@ -22,14 +25,11 @@ public class PlayerSystem extends ComponentBasedSystem {
     addMapping("right", this::handleRight);
     addMapping("left", this::handleLeft);
     addMapping("jump", this::handleJump);
-    addCollisionMapping("jump_self", event -> handleJump(event.getSelf()));
+    addCollisionMapping("jump_self", event -> doJump(event.getSelf()));
   }
 
   public List<PlayerComponent> getPlayers() {
     return componentMapper.getComponents();
-  }
-
-  public void handleJump(GameObject obj) {
   }
 
   private void handleHorizontalMovement(boolean run, int direction) {
@@ -52,10 +52,26 @@ public class PlayerSystem extends ComponentBasedSystem {
     handleHorizontalMovement(on, PlayerComponent.LEFT_DIRECTION);
   }
 
-  void handleJump(boolean on) {
+  private double calculateJumpVerticalSpeed(double maxJumpHeight, double timeToApex) {
+    // h = vt - 0.5 gt^2
+    // v = (h + 0.5 gt^2) / t
+    return (maxJumpHeight + 0.5 * gravitationalAcceleration * timeToApex * timeToApex) / timeToApex;
+  }
+
+  public void doJump(GameObject go, PlayerComponent p) {
+    go.setVelocityY(calculateJumpVerticalSpeed(p.getMaxJumpHeight(), p.getTimeToJumpApex()));
+  }
+
+  public void doJump(GameObject go) {
+    doJump(go, componentMapper.get(go.getId()));
+  }
+
+  private void handleJump(boolean on) {
     List<PlayerComponent> players = getPlayers();
     for (PlayerComponent p : players) {
-      // TODO: implement jumping mechanism
+      if (p.getVerticalStatus() == VerticalMovementStatus.GROUNDED) {
+        doJump(p.getOwner(), p);
+      }
     }
   }
 
@@ -64,11 +80,18 @@ public class PlayerSystem extends ComponentBasedSystem {
     List<PlayerComponent> players = getPlayers();
     for (PlayerComponent p : players) {
       GameObject go = p.getOwner();
+
+      // set horizontal velocity of player if it's moving
       go.setVelocityX(
           p.getHorizontalStatus() == HorizontalMovementStatus.RUNNING
               ? p.getDirection() * p.getMaxSpeed() : 0
       );
-      // TODO: set vertical velocity accordingly go.setVelocityY();
+
+      // change the vertical velocity according to gravity if in air
+      if (p.getVerticalStatus() == VerticalMovementStatus.AIRBORNE) {
+        double vy = go.getVelocity().getY();
+        go.setVelocityY(vy - gravitationalAcceleration * deltaTime);
+      }
     }
   }
 }

@@ -6,7 +6,9 @@ public class PlayerComponent extends Component {
 
   public static final int RIGHT_DIRECTION = 1;
   public static final int LEFT_DIRECTION = -1;
-  private static final int DEFAULT_MAX_SPEED = 100;
+  private static final double DEFAULT_MAX_SPEED = 100;
+  private static final double DEFAULT_MAX_JUMP_HEIGHT = 5;
+  private static final double DEFAULT_TIME_TO_JUMP_APEX = 0.8;
 
   public enum HorizontalMovementStatus {
     /**
@@ -25,13 +27,9 @@ public class PlayerComponent extends Component {
      */
     GROUNDED,
     /**
-     * Falling in air
+     * In air
      */
-    FALLING,
-    /**
-     * Jumping, different from FALLING because the player position is rising
-     */
-    RISING,
+    AIRBORNE,
   }
 
   /**
@@ -55,6 +53,16 @@ public class PlayerComponent extends Component {
    */
   private double maxSpeed = DEFAULT_MAX_SPEED;
 
+  /**
+   * Max jump height
+   */
+  private double maxJumpHeight = DEFAULT_MAX_JUMP_HEIGHT;
+
+  /**
+   * Time needed for player to reach its max jump height, in seconds
+   */
+  private double timeToJumpApex = DEFAULT_TIME_TO_JUMP_APEX;
+
   public PlayerComponent(int id, GameObject owner) {
     super(id, owner);
   }
@@ -75,6 +83,22 @@ public class PlayerComponent extends Component {
     this.maxSpeed = maxSpeed;
   }
 
+  public double getMaxJumpHeight() {
+    return maxJumpHeight;
+  }
+
+  public void setMaxJumpHeight(double maxJumpHeight) {
+    this.maxJumpHeight = maxJumpHeight;
+  }
+
+  public double getTimeToJumpApex() {
+    return timeToJumpApex;
+  }
+
+  public void setTimeToJumpApex(double timeToJumpApex) {
+    this.timeToJumpApex = timeToJumpApex;
+  }
+
   public void switchDirection() {
     direction = -direction;
   }
@@ -85,5 +109,13 @@ public class PlayerComponent extends Component {
 
   public HorizontalMovementStatus getHorizontalStatus() {
     return horizontalStatus;
+  }
+
+  public void setVerticalStatus(VerticalMovementStatus verticalStatus) {
+    this.verticalStatus = verticalStatus;
+  }
+
+  public VerticalMovementStatus getVerticalStatus() {
+    return verticalStatus;
   }
 }
