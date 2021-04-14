@@ -9,8 +9,8 @@ public class CollisionSystem extends GameObjectBasedSystem{
 
   private ActionManager myActionManager;
 
-  public CollisionSystem(EntityManager entityManager, ActionManager actionManager) {
-    super(entityManager);
+  public CollisionSystem(ECManager ecmanager, ActionManager actionManager) {
+    super(ecmanager);
     myActionManager = actionManager;
 
   }
