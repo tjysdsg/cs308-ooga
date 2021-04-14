@@ -24,8 +24,7 @@ public class EnemySystems extends PlayerSystem{
     /**
      * Now assume that the the enemy will only attack the player.
      */
-
-    private void loopHate(){
+    public void loopHate(){
         List<HateComponent> hateAll= hateMapper.getComponents();
         for(int i=0;i<hateAll.size();i++){
             for(int j=i+1;j<hateAll.size();j++){
@@ -36,6 +35,4 @@ public class EnemySystems extends PlayerSystem{
             }
         }
     }
-
-
 }
