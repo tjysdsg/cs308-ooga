@@ -19,6 +19,32 @@ public class PlayerComponent extends Component {
     RUNNING,
   }
 
+  public enum PlayerType{
+    /**
+     * Neutral NPC
+     */
+    NEUTRAL,
+    /**
+     * Player ccontrolled
+     */
+    PLAYER,
+    /**
+     * Enemies
+     */
+    ENEMY
+  }
+
+  public enum CharacterStatus{
+    /**
+     * Player controlled
+     */
+    Active,
+    /**
+     * Waited for switch
+     */
+    StandBy
+  }
+
   public enum VerticalMovementStatus {
     /**
      * Standing/running on ground
