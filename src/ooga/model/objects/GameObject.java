@@ -12,14 +12,14 @@ import org.apache.logging.log4j.Logger;
 
 public class GameObject implements ObservableObject, Comparable<GameObject> {
 
-  private List<Component> components;
+  private List<Component> components = new ArrayList<>();
   private int id;
   private String name;
   private double x, y;
   private transient Vector velocity = new Vector(0, 0);
   private boolean collidable = true;
   private double height, width;
-  private List<ActionInfo> onCollide;
+  private List<ActionInfo> onCollide = new ArrayList<>();
   private transient Runnable positionCallback;
   private static final Logger logger = LogManager.getLogger(PlayerSystem.class);
 

@@ -1,17 +1,13 @@
 
-
 [
   {
     "name": "goomba",
     "height": 50,
     "width": 30,
-    "imageID": "goombaimage",
+    "imageID": "goomba",
     "components" : [
       {
         "type" : "PlayerComponent"
-      },
-      {
-        "type" : "AOEComponent"
       }
     ]
   },
@@ -19,7 +15,13 @@
     "name": "mario",
     "height": 50,
     "width": 50,
-    "imageID": "marioimage"
+    "imageID": "mario"
+  },
+  {
+    "name" : "block",
+    "height" : 50,
+    "width" : 50,
+    "imageID" : "block"
   }
 ]
 
