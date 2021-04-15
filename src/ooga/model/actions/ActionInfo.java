@@ -21,11 +21,12 @@ public class ActionInfo {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof ActionInfo)) {
+    if (!(o instanceof CollisionInfo)) {
       return false;
     }
-    ActionInfo that = (ActionInfo) o;
-    return Objects.equals(with, that.with) && Objects.equals(position, that.position);
+    CollisionInfo
+        info = (CollisionInfo) o;
+    return info.other().isA(this.with) && position.equals(info.position());
   }
 
   public String getAction() {

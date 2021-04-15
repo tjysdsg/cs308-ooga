@@ -10,7 +10,7 @@ import ooga.model.systems.BaseSystem;
 import ooga.model.systems.ECManager;
 import ooga.model.systems.HealthSystem;
 import ooga.model.systems.InputManager;
-import ooga.model.systems.PlayerSystem;
+import ooga.model.systems.creature.PlayerSystem;
 import ooga.model.systems.TransformSystem;
 
 // TODO: implement methods
