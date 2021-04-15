@@ -21,7 +21,7 @@ public class ObjectView extends StackPane {
     this.playerImage = new ImageView();
     File fileImage =
         new File(
-            "/home/joshu/schoolStuff/308/ooga_team08/src/ooga/view/resources/images/mario.png");
+            "src/ooga/view/resources/images/mario.png");
     Image image = null;
     try {
     image =

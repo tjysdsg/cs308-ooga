@@ -49,7 +49,7 @@ public class View {
     }
     createAnimations();
     // setScene(splashScreen);
-    startGame("/home/joshu/schoolStuff/308/ooga_team08/data/example/");
+    startGame("data/example/");
     gameSelection.setOnGameSelected(this::startGame);
     exitApplication =
         () -> {

@@ -54,7 +54,8 @@ public class Controller implements ModelController {
 
   @Override
   public void step() {
-    model.step();
+    // FIXME
+    model.step(0);
   }
 
   @Override
