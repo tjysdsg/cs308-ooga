@@ -16,4 +16,7 @@ public interface Level {
   List<GameObject> generateObjects();
 
   ECManager getECManager();
+
+  void handleCode(String k, boolean on);
+
 }

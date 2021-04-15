@@ -36,7 +36,8 @@ public class GameItem extends VBox {
     VBox.setVgrow(game, Priority.ALWAYS);
     Label label = new Label();
     if (!gamePath.isEmpty()) {
-      game.setStyle("-fx-background-image: url('" + encodedPath + "thumbnail.jpg');");
+      game.setStyle(new StringBuilder().append("-fx-background-image: url('").append(encodedPath)
+          .append("thumbnail.jpg');").toString());
       label.setText(gameLabel);
     }
     game.setOnAction(e -> notifyAction());

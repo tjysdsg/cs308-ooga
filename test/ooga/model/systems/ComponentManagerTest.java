@@ -24,7 +24,7 @@ public class ComponentManagerTest {
   GameObject go;
 
   ComponentManagerTest() {
-    ecManager = new ECManager(null);
+    ecManager = new ECManager(null, null);
   }
 
   @BeforeEach

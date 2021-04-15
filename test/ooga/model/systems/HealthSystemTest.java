@@ -18,7 +18,7 @@ public class HealthSystemTest {
 
   @BeforeEach
   void setup() {
-    ecManager = new ECManager(null);
+    ecManager = new ECManager(null, null);
     healthSystem = new HealthSystem(ecManager);
 
     go = ecManager.createEntity("test entity");
@@ -28,14 +28,14 @@ public class HealthSystemTest {
   @Test
   void testChangeHealth() {
     healthComponent.setHealth(100);
-    healthSystem.changeHealth(go.getId(), -50);
+    healthSystem.changeHealth(go.getId(), -50, false);
     assertEquals(50, healthComponent.getHealth());
   }
 
   @Test
   void testDeathHealth() {
     healthComponent.setHealth(100);
-    healthSystem.changeHealth(go.getId(), -100);
+    healthSystem.changeHealth(go.getId(), -100, false);
     healthSystem.update(0.1);
     assertEquals(0, healthComponent.getHealth());
     assertEquals(0, ecManager.getEntities().size());
