@@ -30,6 +30,7 @@ public class GameScene extends Scene {
   private GameArea gameArea;
   private Consumer<StackPane> onEscape;
   private GameLoop loop;
+  private ImageConfiguration images;
 
   public GameScene(String directory, ObservableResource resources) {
     super(new StackPane(), WIDTH, HEIGHT, Color.BLACK);
@@ -39,9 +40,11 @@ public class GameScene extends Scene {
     this.directory = directory;
     this.gameArea = new GameArea();
     this.loop = new GameLoop();
+    this.images = new ImageConfiguration(directory);
+
     File gameDirectory = new File(directory);
     model.setOnNewObject(e -> {
-      ObjectView obj = new ObjectView(e);
+      ObjectView obj = new ObjectView(e, images);
       gameArea.addObject(obj);
     });
 
