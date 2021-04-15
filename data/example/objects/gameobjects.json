@@ -8,8 +8,18 @@
     "onCollide": [
       {
         "with": "block",
-        "action": "grounded",
-        "position": "bottom"
+        "action": "block_player",
+        "position": "top"
+      },
+      {
+        "with": "mario",
+        "action": "block_player",
+        "position": "top"
+      },
+      {
+        "with": "qblock",
+        "action": "block_player",
+        "position": "top"
       }
     ],
     "components" : [

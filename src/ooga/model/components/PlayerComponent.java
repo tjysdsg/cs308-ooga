@@ -1,13 +1,15 @@
 package ooga.model.components;
 
+import java.util.ArrayList;
+import java.util.List;
 import ooga.model.objects.GameObject;
 
 public class PlayerComponent extends Component {
 
   public static final int RIGHT_DIRECTION = 1;
   public static final int LEFT_DIRECTION = -1;
-  private static final double DEFAULT_MAX_SPEED = 50;
-  private static final double DEFAULT_JUMP_IMPULSE = 200;
+  private static final double DEFAULT_MAX_SPEED = 100;
+  private static final double DEFAULT_JUMP_IMPULSE = 100;
 
   public enum HorizontalMovementStatus {
     /**
@@ -94,6 +96,16 @@ public class PlayerComponent extends Component {
    * The initial vertical velocity that player has when it jumps
    */
   private double jumpImpulse = DEFAULT_JUMP_IMPULSE;
+
+  private List<GameObject> touchedGround = new ArrayList<>();
+
+  public List<GameObject> getTouchedGround() {
+    return touchedGround;
+  }
+
+  public void resetTouchedGround(List<GameObject> touchedGround) {
+    this.touchedGround = new ArrayList<>();
+  }
 
   // only for moshi
   protected PlayerComponent() {

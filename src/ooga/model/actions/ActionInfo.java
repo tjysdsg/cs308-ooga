@@ -24,8 +24,7 @@ public class ActionInfo {
     if (!(o instanceof CollisionInfo)) {
       return false;
     }
-    CollisionInfo
-        info = (CollisionInfo) o;
+    CollisionInfo info = (CollisionInfo) o;
     return info.other().isA(this.with) && position.equals(info.position());
   }
 

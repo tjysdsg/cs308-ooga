@@ -1,6 +1,8 @@
 package ooga.model.systems.creature;
 
+import java.util.ArrayList;
 import java.util.List;
+import ooga.model.Vector;
 import ooga.model.annotations.Track;
 import ooga.model.components.PlayerComponent;
 import ooga.model.components.PlayerComponent.HorizontalMovementStatus;
@@ -31,10 +33,7 @@ public class PlayerSystem extends ComponentBasedSystem {
     addMapping("jump", this::handleJump);
 
     addCollisionMapping("jump_self", event -> doJump(event.getSelf()));
-    addCollisionMapping("grounded", event -> onGrounded(event.getSelf()));
-
-    // TODO: add this to 'onCollide' of player in the config files
-    addCollisionMapping("player_grounded", event -> onGrounded(event.getSelf()));
+    addCollisionMapping("block_player", event -> blockPlayer(event.getSelf(), event.getHitter()));
   }
 
   public List<PlayerComponent> getPlayers() {
@@ -53,10 +52,15 @@ public class PlayerSystem extends ComponentBasedSystem {
     }
   }
 
-  /** Callback when the player touches ground */
-  private void onGrounded(GameObject go) {
+  /**
+   * Callback when the player touches ground
+   */
+  private void blockPlayer(GameObject go, GameObject other) {
     PlayerComponent p = componentMapper.get(go.getId());
-    p.setVerticalStatus(VerticalMovementStatus.GROUNDED);
+    if (other.getY() + other.getHeight() / 2 >= go.getY() - go.getHeight() / 2) { // bottom
+      go.setVelocityY(0);
+      p.setVerticalStatus(VerticalMovementStatus.GROUNDED);
+    }
   }
 
   private void handleRight(boolean on) {
@@ -69,6 +73,8 @@ public class PlayerSystem extends ComponentBasedSystem {
   }
 
   public void doJump(GameObject go, PlayerComponent p) {
+    // adding a little bit of vertical offset to make the player "break free" the collision
+    go.setY(go.getY() + 3.0);
     go.setVelocityY(p.getJumpImpulse());
     p.setVerticalStatus(VerticalMovementStatus.AIRBORNE);
   }
