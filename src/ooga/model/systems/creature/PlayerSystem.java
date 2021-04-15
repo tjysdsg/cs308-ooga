@@ -31,10 +31,10 @@ public class PlayerSystem extends ComponentBasedSystem {
     addMapping("jump", this::handleJump);
 
     addCollisionMapping("jump_self", event -> doJump(event.getSelf()));
-    addCollisionMapping("grounded", event -> onGrounded(event.getSelf()));
-
-    // TODO: add this to 'onCollide' of player in the config files
-    addCollisionMapping("player_grounded", event -> onGrounded(event.getSelf()));
+    addCollisionMapping("player_blocked_bottom", event -> obstacleOnBottom(event.getSelf()));
+    addCollisionMapping("player_blocked_right", event -> obstacleOnRight(event.getSelf()));
+    addCollisionMapping("player_blocked_left", event -> obstacleOnLeft(event.getSelf()));
+    addCollisionMapping("player_blocked_top", event -> obstacleOnTop(event.getSelf()));
   }
 
   public List<PlayerComponent> getPlayers() {
@@ -53,10 +53,34 @@ public class PlayerSystem extends ComponentBasedSystem {
     }
   }
 
-  /** Callback when the player touches ground */
-  private void onGrounded(GameObject go) {
+  /**
+   * Callback when the player touches ground
+   */
+  private void obstacleOnBottom(GameObject go) {
     PlayerComponent p = componentMapper.get(go.getId());
+    if (go.getVelocity().getY() > 0) {
+      go.setVelocityY(0);
+    }
     p.setVerticalStatus(VerticalMovementStatus.GROUNDED);
+  }
+
+  private void obstacleOnTop(GameObject go) {
+    PlayerComponent p = componentMapper.get(go.getId());
+    if (go.getVelocity().getY() < 0) {
+      go.setVelocityY(0);
+    }
+  }
+
+  private void obstacleOnLeft(GameObject go) {
+    if (go.getVelocity().getX() < 0) {
+      go.setVelocityX(0);
+    }
+  }
+
+  private void obstacleOnRight(GameObject go) {
+    if (go.getVelocity().getX() > 0) {
+      go.setVelocityX(0);
+    }
   }
 
   private void handleRight(boolean on) {
@@ -69,6 +93,8 @@ public class PlayerSystem extends ComponentBasedSystem {
   }
 
   public void doJump(GameObject go, PlayerComponent p) {
+    // adding a little bit of vertical offset to make the player "break free" the collision
+    go.setY(go.getY() + 3.0);
     go.setVelocityY(p.getJumpImpulse());
     p.setVerticalStatus(VerticalMovementStatus.AIRBORNE);
   }

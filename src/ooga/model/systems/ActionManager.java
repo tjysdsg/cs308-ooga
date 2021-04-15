@@ -23,11 +23,10 @@ public class ActionManager {
 
   public void handleAction(GameObject self, GameObject other, CollisionInfo a) {
     List<ActionInfo> actionInfos = self.getActions();
-    for (var ai : actionInfos) {
-      // FIXME: add this back when collision direction is calculated correctly
-      //  if (ai.equals(a)) {
-      doAction(ai, self, other);
-      // }
+    for (ActionInfo ai : actionInfos) {
+      if (ai.equals(a)) {
+        doAction(ai, self, other);
+      }
     }
   }
 

@@ -38,7 +38,7 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   }
 
   public boolean isA(String type) {
-    return false;
+    return name.equals(type);
   }
 
   public String getImageID() {

@@ -42,7 +42,6 @@ public class CollisionSystem extends GameObjectBasedSystem {
   }
 
   private void executeCollisions(int index, List<GameObject> collidableObjects) {
-    /*
     GameObject collidingObject = collidableObjects.get(index);
     double width = collidingObject.getWidth();
     double height = collidingObject.getHeight();
@@ -58,25 +57,6 @@ public class CollisionSystem extends GameObjectBasedSystem {
           || y >= collidedObject.getY() && y <= collidedObject.getY() + collidedObject
           .getHeight()) {
         collide(collidingObject, collidedObject);
-      }
-    }
-    */
-    GameObject self = collidableObjects.get(index);
-    double w1 = self.getWidth();
-    double h1 = self.getHeight();
-    double x1 = self.getX() - w1 / 2;
-    double y1 = self.getY() - h1 / 2;
-
-    for (int k = index + 1; k < collidableObjects.size(); k++) {
-      GameObject other = collidableObjects.get(k);
-      double w2 = other.getWidth();
-      double h2 = other.getHeight();
-      double x2 = other.getX() - w2 / 2;
-      double y2 = other.getY() - h2 / 2;
-
-      if (x1 < x2 + w2 && x1 + w1 > x2 &&
-          y1 < y2 + h2 && y1 + h1 > y2) {
-        collide(self, other);
       }
     }
   }
