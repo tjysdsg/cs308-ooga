@@ -4,15 +4,22 @@ import ooga.model.objects.GameObject;
 
 public class HealthComponent extends Component {
 
-  private double health = 0;
+  protected double health = 0;
 
   public HealthComponent(int id, GameObject owner) {
     super(id, owner);
   }
 
-  public double increment(double delta) {
-    health += delta;
-    return health;
+  public void healthIncrement(double delta, boolean increase) {
+      if(increase){
+          if(delta>=0){
+              health+=delta;
+          }
+          return;
+      }
+      if(delta<0){
+          health+=delta;
+      }
   }
 
   public double getHealth() {

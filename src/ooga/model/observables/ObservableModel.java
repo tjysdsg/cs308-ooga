@@ -8,5 +8,4 @@ public interface ObservableModel {
   void setOnLevelChange(Consumer<String> callback);
   void setOnNewObject(Consumer<ObservableObject> callback);
   void setOnTextUpdate(Consumer<String> text);
-
 }

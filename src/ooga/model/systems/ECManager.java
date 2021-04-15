@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+
+import ooga.model.Configuration;
 import ooga.model.components.Component;
 import ooga.model.objects.GameObject;
 import ooga.model.objects.ObjectFactory;
 import ooga.model.objects.ObjectInstance;
+import ooga.model.observables.ObservableObject;
 
 /**
  * System for creating, accessing, updating, and deleting entities/components.
@@ -19,12 +23,14 @@ public class ECManager {
   private Map<Integer, GameObject> entities;
   private Map<Class, Map<Integer, Component>> existingComponents;
   private ObjectFactory factory;
+  private Consumer<ObservableObject> newObjectCallback;
 
-  public ECManager(ObjectFactory factory) {
+  public ECManager(ObjectFactory factory, Consumer<ObservableObject> newObjectCallback) {
     this.factory = factory;
     idManager = new IDManager();
     entities = new HashMap<>();
     existingComponents = new HashMap<>();
+    this.newObjectCallback = newObjectCallback;
   }
 
   public List<GameObject> getEntities() {
@@ -60,6 +66,13 @@ public class ECManager {
   public void addEntity(ObjectInstance instance) {
     GameObject newObject = factory.buildObject(instance);
     entities.put(newObject.getId(), newObject);
+    notifyNewObject(newObject);
+  }
+
+  private void notifyNewObject(GameObject newObject) {
+    if (newObjectCallback != null) {
+      newObjectCallback.accept(newObject);
+    }
   }
 
   public <T> List<T> getComponents(Class<T> componentClass) {
