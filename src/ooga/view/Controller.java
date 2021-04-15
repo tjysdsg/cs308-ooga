@@ -7,7 +7,7 @@ import java.util.Map;
 import ooga.model.Model;
 
 public class Controller implements ModelController {
-  private Map<String, String> code2action; // code -> actions
+  private Map<String, String> code2action = Map.of("a", "left", "d", "right"); // code -> actions
   private Model model;
 
   public Controller(Model model) {
@@ -24,7 +24,7 @@ public class Controller implements ModelController {
   // TODO:Wait for the model
   @Override
   public void handleKeyPress(String code) {
-    model.handleCode("left", true);
+    model.handleCode(code2action.get(code), true);
   }
 
   @Override

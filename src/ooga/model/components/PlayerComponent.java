@@ -6,7 +6,7 @@ public class PlayerComponent extends Component {
 
   public static final int RIGHT_DIRECTION = 1;
   public static final int LEFT_DIRECTION = -1;
-  private static final double DEFAULT_MAX_SPEED = 100;
+  private static final double DEFAULT_MAX_SPEED = 1;
   private static final double DEFAULT_MAX_JUMP_HEIGHT = 5;
   private static final double DEFAULT_TIME_TO_JUMP_APEX = 0.8;
 
@@ -21,7 +21,7 @@ public class PlayerComponent extends Component {
     RUNNING,
   }
 
-  public enum PlayerType{
+  public enum PlayerType {
     /**
      * Neutral NPC
      */
@@ -36,7 +36,7 @@ public class PlayerComponent extends Component {
     ENEMY
   }
 
-  public enum CharacterStatus{
+  public enum CharacterStatus {
     /**
      * Player controlled
      */
@@ -78,12 +78,12 @@ public class PlayerComponent extends Component {
    */
   protected HorizontalMovementStatus horizontalStatus = HorizontalMovementStatus.STILL;
 
-  public void setPlayerType(PlayerType playerType){
-    this.playerType=playerType;
+  public void setPlayerType(PlayerType playerType) {
+    this.playerType = playerType;
   }
 
-  public void setCharacterStatus (CharacterStatus characterStatus){
-    this.characterStatus= characterStatus;
+  public void setCharacterStatus(CharacterStatus characterStatus) {
+    this.characterStatus = characterStatus;
   }
 
   /**
@@ -100,6 +100,11 @@ public class PlayerComponent extends Component {
    * Time needed for player to reach its max jump height, in seconds
    */
   private double timeToJumpApex = DEFAULT_TIME_TO_JUMP_APEX;
+
+  // only for moshi
+  protected PlayerComponent() {
+    super();
+  }
 
   public PlayerComponent(int id, GameObject owner) {
     super(id, owner);

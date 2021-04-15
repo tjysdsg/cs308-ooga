@@ -110,6 +110,8 @@ public class PlayerSystem extends ComponentBasedSystem {
               ? p.getDirection() * p.getMaxSpeed()
               : 0);
 
+      // logger.info(go.getVelocity().getX());
+
       // change the vertical velocity according to gravity if in air
       if (p.getVerticalStatus() == VerticalMovementStatus.AIRBORNE) {
         double vy = go.getVelocity().getY();

@@ -60,20 +60,20 @@ public class GameScene extends Scene {
     // this.controller = game.getController();
     root.getChildren().add(gameArea);
     gameArea.requestFocus();
-    setOnKeyPressed(e -> handlePress(e.getCode()));
-    setOnKeyReleased(e -> handleRelease(e.getCode()));
+    setOnKeyPressed(e -> handlePress(e.getText()));
+    setOnKeyReleased(e -> handleRelease(e.getText()));
     loop.setOnUpdate(controller::step);
     loop.start();
   }
 
   private void handleInvalidGame() {}
 
-  private void handlePress(KeyCode code) {
-    if (code == KeyCode.ESCAPE) {
-      notifyEscape();
-      return;
-    }
-    else controller.handleKeyPress("");
+  private void handlePress(String code) {
+    // FIXME: if (code == KeyCode.ESCAPE) {
+    //   notifyEscape();
+    //   return;
+    // }
+    controller.handleKeyPress(code);
   }
 
   private void notifyEscape() {
@@ -93,7 +93,7 @@ public class GameScene extends Scene {
     this.onEscape = callback;
   }
 
-  private void handleRelease(KeyCode code) {}
+  private void handleRelease(String code) {}
 
   public void pauseGame() {}
 

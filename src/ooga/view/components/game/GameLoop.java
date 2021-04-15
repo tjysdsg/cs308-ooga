@@ -6,7 +6,7 @@ import javafx.animation.AnimationTimer;
 
 public class GameLoop extends AnimationTimer {
   private Consumer<Double> callback;
-  private long prevTime;
+  private long prevTime = System.nanoTime();
   private double delta;
 
   @Override
