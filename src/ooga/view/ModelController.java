@@ -26,6 +26,6 @@ public interface ModelController {
    */
   void setStrokeMapping(String code, String action);
   List<String> getLevels();
-  void step();
+  void step(double delta);
   void setGame(File gameDirectory) throws FileNotFoundException;
 }

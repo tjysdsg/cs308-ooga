@@ -53,9 +53,8 @@ public class Controller implements ModelController {
   }
 
   @Override
-  public void step() {
-    // FIXME
-    model.step(0);
+  public void step(double delta) {
+    model.step(delta);
   }
 
   @Override
