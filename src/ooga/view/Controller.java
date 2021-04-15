@@ -4,14 +4,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
+import javafx.scene.input.KeyCode;
 import ooga.model.Model;
 
 public class Controller implements ModelController {
 
   // code -> actions
-  private Map<String, String> code2action = Map.of(
-      "a", "left", "d", "right",
-      " ", "jump"
+  private Map<KeyCode, String> code2action = Map.of(
+      KeyCode.A, "left", KeyCode.D, "right",
+      KeyCode.SPACE, "jump", KeyCode.ESCAPE, "pause"
   );
   private Model model;
 
@@ -28,7 +29,7 @@ public class Controller implements ModelController {
 
   // TODO:Wait for the model
   @Override
-  public void handleKeyPress(String code) {
+  public void handleKeyPress(KeyCode code) {
     System.out.println(code);
     model.handleCode(code2action.get(code), true);
   }
@@ -47,7 +48,7 @@ public class Controller implements ModelController {
 
   // Self
   @Override
-  public void setStrokeMapping(String code, String action) {
+  public void setStrokeMapping(KeyCode code, String action) {
     code2action.put(code, action);
   }
 
