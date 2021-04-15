@@ -87,6 +87,10 @@ public class CollisionSystem extends GameObjectBasedSystem{
     if(collidingObject.getY()+collidingObject.getHeight() <= y+height){
       bComp =  Math.max(0, Math.min(x+width,collidingObject.getX()+collidingObject.getWidth()) - Math.max(x, collidingObject.getX()));
     }
+    if(lComp + rComp + tComp +bComp == 0){
+      if(collidingObject.getX() < x) return "right";
+      if(collidingObject.getX() > x) return "left";
+    }
 
     return calculateCollisionDirection(lComp,rComp,tComp,bComp);
   }
