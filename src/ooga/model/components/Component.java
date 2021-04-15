@@ -2,7 +2,7 @@ package ooga.model.components;
 
 import ooga.model.objects.GameObject;
 
-public class Component {
+public abstract class Component {
 
   private transient GameObject owner;
   private int id;

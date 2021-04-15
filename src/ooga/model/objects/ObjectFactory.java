@@ -4,9 +4,12 @@ import com.google.common.base.Preconditions;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
+import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory;
 import java.io.IOException;
 import java.util.Map;
+import ooga.model.LevelFactory;
 import ooga.model.Vector;
+import ooga.model.components.Component;
 import ooga.model.exceptions.TypeNotFoundException;
 import ooga.model.systems.IDManager;
 
@@ -19,7 +22,8 @@ public class ObjectFactory {
 
     public ObjectFactory(Map<String, GameObject> presetMap) {
         this.presetMap = Preconditions.checkNotNull(presetMap, "Preset Map shouldn't be null");
-        Moshi moshi = new Moshi.Builder().build();
+        PolymorphicJsonAdapterFactory<Component> componentAdapter = LevelFactory.createComponentAdapter();
+        Moshi moshi = new Moshi.Builder().add(componentAdapter).build();
         this.objectAdapter = moshi.adapter(GameObject.class);
     }
 

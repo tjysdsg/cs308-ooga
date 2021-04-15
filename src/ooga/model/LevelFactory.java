@@ -101,7 +101,7 @@ public class LevelFactory {
     return newLevel;
   }
 
-  private PolymorphicJsonAdapterFactory<Component> createComponentAdapter() {
+  public static PolymorphicJsonAdapterFactory<Component> createComponentAdapter() {
     PolymorphicJsonAdapterFactory<Component> adapter = PolymorphicJsonAdapterFactory.of(Component.class, "type");
     Reflections reflections = new Reflections(Component.class.getPackageName());
     for (Class subclass : reflections.getSubTypesOf(Component.class)) {
