@@ -13,10 +13,10 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   private final int id;
   private final String name;
   private double x, y;
-  private Vector velocity;
+  private transient Vector velocity = new Vector(0, 0);
   private boolean collidable = true;
   private double height, width;
-  List<ActionInfo> onCollide;
+  private List<ActionInfo> onCollide;
 
   public GameObject(int id, String name) {
     this.id = id;
