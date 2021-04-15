@@ -9,7 +9,6 @@ import ooga.model.objects.GameObject;
 import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
 import ooga.model.systems.ECManager;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,9 +27,6 @@ public class PlayerSystem extends ComponentBasedSystem {
   public PlayerSystem(ECManager ecManager) {
     super(ecManager);
     componentMapper = getComponentMapper(PlayerComponent.class);
-  }
-
-  public void init() {
     addMapping("right", this::handleRight);
     addMapping("left", this::handleLeft);
     addMapping("jump", this::handleJump);
@@ -57,9 +53,7 @@ public class PlayerSystem extends ComponentBasedSystem {
     }
   }
 
-  /**
-   * Callback when the player touches ground
-   */
+  /** Callback when the player touches ground */
   private void onGrounded(GameObject go) {
     PlayerComponent p = componentMapper.get(go.getId());
     p.setVerticalStatus(VerticalMovementStatus.GROUNDED);
@@ -113,8 +107,8 @@ public class PlayerSystem extends ComponentBasedSystem {
       // set horizontal velocity of player if it's moving
       go.setVelocityX(
           p.getHorizontalStatus() == HorizontalMovementStatus.RUNNING
-              ? p.getDirection() * p.getMaxSpeed() : 0
-      );
+              ? p.getDirection() * p.getMaxSpeed()
+              : 0);
 
       // change the vertical velocity according to gravity if in air
       if (p.getVerticalStatus() == VerticalMovementStatus.AIRBORNE) {
