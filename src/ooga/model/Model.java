@@ -80,7 +80,13 @@ public class Model implements ObservableModel {
   public void setCurrentLevel(String levelName) throws FileNotFoundException, InvalidDataFileException {
     File levelFile = FileReader.getFile(levelsDir, levelName + FILE_EXTENSION);
     currentLevel = levelFactory.buildLevel(levelFile);
-    levelChangeCallback.accept(levelName);
+    notifyLevelChange(levelName);
+  }
+
+  private void notifyLevelChange(String levelName) {
+    if (levelChangeCallback != null) {
+      levelChangeCallback.accept(levelName);
+    }
   }
 
   public void handleCode(String k, boolean on) {

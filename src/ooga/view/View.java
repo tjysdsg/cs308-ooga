@@ -2,14 +2,20 @@ package ooga.view;
 
 import fr.brouillard.oss.cssfx.CSSFX;
 import java.awt.event.FocusAdapter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.*;
+import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.*;
 import ooga.model.Model;
+import ooga.model.exceptions.ModelException;
+import ooga.view.components.DialogFactory;
 import ooga.view.components.gameselection.GSelectionScene;
 import ooga.view.components.SplashScreen;
 import ooga.view.util.ObservableResource;
@@ -39,13 +45,18 @@ public class View {
     this.stage = stage;
     this.resources = new ObservableResource();
     resources.setResources(ResourceBundle.getBundle(DEFAULT_RESOURCES + "English"));
-    // this.modelController = model.getController();
+
+    model = new Model();
+    modelController = new Controller(model);
 
     SplashScreen splashScreen = new SplashScreen(HEIGHT, WIDTH, resources);
     GSelectionScene gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);
     createAnimations();
     setScene(splashScreen);
-    gameSelection.setOnGameSelected(e -> logger.info("Game Selected {}", e));
+    gameSelection.setOnGameSelected(e ->  {
+      logger.info("Game Selected {}", e);
+      handleSelection(e);
+    });
     exitApplication =
         () -> {
           fadeOutTransition.setNode(currentScene.getRoot());
@@ -70,6 +81,16 @@ public class View {
 
     logger.info("Displaying Splash Screen");
     stage.show();
+  }
+
+  private void handleSelection(String gamePath) {
+    File gameDirectory = new File(gamePath);
+
+    try {
+      modelController.setGame(gameDirectory);
+    } catch (ModelException | FileNotFoundException e) {
+      logger.debug(e.getMessage());
+    }
   }
 
   private void createAnimations() {
