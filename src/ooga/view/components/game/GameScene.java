@@ -79,6 +79,10 @@ public class GameScene extends Scene {
     controller.handleKeyPress(code);
   }
 
+  private void handleRelease(String code) {
+    controller.handleKeyRelease(code);
+  }
+
   private void notifyEscape() {
     if (this.onEscape != null) {
       onEscape.accept(this.root);
@@ -96,7 +100,6 @@ public class GameScene extends Scene {
     this.onEscape = callback;
   }
 
-  private void handleRelease(String code) {}
 
   public void pauseGame() {}
 

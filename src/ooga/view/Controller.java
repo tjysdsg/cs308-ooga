@@ -29,13 +29,11 @@ public class Controller implements ModelController {
   // TODO:Wait for the model
   @Override
   public void handleKeyPress(String code) {
-    System.out.println(code);
     model.handleCode(code2action.get(code), true);
   }
 
   @Override
   public void handleKeyRelease(String code) {
-
     model.handleCode(code2action.get(code), false);
   }
 
