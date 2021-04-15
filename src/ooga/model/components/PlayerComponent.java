@@ -7,8 +7,7 @@ public class PlayerComponent extends Component {
   public static final int RIGHT_DIRECTION = 1;
   public static final int LEFT_DIRECTION = -1;
   private static final double DEFAULT_MAX_SPEED = 50;
-  private static final double DEFAULT_MAX_JUMP_HEIGHT = 100;
-  private static final double DEFAULT_TIME_TO_JUMP_APEX = 0.8;
+  private static final double DEFAULT_JUMP_IMPULSE = 200;
 
   public enum HorizontalMovementStatus {
     /**
@@ -92,14 +91,9 @@ public class PlayerComponent extends Component {
   private double maxSpeed = DEFAULT_MAX_SPEED;
 
   /**
-   * Max jump height
+   * The initial vertical velocity that player has when it jumps
    */
-  private double maxJumpHeight = DEFAULT_MAX_JUMP_HEIGHT;
-
-  /**
-   * Time needed for player to reach its max jump height, in seconds
-   */
-  private double timeToJumpApex = DEFAULT_TIME_TO_JUMP_APEX;
+  private double jumpImpulse = DEFAULT_JUMP_IMPULSE;
 
   // only for moshi
   protected PlayerComponent() {
@@ -126,20 +120,12 @@ public class PlayerComponent extends Component {
     this.maxSpeed = maxSpeed;
   }
 
-  public double getMaxJumpHeight() {
-    return maxJumpHeight;
+  public double getJumpImpulse() {
+    return jumpImpulse;
   }
 
-  public void setMaxJumpHeight(double maxJumpHeight) {
-    this.maxJumpHeight = maxJumpHeight;
-  }
-
-  public double getTimeToJumpApex() {
-    return timeToJumpApex;
-  }
-
-  public void setTimeToJumpApex(double timeToJumpApex) {
-    this.timeToJumpApex = timeToJumpApex;
+  public void setJumpImpulse(double jumpImpulse) {
+    this.jumpImpulse = jumpImpulse;
   }
 
   public void switchDirection() {
