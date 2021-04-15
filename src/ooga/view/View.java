@@ -1,62 +1,57 @@
 package ooga.view;
 
 import fr.brouillard.oss.cssfx.CSSFX;
-import java.awt.event.FocusAdapter;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.*;
-import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.*;
-import ooga.model.Model;
-import ooga.model.exceptions.ModelException;
-import ooga.view.components.DialogFactory;
-import ooga.view.components.gameselection.GSelectionScene;
 import ooga.view.components.SplashScreen;
+import ooga.view.components.game.GameScene;
+import ooga.view.components.gameselection.GSelectionScene;
 import ooga.view.util.ObservableResource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class View {
   private static final double FADE_OPACITY = 0.1;
-  private static final int TRANSITION_SPEED = 700; //milliseconds
+  private static final int TRANSITION_SPEED = 700; // milliseconds
   public static final int HEIGHT = 700;
   public static final int WIDTH = 700;
   public static final String RESOURCES = "resources/";
   public static final String DEFAULT_RESOURCES = "ooga.view.resources.languages.";
   private static final Logger logger = LogManager.getLogger(View.class);
 
-  private Model model;
   private Runnable exitApplication;
-  private ModelController modelController;
   private ObservableResource resources;
   private Scene currentScene;
   private FadeTransition fadeOutTransition;
   private FadeTransition fadeInTransition;
+  private GSelectionScene gameSelection;
   private Stage stage;
+  private String cssFile;
 
   public View(Stage stage) {
     CSSFX.start();
     this.stage = stage;
     this.resources = new ObservableResource();
     resources.setResources(ResourceBundle.getBundle(DEFAULT_RESOURCES + "English"));
-
-    model = new Model();
-    modelController = new Controller(model);
-
     SplashScreen splashScreen = new SplashScreen(HEIGHT, WIDTH, resources);
-    GSelectionScene gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);
+    gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);
+    // this.modelController = model.getController();
+    final URL cssFileURL = getClass().getResource(RESOURCES + "main.css");
+    if (cssFileURL != null) {
+      this.cssFile = cssFileURL.toExternalForm();
+      gameSelection.getStylesheets().add(cssFile);
+      splashScreen.getStylesheets().add(cssFile);
+    } else {
+      logger.warn("Css file could not be loaded");
+    }
     createAnimations();
     setScene(splashScreen);
-    gameSelection.setOnGameSelected(e ->  {
-      logger.info("Game Selected {}", e);
-      handleSelection(e);
-    });
+    //startGame("data/example/");
+    gameSelection.setOnGameSelected(this::startGame);
     exitApplication =
         () -> {
           fadeOutTransition.setNode(currentScene.getRoot());
@@ -70,27 +65,22 @@ public class View {
     splashScreen.setOnExit(exitApplication);
     splashScreen.setOnPlay(() -> setScene(gameSelection));
 
-    final URL cssFileURL = getClass().getResource(RESOURCES + "main.css");
-    if (cssFileURL != null) {
-      final String cssFile = cssFileURL.toExternalForm();
-      gameSelection.getStylesheets().add(cssFile);
-      splashScreen.getStylesheets().add(cssFile);
-    } else {
-      logger.warn("Css file could not be loaded");
-    }
-
     logger.info("Displaying Splash Screen");
     stage.show();
   }
 
-  private void handleSelection(String gamePath) {
-    File gameDirectory = new File(gamePath);
-
-    try {
-      modelController.setGame(gameDirectory);
-    } catch (ModelException | FileNotFoundException e) {
-      logger.debug(e.getMessage());
+  private void startGame(String directory) {
+    logger.info("Game Selected {}", directory);
+    // TODO: Have a check if a game is currently playing and ask
+    // if want to quit
+    GameScene newGame = new GameScene(directory, resources);
+    if (!cssFile.isBlank()) {
+      newGame.getStylesheets().add(cssFile);
     }
+    newGame.setOnEscape((e) -> {
+      setScene(gameSelection);
+    });
+    setScene(newGame);
   }
 
   private void createAnimations() {

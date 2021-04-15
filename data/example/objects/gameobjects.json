@@ -1,11 +1,57 @@
 
-
 [
   {
     "name": "goomba",
     "height": 50,
-    "width": 30,
-    "imageID": "goombaimage",
+    "width": 50,
+    "imageID": "goomba",
+    "onCollide": [
+      {
+        "with": "block",
+        "action": "player_blocked_bottom",
+        "position": "top"
+      },
+      {
+        "with": "mario",
+        "action": "player_blocked_bottom",
+        "position": "top"
+      },
+      {
+        "with": "qblock",
+        "action": "player_blocked_bottom",
+        "position": "top"
+      },
+      {
+        "with": "mario",
+        "action": "player_blocked_right",
+        "position": "right"
+      },
+      {
+        "with": "qblock",
+        "action": "player_blocked_right",
+        "position": "right"
+      },
+      {
+        "with": "mario",
+        "action": "player_blocked_left",
+        "position": "left"
+      },
+      {
+        "with": "qblock",
+        "action": "player_blocked_left",
+        "position": "left"
+      },
+      {
+        "with": "mario",
+        "action": "player_blocked_top",
+        "position": "bottom"
+      },
+      {
+        "with": "qblock",
+        "action": "player_blocked_top",
+        "position": "bottom"
+      }
+    ],
     "components" : [
       {
         "type" : "PlayerComponent"
@@ -13,10 +59,28 @@
     ]
   },
   {
+    "name" : "qblock",
+    "height" : "50",
+    "width" : "50",
+    "imageID" : "qblock"
+  },
+  {
+    "name" : "brick",
+    "height" : "50",
+    "width" : "50",
+    "imageID" : "brick"
+  },
+  {
     "name": "mario",
     "height": 50,
     "width": 50,
-    "imageID": "marioimage"
+    "imageID": "mario"
+  },
+  {
+    "name" : "block",
+    "height" : 50,
+    "width" : 50,
+    "imageID" : "block"
   }
 ]
 

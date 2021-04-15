@@ -13,10 +13,6 @@ public class NPCSystem extends PlayerSystem{
     public NPCSystem(ECManager ecManager) {
         super(ecManager);
         movementSequenceMapper =getComponentMapper(MovementSquenceComponent.class);
-    }
-
-    @Override
-    public void init(){
         initPlayerType(PlayerComponent.PlayerType.NEUTRAL);
     }
 

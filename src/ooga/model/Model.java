@@ -93,8 +93,8 @@ public class Model implements ObservableModel {
     currentLevel.handleCode(k, on);
   }
 
-  public void step() {
-
+  public void step(double deltaTime) {
+    currentLevel.update(deltaTime);
   }
 
   public void advanceLevel() {

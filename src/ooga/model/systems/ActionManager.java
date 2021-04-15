@@ -23,7 +23,7 @@ public class ActionManager {
 
   public void handleAction(GameObject self, GameObject other, CollisionInfo a) {
     List<ActionInfo> actionInfos = self.getActions();
-    for (var ai : actionInfos) {
+    for (ActionInfo ai : actionInfos) {
       if (ai.equals(a)) {
         doAction(ai, self, other);
       }

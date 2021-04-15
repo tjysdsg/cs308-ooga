@@ -21,7 +21,7 @@ public class ECManager {
 
   private IDManager idManager;
   private Map<Integer, GameObject> entities;
-  private Map<Class, Map<Integer, Component>> existingComponents;
+  private Map<String, Map<Integer, Component>> existingComponents;
   private ObjectFactory factory;
   private Consumer<ObservableObject> newObjectCallback;
 
@@ -76,14 +76,14 @@ public class ECManager {
   }
 
   public <T> List<T> getComponents(Class<T> componentClass) {
-    Map<Integer, Component> components = existingComponents.get(componentClass);
+    Map<Integer, Component> components = existingComponents.get(componentClass.getName());
     if (components == null) {
       return new ArrayList<T>();
     }
     return (List<T>) new ArrayList<>(components.values());
   }
 
-  public void registerExistingComponent(GameObject owner, Component component) {
+  public <T extends Component> void registerExistingComponent(GameObject owner, T component) {
     component.setOwner(owner);
     component.setId(idManager.getNewId());
     addComponentToMap(component);
@@ -93,7 +93,7 @@ public class ECManager {
    * @apiNote This doesn't remove the component from its parent's component list
    */
   public <T> void removeComponent(Class<T> componentType, int id) {
-    Map<Integer, Component> idCompMap = existingComponents.get(componentType);
+    Map<Integer, Component> idCompMap = existingComponents.get(componentType.getName());
     if (idCompMap != null) {
       idCompMap.remove(id);
     } else {
@@ -101,15 +101,15 @@ public class ECManager {
     }
   }
 
-  private void addComponentToMap(Component component) {
+  private <T extends Component> void addComponentToMap(T component) {
     int id = component.getId();
-    Map<Integer, Component> idCompMap = existingComponents.get(component.getClass());
+    Map<Integer, Component> idCompMap = existingComponents.get(component.typeUnerasure());
     if (idCompMap != null) {
       idCompMap.put(id, component);
     } else {
       idCompMap = new HashMap<>();
       idCompMap.put(id, component);
-      existingComponents.put(component.getClass(), idCompMap);
+      existingComponents.put(component.typeUnerasure(), idCompMap);
     }
   }
 

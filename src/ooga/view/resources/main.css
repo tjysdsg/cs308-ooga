@@ -367,3 +367,36 @@ JFXDialogLayout Label {
   -fx-border-radius: 10 10 10 10;
   -fx-background-radius: 10 10 10 10;
 }
+
+.game-scene {
+  -fx-padding: 50;
+  -fx-spacing: 40;
+}
+
+.game-area {
+  -fx-background-color: #401A5F;
+}
+
+.game-scene {
+  -fx-padding: 5;
+}
+
+.pause-dialog {
+  -fx-spacing: 10;
+  -fx-padding: 50;
+  -fx-background-color: -primary-color;
+  -fx-alignment: TOP_CENTER;
+  -fx-fill-width: true;
+}
+
+.pause-dialog VBox{
+  -fx-background-color: -primary-color;
+  -fx-alignment: TOP_CENTER;
+  -fx-fill-width: true;
+  -fx-max-width: Infinity;
+  -fx-max-height: Infinity;
+}
+
+.pause-dialog JFXButton {
+  -fx-pref-width: 30;
+}

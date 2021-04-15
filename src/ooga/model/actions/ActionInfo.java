@@ -24,9 +24,10 @@ public class ActionInfo {
     if (!(o instanceof CollisionInfo)) {
       return false;
     }
-    CollisionInfo
-        info = (CollisionInfo) o;
-    return info.other().isA(this.with) && position.equals(info.position());
+    CollisionInfo info = (CollisionInfo) o;
+    boolean ret = info.other().isA(this.with);
+    ret = ret && (position.equals(info.position()) || info.position().equals("any"));
+    return ret;
   }
 
   public String getAction() {

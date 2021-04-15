@@ -3,7 +3,7 @@ package ooga.model.observables;
 import java.util.function.Consumer;
 
 public interface ObservableObject {
-  void setOnUpdate(Runnable callback);
+  void setOnPositionUpdate(Runnable callback);
 
   double getX();
   double getY();
@@ -13,6 +13,7 @@ public interface ObservableObject {
   boolean isVisible();
   String objectId();
   String getName();
+  String getImageID();
 }
 
 /*

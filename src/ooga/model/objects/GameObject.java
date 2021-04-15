@@ -6,17 +6,26 @@ import ooga.model.Vector;
 import ooga.model.actions.ActionInfo;
 import ooga.model.components.Component;
 import ooga.model.observables.ObservableObject;
+import ooga.model.systems.creature.PlayerSystem;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class GameObject implements ObservableObject, Comparable<GameObject> {
 
-  private List<Component> components;
-  private final int id;
-  private final String name;
+  private List<Component> components = new ArrayList<>();
+  private int id;
+  private String name;
   private double x, y;
-  private Vector velocity;
+  private String imageID;
+
+  private transient Vector velocity = new Vector(0, 0);
   private boolean collidable = true;
   private double height, width;
-  List<ActionInfo> onCollide;
+  private List<ActionInfo> onCollide = new ArrayList<>();
+  private transient Runnable positionCallback;
+  private static final Logger logger = LogManager.getLogger(PlayerSystem.class);
+
+  public GameObject(){}
 
   public GameObject(int id, String name) {
     this.id = id;
@@ -29,12 +38,16 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   }
 
   public boolean isA(String type) {
-    return false;
+    return name.equals(type);
   }
 
-  // FIXME: since we use systems to update data, do we need this?
+  public String getImageID() {
+    return imageID;
+  }
+
   @Override
-  public void setOnUpdate(Runnable callback) {
+  public void setOnPositionUpdate(Runnable callback) {
+    positionCallback = callback;
   }
 
   public int getId() {
@@ -45,12 +58,22 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
     return collidable;
   }
 
+  private void notifyPositionUpdate() {
+    if (positionCallback != null) {
+      positionCallback.run();
+    } else {
+      logger.warn("Null notify position callback");
+    }
+  }
+
   public void setX(double x) {
     this.x = x;
+    notifyPositionUpdate();
   }
 
   public void setY(double y) {
     this.y = y;
+    notifyPositionUpdate();
   }
 
   @Override
@@ -65,12 +88,12 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
 
   @Override
   public double getHeight() {
-    return 0;
+    return this.height;
   }
 
   @Override
   public double getWidth() {
-    return 0;
+    return this.width;
   }
 
   @Override

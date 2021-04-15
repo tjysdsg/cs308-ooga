@@ -4,15 +4,22 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
+import javafx.scene.input.KeyCode;
 import ooga.model.Model;
 
 public class Controller implements ModelController {
-  private Map<String, String> code2action; // code -> actions
+
+  // code -> actions
+  private Map<KeyCode, String> code2action = Map.of(
+      KeyCode.A, "left", KeyCode.D, "right",
+      KeyCode.SPACE, "jump", KeyCode.ESCAPE, "pause"
+  );
   private Model model;
 
   public Controller(Model model) {
     this.model = model;
   }
+
   // TODO: proxy model
   @Override
   public void setCurrentLevel(String levelName) throws FileNotFoundException {
@@ -20,16 +27,15 @@ public class Controller implements ModelController {
   }
 
 
-
   // TODO:Wait for the model
   @Override
-  public void handleKeyPress(String code) {
+  public void handleKeyPress(KeyCode code) {
+    System.out.println(code);
     model.handleCode(code2action.get(code), true);
   }
 
   @Override
-  public void handleKeyRelease(String code) {
-
+  public void handleKeyRelease(KeyCode code) {
     model.handleCode(code2action.get(code), false);
   }
 
@@ -41,7 +47,7 @@ public class Controller implements ModelController {
 
   // Self
   @Override
-  public void setStrokeMapping(String code, String action) {
+  public void setStrokeMapping(KeyCode code, String action) {
     code2action.put(code, action);
   }
 
@@ -53,8 +59,8 @@ public class Controller implements ModelController {
   }
 
   @Override
-  public void step() {
-    model.step();
+  public void step(double delta) {
+    model.step(delta);
   }
 
   @Override

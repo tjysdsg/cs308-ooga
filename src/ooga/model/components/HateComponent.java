@@ -11,6 +11,11 @@ public class HateComponent extends Component{
         super(id, owner);
     }
 
+    @Override
+    public String typeUnerasure() {
+        return HateComponent.class.getName();
+    }
+
     public void setRange(double range){
         this.range=range;
     }
