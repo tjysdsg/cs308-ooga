@@ -1,8 +1,6 @@
 package ooga.model.systems.creature;
 
-import java.util.ArrayList;
 import java.util.List;
-import ooga.model.Vector;
 import ooga.model.annotations.Track;
 import ooga.model.components.PlayerComponent;
 import ooga.model.components.PlayerComponent.HorizontalMovementStatus;
@@ -33,7 +31,10 @@ public class PlayerSystem extends ComponentBasedSystem {
     addMapping("jump", this::handleJump);
 
     addCollisionMapping("jump_self", event -> doJump(event.getSelf()));
-    addCollisionMapping("block_player", event -> blockPlayer(event.getSelf(), event.getHitter()));
+    addCollisionMapping("player_blocked_bottom", event -> obstacleOnBottom(event.getSelf()));
+    addCollisionMapping("player_blocked_right", event -> obstacleOnRight(event.getSelf()));
+    addCollisionMapping("player_blocked_left", event -> obstacleOnLeft(event.getSelf()));
+    addCollisionMapping("player_blocked_top", event -> obstacleOnTop(event.getSelf()));
   }
 
   public List<PlayerComponent> getPlayers() {
@@ -55,11 +56,30 @@ public class PlayerSystem extends ComponentBasedSystem {
   /**
    * Callback when the player touches ground
    */
-  private void blockPlayer(GameObject go, GameObject other) {
+  private void obstacleOnBottom(GameObject go) {
     PlayerComponent p = componentMapper.get(go.getId());
-    if (other.getY() + other.getHeight() / 2 >= go.getY() - go.getHeight() / 2) { // bottom
+    if (go.getVelocity().getY() > 0) {
       go.setVelocityY(0);
-      p.setVerticalStatus(VerticalMovementStatus.GROUNDED);
+    }
+    p.setVerticalStatus(VerticalMovementStatus.GROUNDED);
+  }
+
+  private void obstacleOnTop(GameObject go) {
+    PlayerComponent p = componentMapper.get(go.getId());
+    if (go.getVelocity().getY() < 0) {
+      go.setVelocityY(0);
+    }
+  }
+
+  private void obstacleOnLeft(GameObject go) {
+    if (go.getVelocity().getX() < 0) {
+      go.setVelocityX(0);
+    }
+  }
+
+  private void obstacleOnRight(GameObject go) {
+    if (go.getVelocity().getX() > 0) {
+      go.setVelocityX(0);
     }
   }
 

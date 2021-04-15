@@ -24,7 +24,6 @@ public class ActionManager {
   public void handleAction(GameObject self, GameObject other, CollisionInfo a) {
     List<ActionInfo> actionInfos = self.getActions();
     for (ActionInfo ai : actionInfos) {
-      // FIXME: add this back when collision direction is calculated correctly
       if (ai.equals(a)) {
         doAction(ai, self, other);
       }

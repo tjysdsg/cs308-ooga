@@ -8,18 +8,48 @@
     "onCollide": [
       {
         "with": "block",
-        "action": "block_player",
+        "action": "player_blocked_bottom",
         "position": "top"
       },
       {
         "with": "mario",
-        "action": "block_player",
+        "action": "player_blocked_bottom",
         "position": "top"
       },
       {
         "with": "qblock",
-        "action": "block_player",
+        "action": "player_blocked_bottom",
         "position": "top"
+      },
+      {
+        "with": "mario",
+        "action": "player_blocked_right",
+        "position": "right"
+      },
+      {
+        "with": "qblock",
+        "action": "player_blocked_right",
+        "position": "right"
+      },
+      {
+        "with": "mario",
+        "action": "player_blocked_left",
+        "position": "left"
+      },
+      {
+        "with": "qblock",
+        "action": "player_blocked_left",
+        "position": "left"
+      },
+      {
+        "with": "mario",
+        "action": "player_blocked_top",
+        "position": "bottom"
+      },
+      {
+        "with": "qblock",
+        "action": "player_blocked_top",
+        "position": "bottom"
       }
     ],
     "components" : [
