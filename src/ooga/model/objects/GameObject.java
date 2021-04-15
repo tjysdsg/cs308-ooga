@@ -13,8 +13,8 @@ import org.apache.logging.log4j.Logger;
 public class GameObject implements ObservableObject, Comparable<GameObject> {
 
   private List<Component> components;
-  private final int id;
-  private final String name;
+  private int id;
+  private String name;
   private double x, y;
   private transient Vector velocity = new Vector(0, 0);
   private boolean collidable = true;
@@ -22,6 +22,8 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   private List<ActionInfo> onCollide;
   private transient Runnable positionCallback;
   private static final Logger logger = LogManager.getLogger(PlayerSystem.class);
+
+  public GameObject(){}
 
   public GameObject(int id, String name) {
     this.id = id;

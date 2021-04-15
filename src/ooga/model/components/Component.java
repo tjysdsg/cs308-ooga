@@ -7,6 +7,10 @@ public abstract class Component {
   private transient GameObject owner;
   private int id;
 
+  // only for moshi
+  protected Component() {
+  }
+
   public Component(int id, GameObject owner) {
     this.id = id;
     this.owner = owner;
