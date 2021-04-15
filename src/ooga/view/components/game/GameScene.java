@@ -1,16 +1,22 @@
 package ooga.view.components.game;
 
+import java.io.File;
 import java.util.function.Consumer;
+import org.apache.logging.log4j.LogManager;
+
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import ooga.model.ModelFactory;
 import ooga.model.observables.ObservableModel;
 import ooga.view.ModelController;
 import ooga.view.util.ObservableResource;
+import org.apache.logging.log4j.Logger;
 
 /** A scene in which games are actually tracked and played. */
 public class GameScene extends Scene {
+  private static final Logger logger = LogManager.getLogger(GameScene.class);
   private static int WIDTH = 800;
   private static int HEIGHT = 500;
   private StackPane root;
@@ -25,11 +31,19 @@ public class GameScene extends Scene {
     root.getStyleClass().add("game-scene");
     GameArea gameArea = new GameArea();
     this.directory = directory;
+    File gameDirectory = new File(directory);
+    if (!ModelFactory.verifyGameDirectory(gameDirectory)) {
+      handleInvalidGame();
+    } 
     // this.controller = game.getController();
     root.getChildren().add(gameArea);
     gameArea.requestFocus();
     setOnKeyPressed(e -> handlePress(e.getCode()));
     setOnKeyReleased(e -> handleRelease(e.getCode()));
+  }
+
+  private void handleInvalidGame() {
+
   }
 
   private void handlePress(KeyCode code) {
