@@ -36,7 +36,6 @@ public class Controller implements ModelController {
 
   @Override
   public void handleKeyRelease(String code) {
-
     model.handleCode(code2action.get(code), false);
   }
 

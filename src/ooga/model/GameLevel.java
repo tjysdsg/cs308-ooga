@@ -8,6 +8,7 @@ import ooga.model.components.Component;
 import ooga.model.objects.GameObject;
 import ooga.model.systems.ActionManager;
 import ooga.model.systems.BaseSystem;
+import ooga.model.systems.CollisionSystem;
 import ooga.model.systems.ECManager;
 import ooga.model.systems.HealthSystem;
 import ooga.model.systems.InputManager;
@@ -35,15 +36,12 @@ class GameLevel implements Level {
     // TODO: load configs and create components
 
     // TODO: create systems here and add them to systems
-    systems.add(new TransformSystem(ecManager));
     systems.add(new HealthSystem(ecManager));
     systems.add(new PlayerSystem(ecManager));
+    systems.add(new CollisionSystem(ecManager, actionManager));
+    systems.add(new TransformSystem(ecManager));
 
-    for (GameObject go : ecManager.getEntities()) {
-      for (Component component : go.getComponents()) {
-        ecManager.registerExistingComponent(go, component);
-      }
-    }
+    ecManager.registerExistingComponents(ecManager.getEntities());
 
     for (var s : systems) {
       s.registerAllInputs(inputManager);
