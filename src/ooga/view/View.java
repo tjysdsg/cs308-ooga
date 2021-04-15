@@ -1,40 +1,29 @@
 package ooga.view;
 
 import fr.brouillard.oss.cssfx.CSSFX;
-import ooga.view.components.game.GameScene;
-import java.awt.event.FocusAdapter;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.*;
-import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.*;
-import ooga.model.Model;
-import ooga.model.exceptions.ModelException;
-import ooga.view.components.DialogFactory;
-import ooga.view.components.gameselection.GSelectionScene;
 import ooga.view.components.SplashScreen;
+import ooga.view.components.game.GameScene;
+import ooga.view.components.gameselection.GSelectionScene;
 import ooga.view.util.ObservableResource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class View {
   private static final double FADE_OPACITY = 0.1;
-  private static final int TRANSITION_SPEED = 700; //milliseconds
+  private static final int TRANSITION_SPEED = 700; // milliseconds
   public static final int HEIGHT = 700;
   public static final int WIDTH = 700;
   public static final String RESOURCES = "resources/";
   public static final String DEFAULT_RESOURCES = "ooga.view.resources.languages.";
   private static final Logger logger = LogManager.getLogger(View.class);
 
-  private Model model;
   private Runnable exitApplication;
-  private ModelController modelController;
   private ObservableResource resources;
   private Scene currentScene;
   private FadeTransition fadeOutTransition;
@@ -59,8 +48,8 @@ public class View {
       logger.warn("Css file could not be loaded");
     }
     createAnimations();
-    //setScene(splashScreen);
-    startGame("");
+    // setScene(splashScreen);
+    startGame("/home/joshu/schoolStuff/308/ooga_team08/data/example/");
     gameSelection.setOnGameSelected(this::startGame);
     exitApplication =
         () -> {
@@ -75,14 +64,13 @@ public class View {
     splashScreen.setOnExit(exitApplication);
     splashScreen.setOnPlay(() -> setScene(gameSelection));
 
-
     logger.info("Displaying Splash Screen");
     stage.show();
   }
 
   private void startGame(String directory) {
     logger.info("Game Selected {}", directory);
-    //TODO: Have a check if a game is currently playing and ask
+    // TODO: Have a check if a game is currently playing and ask
     // if want to quit
     GameScene newGame = new GameScene(directory, resources);
     if (!cssFile.isBlank()) {
