@@ -25,7 +25,7 @@ public class FileReader {
         }
         File[] matches = directory.listFiles((file, s) -> s.equals(fileName));
 
-        if (matches == null) {
+        if (matches == null || matches.length == 0) {
             throw new FileNotFoundException();
         }
 
