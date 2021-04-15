@@ -7,7 +7,7 @@ public class PlayerComponent extends Component {
   public static final int RIGHT_DIRECTION = 1;
   public static final int LEFT_DIRECTION = -1;
   private static final double DEFAULT_MAX_SPEED = 50;
-  private static final double DEFAULT_MAX_JUMP_HEIGHT = 5;
+  private static final double DEFAULT_MAX_JUMP_HEIGHT = 100;
   private static final double DEFAULT_TIME_TO_JUMP_APEX = 0.8;
 
   public enum HorizontalMovementStatus {

@@ -7,12 +7,18 @@ import java.util.Map;
 import ooga.model.Model;
 
 public class Controller implements ModelController {
-  private Map<String, String> code2action = Map.of("a", "left", "d", "right"); // code -> actions
+
+  // code -> actions
+  private Map<String, String> code2action = Map.of(
+      "a", "left", "d", "right",
+      " ", "jump"
+  );
   private Model model;
 
   public Controller(Model model) {
     this.model = model;
   }
+
   // TODO: proxy model
   @Override
   public void setCurrentLevel(String levelName) throws FileNotFoundException {
@@ -20,10 +26,10 @@ public class Controller implements ModelController {
   }
 
 
-
   // TODO:Wait for the model
   @Override
   public void handleKeyPress(String code) {
+    System.out.println(code);
     model.handleCode(code2action.get(code), true);
   }
 
