@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AttackSystems extends PlayerSystem{
+public abstract class AttackSystems extends PlayerSystem{
     private ComponentMapper<HateComponent> hateMapper;
     protected Map<Pair<HateComponent,PlayerComponent>, AttackDealer> hateMap = new HashMap<>();
 
@@ -69,6 +69,10 @@ public class AttackSystems extends PlayerSystem{
         public void setHate(boolean hate){
             this.hate=hate;
         }
+        public boolean attackOrNot(){
+            return attack;
+        }
     }
+
 
 }
