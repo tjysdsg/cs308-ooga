@@ -380,3 +380,23 @@ JFXDialogLayout Label {
 .game-scene {
   -fx-padding: 5;
 }
+
+.pause-dialog {
+  -fx-spacing: 10;
+  -fx-padding: 50;
+  -fx-background-color: -primary-color;
+  -fx-alignment: TOP_CENTER;
+  -fx-fill-width: true;
+}
+
+.pause-dialog VBox{
+  -fx-background-color: -primary-color;
+  -fx-alignment: TOP_CENTER;
+  -fx-fill-width: true;
+  -fx-max-width: Infinity;
+  -fx-max-height: Infinity;
+}
+
+.pause-dialog JFXButton {
+  -fx-pref-width: 30;
+}
