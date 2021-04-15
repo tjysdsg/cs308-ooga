@@ -16,24 +16,11 @@ public class ObjectView extends StackPane {
   private ObservableObject gameObject;
   private ImageView playerImage;
 
-  public ObjectView(ObservableObject obj) {
+  public ObjectView(ObservableObject obj, ImageConfiguration images) {
     this.gameObject = obj;
     this.playerImage = new ImageView();
-    File fileImage =
-        new File(
-            "src/ooga/view/resources/images/mario.png");
-    Image image = null;
-    try {
-    image =
-        new Image(
-            fileImage.toURI().toURL().toExternalForm(),
-            gameObject.getWidth(),
-            gameObject.getHeight(),
-            false,
-            true);
-    } catch(MalformedURLException e) {
-      logger.warn("Could not load image {}", "image directory");
-    }
+
+    Image image = images.getImage("mario", obj.getWidth(), obj.getHeight());
     if (image != null) {
       playerImage.setImage(image);
     }
@@ -48,6 +35,6 @@ public class ObjectView extends StackPane {
 
   private void refreshPosition() {
     setTranslateX(gameObject.getX());
-    setTranslateY(gameObject.getY());
+    setTranslateY(-gameObject.getY());
   }
 }
