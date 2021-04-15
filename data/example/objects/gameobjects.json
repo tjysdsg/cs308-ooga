@@ -5,6 +5,13 @@
     "height": 50,
     "width": 50,
     "imageID": "goomba",
+    "onCollide": [
+      {
+        "with": "block",
+        "action": "grounded",
+        "position": "bottom"
+      }
+    ],
     "components" : [
       {
         "type" : "PlayerComponent"
