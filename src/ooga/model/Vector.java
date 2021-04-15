@@ -31,6 +31,14 @@ public class Vector {
         y - other.getY());
   }
 
+  public Vector unitVector(){
+    Vector unit = new Vector(this.x,this.y);
+    double magit=magnitude();
+    unit.setX(this.x/magit);
+    unit.setY(this.y/magit);
+    return unit;
+  }
+
   public double magnitude() {
     return Math.hypot(x, y);
   }
