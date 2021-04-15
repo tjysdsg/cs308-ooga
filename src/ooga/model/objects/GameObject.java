@@ -65,12 +65,12 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
 
   @Override
   public double getHeight() {
-    return 0;
+    return this.height;
   }
 
   @Override
   public double getWidth() {
-    return 0;
+    return this.width;
   }
 
   @Override
