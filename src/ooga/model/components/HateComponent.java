@@ -13,11 +13,8 @@ public class HateComponent extends Component{
     public void setRange(double range){
         this.range=range;
     }
-    public void detectHate(double distance){
-        if (distance<this.range){
-            hate=true;
-        }
-        hate=false;
+    public boolean detectHate(double distance){
+        return distance<this.range;
     }
     public boolean getHate(){
         return hate;
