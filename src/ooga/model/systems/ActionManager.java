@@ -5,6 +5,7 @@ import com.google.common.collect.MultimapBuilder;
 import java.util.List;
 import java.util.function.Consumer;
 import ooga.model.actions.ActionInfo;
+import ooga.model.actions.CollisionInfo;
 import ooga.model.objects.GameObject;
 import ooga.model.actions.CollisionAction;
 
@@ -20,7 +21,7 @@ public class ActionManager {
     actions.put(actionName, action);
   }
 
-  public void handleAction(GameObject self, GameObject other, ActionInfo a) {
+  public void handleAction(GameObject self, GameObject other, CollisionInfo a) {
     List<ActionInfo> actionInfos = self.getActions();
     for (var ai : actionInfos) {
       if (ai.equals(a)) {

@@ -3,6 +3,8 @@ package ooga.model.systems;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import ooga.model.actions.ActionInfo;
+import ooga.model.actions.CollisionInfo;
 import ooga.model.objects.GameObject;
 
 public class CollisionSystem extends GameObjectBasedSystem{
@@ -59,9 +61,13 @@ public class CollisionSystem extends GameObjectBasedSystem{
     }
   }
 
-  public void collide(GameObject collidingObject, GameObject collidedObject) {
-    String collidingObjectDirection = detectCollisionDirection(collidingObject, collidedObject);
-    String collidedObjectDirection = detectCollisionDirection(collidedObject, collidingObject);
+  public void collide(GameObject self, GameObject other) {
+    String selfDirection = detectCollisionDirection(self, other);
+    String otherDirection = detectCollisionDirection(other, self);
+    CollisionInfo info = new CollisionInfo(self, other, selfDirection);
+    myActionManager.handleAction(self, other, info);
+    info = new CollisionInfo(other, self, otherDirection);
+    myActionManager.handleAction(other, self, info);
   }
 
   private String detectCollisionDirection(GameObject collidingObject, GameObject collidedObject) {
