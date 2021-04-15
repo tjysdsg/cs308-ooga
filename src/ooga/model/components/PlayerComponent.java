@@ -9,7 +9,7 @@ public class PlayerComponent extends Component {
   public static final int RIGHT_DIRECTION = 1;
   public static final int LEFT_DIRECTION = -1;
   private static final double DEFAULT_MAX_SPEED = 100;
-  private static final double DEFAULT_JUMP_IMPULSE = 100;
+  private static final double DEFAULT_JUMP_IMPULSE = 130;
 
   public enum HorizontalMovementStatus {
     /**
