@@ -9,7 +9,7 @@ import javafx.scene.layout.StackPane;
 
 public class GameArea extends AnchorPane {
   private static final double LEFT_EDGE = 20;
-  private static final double BOTTOM_EDGE = 100;
+  private static final double BOTTOM_EDGE = 0;
   private StackPane objectsPane;
 
   public GameArea() {

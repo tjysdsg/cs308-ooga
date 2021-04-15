@@ -3,9 +3,12 @@ package ooga.view.components.game;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.image.Image;
 import org.apache.logging.log4j.LogManager;
@@ -19,6 +22,7 @@ public class ImageConfiguration {
 
   public ImageConfiguration(String directory) {
     this.directory = directory;
+    this.cachedImages = new HashMap<>();
     Moshi moshi = new Moshi.Builder().build();
     var type = Types.newParameterizedType(Map.class, String.class, String.class);
     JsonAdapter<Map<String, String>> mapAdapter = moshi.adapter(type);
@@ -31,20 +35,30 @@ public class ImageConfiguration {
     }
   }
 
-  public Image getImage(String mode) {
+  public Image getImage(String mode, double width, double height) {
     Image image;
-    if (cachedImages.containsKey(mode)) {
-      image = cachedImages.get(mode);
-    } else {
-      image = getImageFile(mode);
-    }
+    String fileName = codeToPath.get(mode);
+    image = getImageFile("images/" + fileName, width, height);
     return image;
   }
 
-  private Image getImageFile(String mode) {
+  private Image getImageFile(String mode, double width, double height) {
     String fileName = codeToPath.get(mode);
-    Image image = new Image(Paths.get(directory, fileName).toString());
-    cachedImages.put(mode, image);
-    return image;
+    System.out.println(width);
+    try {
+    System.out.println(new File(directory, mode).toURI().toURL().toExternalForm());
+      Image image =
+          new Image(
+              new File(directory, mode).toURI().toURL().toExternalForm(),
+              width,
+              height,
+              false,
+              true);
+      cachedImages.put(mode, image);
+      return image;
+    } catch (MalformedURLException e) {
+
+    }
+    return null;
   }
 }
