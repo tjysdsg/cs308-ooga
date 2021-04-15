@@ -24,7 +24,7 @@ public class Controller implements ModelController {
   // TODO:Wait for the model
   @Override
   public void handleKeyPress(String code) {
-    model.handleCode(code2action.get(code), true);
+    model.handleCode("left", true);
   }
 
   @Override
