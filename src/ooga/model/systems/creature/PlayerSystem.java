@@ -10,10 +10,14 @@ import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
 import ooga.model.systems.ECManager;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 // TODO: add tests for this
 @Track(PlayerComponent.class)
 public class PlayerSystem extends ComponentBasedSystem {
 
+  private static final Logger logger = LogManager.getLogger(PlayerSystem.class);
 
   protected ComponentMapper<PlayerComponent> componentMapper;
   // TODO: support customizing gravitational acceleration
@@ -66,6 +70,7 @@ public class PlayerSystem extends ComponentBasedSystem {
   }
 
   private void handleLeft(boolean on) {
+    logger.info("Left being handled");
     handleHorizontalMovement(on, PlayerComponent.LEFT_DIRECTION);
   }
 
