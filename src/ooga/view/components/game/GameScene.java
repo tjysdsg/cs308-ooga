@@ -1,17 +1,20 @@
 package ooga.view.components.game;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.function.Consumer;
-import org.apache.logging.log4j.LogManager;
-
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import ooga.model.Model;
 import ooga.model.ModelFactory;
+import ooga.model.exceptions.InvalidDataFileException;
 import ooga.model.observables.ObservableModel;
+import ooga.view.Controller;
 import ooga.view.ModelController;
 import ooga.view.util.ObservableResource;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /** A scene in which games are actually tracked and played. */
@@ -22,19 +25,33 @@ public class GameScene extends Scene {
   private StackPane root;
   private ObservableModel game;
   private ModelController controller;
+  private Model model;
   private String directory;
+  private GameArea gameArea;
   private Consumer<StackPane> onEscape;
 
   public GameScene(String directory, ObservableResource resources) {
     super(new StackPane(), WIDTH, HEIGHT, Color.BLACK);
     this.root = (StackPane) getRoot();
-    root.getStyleClass().add("game-scene");
-    GameArea gameArea = new GameArea();
+    this.model = new Model();
+    this.controller = new Controller(model);
     this.directory = directory;
+    this.gameArea = new GameArea();
     File gameDirectory = new File(directory);
+    model.setOnNewObject(gameArea::addObject);
+
     if (!ModelFactory.verifyGameDirectory(gameDirectory)) {
       handleInvalidGame();
-    } 
+    }
+    try {
+      model.setGame(gameDirectory);
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (InvalidDataFileException e) {
+      e.printStackTrace();
+    }
+
+    root.getStyleClass().add("game-scene");
     // this.controller = game.getController();
     root.getChildren().add(gameArea);
     gameArea.requestFocus();
@@ -42,9 +59,7 @@ public class GameScene extends Scene {
     setOnKeyReleased(e -> handleRelease(e.getCode()));
   }
 
-  private void handleInvalidGame() {
-
-  }
+  private void handleInvalidGame() {}
 
   private void handlePress(KeyCode code) {
     if (code == KeyCode.ESCAPE) {

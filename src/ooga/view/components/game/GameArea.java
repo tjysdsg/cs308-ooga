@@ -15,7 +15,11 @@ public class GameArea extends AnchorPane {
   public GameArea() {
     this.objectsPane = new StackPane();
     getStyleClass().add("game-area");
-    objectsPane.setStyle("-fx-background-color: green");
+
+    // Needed so pane doesn't shrink
+    JFXButton placeholder = new JFXButton();
+    placeholder.setVisible(false);
+    objectsPane.getChildren().add(placeholder);
 
     objectsPane.setTranslateX(LEFT_EDGE);
     getChildren().add(objectsPane);
