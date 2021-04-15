@@ -9,6 +9,9 @@
     "components" : [
       {
         "type" : "PlayerComponent"
+      },
+      {
+        "type" : "AOEComponent"
       }
     ]
   },
