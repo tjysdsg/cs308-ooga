@@ -374,9 +374,7 @@ JFXDialogLayout Label {
 }
 
 .game-area {
-  -fx-background-color: blue;
-  -fx-max-width: Infinity;
-  -fx-max-height: Infinity;
+  -fx-background-color: #401A5F;
 }
 
 .game-scene {
