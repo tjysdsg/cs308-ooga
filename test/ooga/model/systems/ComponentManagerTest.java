@@ -17,6 +17,11 @@ class TestComponent extends Component {
   public TestComponent(int id, GameObject owner) {
     super(id, owner);
   }
+
+  @Override
+  public String typeUnerasure() {
+    return TestComponent.class.getName();
+  }
 }
 
 public class ComponentManagerTest {
