@@ -1,25 +1,39 @@
 
-
 [
   {
     "name": "goomba",
     "height": 50,
-    "width": 30,
-    "imageID": "goombaimage",
+    "width": 50,
+    "imageID": "goomba",
     "components" : [
       {
         "type" : "PlayerComponent"
-      },
-      {
-        "type" : "AOEComponent"
       }
     ]
+  },
+  {
+    "name" : "qblock",
+    "height" : "50",
+    "width" : "50",
+    "imageID" : "qblock"
+  },
+  {
+    "name" : "brick",
+    "height" : "50",
+    "width" : "50",
+    "imageID" : "brick"
   },
   {
     "name": "mario",
     "height": 50,
     "width": 50,
-    "imageID": "marioimage"
+    "imageID": "mario"
+  },
+  {
+    "name" : "block",
+    "height" : 50,
+    "width" : 50,
+    "imageID" : "block"
   }
 ]
 
