@@ -13,6 +13,7 @@ public interface ObservableObject {
   boolean isVisible();
   String objectId();
   String getName();
+  String getImageID();
 }
 
 /*
