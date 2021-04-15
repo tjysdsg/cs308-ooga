@@ -16,6 +16,7 @@ public class GameLoop extends AnimationTimer {
     if (callback != null) {
       callback.accept(delta);
     }
+    prevTime = currentNanoTime;
   }
 
   public void setUpdateTime(long timeInNano) {}
