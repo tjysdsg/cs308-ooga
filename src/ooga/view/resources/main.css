@@ -373,9 +373,9 @@ JFXDialogLayout Label {
   -fx-spacing: 40;
 }
 
-.game-area {
-  -fx-background-color: #401A5F;
-}
+/*.game-area {*/
+/*  -fx-background-color: #401A5F;*/
+/*}*/
 
 .game-scene {
   -fx-padding: 5;
