@@ -69,6 +69,7 @@ public class GameScene extends Scene {
       notifyEscape();
       return;
     }
+    else controller.handleKeyPress("");
   }
 
   private void notifyEscape() {
