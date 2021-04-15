@@ -29,6 +29,7 @@ public class GameScene extends Scene {
   private String directory;
   private GameArea gameArea;
   private Consumer<StackPane> onEscape;
+  private GameLoop loop;
 
   public GameScene(String directory, ObservableResource resources) {
     super(new StackPane(), WIDTH, HEIGHT, Color.BLACK);
@@ -37,6 +38,7 @@ public class GameScene extends Scene {
     this.controller = new Controller(model);
     this.directory = directory;
     this.gameArea = new GameArea();
+    this.loop = new GameLoop();
     File gameDirectory = new File(directory);
     model.setOnNewObject(e -> {
       ObjectView obj = new ObjectView(e);
@@ -60,6 +62,8 @@ public class GameScene extends Scene {
     gameArea.requestFocus();
     setOnKeyPressed(e -> handlePress(e.getCode()));
     setOnKeyReleased(e -> handleRelease(e.getCode()));
+    loop.setOnUpdate(controller::step);
+    loop.start();
   }
 
   private void handleInvalidGame() {}
