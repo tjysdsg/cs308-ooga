@@ -28,6 +28,7 @@ public class View {
   private Scene currentScene;
   private FadeTransition fadeOutTransition;
   private FadeTransition fadeInTransition;
+  private GSelectionScene gameSelection;
   private Stage stage;
   private String cssFile;
 
@@ -37,7 +38,7 @@ public class View {
     this.resources = new ObservableResource();
     resources.setResources(ResourceBundle.getBundle(DEFAULT_RESOURCES + "English"));
     SplashScreen splashScreen = new SplashScreen(HEIGHT, WIDTH, resources);
-    GSelectionScene gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);
+    gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);
     // this.modelController = model.getController();
     final URL cssFileURL = getClass().getResource(RESOURCES + "main.css");
     if (cssFileURL != null) {
@@ -48,7 +49,7 @@ public class View {
       logger.warn("Css file could not be loaded");
     }
     createAnimations();
-     setScene(splashScreen);
+    setScene(splashScreen);
     //startGame("data/example/");
     gameSelection.setOnGameSelected(this::startGame);
     exitApplication =
@@ -76,6 +77,9 @@ public class View {
     if (!cssFile.isBlank()) {
       newGame.getStylesheets().add(cssFile);
     }
+    newGame.setOnEscape((e) -> {
+      setScene(gameSelection);
+    });
     setScene(newGame);
   }
 
