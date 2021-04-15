@@ -1,12 +1,159 @@
 package ooga.model.components;
 
-import com.google.common.collect.Multimap;
 import ooga.model.objects.GameObject;
 
 public class PlayerComponent extends Component {
+
+  public static final int RIGHT_DIRECTION = 1;
+  public static final int LEFT_DIRECTION = -1;
+  private static final double DEFAULT_MAX_SPEED = 100;
+  private static final double DEFAULT_MAX_JUMP_HEIGHT = 5;
+  private static final double DEFAULT_TIME_TO_JUMP_APEX = 0.8;
+
+  public enum HorizontalMovementStatus {
+    /**
+     * Not moving
+     */
+    STILL,
+    /**
+     * Running at maxSpeed
+     */
+    RUNNING,
+  }
+
+  public enum PlayerType{
+    /**
+     * Neutral NPC
+     */
+    NEUTRAL,
+    /**
+     * Player ccontrolled
+     */
+    PLAYER,
+    /**
+     * Enemies
+     */
+    ENEMY
+  }
+
+  public enum CharacterStatus{
+    /**
+     * Player controlled
+     */
+    Active,
+    /**
+     * Waited for switch
+     */
+    StandBy
+  }
+
+  public enum VerticalMovementStatus {
+    /**
+     * Standing/running on ground
+     */
+    GROUNDED,
+    /**
+     * In air
+     */
+    AIRBORNE,
+  }
+
+  /**
+   * which horizontal the player is facing, 1 for right, -1 for left
+   */
+  protected int direction = RIGHT_DIRECTION;
+
+
+  protected PlayerType playerType = PlayerType.PLAYER;
+
+  protected CharacterStatus characterStatus = CharacterStatus.Active;
+
+  /**
+   * Status of the player in terms of vertical movement
+   */
+  protected VerticalMovementStatus verticalStatus = VerticalMovementStatus.GROUNDED;
+
+  /**
+   * Status of the player in terms of horizontal movement
+   */
+  protected HorizontalMovementStatus horizontalStatus = HorizontalMovementStatus.STILL;
+
+  public void setPlayerType(PlayerType playerType){
+    this.playerType=playerType;
+  }
+
+  public void setCharacterStatus (CharacterStatus characterStatus){
+    this.characterStatus= characterStatus;
+  }
+
+  /**
+   * Max horizontal movement speed
+   */
+  private double maxSpeed = DEFAULT_MAX_SPEED;
+
+  /**
+   * Max jump height
+   */
+  private double maxJumpHeight = DEFAULT_MAX_JUMP_HEIGHT;
+
+  /**
+   * Time needed for player to reach its max jump height, in seconds
+   */
+  private double timeToJumpApex = DEFAULT_TIME_TO_JUMP_APEX;
 
   public PlayerComponent(int id, GameObject owner) {
     super(id, owner);
   }
 
+  public int getDirection() {
+    return direction;
+  }
+
+  public void setDirection(int direction) {
+    this.direction = direction;
+  }
+
+  public double getMaxSpeed() {
+    return maxSpeed;
+  }
+
+  public void setMaxSpeed(double maxSpeed) {
+    this.maxSpeed = maxSpeed;
+  }
+
+  public double getMaxJumpHeight() {
+    return maxJumpHeight;
+  }
+
+  public void setMaxJumpHeight(double maxJumpHeight) {
+    this.maxJumpHeight = maxJumpHeight;
+  }
+
+  public double getTimeToJumpApex() {
+    return timeToJumpApex;
+  }
+
+  public void setTimeToJumpApex(double timeToJumpApex) {
+    this.timeToJumpApex = timeToJumpApex;
+  }
+
+  public void switchDirection() {
+    direction = -direction;
+  }
+
+  public void setHorizontalStatus(HorizontalMovementStatus horizontalStatus) {
+    this.horizontalStatus = horizontalStatus;
+  }
+
+  public HorizontalMovementStatus getHorizontalStatus() {
+    return horizontalStatus;
+  }
+
+  public void setVerticalStatus(VerticalMovementStatus verticalStatus) {
+    this.verticalStatus = verticalStatus;
+  }
+
+  public VerticalMovementStatus getVerticalStatus() {
+    return verticalStatus;
+  }
 }
