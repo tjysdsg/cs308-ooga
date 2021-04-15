@@ -6,4 +6,9 @@ public class AOEComponent extends Component{
     public AOEComponent(int id, GameObject owner) {
         super(id, owner);
     }
+
+    @Override
+    public String typeUnerasure() {
+        return AOEComponent.class.getName();
+    }
 }

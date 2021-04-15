@@ -156,4 +156,8 @@ public class PlayerComponent extends Component {
   public VerticalMovementStatus getVerticalStatus() {
     return verticalStatus;
   }
+
+  public String typeUnerasure() {
+    return PlayerComponent.class.getName();
+  }
 }
