@@ -42,38 +42,41 @@ public class CollisionSystem extends GameObjectBasedSystem {
   }
 
   private void executeCollisions(int index, List<GameObject> collidableObjects) {
-    // GameObject collidingObject = collidableObjects.get(index);
-    // double width = collidingObject.getWidth();
-    // double height = collidingObject.getHeight();
-    // double x = collidingObject.getX();
-    // double y = collidingObject.getY();
-    //
-    // for(int k = index+1; k<collidableObjects.size(); k++){
-    //   GameObject collidedObject = collidableObjects.get(k);
-    //
-    //   if(x + width < collidedObject.getX()){
-    //     return;
-    //   }
-    //   else if(collidedObject.getY() >= y && collidedObject.getY() <= y+height || y>=collidedObject.getY() && y<= collidedObject.getY()+collidedObject.getHeight()){
-    //     collide(collidingObject, collidedObject);
-    //   }
-    //
-    // }
+    /*
+    GameObject collidingObject = collidableObjects.get(index);
+    double width = collidingObject.getWidth();
+    double height = collidingObject.getHeight();
+    double x = collidingObject.getX();
+    double y = collidingObject.getY();
+
+    for (int k = index + 1; k < collidableObjects.size(); k++) {
+      GameObject collidedObject = collidableObjects.get(k);
+
+      if (x + width < collidedObject.getX()) {
+        return;
+      } else if (collidedObject.getY() >= y && collidedObject.getY() <= y + height
+          || y >= collidedObject.getY() && y <= collidedObject.getY() + collidedObject
+          .getHeight()) {
+        collide(collidingObject, collidedObject);
+      }
+    }
+    */
     GameObject self = collidableObjects.get(index);
-    double width = self.getWidth();
-    double height = self.getHeight();
-    double x = self.getX();
-    double y = self.getY();
+    double w1 = self.getWidth();
+    double h1 = self.getHeight();
+    double x1 = self.getX() - w1 / 2;
+    double y1 = self.getY() - h1 / 2;
 
     for (int k = index + 1; k < collidableObjects.size(); k++) {
       GameObject other = collidableObjects.get(k);
+      double w2 = other.getWidth();
+      double h2 = other.getHeight();
+      double x2 = other.getX() - w2 / 2;
+      double y2 = other.getY() - h2 / 2;
 
-      if (x < other.getX() + other.getWidth() &&
-          x + width > other.getX() &&
-          y < other.getY() + other.getHeight() &&
-          y + height > other.getY()) {
+      if (x1 < x2 + w2 && x1 + w1 > x2 &&
+          y1 < y2 + h2 && y1 + h1 > y2) {
         collide(self, other);
-        System.out.println("Collision Detected");
       }
     }
   }
@@ -87,6 +90,7 @@ public class CollisionSystem extends GameObjectBasedSystem {
     myActionManager.handleAction(other, self, info);
   }
 
+  // FIXME: not working correctly
   private String detectCollisionDirection(GameObject collidingObject, GameObject collidedObject) {
     double x = collidedObject.getX();
     double y = collidedObject.getY();
