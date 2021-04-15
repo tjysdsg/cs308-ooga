@@ -40,7 +40,7 @@ public class ObjectView extends StackPane {
     setHeight(gameObject.getHeight());
     setWidth(gameObject.getWidth());
     System.out.println(gameObject.getWidth());
-    obj.setOnUpdate(this::refreshPosition);
+    obj.setOnPositionUpdate(this::refreshPosition);
     refreshPosition();
     getChildren().add(playerImage);
     logger.info("New object created at {} {}", getTranslateX(), getTranslateY());

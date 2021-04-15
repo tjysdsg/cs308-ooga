@@ -6,6 +6,9 @@ import ooga.model.Vector;
 import ooga.model.actions.ActionInfo;
 import ooga.model.components.Component;
 import ooga.model.observables.ObservableObject;
+import ooga.model.systems.creature.PlayerSystem;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class GameObject implements ObservableObject, Comparable<GameObject> {
 
@@ -17,6 +20,8 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   private boolean collidable = true;
   private double height, width;
   private List<ActionInfo> onCollide;
+  private transient Runnable positionCallback;
+  private static final Logger logger = LogManager.getLogger(PlayerSystem.class);
 
   public GameObject(int id, String name) {
     this.id = id;
@@ -32,9 +37,9 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
     return false;
   }
 
-  // FIXME: since we use systems to update data, do we need this?
   @Override
-  public void setOnUpdate(Runnable callback) {
+  public void setOnPositionUpdate(Runnable callback) {
+    positionCallback = callback;
   }
 
   public int getId() {
@@ -45,12 +50,22 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
     return collidable;
   }
 
+  private void notifyPositionUpdate() {
+    if (positionCallback != null) {
+      positionCallback.run();
+    } else {
+      logger.warn("Null notify position callback");
+    }
+  }
+
   public void setX(double x) {
     this.x = x;
+    notifyPositionUpdate();
   }
 
   public void setY(double y) {
     this.y = y;
+    notifyPositionUpdate();
   }
 
   @Override

@@ -6,6 +6,7 @@ import com.squareup.moshi.Moshi;
 
 import java.io.IOException;
 import java.util.Map;
+import ooga.model.Vector;
 import ooga.model.exceptions.TypeNotFoundException;
 import ooga.model.systems.IDManager;
 
@@ -44,6 +45,7 @@ public class ObjectFactory {
 
         clone.setX(instance.getX());
         clone.setY(instance.getY());
+        clone.setVelocity(new Vector(0, 0));
 
         return clone;
     }

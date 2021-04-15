@@ -21,7 +21,7 @@ public class ECManager {
 
   private IDManager idManager;
   private Map<Integer, GameObject> entities;
-  private Map<Class, Map<Integer, Component>> existingComponents;
+  private Map<Class<? extends Component>, Map<Integer, Component>> existingComponents;
   private ObjectFactory factory;
   private Consumer<ObservableObject> newObjectCallback;
 
@@ -83,7 +83,7 @@ public class ECManager {
     return (List<T>) new ArrayList<>(components.values());
   }
 
-  public void registerExistingComponent(GameObject owner, Component component) {
+  public <T extends Component> void registerExistingComponent(GameObject owner, T component) {
     component.setOwner(owner);
     component.setId(idManager.getNewId());
     addComponentToMap(component);
@@ -101,7 +101,7 @@ public class ECManager {
     }
   }
 
-  private void addComponentToMap(Component component) {
+  private <T extends Component> void addComponentToMap(T component) {
     int id = component.getId();
     Map<Integer, Component> idCompMap = existingComponents.get(component.getClass());
     if (idCompMap != null) {

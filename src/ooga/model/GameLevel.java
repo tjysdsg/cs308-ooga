@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.squareup.moshi.Json;
+import ooga.model.components.Component;
 import ooga.model.objects.GameObject;
 import ooga.model.systems.ActionManager;
 import ooga.model.systems.BaseSystem;
@@ -37,6 +38,12 @@ class GameLevel implements Level {
     systems.add(new TransformSystem(ecManager));
     systems.add(new HealthSystem(ecManager));
     systems.add(new PlayerSystem(ecManager));
+
+    for (GameObject go : ecManager.getEntities()) {
+      for (Component component : go.getComponents()) {
+        ecManager.registerExistingComponent(go, component);
+      }
+    }
 
     for (var s : systems) {
       s.registerAllInputs(inputManager);
