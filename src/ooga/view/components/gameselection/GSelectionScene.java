@@ -1,5 +1,6 @@
 package ooga.view.components.gameselection;
 
+import java.io.File;
 import java.util.function.Consumer;
 import java.util.prefs.Preferences;
 import javafx.scene.Scene;
@@ -52,8 +53,8 @@ public class GSelectionScene extends Scene {
     // createItem("/home/joshu/schoolStuff/308/ooga_team08/data/Ultimate Game");
   }
 
-  public void setOnGameSelected(Consumer<String> callBack) {
-    this.gameView.setOnPlayRequested(callBack);
-    this.gamesList.setOnRun(callBack);
+  public void setOnGameSelected(Consumer<String> callback) {
+    this.gameView.setOnPlayRequested(callback);
+    this.gamesList.setOnRun(callback);
   }
 }

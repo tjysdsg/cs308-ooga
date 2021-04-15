@@ -31,7 +31,6 @@ public class PlayerSystem extends ComponentBasedSystem {
     addMapping("left", this::handleLeft);
     addMapping("jump", this::handleJump);
 
-
     addCollisionMapping("jump_self", event -> doJump(event.getSelf()));
 
     // TODO: add this to 'onCollide' of player in the config files
@@ -93,9 +92,9 @@ public class PlayerSystem extends ComponentBasedSystem {
     }
   }
 
-  public void initPlayerType(PlayerComponent.PlayerType playerType){
-    List<PlayerComponent> players= getPlayers();
-    for(PlayerComponent p: players){
+  public void initPlayerType(PlayerComponent.PlayerType playerType) {
+    List<PlayerComponent> players = getPlayers();
+    for (PlayerComponent p : players) {
       p.setPlayerType(playerType);
     }
   }
@@ -115,7 +114,7 @@ public class PlayerSystem extends ComponentBasedSystem {
       // change the vertical velocity according to gravity if in air
       if (p.getVerticalStatus() == VerticalMovementStatus.AIRBORNE) {
         double vy = go.getVelocity().getY();
-        go.setVelocityY((vy - gravitationalAcceleration * deltaTime)/(1+ friction));
+        go.setVelocityY((vy - gravitationalAcceleration * deltaTime) / (1 + friction));
       }
     }
   }
