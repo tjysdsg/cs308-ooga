@@ -35,7 +35,7 @@ public class Controller implements ModelController {
   }
 
   @Override
-  public void handleKeyRelease(String code) {
+  public void handleKeyRelease(KeyCode code) {
     model.handleCode(code2action.get(code), false);
   }
 

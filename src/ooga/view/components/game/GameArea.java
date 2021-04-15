@@ -33,6 +33,9 @@ public class GameArea extends AnchorPane {
   }
 
   public void addObject(ObjectView object) {
+    if(objectsPane.getChildren().size() == 1) {
+      setCameraCenter(object);
+    }
     objectsPane.getChildren().add(object);
   }
 

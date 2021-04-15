@@ -104,7 +104,7 @@ public class GameScene extends Scene {
     controller.handleKeyPress(code);
   }
 
-  private void handleRelease(String code) {
+  private void handleRelease(KeyCode code) {
     controller.handleKeyRelease(code);
   }
 
@@ -124,8 +124,6 @@ public class GameScene extends Scene {
   public void setOnEscape(Consumer<StackPane> callback) {
     this.onEscape = callback;
   }
-
-  private void handleRelease(KeyCode code) {}
 
   public void pauseGame() {}
 
