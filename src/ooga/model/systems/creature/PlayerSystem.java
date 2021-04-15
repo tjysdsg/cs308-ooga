@@ -20,8 +20,7 @@ public class PlayerSystem extends ComponentBasedSystem {
 
   protected ComponentMapper<PlayerComponent> componentMapper;
   // TODO: support customizing gravitational acceleration
-  private double gravitationalAcceleration = 9.8;
-  private double friction = 0.1;
+  private double gravitationalAcceleration = 100;
   // TODO: support active and inactive players
 
   public PlayerSystem(ECManager ecManager) {
@@ -32,6 +31,7 @@ public class PlayerSystem extends ComponentBasedSystem {
     addMapping("jump", this::handleJump);
 
     addCollisionMapping("jump_self", event -> doJump(event.getSelf()));
+    addCollisionMapping("grounded", event -> onGrounded(event.getSelf()));
 
     // TODO: add this to 'onCollide' of player in the config files
     addCollisionMapping("player_grounded", event -> onGrounded(event.getSelf()));
@@ -68,14 +68,9 @@ public class PlayerSystem extends ComponentBasedSystem {
     handleHorizontalMovement(on, PlayerComponent.LEFT_DIRECTION);
   }
 
-  private double calculateJumpVerticalSpeed(double maxJumpHeight, double timeToApex) {
-    // h = vt - 0.5 gt^2
-    // v = (h + 0.5 gt^2) / t
-    return (maxJumpHeight + 0.5 * gravitationalAcceleration * timeToApex * timeToApex) / timeToApex;
-  }
-
   public void doJump(GameObject go, PlayerComponent p) {
-    go.setVelocityY(calculateJumpVerticalSpeed(p.getMaxJumpHeight(), p.getTimeToJumpApex()));
+    go.setVelocityY(p.getJumpImpulse());
+    p.setVerticalStatus(VerticalMovementStatus.AIRBORNE);
   }
 
   public void doJump(GameObject go) {
@@ -115,7 +110,9 @@ public class PlayerSystem extends ComponentBasedSystem {
       // change the vertical velocity according to gravity if in air
       if (p.getVerticalStatus() == VerticalMovementStatus.AIRBORNE) {
         double vy = go.getVelocity().getY();
-        go.setVelocityY((vy - gravitationalAcceleration * deltaTime) / (1 + friction));
+        go.setVelocityY(vy - gravitationalAcceleration * deltaTime);
+      } else {
+        go.setVelocityY(0);
       }
     }
   }

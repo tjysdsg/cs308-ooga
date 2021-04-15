@@ -39,11 +39,7 @@ class GameLevel implements Level {
     systems.add(new HealthSystem(ecManager));
     systems.add(new PlayerSystem(ecManager));
 
-    for (GameObject go : ecManager.getEntities()) {
-      for (Component component : go.getComponents()) {
-        ecManager.registerExistingComponent(go, component);
-      }
-    }
+    ecManager.registerExistingComponents(ecManager.getEntities());
 
     for (var s : systems) {
       s.registerAllInputs(inputManager);

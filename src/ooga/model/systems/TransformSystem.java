@@ -23,7 +23,7 @@ public class TransformSystem extends GameObjectBasedSystem {
       Vector v = go.getVelocity();
 
       go.setX(x + deltaTime * v.getX());
-      go.setY(y + deltaTime * v.getY());
+      go.setY(y - deltaTime * v.getY());
     }
   }
 }
