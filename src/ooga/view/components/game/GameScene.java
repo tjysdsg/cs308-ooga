@@ -38,7 +38,10 @@ public class GameScene extends Scene {
     this.directory = directory;
     this.gameArea = new GameArea();
     File gameDirectory = new File(directory);
-    model.setOnNewObject(gameArea::addObject);
+    model.setOnNewObject(e -> {
+      ObjectView obj = new ObjectView(e);
+      gameArea.addObject(obj);
+    });
 
     if (!ModelFactory.verifyGameDirectory(gameDirectory)) {
       handleInvalidGame();

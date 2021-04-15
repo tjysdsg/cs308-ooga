@@ -32,11 +32,11 @@ public class GameArea extends AnchorPane {
     objectsPane.translateXProperty().bind(prop.multiply(-1));
   }
 
-  public void addObject(ObservableObject object) {
-    objectsPane.getChildren().add(new ObjectView(object));
+  public void addObject(ObjectView object) {
+    objectsPane.getChildren().add(object);
   }
 
-  public void removeObject(ObservableObject object) {
+  public void removeObject(ObjectView object) {
     objectsPane.getChildren().remove(object);
   }
 }
