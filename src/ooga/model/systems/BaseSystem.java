@@ -25,6 +25,7 @@ public abstract class BaseSystem {
     actionMaps.put(code, callback);
   }
 
+
   public void registerAllInputs(InputManager inputManager) {
     keymaps.forEach(inputManager::registerInput);
   }
