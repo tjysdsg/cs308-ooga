@@ -10,13 +10,15 @@ import ooga.model.observables.ObservableObject;
 public class GameObject implements ObservableObject, Comparable<GameObject> {
 
   private List<Component> components;
-  private final int id;
-  private final String name;
+  private int id;
+  private String name;
   private double x, y;
-  private Vector velocity;
+  private Vector velocity = new Vector(0, 0);
   private boolean collidable = true;
   private double height, width;
   List<ActionInfo> onCollide;
+
+  public GameObject(){}
 
   public GameObject(int id, String name) {
     this.id = id;
