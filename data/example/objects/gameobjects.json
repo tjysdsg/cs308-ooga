@@ -3,7 +3,7 @@
   {
     "name": "goomba",
     "height": 50,
-    "width": 30,
+    "width": 50,
     "imageID": "goomba",
     "components" : [
       {

@@ -16,6 +16,8 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   private int id;
   private String name;
   private double x, y;
+  private String imageID;
+
   private transient Vector velocity = new Vector(0, 0);
   private boolean collidable = true;
   private double height, width;
@@ -37,6 +39,10 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
 
   public boolean isA(String type) {
     return false;
+  }
+
+  public String getImageID() {
+    return imageID;
   }
 
   @Override

@@ -20,7 +20,7 @@ public class ObjectView extends StackPane {
     this.gameObject = obj;
     this.playerImage = new ImageView();
 
-    Image image = images.getImage("mario", obj.getWidth(), obj.getHeight());
+    Image image = images.getImage(obj.getImageID(), obj.getWidth(), obj.getHeight());
     if (image != null) {
       playerImage.setImage(image);
     }
