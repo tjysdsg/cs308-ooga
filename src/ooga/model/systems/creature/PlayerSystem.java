@@ -18,7 +18,7 @@ public class PlayerSystem extends ComponentBasedSystem {
   protected ComponentMapper<PlayerComponent> componentMapper;
   // TODO: support customizing gravitational acceleration
   private double gravitationalAcceleration = 9.8;
-  private double fraction = 0.1;
+  private double friction = 0.1;
   // TODO: support active and inactive players
 
   public PlayerSystem(ECManager ecManager) {
@@ -115,7 +115,7 @@ public class PlayerSystem extends ComponentBasedSystem {
       // change the vertical velocity according to gravity if in air
       if (p.getVerticalStatus() == VerticalMovementStatus.AIRBORNE) {
         double vy = go.getVelocity().getY();
-        go.setVelocityY((vy - gravitationalAcceleration * deltaTime)/(1+fraction));
+        go.setVelocityY((vy - gravitationalAcceleration * deltaTime)/(1+ friction));
       }
     }
   }
