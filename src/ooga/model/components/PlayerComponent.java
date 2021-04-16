@@ -9,7 +9,8 @@ public class PlayerComponent extends Component {
   public static final int RIGHT_DIRECTION = 1;
   public static final int LEFT_DIRECTION = -1;
   private static final double DEFAULT_MAX_SPEED = 100;
-  private static final double DEFAULT_JUMP_IMPULSE = 130;
+  private static final double DEFAULT_JUMP_HEIGHT = 80;
+  private static final double DEFAULT_JUMP_TIME = 0.4;
 
   public enum HorizontalMovementStatus {
     /**
@@ -54,16 +55,19 @@ public class PlayerComponent extends Component {
      */
     GROUNDED,
     /**
-     * In air
+     * Rising in air
      */
-    AIRBORNE,
+    RISING,
+    /**
+     * Free falling
+     */
+    FALLING,
   }
 
   /**
    * which horizontal the player is facing, 1 for right, -1 for left
    */
   protected int direction = RIGHT_DIRECTION;
-
 
   protected PlayerType playerType = PlayerType.PLAYER;
 
@@ -79,6 +83,8 @@ public class PlayerComponent extends Component {
    */
   protected HorizontalMovementStatus horizontalStatus = HorizontalMovementStatus.STILL;
 
+  private double jumpTimer = 0;
+
   public void setPlayerType(PlayerType playerType) {
     this.playerType = playerType;
   }
@@ -93,18 +99,35 @@ public class PlayerComponent extends Component {
   private double maxSpeed = DEFAULT_MAX_SPEED;
 
   /**
-   * The initial vertical velocity that player has when it jumps
+   * Max height the players can jump
    */
-  private double jumpImpulse = DEFAULT_JUMP_IMPULSE;
+  private double jumpHeight = DEFAULT_JUMP_HEIGHT;
 
-  private List<GameObject> touchedGround = new ArrayList<>();
+  /**
+   * Time to reach jump apex
+   */
+  private double jumpTime = DEFAULT_JUMP_TIME;
 
-  public List<GameObject> getTouchedGround() {
-    return touchedGround;
+  private List<GameObject> blocksBelow = new ArrayList<>();
+
+  public List<GameObject> getBlocksBelow() {
+    return blocksBelow;
   }
 
-  public void resetTouchedGround(List<GameObject> touchedGround) {
-    this.touchedGround = new ArrayList<>();
+  public void resetBlocksBelow() {
+    this.blocksBelow = new ArrayList<>();
+  }
+
+  public void incrementJumpTimer(double delta) {
+    jumpTimer += delta;
+  }
+
+  public double getJumpTimer() {
+    return jumpTimer;
+  }
+
+  public void resetJumpTimer() {
+    this.jumpTimer = 0;
   }
 
   // only for moshi
@@ -132,12 +155,20 @@ public class PlayerComponent extends Component {
     this.maxSpeed = maxSpeed;
   }
 
-  public double getJumpImpulse() {
-    return jumpImpulse;
+  public double getJumpHeight() {
+    return jumpHeight;
   }
 
-  public void setJumpImpulse(double jumpImpulse) {
-    this.jumpImpulse = jumpImpulse;
+  public void setJumpHeight(double jumpHeight) {
+    this.jumpHeight = jumpHeight;
+  }
+
+  public double getJumpTime() {
+    return jumpTime;
+  }
+
+  public void setJumpTime(double jumpTime) {
+    this.jumpTime = jumpTime;
   }
 
   public void switchDirection() {

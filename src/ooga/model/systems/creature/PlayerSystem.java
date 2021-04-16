@@ -19,8 +19,7 @@ public class PlayerSystem extends ComponentBasedSystem {
   private static final Logger logger = LogManager.getLogger(PlayerSystem.class);
 
   protected ComponentMapper<PlayerComponent> componentMapper;
-  // TODO: support customizing gravitational acceleration
-  private double gravitationalAcceleration = 100;
+
   // TODO: support active and inactive players
 
   public PlayerSystem(ECManager ecManager) {
@@ -31,7 +30,10 @@ public class PlayerSystem extends ComponentBasedSystem {
     addMapping("jump", this::handleJump);
 
     addCollisionMapping("jump_self", event -> doJump(event.getSelf()));
-    addCollisionMapping("player_blocked_bottom", event -> obstacleOnBottom(event.getSelf()));
+    addCollisionMapping(
+        "player_blocked_bottom",
+        event -> obstacleOnBottom(event.getSelf(), event.getHitter())
+    );
     addCollisionMapping("player_blocked_right", event -> obstacleOnRight(event.getSelf()));
     addCollisionMapping("player_blocked_left", event -> obstacleOnLeft(event.getSelf()));
     addCollisionMapping("player_blocked_top", event -> obstacleOnTop(event.getSelf()));
@@ -56,19 +58,19 @@ public class PlayerSystem extends ComponentBasedSystem {
   /**
    * Callback when the player touches ground
    */
-  private void obstacleOnBottom(GameObject go) {
+  private void obstacleOnBottom(GameObject go, GameObject other) {
     PlayerComponent p = componentMapper.get(go.getId());
     if (go.getVelocity().getY() > 0) {
       go.setVelocityY(0);
     }
     p.setVerticalStatus(VerticalMovementStatus.GROUNDED);
+    p.getBlocksBelow().add(other);
   }
 
   private void obstacleOnTop(GameObject go) {
     PlayerComponent p = componentMapper.get(go.getId());
-    if (go.getVelocity().getY() < 0) {
-      go.setVelocityY(0);
-    }
+    p.setVerticalStatus(VerticalMovementStatus.FALLING);
+    go.setVelocityY(0);
   }
 
   private void obstacleOnLeft(GameObject go) {
@@ -93,10 +95,13 @@ public class PlayerSystem extends ComponentBasedSystem {
   }
 
   public void doJump(GameObject go, PlayerComponent p) {
-    // adding a little bit of vertical offset to make the player "break free" the collision
-    go.setY(go.getY() + 3.0);
-    go.setVelocityY(p.getJumpImpulse());
-    p.setVerticalStatus(VerticalMovementStatus.AIRBORNE);
+    if (p.getVerticalStatus() == VerticalMovementStatus.GROUNDED) {
+      go.setVelocityY(p.getJumpHeight() / p.getJumpTime());
+      go.setY(go.getY() + 3.0);
+      p.setVerticalStatus(VerticalMovementStatus.RISING);
+      p.resetJumpTimer();
+      p.resetBlocksBelow();
+    }
   }
 
   public void doJump(GameObject go) {
@@ -106,9 +111,7 @@ public class PlayerSystem extends ComponentBasedSystem {
   private void handleJump(boolean on) {
     List<PlayerComponent> players = getPlayers();
     for (PlayerComponent p : players) {
-      if (p.getVerticalStatus() == VerticalMovementStatus.GROUNDED) {
-        doJump(p.getOwner(), p);
-      }
+      doJump(p.getOwner(), p);
     }
   }
 
@@ -131,15 +134,35 @@ public class PlayerSystem extends ComponentBasedSystem {
               ? p.getDirection() * p.getMaxSpeed()
               : 0);
 
-      // logger.info(go.getVelocity().getX());
+      logger.debug("Vertical movement status {}", p.getVerticalStatus());
 
-      // change the vertical velocity according to gravity if in air
-      if (p.getVerticalStatus() == VerticalMovementStatus.AIRBORNE) {
-        double vy = go.getVelocity().getY();
-        go.setVelocityY(vy - gravitationalAcceleration * deltaTime);
+      // update vertical movement status
+      if (p.getBlocksBelow().size() == 0) {
+        if (p.getVerticalStatus() != VerticalMovementStatus.RISING) {
+          p.setVerticalStatus(VerticalMovementStatus.FALLING);
+        }
+      } else {
+        p.setVerticalStatus(VerticalMovementStatus.GROUNDED);
+      }
+
+      // update vertical velocity according to vertical movement status
+      if (p.getVerticalStatus() == VerticalMovementStatus.RISING) {
+        if (p.getJumpTimer() >= p.getJumpTime()) {
+          go.setVelocityY(0);
+          p.setVerticalStatus(VerticalMovementStatus.FALLING);
+        } else {
+          go.setVelocityY(p.getJumpHeight() / p.getJumpTime());
+        }
+      } else if (p.getVerticalStatus() == VerticalMovementStatus.FALLING) {
+        go.setVelocityY(-p.getJumpHeight() / p.getJumpTime());
       } else {
         go.setVelocityY(0);
       }
+
+      // update the vertical velocity
+      p.incrementJumpTimer(deltaTime);
+      // reset list of blocks below
+      p.resetBlocksBelow();
     }
   }
 }
