@@ -1,13 +1,20 @@
 package ooga.model.components;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import ooga.model.objects.GameObject;
 
 public class PlayerComponent extends Component {
 
   public static final int RIGHT_DIRECTION = 1;
   public static final int LEFT_DIRECTION = -1;
+  public static final int OBSTACLE_KEY_LEFT = 0;
+  public static final int OBSTACLE_KEY_RIGHT = 1;
+  public static final int OBSTACLE_KEY_TOP = 2;
+  public static final int OBSTACLE_KEY_BOTTOM = 3;
+
   private static final double DEFAULT_MAX_SPEED = 100;
   private static final double DEFAULT_JUMP_HEIGHT = 80;
   private static final double DEFAULT_JUMP_TIME = 0.4;
@@ -104,18 +111,27 @@ public class PlayerComponent extends Component {
   private double jumpHeight = DEFAULT_JUMP_HEIGHT;
 
   /**
+   * Obstacles the player currently collide with
+   *
+   * <ol>
+   *   <li>key OBSTACLE_KEY_LEFT maps to the obstacle on the left</li>
+   *   <li>key OBSTACLE_KEY_BOTTOM maps to the obstacle on the bottom</li>
+   *   <li>...</li>
+   * </ol>
+   */
+  private Map<Integer, GameObject> obstacles = new HashMap<>();
+
+  /**
    * Time to reach jump apex
    */
   private double jumpTime = DEFAULT_JUMP_TIME;
 
-  private List<GameObject> blocksBelow = new ArrayList<>();
-
-  public List<GameObject> getBlocksBelow() {
-    return blocksBelow;
+  public GameObject getObstacle(int obstacleDirection) {
+    return obstacles.getOrDefault(obstacleDirection, null);
   }
 
-  public void resetBlocksBelow() {
-    this.blocksBelow = new ArrayList<>();
+  public void setObstacle(int obstacleDirection, GameObject go) {
+    obstacles.put(obstacleDirection, go);
   }
 
   public void incrementJumpTimer(double delta) {

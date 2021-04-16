@@ -34,9 +34,18 @@ public class PlayerSystem extends ComponentBasedSystem {
         "player_blocked_bottom",
         event -> obstacleOnBottom(event.getSelf(), event.getHitter())
     );
-    addCollisionMapping("player_blocked_right", event -> obstacleOnRight(event.getSelf()));
-    addCollisionMapping("player_blocked_left", event -> obstacleOnLeft(event.getSelf()));
-    addCollisionMapping("player_blocked_top", event -> obstacleOnTop(event.getSelf()));
+    addCollisionMapping(
+        "player_blocked_right",
+        event -> obstacleOnRight(event.getSelf(), event.getHitter())
+    );
+    addCollisionMapping(
+        "player_blocked_left",
+        event -> obstacleOnLeft(event.getSelf(), event.getHitter())
+    );
+    addCollisionMapping(
+        "player_blocked_top",
+        event -> obstacleOnTop(event.getSelf(), event.getHitter())
+    );
   }
 
   public List<PlayerComponent> getPlayers() {
@@ -60,29 +69,24 @@ public class PlayerSystem extends ComponentBasedSystem {
    */
   private void obstacleOnBottom(GameObject go, GameObject other) {
     PlayerComponent p = componentMapper.get(go.getId());
-    if (go.getVelocity().getY() > 0) {
-      go.setVelocityY(0);
-    }
     p.setVerticalStatus(VerticalMovementStatus.GROUNDED);
-    p.getBlocksBelow().add(other);
+    p.setObstacle(PlayerComponent.OBSTACLE_KEY_BOTTOM, other);
   }
 
-  private void obstacleOnTop(GameObject go) {
+  private void obstacleOnTop(GameObject go, GameObject other) {
     PlayerComponent p = componentMapper.get(go.getId());
     p.setVerticalStatus(VerticalMovementStatus.FALLING);
-    go.setVelocityY(0);
+    p.setObstacle(PlayerComponent.OBSTACLE_KEY_TOP, other);
   }
 
-  private void obstacleOnLeft(GameObject go) {
-    if (go.getVelocity().getX() < 0) {
-      go.setVelocityX(0);
-    }
+  private void obstacleOnLeft(GameObject go, GameObject other) {
+    PlayerComponent p = componentMapper.get(go.getId());
+    p.setObstacle(PlayerComponent.OBSTACLE_KEY_LEFT, other);
   }
 
-  private void obstacleOnRight(GameObject go) {
-    if (go.getVelocity().getX() > 0) {
-      go.setVelocityX(0);
-    }
+  private void obstacleOnRight(GameObject go, GameObject other) {
+    PlayerComponent p = componentMapper.get(go.getId());
+    p.setObstacle(PlayerComponent.OBSTACLE_KEY_RIGHT, other);
   }
 
   private void handleRight(boolean on) {
@@ -100,7 +104,7 @@ public class PlayerSystem extends ComponentBasedSystem {
       go.setY(go.getY() + 3.0);
       p.setVerticalStatus(VerticalMovementStatus.RISING);
       p.resetJumpTimer();
-      p.resetBlocksBelow();
+      p.setObstacle(PlayerComponent.OBSTACLE_KEY_BOTTOM, null);
     }
   }
 
@@ -133,11 +137,17 @@ public class PlayerSystem extends ComponentBasedSystem {
           p.getHorizontalStatus() == HorizontalMovementStatus.RUNNING
               ? p.getDirection() * p.getMaxSpeed()
               : 0);
-
-      logger.debug("Vertical movement status {}", p.getVerticalStatus());
+      if (p.getObstacle(PlayerComponent.OBSTACLE_KEY_LEFT) != null
+          && go.getVelocity().getX() < 0) {
+        go.setVelocityX(0);
+      }
+      if (p.getObstacle(PlayerComponent.OBSTACLE_KEY_RIGHT) != null
+          && go.getVelocity().getX() > 0) {
+        go.setVelocityX(0);
+      }
 
       // update vertical movement status
-      if (p.getBlocksBelow().size() == 0) {
+      if (p.getObstacle(PlayerComponent.OBSTACLE_KEY_BOTTOM) == null) {
         if (p.getVerticalStatus() != VerticalMovementStatus.RISING) {
           p.setVerticalStatus(VerticalMovementStatus.FALLING);
         }
@@ -148,21 +158,26 @@ public class PlayerSystem extends ComponentBasedSystem {
       // update vertical velocity according to vertical movement status
       if (p.getVerticalStatus() == VerticalMovementStatus.RISING) {
         if (p.getJumpTimer() >= p.getJumpTime()) {
-          go.setVelocityY(0);
           p.setVerticalStatus(VerticalMovementStatus.FALLING);
         } else {
           go.setVelocityY(p.getJumpHeight() / p.getJumpTime());
         }
-      } else if (p.getVerticalStatus() == VerticalMovementStatus.FALLING) {
+      }
+      if (p.getVerticalStatus() == VerticalMovementStatus.FALLING) {
         go.setVelocityY(-p.getJumpHeight() / p.getJumpTime());
-      } else {
+      }
+      if (p.getVerticalStatus() == VerticalMovementStatus.GROUNDED) {
         go.setVelocityY(0);
       }
 
       // update the vertical velocity
       p.incrementJumpTimer(deltaTime);
-      // reset list of blocks below
-      p.resetBlocksBelow();
+
+      // reset list of obstacles
+      p.setObstacle(PlayerComponent.OBSTACLE_KEY_LEFT, null);
+      p.setObstacle(PlayerComponent.OBSTACLE_KEY_RIGHT, null);
+      p.setObstacle(PlayerComponent.OBSTACLE_KEY_TOP, null);
+      p.setObstacle(PlayerComponent.OBSTACLE_KEY_BOTTOM, null);
     }
   }
 }

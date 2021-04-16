@@ -22,12 +22,22 @@
         "position": "top"
       },
       {
+        "with": "brick",
+        "action": "player_blocked_bottom",
+        "position": "top"
+      },
+      {
         "with": "mario",
         "action": "player_blocked_right",
         "position": "right"
       },
       {
         "with": "qblock",
+        "action": "player_blocked_right",
+        "position": "right"
+      },
+      {
+        "with": "brick",
         "action": "player_blocked_right",
         "position": "right"
       },
@@ -40,6 +50,16 @@
         "with": "qblock",
         "action": "player_blocked_left",
         "position": "left"
+      },
+      {
+        "with": "brick",
+        "action": "player_blocked_left",
+        "position": "left"
+      },
+      {
+        "with": "brick",
+        "action": "player_blocked_top",
+        "position": "bottom"
       },
       {
         "with": "mario",
