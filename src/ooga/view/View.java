@@ -88,18 +88,25 @@ public class View {
           if (this.currentGame != null) {
             currentGame.playGame();
           }
-        }, "resume", "special", "primary");
+        },
+        "resume",
+        "special",
+        "primary");
 
     pauseMenu.addOption(
         resources.getStringBinding("Settings"),
         () -> {
           System.out.println("yay!");
         });
-    pauseMenu.addOption( 
+
+    pauseMenu.addOption(
         resources.getStringBinding("Exit"),
         () -> {
           setScene(this.splashScreen);
-        }, "exit", "special", "secondary");
+        },
+        "exit",
+        "special",
+        "secondary");
   }
 
   private void startGame(String directory) {

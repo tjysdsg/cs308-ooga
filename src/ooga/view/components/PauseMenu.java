@@ -1,22 +1,19 @@
 package ooga.view.components;
-import java.util.Arrays;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialogLayout;
-
+import java.util.Arrays;
+import javafx.beans.binding.StringBinding;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import ooga.view.util.ObservableResource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.javafx.FontIcon;
 
-import javafx.beans.binding.StringBinding;
-import javafx.scene.layout.StackPane;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import ooga.view.util.ObservableResource;
-
 public class PauseMenu extends StackPane {
   private static final Logger logger = LogManager.getLogger(PauseMenu.class);
-  
+
   private VBox contents;
 
   public PauseMenu(ObservableResource resources) {
@@ -29,7 +26,7 @@ public class PauseMenu extends StackPane {
     getChildren().addAll(contents);
   }
 
-  public void addOption(StringBinding text, Runnable action, String ... classes) {
+  public void addOption(StringBinding text, Runnable action, String... classes) {
     JFXButton button = new JFXButton();
     button.textProperty().bind(text);
     button.setGraphic(new FontIcon());
@@ -38,5 +35,4 @@ public class PauseMenu extends StackPane {
     contents.getChildren().addAll(button);
     Arrays.stream(classes).forEach(button.getStyleClass()::add); // sexy :D
   }
-
 }
