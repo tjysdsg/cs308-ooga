@@ -394,3 +394,50 @@ JFXDialogLayout Label {
 .pause-dialog JFXButton:hover {
   -fx-border-color: -secondary-color;
 }
+
+.settings-module {
+  -fx-max-height: Infinity;
+  -fx-max-width: Infinity;
+  -fx-padding: 200;
+}
+
+.settings-area {
+  -fx-spacing: 20;
+  -fx-padding: 20;
+  -fx-max-width: Infinity;
+  -fx-max-height: Infinity;
+  -fx-hgap: 50;
+  -fx-vgap: 20;
+  -fx-alignment: CENTER;
+  -fx-border-color: grey;
+  -fx-background-color: -primary-color;
+  -fx-border-radius: 10;
+}
+
+.setting-pair {
+  -fx-border-color: -primary-color;
+  -fx-spacing: 10;
+  -fx-alignment: CENTER;
+  -fx-border-width: 0 0 1 0;
+  -fx-pref-width: 200;
+  -fx-max-width: Infinity;
+  -fx-max-height: 40;
+}
+
+.setting-pair:hover {
+  -fx-border-color: -secondary-color;
+}
+
+.combo-box-base {
+  -fx-background-color: -primary-color;
+}
+
+.combo-box > .list-cell {
+  -fx-background-color: -primary-color;
+  -fx-text-fill: #ffffffff;
+  -fx-fill: #ffffffff;
+}
+
+.combo-box > .text-field {
+  -fx-background-color: -primary-color;
+}

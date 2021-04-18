@@ -5,10 +5,14 @@ import fr.brouillard.oss.cssfx.CSSFX;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.*;
+import javafx.beans.property.ObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.*;
 import ooga.view.components.PauseMenu;
+import ooga.view.components.SettingsModule;
 import ooga.view.components.SplashScreen;
 import ooga.view.components.game.GameScene;
 import ooga.view.components.gameselection.GSelectionScene;
@@ -71,10 +75,13 @@ public class View {
     splashScreen.setOnPlay(() -> setScene(gameSelection));
 
     setupPauseMenu();
+    setupSettings();
 
     logger.info("Displaying Splash Screen");
     stage.show();
   }
+
+  private void setupSettings() {}
 
   private void setupPauseMenu() {
     pauseDialog = new JFXDialog();
@@ -117,12 +124,29 @@ public class View {
     if (!cssFile.isBlank()) {
       currentGame.getStylesheets().add(cssFile);
     }
+
+    SettingsModule settingsModule = new SettingsModule(resources);
+    ObservableList<String> list = FXCollections.observableArrayList();
+    list.addAll("English", "French", "German");
+    settingsModule.addListSetting(resources.getStringBinding("Resume"), list);
+
     currentGame.setOnEscape(
         (e) -> {
           currentGame.pauseGame();
-          pauseDialog.show(e);
+          // pauseDialog.show(e);
+          e.getChildren().add(settingsModule);
         });
+
     setScene(currentGame);
+
+    ObjectProperty<String> prop =
+        settingsModule.addListSetting(resources.getStringBinding("LanguageSetting"), list);
+    System.out.println(prop.get());
+    prop.addListener((s, old, newVal) -> handleLanguageChange(old, newVal));
+  }
+
+  private void handleLanguageChange(String old, String newVal) {
+    logger.info("Language Changed from {} to {}", old, newVal);
   }
 
   private void createAnimations() {
