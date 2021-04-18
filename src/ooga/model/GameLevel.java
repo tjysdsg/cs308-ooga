@@ -37,8 +37,8 @@ class GameLevel implements Level {
 
     // TODO: create systems here and add them to systems
     systems.add(new HealthSystem(ecManager));
-    systems.add(new PlayerSystem(ecManager));
     systems.add(new CollisionSystem(ecManager, actionManager));
+    systems.add(new PlayerSystem(ecManager));
     systems.add(new TransformSystem(ecManager));
 
     ecManager.registerExistingComponents(ecManager.getEntities());
