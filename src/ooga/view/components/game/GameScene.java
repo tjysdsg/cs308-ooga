@@ -125,7 +125,11 @@ public class GameScene extends Scene {
     this.onEscape = callback;
   }
 
-  public void pauseGame() {}
+  public void pauseGame() {
+    loop.stop();
+  }
 
-  public void playGame() {}
+  public void playGame() {
+    loop.start();
+  }
 }

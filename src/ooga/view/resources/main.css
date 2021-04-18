@@ -369,16 +369,28 @@ JFXDialogLayout Label {
   -fx-background-color: -primary-color;
   -fx-alignment: TOP_CENTER;
   -fx-fill-width: true;
+  -fx-pref-width: 350;
+  -fx-pref-height: 450;
 }
 
 .pause-dialog VBox {
   -fx-background-color: -primary-color;
   -fx-alignment: TOP_CENTER;
+  -fx-spacing: 20;
   -fx-fill-width: true;
   -fx-max-width: Infinity;
   -fx-max-height: Infinity;
 }
 
 .pause-dialog JFXButton {
-  -fx-pref-width: 30;
+  -fx-max-width: 300;
+  -fx-font-size: 17;
+  -fx-max-height: 400;
+  -fx-pref-height: 120;
+  -fx-border-width: 2;
+  -fx-border-color: -primary-color;
+}
+
+.pause-dialog JFXButton:hover {
+  -fx-border-color: -secondary-color;
 }
