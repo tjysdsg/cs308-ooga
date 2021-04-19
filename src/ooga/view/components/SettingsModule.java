@@ -15,12 +15,18 @@ import ooga.view.util.ObservableResource;
 
 public class SettingsModule extends StackPane {
   private FlowPane area;
+  private StringBinding moduleName;
 
-  public SettingsModule(ObservableResource resources) {
+  public SettingsModule(StringBinding moduleName) {
     getStyleClass().addAll("settings-module");
+    this.moduleName = moduleName;
     area = new FlowPane();
     area.getStyleClass().addAll("settings-area");
     getChildren().addAll(area);
+  }
+
+  public StringBinding moduleBinding() {
+    return this.moduleName;
   }
 
   /**

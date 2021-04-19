@@ -4,6 +4,7 @@
   -game-item-button-width: 200;
   -game-item-button-height: 170;
   -primary-color: #1f1b24;
+  -primary-lighter: #353139;
   -fx-font-size: 10;
   -fx-font-family: "DejaVu Sans Light";
 }
@@ -398,7 +399,6 @@ JFXDialogLayout Label {
 .settings-module {
   -fx-max-height: Infinity;
   -fx-max-width: Infinity;
-  -fx-padding: 200;
 }
 
 .settings-area {
@@ -414,30 +414,80 @@ JFXDialogLayout Label {
   -fx-border-radius: 10;
 }
 
-.setting-pair {
+.settings-pair {
   -fx-border-color: -primary-color;
   -fx-spacing: 10;
   -fx-alignment: CENTER;
   -fx-border-width: 0 0 1 0;
-  -fx-pref-width: 200;
+  -fx-pref-width: 400;
   -fx-max-width: Infinity;
   -fx-max-height: 40;
 }
 
 .setting-pair:hover {
   -fx-border-color: -secondary-color;
+  -fx-border-width: 0 0 1 0;
 }
 
 .combo-box-base {
+  -fx-background-color: -primary-color;
+  -fx-font-size: 1.5em;
+}
+
+.jfx-combo-box {
+  -fx-background-color: -primary-color;
+}
+
+.jfx-combo-box .label {
   -fx-background-color: -primary-color;
 }
 
 .combo-box > .list-cell {
   -fx-background-color: -primary-color;
+  -fx-background: black;
   -fx-text-fill: #ffffffff;
   -fx-fill: #ffffffff;
 }
 
 .combo-box > .text-field {
   -fx-background-color: -primary-color;
+}
+
+TabPane {
+  -fx-max-height: Infinity;
+  -fx-max-width: Infinity;
+}
+
+.settings-dialog {
+  -fx-pref-width: 400; 
+  -fx-pref-height: 400; 
+}
+
+.tab {
+  -fx-background-color: -primary-color;
+  -fx-text-fill: #ffffffff;
+  -fx-font-size: 2em;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 100, 0.5, 0, 0);
+  -fx-spacing: 50;
+  -fx-pref-height: 35;
+}
+
+.tab-label {
+  -fx-text-fill: green;
+  -fx-font-size: 2em;
+}
+
+.tab-header-background {
+  -fx-background-color: -primary-lighter;
+}
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+  -fx-border-color: -secondary-color;
+}
+.tab-pane:focused > .tab-header-area > .tab:selected {
+  -fx-background-color: -secondary-color;
+}
+
+.tab:selected  {
+ -fx-background-color: -secondary-color
 }
