@@ -9,6 +9,10 @@
     "components" : [
       {
         "type" : "PlayerComponent"
+      },
+      {
+        "type" : "AttackComponent",
+        "frequency"
       }
     ]
   },
