@@ -16,7 +16,7 @@ public class PlayerComponent extends Component {
   public static final int OBSTACLE_KEY_BOTTOM = 3;
 
   private static final double DEFAULT_MAX_SPEED = 100;
-  private static final double DEFAULT_JUMP_HEIGHT = 80;
+  private static final double DEFAULT_JUMP_HEIGHT = 100;
   private static final double DEFAULT_JUMP_TIME = 0.4;
 
   public enum HorizontalMovementStatus {

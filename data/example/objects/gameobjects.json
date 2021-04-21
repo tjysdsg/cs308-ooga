@@ -1,4 +1,3 @@
-
 [
   {
     "name": "goomba",
@@ -8,49 +7,54 @@
     "onCollide": [
       {
         "actions": {
-            "player_blocked_bottom" : ""
-
-          },
-        "positions" : ["top"]
+          "player_blocked_bottom": ""
+        },
+        "positions": [
+          "bottom"
+        ]
       },
       {
         "actions": {
-          "player_blocked_top" : ""
+          "player_blocked_top": ""
         },
-        "positions" : ["bottom"]
+        "positions": [
+          "top"
+        ]
       },
       {
         "actions": {
-          "player_blocked_left" : ""
-
+          "player_blocked_left": ""
         },
-        "positions" : ["left"]
+        "positions": [
+          "left"
+        ]
       },
       {
         "actions": {
-          "player_blocked_right" : ""
-
+          "player_blocked_right": ""
         },
-        "positions" : ["right"]
+        "positions": [
+          "right"
+        ]
       }
     ],
-    "components" : [
+    "components": [
       {
-        "type" : "PlayerComponent"
+        "type": "PlayerComponent"
       }
     ]
   },
   {
-    "name" : "qblock",
-    "height" : "50",
-    "width" : "50",
-    "imageID" : "qblock"
+    "name": "qblock",
+    "height": "50",
+    "width": "50",
+    "imageID": "qblock"
   },
   {
-    "name" : "brick",
-    "height" : "50",
-    "width" : "50",
-    "imageID" : "brick"
+    "name": "brick",
+    "height": "50",
+    "width": "50",
+    "imageID": "brick"
   },
   {
     "name": "mario",
@@ -59,10 +63,10 @@
     "imageID": "mario"
   },
   {
-    "name" : "block",
-    "height" : 50,
-    "width" : 50,
-    "imageID" : "block"
+    "name": "block",
+    "height": 50,
+    "width": 50,
+    "imageID": "block"
   }
 ]
 

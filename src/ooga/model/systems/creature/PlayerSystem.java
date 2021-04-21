@@ -114,8 +114,14 @@ public class PlayerSystem extends ComponentBasedSystem {
 
   private void handleJump(boolean on) {
     List<PlayerComponent> players = getPlayers();
-    for (PlayerComponent p : players) {
-      doJump(p.getOwner(), p);
+    if (on) {
+      for (PlayerComponent p : players) {
+        doJump(p.getOwner(), p);
+      }
+    } else {
+      for (PlayerComponent p : players) {
+        p.setVerticalStatus(VerticalMovementStatus.FALLING);
+      }
     }
   }
 
