@@ -318,3 +318,6 @@ settings pretty dope, Java isn't that bad lol.
 10. Player slides on the ground.
 
     Change image of player object and momentarily change horizontal speed. Once player covers certain distance, reset image and speed.
+
+## Tinglong 
+
