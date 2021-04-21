@@ -7,69 +7,31 @@
     "imageID": "goomba",
     "onCollide": [
       {
-        "with": "block",
-        "action": "player_blocked_bottom",
-        "position": "top"
+        "actions": {
+            "player_blocked_bottom" : ""
+
+          },
+        "positions" : ["top"]
       },
       {
-        "with": "mario",
-        "action": "player_blocked_bottom",
-        "position": "top"
+        "actions": {
+          "player_blocked_top" : ""
+        },
+        "positions" : ["bottom"]
       },
       {
-        "with": "qblock",
-        "action": "player_blocked_bottom",
-        "position": "top"
+        "actions": {
+          "player_blocked_left" : ""
+
+        },
+        "positions" : ["left"]
       },
       {
-        "with": "brick",
-        "action": "player_blocked_bottom",
-        "position": "top"
-      },
-      {
-        "with": "mario",
-        "action": "player_blocked_right",
-        "position": "right"
-      },
-      {
-        "with": "qblock",
-        "action": "player_blocked_right",
-        "position": "right"
-      },
-      {
-        "with": "brick",
-        "action": "player_blocked_right",
-        "position": "right"
-      },
-      {
-        "with": "mario",
-        "action": "player_blocked_left",
-        "position": "left"
-      },
-      {
-        "with": "qblock",
-        "action": "player_blocked_left",
-        "position": "left"
-      },
-      {
-        "with": "brick",
-        "action": "player_blocked_left",
-        "position": "left"
-      },
-      {
-        "with": "brick",
-        "action": "player_blocked_top",
-        "position": "bottom"
-      },
-      {
-        "with": "mario",
-        "action": "player_blocked_top",
-        "position": "bottom"
-      },
-      {
-        "with": "qblock",
-        "action": "player_blocked_top",
-        "position": "bottom"
+        "actions": {
+          "player_blocked_right" : ""
+
+        },
+        "positions" : ["right"]
       }
     ],
     "components" : [
