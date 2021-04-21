@@ -1,11 +1,39 @@
 
-
 [
   {
     "name": "goomba",
     "height": 50,
-    "width": 30,
-    "imageID": "goombaimage",
+    "width": 50,
+    "imageID": "goomba",
+    "onCollide": [
+      {
+        "actions": {
+            "player_blocked_bottom" : ""
+
+          },
+        "positions" : ["top"]
+      },
+      {
+        "actions": {
+          "player_blocked_top" : ""
+        },
+        "positions" : ["bottom"]
+      },
+      {
+        "actions": {
+          "player_blocked_left" : ""
+
+        },
+        "positions" : ["left"]
+      },
+      {
+        "actions": {
+          "player_blocked_right" : ""
+
+        },
+        "positions" : ["right"]
+      }
+    ],
     "components" : [
       {
         "type" : "PlayerComponent"
@@ -17,10 +45,28 @@
     ]
   },
   {
+    "name" : "qblock",
+    "height" : "50",
+    "width" : "50",
+    "imageID" : "qblock"
+  },
+  {
+    "name" : "brick",
+    "height" : "50",
+    "width" : "50",
+    "imageID" : "brick"
+  },
+  {
     "name": "mario",
     "height": 50,
     "width": 50,
-    "imageID": "marioimage"
+    "imageID": "mario"
+  },
+  {
+    "name" : "block",
+    "height" : 50,
+    "width" : 50,
+    "imageID" : "block"
   }
 ]
 

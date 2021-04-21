@@ -1,14 +1,23 @@
 package ooga.model.components;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import ooga.model.objects.GameObject;
 
 public class PlayerComponent extends Component {
 
   public static final int RIGHT_DIRECTION = 1;
   public static final int LEFT_DIRECTION = -1;
+  public static final int OBSTACLE_KEY_LEFT = 0;
+  public static final int OBSTACLE_KEY_RIGHT = 1;
+  public static final int OBSTACLE_KEY_TOP = 2;
+  public static final int OBSTACLE_KEY_BOTTOM = 3;
+
   private static final double DEFAULT_MAX_SPEED = 100;
-  private static final double DEFAULT_MAX_JUMP_HEIGHT = 5;
-  private static final double DEFAULT_TIME_TO_JUMP_APEX = 0.8;
+  private static final double DEFAULT_JUMP_HEIGHT = 80;
+  private static final double DEFAULT_JUMP_TIME = 0.4;
 
   public enum HorizontalMovementStatus {
     /**
@@ -21,7 +30,7 @@ public class PlayerComponent extends Component {
     RUNNING,
   }
 
-  public enum PlayerType{
+  public enum PlayerType {
     /**
      * Neutral NPC
      */
@@ -36,7 +45,7 @@ public class PlayerComponent extends Component {
     ENEMY
   }
 
-  public enum CharacterStatus{
+  public enum CharacterStatus {
     /**
      * Player controlled
      */
@@ -53,16 +62,19 @@ public class PlayerComponent extends Component {
      */
     GROUNDED,
     /**
-     * In air
+     * Rising in air
      */
-    AIRBORNE,
+    RISING,
+    /**
+     * Free falling
+     */
+    FALLING,
   }
 
   /**
    * which horizontal the player is facing, 1 for right, -1 for left
    */
   protected int direction = RIGHT_DIRECTION;
-
 
   protected PlayerType playerType = PlayerType.PLAYER;
 
@@ -78,12 +90,14 @@ public class PlayerComponent extends Component {
    */
   protected HorizontalMovementStatus horizontalStatus = HorizontalMovementStatus.STILL;
 
-  public void setPlayerType(PlayerType playerType){
-    this.playerType=playerType;
+  private double jumpTimer = 0;
+
+  public void setPlayerType(PlayerType playerType) {
+    this.playerType = playerType;
   }
 
-  public void setCharacterStatus (CharacterStatus characterStatus){
-    this.characterStatus= characterStatus;
+  public void setCharacterStatus(CharacterStatus characterStatus) {
+    this.characterStatus = characterStatus;
   }
 
   /**
@@ -92,14 +106,50 @@ public class PlayerComponent extends Component {
   private double maxSpeed = DEFAULT_MAX_SPEED;
 
   /**
-   * Max jump height
+   * Max height the players can jump
    */
-  private double maxJumpHeight = DEFAULT_MAX_JUMP_HEIGHT;
+  private double jumpHeight = DEFAULT_JUMP_HEIGHT;
 
   /**
-   * Time needed for player to reach its max jump height, in seconds
+   * Obstacles the player currently collide with
+   *
+   * <ol>
+   *   <li>key OBSTACLE_KEY_LEFT maps to the obstacle on the left</li>
+   *   <li>key OBSTACLE_KEY_BOTTOM maps to the obstacle on the bottom</li>
+   *   <li>...</li>
+   * </ol>
    */
-  private double timeToJumpApex = DEFAULT_TIME_TO_JUMP_APEX;
+  private Map<Integer, GameObject> obstacles = new HashMap<>();
+
+  /**
+   * Time to reach jump apex
+   */
+  private double jumpTime = DEFAULT_JUMP_TIME;
+
+  public GameObject getObstacle(int obstacleDirection) {
+    return obstacles.getOrDefault(obstacleDirection, null);
+  }
+
+  public void setObstacle(int obstacleDirection, GameObject go) {
+    obstacles.put(obstacleDirection, go);
+  }
+
+  public void incrementJumpTimer(double delta) {
+    jumpTimer += delta;
+  }
+
+  public double getJumpTimer() {
+    return jumpTimer;
+  }
+
+  public void resetJumpTimer() {
+    this.jumpTimer = 0;
+  }
+
+  // only for moshi
+  protected PlayerComponent() {
+    super();
+  }
 
   public PlayerComponent(int id, GameObject owner) {
     super(id, owner);
@@ -121,20 +171,20 @@ public class PlayerComponent extends Component {
     this.maxSpeed = maxSpeed;
   }
 
-  public double getMaxJumpHeight() {
-    return maxJumpHeight;
+  public double getJumpHeight() {
+    return jumpHeight;
   }
 
-  public void setMaxJumpHeight(double maxJumpHeight) {
-    this.maxJumpHeight = maxJumpHeight;
+  public void setJumpHeight(double jumpHeight) {
+    this.jumpHeight = jumpHeight;
   }
 
-  public double getTimeToJumpApex() {
-    return timeToJumpApex;
+  public double getJumpTime() {
+    return jumpTime;
   }
 
-  public void setTimeToJumpApex(double timeToJumpApex) {
-    this.timeToJumpApex = timeToJumpApex;
+  public void setJumpTime(double jumpTime) {
+    this.jumpTime = jumpTime;
   }
 
   public void switchDirection() {
@@ -155,5 +205,9 @@ public class PlayerComponent extends Component {
 
   public VerticalMovementStatus getVerticalStatus() {
     return verticalStatus;
+  }
+
+  public String typeUnerasure() {
+    return PlayerComponent.class.getName();
   }
 }

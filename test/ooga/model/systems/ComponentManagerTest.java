@@ -17,6 +17,11 @@ class TestComponent extends Component {
   public TestComponent(int id, GameObject owner) {
     super(id, owner);
   }
+
+  @Override
+  public String typeUnerasure() {
+    return TestComponent.class.getName();
+  }
 }
 
 public class ComponentManagerTest {
@@ -25,7 +30,7 @@ public class ComponentManagerTest {
   GameObject go;
 
   ComponentManagerTest() {
-    ecManager = new ECManager(null);
+    ecManager = new ECManager(null, null);
   }
 
   @BeforeEach

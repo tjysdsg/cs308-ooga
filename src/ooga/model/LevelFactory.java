@@ -8,11 +8,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.Consumer;
 
 import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory;
 import ooga.model.components.Component;
@@ -22,22 +22,31 @@ import ooga.model.objects.EntityManagerAdapter;
 import ooga.model.exceptions.NotADirectoryException;
 import ooga.model.objects.GameObject;
 import ooga.model.objects.ObjectFactory;
+import ooga.model.observables.ObservableObject;
+import ooga.model.util.FileReader;
+import org.checkerframework.checker.units.qual.C;
+import org.reflections.Reflections;
 
 public class LevelFactory {
 
   private JsonAdapter<GameLevel> levelAdapter;
+  private ObjectFactory objectFactory;
+  private Consumer<ObservableObject> newObjectCallback;
 
-  public LevelFactory(File objectsDir) throws IOException {
+  public LevelFactory(File objectsDir , Consumer<ObservableObject> newObjectCallback) throws FileNotFoundException {
+    this(objectsDir);
+    this.newObjectCallback = newObjectCallback;
+  }
+
+  public LevelFactory(File objectsDir) throws FileNotFoundException {
     if (!objectsDir.isDirectory()) {
       throw new NotADirectoryException(objectsDir.getName());
     }
 
     Map<String, GameObject> presetMap = new HashMap<>();
 
-    Moshi moshi = new Moshi.Builder().add(
-        PolymorphicJsonAdapterFactory
-            .of(Component.class, "type")
-            .withSubtype(PlayerComponent.class, "PlayerComponent")).build();
+    PolymorphicJsonAdapterFactory<Component> componentAdapter = createComponentAdapter();
+    Moshi moshi = new Moshi.Builder().add(componentAdapter).build();
 
     Type type = Types.newParameterizedType(List.class, GameObject.class);
     JsonAdapter<List<GameObject>> adapter = moshi.adapter(type);
@@ -48,39 +57,35 @@ public class LevelFactory {
       addObjects(objectFile, adapter, presetMap);
     }
 
-    ObjectFactory objectFactory = new ObjectFactory(presetMap);
-
-    EntityManagerAdapter entityManagerAdapter = new EntityManagerAdapter(objectFactory);
-    Moshi objectMoshi = new Moshi.Builder().add(entityManagerAdapter).build();
-    levelAdapter = objectMoshi.adapter(GameLevel.class);
+    objectFactory = new ObjectFactory(presetMap);
   }
 
   private void addObjects(File objectsFile, JsonAdapter<List<GameObject>> adapter,
-      Map<String, GameObject> presetMap) throws IOException {
-    String objectsText = fileToString(objectsFile);
+      Map<String, GameObject> presetMap) throws FileNotFoundException, InvalidDataFileException {
+    String objectsText = FileReader.readFile(objectsFile);
 
-    List<GameObject> objectPresets = adapter.fromJson(objectsText);
+    List<GameObject> objectPresets;
+    try {
+      objectPresets = adapter.fromJson(objectsText);
+    } catch (IOException e) {
+      throw new InvalidDataFileException(objectsFile.getName());
+    }
 
     for (GameObject object : objectPresets) {
       presetMap.put(object.getName(), object);
     }
   }
 
-  private String fileToString(File toConvert) throws FileNotFoundException {
-    Path filePath = toConvert.toPath();
 
-    try {
-      return Files.readString(filePath);
-    } catch (IOException e) {
-      throw new FileNotFoundException(toConvert.getName());
-    }
-  }
 
-  Level buildLevel(File levelFile)
-          throws FileNotFoundException, InvalidDataFileException {
+  Level buildLevel(File levelFile) throws FileNotFoundException, InvalidDataFileException {
+    EntityManagerAdapter entityManagerAdapter = new EntityManagerAdapter(objectFactory, newObjectCallback);
+    Moshi objectMoshi = new Moshi.Builder().add(entityManagerAdapter).build();
+    JsonAdapter<GameLevel> levelAdapter = objectMoshi.adapter(GameLevel.class);
+
     String levelText;
     try {
-      levelText = fileToString(levelFile);
+      levelText = FileReader.readFile(levelFile);
     } catch (IOException e) {
       throw new FileNotFoundException(levelFile.getName());
     }
@@ -94,5 +99,14 @@ public class LevelFactory {
 
     newLevel.init();
     return newLevel;
+  }
+
+  public static PolymorphicJsonAdapterFactory<Component> createComponentAdapter() {
+    PolymorphicJsonAdapterFactory<Component> adapter = PolymorphicJsonAdapterFactory.of(Component.class, "type");
+    Reflections reflections = new Reflections(Component.class.getPackageName());
+    for (Class subclass : reflections.getSubTypesOf(Component.class)) {
+      adapter = adapter.withSubtype(subclass, subclass.getSimpleName());
+    }
+    return adapter;
   }
 }

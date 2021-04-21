@@ -8,6 +8,11 @@ public class PayloadMultiplier extends Component{
         super(id, owner);
     }
 
+    @Override
+    public String typeUnerasure() {
+        return PayloadMultiplier.class.getName();
+    }
+
     public void setMultiplier(double multiplier) {
         this.multiplier = multiplier;
     }

@@ -2,10 +2,14 @@ package ooga.model.components;
 
 import ooga.model.objects.GameObject;
 
-public class Component {
+public abstract class Component {
 
   private transient GameObject owner;
   private int id;
+
+  // only for moshi
+  protected Component() {
+  }
 
   public Component(int id, GameObject owner) {
     this.id = id;
@@ -27,4 +31,6 @@ public class Component {
   public void setOwner(GameObject owner) {
     this.owner = owner;
   }
+
+  public abstract String typeUnerasure();
 }

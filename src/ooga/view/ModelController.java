@@ -1,20 +1,23 @@
 package ooga.view;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
+import javafx.scene.input.KeyCode;
 
 public interface ModelController {
-  void setLevel(String levelName);
+  void setCurrentLevel(String levelName) throws FileNotFoundException;
 
-  void handleKeyPress(String code);
+  void handleKeyPress(KeyCode code);
 
-  void handleKeyRelease(String code);
+  void handleKeyRelease(KeyCode code);
 
   /**
    * Returns a list of the strings which can trigger certain actions within the model.
    *
    * @return The strokes that can be used to trigger actions.
    */
-  List<String> getAvailbleActions();
+  List<String> getAvailableActions();
 
   /**
    * Set the stroke mapping for a certain action
@@ -22,7 +25,8 @@ public interface ModelController {
    * @param stroke - The key that will be pressed
    * @param actions - The action that will result from the pressed key
    */
-  void setStrokeMapping(String code, String action);
+  void setStrokeMapping(KeyCode code, String action);
   List<String> getLevels();
-  void step();
+  void step(double delta);
+  void setGame(File gameDirectory) throws FileNotFoundException;
 }

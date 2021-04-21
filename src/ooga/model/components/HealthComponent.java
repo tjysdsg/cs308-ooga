@@ -29,4 +29,8 @@ public class HealthComponent extends Component {
   public void setHealth(double health) {
     this.health = health;
   }
+
+  public String typeUnerasure() {
+    return HealthComponent.class.getName();
+  }
 }

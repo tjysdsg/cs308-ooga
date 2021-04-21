@@ -11,6 +11,11 @@ public class AttackComponent extends Component {
         super(id, owner);
     }
 
+    @Override
+    public String typeUnerasure() {
+        return AttackComponent.class.getName();
+    }
+
     public void setFrequency(int frequency){
         this.frequency=frequency;
     }
