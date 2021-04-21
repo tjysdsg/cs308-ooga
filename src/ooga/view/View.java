@@ -16,10 +16,17 @@ import ooga.view.components.SettingsModule;
 import ooga.view.components.SplashScreen;
 import ooga.view.components.game.GameScene;
 import ooga.view.components.gameselection.GSelectionScene;
+import ooga.view.util.ViewConfiguration;
+import ooga.view.util.ConfigurationFactory;
 import ooga.view.util.ObservableResource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * This is special junk.
+ * Then the rest of this
+ * @param ok - YESSIR THIS IS GOOD!
+ * */
 public class View {
   private static final double FADE_OPACITY = 0.1;
   private static final int TRANSITION_SPEED = 700; // milliseconds
@@ -40,11 +47,13 @@ public class View {
   private String cssFile;
   private JFXDialog pauseDialog;
   private SplashScreen splashScreen;
+  private ViewConfiguration viewConfig;
 
   public View(Stage stage) {
     CSSFX.start();
     this.stage = stage;
     this.resources = new ObservableResource();
+    this.viewConfig = ConfigurationFactory.createConfiguration();
     resources.setResources(ResourceBundle.getBundle(DEFAULT_RESOURCES + "English"));
     splashScreen = new SplashScreen(HEIGHT, WIDTH, resources);
     gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);
@@ -125,7 +134,7 @@ public class View {
       currentGame.getStylesheets().add(cssFile);
     }
 
-    SettingsModule settingsModule = new SettingsModule(resources);
+    SettingsModule settingsModule = new SettingsModule(resources.getStringBinding("System"));
     ObservableList<String> list = FXCollections.observableArrayList();
     list.addAll("English", "French", "German");
     settingsModule.addListSetting(resources.getStringBinding("Resume"), list);
