@@ -1,20 +1,25 @@
 package ooga.model.actions;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 public class ActionInfo {
+  private static final String ANY_ITEM = "any";
+  private static final String ANY_SIDE = "any";
+  private Set<String> with = Set.of(ANY_ITEM);
+  private Set<String> positions = Set.of(ANY_SIDE);
+  private Set<Action> actions;
 
-  private String with;
-  private String position;
-  private String action;
-  private String payload;
+  public ActionInfo(){};
 
-  public ActionInfo(String with, String position, String action, String payload) {
-    this.with = with;
-    this.position = position;
-    this.action = action;
-    this.payload = payload;
-  }
+//  public ActionInfo(String with, String position, String action, String payload) {
+//    this.with = with;
+//    this.position = position;
+//    this.action = action;
+//    this.payload = payload;
+//  }
 
   @Override
   public boolean equals(Object o) {
@@ -25,16 +30,20 @@ public class ActionInfo {
       return false;
     }
     CollisionInfo info = (CollisionInfo) o;
-    boolean ret = info.other().isA(this.with);
-    ret = ret && (position.equals(info.position()) || info.position().equals("any"));
-    return ret;
+
+    boolean ret = with.contains(ANY_ITEM);
+    for (String item : with) {
+      ret = ret || info.other().isA(item);
+    }
+
+     return ret && positions.contains(ANY_SIDE) && positions.contains(info.position());
   }
 
-  public String getAction() {
-    return this.action;
+  public Set<Action> getActions() {
+    return this.actions;
   }
 
-  public String getPayload() {
-    return payload;
-  }
+//  public String getPayload() {
+//    return payload;
+//  }
 }
