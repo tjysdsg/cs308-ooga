@@ -141,9 +141,9 @@ public class View {
 
     currentGame.setOnEscape(
         (e) -> {
-          currentGame.pauseGame();
-          // pauseDialog.show(e);
-          e.getChildren().add(settingsModule);
+           currentGame.pauseGame();
+           pauseDialog.show(e);
+          //e.getChildren().add(settingsModule);
         });
 
     setScene(currentGame);
