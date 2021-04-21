@@ -9,22 +9,22 @@
       {
         "with": "block",
         "action": "player_blocked_bottom",
-        "position": "top"
+        "position": "bottom"
       },
       {
         "with": "mario",
         "action": "player_blocked_bottom",
-        "position": "top"
+        "position": "bottom"
       },
       {
         "with": "qblock",
         "action": "player_blocked_bottom",
-        "position": "top"
+        "position": "bottom"
       },
       {
         "with": "brick",
         "action": "player_blocked_bottom",
-        "position": "top"
+        "position": "bottom"
       },
       {
         "with": "mario",
@@ -59,17 +59,17 @@
       {
         "with": "brick",
         "action": "player_blocked_top",
-        "position": "bottom"
+        "position": "top"
       },
       {
         "with": "mario",
         "action": "player_blocked_top",
-        "position": "bottom"
+        "position": "top"
       },
       {
         "with": "qblock",
         "action": "player_blocked_top",
-        "position": "bottom"
+        "position": "top"
       }
     ],
     "components" : [

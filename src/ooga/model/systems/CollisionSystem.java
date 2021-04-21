@@ -64,10 +64,42 @@ public class CollisionSystem extends GameObjectBasedSystem {
   public void collide(GameObject self, GameObject other) {
     String selfDirection = detectCollisionDirection(self, other);
     String otherDirection = detectCollisionDirection(other, self);
+    /*
+    if(self.getName().equals("goomba")){
+      System.out.println(self.getY());
+      System.out.println(self.getName() + " Direction: " + selfDirection);
+    }
+    */
+
+    if(self.getVelocity().magnitude() >= other.getVelocity().magnitude()){
+      rectifyCollision(self, other, selfDirection);
+    }
+
+    else {
+      rectifyCollision(other, self, otherDirection);
+    }
+
     CollisionInfo info = new CollisionInfo(self, other, selfDirection);
     myActionManager.handleAction(self, other, info);
     info = new CollisionInfo(other, self, otherDirection);
     myActionManager.handleAction(other, self, info);
+  }
+
+  private void rectifyCollision(GameObject self, GameObject other, String selfDirection) {
+    switch (selfDirection){
+      case "left":
+        self.setX(other.getX()+other.getWidth());
+        break;
+      case "right":
+        self.setX(other.getX()-self.getWidth());
+        break;
+      case "top":
+        self.setY(other.getY()-other.getHeight());
+        break;
+      case "bottom":
+        self.setY(other.getY()+self.getHeight());
+        break;
+    }
   }
 
   // FIXME: not working correctly
@@ -92,12 +124,12 @@ public class CollisionSystem extends GameObjectBasedSystem {
           Math.min(y + height, collidingObject.getY() + collidingObject.getHeight()) - Math
               .max(y, collidingObject.getY()));
     }
-    if (collidingObject.getY() >= y) {
+    if (collidingObject.getY() <= y) {
       tComp = Math.max(0,
           Math.min(x + width, collidingObject.getX() + collidingObject.getWidth()) - Math
               .max(x, collidingObject.getX()));
     }
-    if (collidingObject.getY() + collidingObject.getHeight() <= y + height) {
+    if (collidingObject.getY() + collidingObject.getHeight() >= y + height) {
       bComp = Math.max(0,
           Math.min(x + width, collidingObject.getX() + collidingObject.getWidth()) - Math
               .max(x, collidingObject.getX()));
