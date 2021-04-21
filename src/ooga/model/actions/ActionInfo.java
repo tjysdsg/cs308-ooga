@@ -1,8 +1,6 @@
 package ooga.model.actions;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class ActionInfo {
@@ -10,7 +8,7 @@ public class ActionInfo {
   private static final String ANY_SIDE = "any";
   private Set<String> with = Set.of(ANY_ITEM);
   private Set<String> positions = Set.of(ANY_SIDE);
-  private Set<Action> actions;
+  private Map<String, String> actions;
 
   public ActionInfo(){};
 
@@ -30,16 +28,16 @@ public class ActionInfo {
       return false;
     }
     CollisionInfo info = (CollisionInfo) o;
-
     boolean ret = with.contains(ANY_ITEM);
     for (String item : with) {
       ret = ret || info.other().isA(item);
     }
 
-     return ret && positions.contains(ANY_SIDE) && positions.contains(info.position());
+
+    return ret && (positions.contains(ANY_SIDE) || positions.contains(info.position()));
   }
 
-  public Set<Action> getActions() {
+  public Map<String, String> getActions() {
     return this.actions;
   }
 

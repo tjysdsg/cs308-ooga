@@ -3,9 +3,14 @@ package ooga.model.actions;
 import java.util.List;
 
 public class Action {
-  private List<String> payload;
+  private String payload;
+  private String name;
 
-  public List<String> getPayloads() {
+  public String getPayload() {
     return payload;
+  }
+
+  public String getName() {
+    return name;
   }
 }
