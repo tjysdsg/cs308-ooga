@@ -321,3 +321,4 @@ settings pretty dope, Java isn't that bad lol.
 
 ## Tinglong 
 
+1. Game dev writes a health system for the game, 
