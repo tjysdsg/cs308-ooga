@@ -121,6 +121,7 @@ public class PlayerComponent extends Component {
    */
   private Map<Integer, GameObject> obstacles = new HashMap<>();
 
+
   /**
    * Time to reach jump apex
    */
