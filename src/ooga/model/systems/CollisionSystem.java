@@ -86,6 +86,9 @@ public class CollisionSystem extends GameObjectBasedSystem {
   }
 
   private void rectifyCollision(GameObject self, GameObject other, String selfDirection) {
+    if(self.getVelocity().magnitude() == 0){
+      return;
+    }
     switch (selfDirection){
       case "left":
         self.setX(other.getX()+other.getWidth());
@@ -102,7 +105,6 @@ public class CollisionSystem extends GameObjectBasedSystem {
     }
   }
 
-  // FIXME: not working correctly
   private String detectCollisionDirection(GameObject collidingObject, GameObject collidedObject) {
     double x = collidedObject.getX();
     double y = collidedObject.getY();
