@@ -41,9 +41,11 @@
         "type" : "PlayerComponent"
       },
       {
-        "type" : "AttackComponent",
-        "frequency"
+        "type" : "HateComponent",
+        "frequency" : "30",
+        "range" : "50"
       }
+
     ]
   },
   {
