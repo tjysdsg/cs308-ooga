@@ -64,12 +64,6 @@ public class CollisionSystem extends GameObjectBasedSystem {
   public void collide(GameObject self, GameObject other) {
     String selfDirection = detectCollisionDirection(self, other);
     String otherDirection = detectCollisionDirection(other, self);
-    /*
-    if(self.getName().equals("goomba")){
-      System.out.println(self.getY());
-      System.out.println(self.getName() + " Direction: " + selfDirection);
-    }
-    */
 
     if(self.getVelocity().magnitude() >= other.getVelocity().magnitude()){
       rectifyCollision(self, other, selfDirection);
@@ -137,11 +131,11 @@ public class CollisionSystem extends GameObjectBasedSystem {
               .max(x, collidingObject.getX()));
     }
     if (lComp + rComp + tComp + bComp == 0) {
-      if (collidingObject.getX() < x) {
-        return "right";
+      if (collidingObject.getY() < y) {
+        return "top";
       }
-      if (collidingObject.getX() > x) {
-        return "left";
+      if (collidingObject.getY() > y) {
+        return "bottom";
       }
     }
 
