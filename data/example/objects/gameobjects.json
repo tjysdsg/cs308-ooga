@@ -24,14 +24,14 @@
           "player_blocked_left" : ""
 
         },
-        "positions" : ["right"]
+        "positions" : ["left"]
       },
       {
         "actions": {
           "player_blocked_right" : ""
 
         },
-        "positions" : ["left"]
+        "positions" : ["right"]
       }
     ],
     "components" : [
