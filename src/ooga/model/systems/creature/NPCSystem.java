@@ -8,7 +8,7 @@ import ooga.model.systems.ECManager;
 
 import java.util.List;
 
-@Track(MovementSquenceComponent.class)
+@Track({MovementSquenceComponent.class, PlayerComponent.class})
 public class NPCSystem extends PlayerSystem{
     protected ComponentMapper<MovementSquenceComponent> movementSequenceMapper;
 

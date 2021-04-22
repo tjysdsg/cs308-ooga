@@ -10,7 +10,7 @@ import ooga.model.systems.ECManager;
 
 import java.util.Map;
 
-@Track(HealthComponent.class)
+@Track({HateComponent.class, HealthComponent.class, PlayerComponent.class})
 public class SampleAttackSystem extends AttackSystems{
     private ComponentMapper<HealthComponent> healthMapper;
     private final int sampleDecrease=10;
