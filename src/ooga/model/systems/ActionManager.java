@@ -5,6 +5,7 @@ import com.google.common.collect.MultimapBuilder;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
+import ooga.model.actions.Action;
 import ooga.model.actions.ActionInfo;
 import ooga.model.actions.CollisionInfo;
 import ooga.model.objects.GameObject;
@@ -36,18 +37,17 @@ public class ActionManager {
   }
 
   private void doAction(ActionInfo action, GameObject self, GameObject other) {
-    for (Entry<String, String> actionInstance : action.getActions().entrySet()) {
-      String actionName = actionInstance.getKey();
-      var callbacks = actions.get(actionName);
+    for (Action actionInstance : action.getActions()) {
+      var callbacks = actions.get(actionInstance.getName());
 
       // check if the action being trigger is registered
       if (callbacks == null || callbacks.size() == 0) {
-        logger.error("The action being triggered is not registered {}", actionName);
+        logger.error("The action being triggered is not registered {}", actionInstance.getName());
         return;
       }
 
       for (Consumer<CollisionAction> actions : callbacks) {
-        actions.accept(new CollisionAction(self, other, actionInstance.getValue()));
+        actions.accept(new CollisionAction(self, other, actionInstance.getPayload()));
       }
     }
   }

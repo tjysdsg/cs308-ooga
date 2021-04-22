@@ -6,33 +6,41 @@
     "imageID": "goomba",
     "onCollide": [
       {
-        "actions": {
-          "player_blocked_bottom": ""
-        },
+        "actions": [
+          {
+            "action" : "player_blocked_bottom"
+          }
+        ],
         "positions": [
           "bottom"
         ]
       },
       {
-        "actions": {
-          "player_blocked_top": ""
-        },
+        "actions": [
+          {
+            "action": "player_blocked_top"
+          }
+        ],
         "positions": [
           "top"
         ]
       },
       {
-        "actions": {
-          "player_blocked_left": ""
-        },
+        "actions": [
+          {
+            "action": "player_blocked_left"
+          }
+        ],
         "positions": [
           "left"
         ]
       },
       {
-        "actions": {
-          "player_blocked_right": ""
-        },
+        "actions": [
+          {
+            "action" : "player_blocked_right"
+          }
+        ],
         "positions": [
           "right"
         ]
