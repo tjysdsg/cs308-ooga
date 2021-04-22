@@ -17,7 +17,6 @@ public class AttackSystem extends HealthSystem {
   private ComponentMapper<WeaponComponent> weaponMapper;
   private ComponentMapper<PlayerComponent> playerMapper;
   private ComponentMapper<HateComponent> enemyMapper;
-  private ComponentMapper<HealthComponent> enemyHealthMapper;
 
   public AttackSystem(ECManager ecManager) {
     super(ecManager);
