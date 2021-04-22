@@ -130,6 +130,10 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
     return velocity;
   }
 
+  public Vector getLocation(){
+    return new Vector(x,y);
+  }
+
   public void setVelocity(Vector velocity) {
     this.velocity = velocity;
   }
