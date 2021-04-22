@@ -4,13 +4,12 @@ import javafx.util.Pair;
 import ooga.model.Vector;
 import ooga.model.annotations.Track;
 import ooga.model.components.Component;
-import ooga.model.components.HateComponent;
+import ooga.model.components.enemy.HateComponent;
 import ooga.model.components.PlayerComponent;
 import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
 import ooga.model.systems.ECManager;
 
-import javax.swing.text.html.HTMLEditorKit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

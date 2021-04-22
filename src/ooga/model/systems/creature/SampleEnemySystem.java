@@ -2,7 +2,7 @@ package ooga.model.systems.creature;
 
 import javafx.util.Pair;
 import ooga.model.annotations.Track;
-import ooga.model.components.HateComponent;
+import ooga.model.components.enemy.HateComponent;
 import ooga.model.components.HealthComponent;
 import ooga.model.components.PlayerComponent;
 import ooga.model.systems.ComponentMapper;
