@@ -17,6 +17,7 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   private String name;
   private double x, y;
   private String imageID;
+  private boolean isCollided;
   private List<String> isA;
   private transient Vector velocity = new Vector(0, 0);
   private boolean collidable = true;
@@ -143,6 +144,10 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   public void setVelocityY(double velocityY) {
     this.velocity.setY(velocityY);
   }
+
+  public boolean getCollided(){return isCollided;}
+
+  public void setCollided(boolean collided){isCollided = collided;}
 
   @Override
   public int compareTo(GameObject o) {
