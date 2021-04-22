@@ -16,17 +16,12 @@ import ooga.view.components.SettingsModule;
 import ooga.view.components.SplashScreen;
 import ooga.view.components.game.GameScene;
 import ooga.view.components.gameselection.GSelectionScene;
-import ooga.view.util.ViewConfiguration;
 import ooga.view.util.ConfigurationFactory;
 import ooga.view.util.ObservableResource;
+import ooga.view.util.ViewConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
- * This is special junk.
- * Then the rest of this
- * @param ok - YESSIR THIS IS GOOD!
- * */
 public class View {
   private static final double FADE_OPACITY = 0.1;
   private static final int TRANSITION_SPEED = 700; // milliseconds
@@ -141,9 +136,9 @@ public class View {
 
     currentGame.setOnEscape(
         (e) -> {
-           currentGame.pauseGame();
-           pauseDialog.show(e);
-          //e.getChildren().add(settingsModule);
+          currentGame.pauseGame();
+          pauseDialog.show(e);
+          // e.getChildren().add(settingsModule);
         });
 
     setScene(currentGame);
