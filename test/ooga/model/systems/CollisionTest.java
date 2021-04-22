@@ -1,6 +1,8 @@
 package ooga.model.systems;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 import ooga.model.objects.GameObject;
@@ -25,10 +27,26 @@ public class CollisionTest {
     obj1 = myECManager.createEntity("obj1");
     obj2 = myECManager.createEntity("obj2");
 
+    obj1.setWidth(50);
+    obj1.setHeight(50);
+
+    obj2.setWidth(50);
+    obj2.setHeight(50);
   }
 
   @Test
-  void testNoCollision(){
+  void testNoCollisionX(){
+    obj1.setX(0);
+    obj1.setY(50);
 
+    obj2.setX(51);
+    obj2.setY(50);
+
+    myCollisionSystem.update(.01);
+    assertFalse(obj1.getCollided());
+    assertFalse(obj1.getCollided());
   }
+  
+
+
 }

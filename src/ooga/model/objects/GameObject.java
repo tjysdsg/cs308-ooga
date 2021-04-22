@@ -101,7 +101,7 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
 
   }
   public void setHeight(double height){
-    this.height = height;     
+    this.height = height;
   }
 
   @Override
