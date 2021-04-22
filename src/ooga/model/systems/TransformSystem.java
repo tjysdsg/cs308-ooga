@@ -1,6 +1,8 @@
 package ooga.model.systems;
 
+import java.util.ArrayList;
 import java.util.List;
+import ooga.model.StatsInfo;
 import ooga.model.Vector;
 import ooga.model.objects.GameObject;
 
@@ -11,6 +13,18 @@ public class TransformSystem extends GameObjectBasedSystem {
 
   public TransformSystem(ECManager ecManager) {
     super(ecManager);
+    addStatsSupplier("position", this::positionStatsSupplier);
+  }
+
+  private List<StatsInfo> positionStatsSupplier() {
+    ArrayList<StatsInfo> ret = new ArrayList<>();
+    List<GameObject> gameObjects = getTrackedGameObjects();
+    for (GameObject go : gameObjects) {
+      double x = go.getX();
+      double y = go.getY();
+      ret.add(new StatsInfo("(" + x + ", " + y + ")", go.getId()));
+    }
+    return ret;
   }
 
   @Override
