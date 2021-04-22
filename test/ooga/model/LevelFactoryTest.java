@@ -20,7 +20,7 @@ public class LevelFactoryTest {
 
     @BeforeEach
     void setup() throws IOException, URISyntaxException {
-       factory = new LevelFactory(getFile(objectDirectory), null);
+       factory = new LevelFactory(getFile(objectDirectory), null, null);
     }
 
     @Test

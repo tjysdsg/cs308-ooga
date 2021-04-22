@@ -14,7 +14,7 @@ public class EntityManagerTest {
   GameObject go;
 
   EntityManagerTest() {
-    ecManager = new ECManager(null, null);
+    ecManager = new ECManager(null, null, null);
   }
 
   @BeforeEach

@@ -30,7 +30,7 @@ public class ComponentManagerTest {
   GameObject go;
 
   ComponentManagerTest() {
-    ecManager = new ECManager(null, null);
+    ecManager = new ECManager(null, null, null);
   }
 
   @BeforeEach
