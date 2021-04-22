@@ -12,8 +12,10 @@ import ooga.model.systems.CollisionSystem;
 import ooga.model.systems.ECManager;
 import ooga.model.systems.HealthSystem;
 import ooga.model.systems.InputManager;
+import ooga.model.systems.creature.NPCSystem;
 import ooga.model.systems.creature.PlayerSystem;
 import ooga.model.systems.TransformSystem;
+import ooga.model.systems.creature.SampleAttackSystem;
 
 // TODO: implement methods
 class GameLevel implements Level {
@@ -40,6 +42,8 @@ class GameLevel implements Level {
     systems.add(new CollisionSystem(ecManager, actionManager));
     systems.add(new PlayerSystem(ecManager));
     systems.add(new TransformSystem(ecManager));
+    systems.add(new SampleAttackSystem(ecManager));
+    systems.add(new NPCSystem(ecManager));
 
     ecManager.registerExistingComponents(ecManager.getEntities());
 

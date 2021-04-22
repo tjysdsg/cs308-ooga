@@ -32,10 +32,12 @@ public class LevelFactory {
   private JsonAdapter<GameLevel> levelAdapter;
   private ObjectFactory objectFactory;
   private Consumer<ObservableObject> newObjectCallback;
+  private Consumer<ObservableObject> deleteObjectCallback;
 
-  public LevelFactory(File objectsDir , Consumer<ObservableObject> newObjectCallback) throws FileNotFoundException {
+  public LevelFactory(File objectsDir , Consumer<ObservableObject> newObjectCallback, Consumer<ObservableObject>deleteObjectCallback) throws FileNotFoundException {
     this(objectsDir);
     this.newObjectCallback = newObjectCallback;
+    this.deleteObjectCallback=deleteObjectCallback;
   }
 
   public LevelFactory(File objectsDir) throws FileNotFoundException {
@@ -79,7 +81,7 @@ public class LevelFactory {
 
 
   Level buildLevel(File levelFile) throws FileNotFoundException, InvalidDataFileException {
-    EntityManagerAdapter entityManagerAdapter = new EntityManagerAdapter(objectFactory, newObjectCallback);
+    EntityManagerAdapter entityManagerAdapter = new EntityManagerAdapter(objectFactory, newObjectCallback,deleteObjectCallback);
     Moshi objectMoshi = new Moshi.Builder().add(entityManagerAdapter).build();
     JsonAdapter<GameLevel> levelAdapter = objectMoshi.adapter(GameLevel.class);
 
