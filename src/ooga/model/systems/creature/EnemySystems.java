@@ -16,12 +16,12 @@ import java.util.List;
 import java.util.Map;
 
 @Track({PlayerComponent.class,HateComponent.class})
-public abstract class AttackSystems extends ComponentBasedSystem {
+public abstract class EnemySystems extends ComponentBasedSystem {
     private ComponentMapper<HateComponent> hateMapper;
     private ComponentMapper<PlayerComponent> playerComponent;
     protected Map<Pair<HateComponent,PlayerComponent>, AttackDealer> hateMap = new HashMap<>();
 
-    public AttackSystems(ECManager ecManager) {
+    public EnemySystems(ECManager ecManager) {
         super(ecManager);
         hateMapper = getComponentMapper(HateComponent.class);
         playerComponent = getComponentMapper(PlayerComponent.class);
