@@ -24,13 +24,15 @@ public class ECManager {
   private Map<String, Map<Integer, Component>> existingComponents;
   private ObjectFactory factory;
   private Consumer<ObservableObject> newObjectCallback;
+  private Consumer<ObservableObject> deleteObjectCallback;
 
-  public ECManager(ObjectFactory factory, Consumer<ObservableObject> newObjectCallback) {
+  public ECManager(ObjectFactory factory, Consumer<ObservableObject> newObjectCallback, Consumer<ObservableObject> deleteObjectCallback) {
     this.factory = factory;
     idManager = new IDManager();
     entities = new HashMap<>();
     existingComponents = new HashMap<>();
     this.newObjectCallback = newObjectCallback;
+    this.deleteObjectCallback=deleteObjectCallback;
   }
 
   public List<GameObject> getEntities() {
@@ -54,6 +56,7 @@ public class ECManager {
   public void deleteGameObject(int ID) {
     // FIXME: how to invalidate the references to the removed GameObject and Components?
     GameObject entity = entities.get(ID);
+    notifyObjectDelete(entity);
 
     // remove all of its components
     for (Component component : entity.getComponents()) {
@@ -72,6 +75,11 @@ public class ECManager {
   private void notifyNewObject(GameObject newObject) {
     if (newObjectCallback != null) {
       newObjectCallback.accept(newObject);
+    }
+  }
+  private void notifyObjectDelete(GameObject deleteObject){
+    if(deleteObject!=null){
+      deleteObjectCallback.accept(deleteObject);
     }
   }
 

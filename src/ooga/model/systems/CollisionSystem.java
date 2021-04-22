@@ -64,13 +64,41 @@ public class CollisionSystem extends GameObjectBasedSystem {
   public void collide(GameObject self, GameObject other) {
     String selfDirection = detectCollisionDirection(self, other);
     String otherDirection = detectCollisionDirection(other, self);
+
+    if(self.getVelocity().magnitude() >= other.getVelocity().magnitude()){
+      rectifyCollision(self, other, selfDirection);
+    }
+
+    else {
+      rectifyCollision(other, self, otherDirection);
+    }
+
     CollisionInfo info = new CollisionInfo(self, other, selfDirection);
     myActionManager.handleAction(self, other, info);
     info = new CollisionInfo(other, self, otherDirection);
     myActionManager.handleAction(other, self, info);
   }
 
-  // FIXME: not working correctly
+  private void rectifyCollision(GameObject self, GameObject other, String selfDirection) {
+    if(self.getVelocity().magnitude() == 0){
+      return;
+    }
+    switch (selfDirection){
+      case "left":
+        self.setX(other.getX()+other.getWidth());
+        break;
+      case "right":
+        self.setX(other.getX()-self.getWidth());
+        break;
+      case "top":
+        self.setY(other.getY()-other.getHeight());
+        break;
+      case "bottom":
+        self.setY(other.getY()+self.getHeight());
+        break;
+    }
+  }
+
   private String detectCollisionDirection(GameObject collidingObject, GameObject collidedObject) {
     double x = collidedObject.getX();
     double y = collidedObject.getY();
@@ -92,22 +120,22 @@ public class CollisionSystem extends GameObjectBasedSystem {
           Math.min(y + height, collidingObject.getY() + collidingObject.getHeight()) - Math
               .max(y, collidingObject.getY()));
     }
-    if (collidingObject.getY() >= y) {
+    if (collidingObject.getY() <= y) {
       tComp = Math.max(0,
           Math.min(x + width, collidingObject.getX() + collidingObject.getWidth()) - Math
               .max(x, collidingObject.getX()));
     }
-    if (collidingObject.getY() + collidingObject.getHeight() <= y + height) {
+    if (collidingObject.getY() + collidingObject.getHeight() >= y + height) {
       bComp = Math.max(0,
           Math.min(x + width, collidingObject.getX() + collidingObject.getWidth()) - Math
               .max(x, collidingObject.getX()));
     }
     if (lComp + rComp + tComp + bComp == 0) {
-      if (collidingObject.getX() < x) {
-        return "right";
+      if (collidingObject.getY() < y) {
+        return "top";
       }
-      if (collidingObject.getX() > x) {
-        return "left";
+      if (collidingObject.getY() > y) {
+        return "bottom";
       }
     }
 

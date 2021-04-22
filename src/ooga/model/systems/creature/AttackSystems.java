@@ -5,6 +5,7 @@ import ooga.model.Vector;
 import ooga.model.components.Component;
 import ooga.model.components.HateComponent;
 import ooga.model.components.PlayerComponent;
+import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
 import ooga.model.systems.ECManager;
 
@@ -13,13 +14,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AttackSystems extends PlayerSystem{
+public abstract class AttackSystems extends ComponentBasedSystem {
     private ComponentMapper<HateComponent> hateMapper;
+    private ComponentMapper<PlayerComponent> playerComponent;
     protected Map<Pair<HateComponent,PlayerComponent>, AttackDealer> hateMap = new HashMap<>();
 
     public AttackSystems(ECManager ecManager) {
         super(ecManager);
         hateMapper = getComponentMapper(HateComponent.class);
+        playerComponent = getComponentMapper(PlayerComponent.class);
+    }
+
+    private List<PlayerComponent> getPlayers(){
+        return playerComponent.getComponents();
     }
 
     //TODO: put these thing into Hate system when the system design is done

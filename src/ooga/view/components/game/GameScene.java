@@ -1,10 +1,17 @@
 package ooga.view.components.game;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.function.Consumer;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import ooga.model.Model;
@@ -47,6 +54,23 @@ public class GameScene extends Scene {
       ObjectView obj = new ObjectView(e, images);
       gameArea.addObject(obj);
     });
+
+    BackgroundImage bg;
+    try {
+      logger.info("%n%n%nOpenning {} for background%n%n%n", directory + "images/sunny_day.png");
+       bg = new BackgroundImage(
+          new Image(
+            new FileInputStream(directory + "images/sunny_day.png")),
+          BackgroundRepeat.REPEAT,
+          BackgroundRepeat.REPEAT,
+          BackgroundPosition.DEFAULT,
+          BackgroundSize.DEFAULT);
+
+    } catch (Exception e) {
+      throw new InvalidDataFileException("thing");
+    }
+
+    gameArea.setBackground(new Background(bg));
 
     if (!ModelFactory.verifyGameDirectory(gameDirectory)) {
       handleInvalidGame();
