@@ -1,6 +1,7 @@
 package ooga.model.systems.creature;
 
 import javafx.util.Pair;
+import ooga.model.annotations.Track;
 import ooga.model.components.HateComponent;
 import ooga.model.components.HealthComponent;
 import ooga.model.components.PlayerComponent;
@@ -9,6 +10,7 @@ import ooga.model.systems.ECManager;
 
 import java.util.Map;
 
+@Track(HealthComponent.class)
 public class SampleAttackSystem extends AttackSystems{
     private ComponentMapper<HealthComponent> healthMapper;
     private final int sampleDecrease=10;

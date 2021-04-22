@@ -2,6 +2,7 @@ package ooga.model.systems.creature;
 
 import javafx.util.Pair;
 import ooga.model.Vector;
+import ooga.model.annotations.Track;
 import ooga.model.components.Component;
 import ooga.model.components.HateComponent;
 import ooga.model.components.PlayerComponent;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Track({PlayerComponent.class,HateComponent.class})
 public abstract class AttackSystems extends ComponentBasedSystem {
     private ComponentMapper<HateComponent> hateMapper;
     private ComponentMapper<PlayerComponent> playerComponent;
