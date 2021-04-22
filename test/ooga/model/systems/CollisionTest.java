@@ -108,7 +108,7 @@ public class CollisionTest {
 
     String direction = myCollisionSystem.detectCollisionDirection(obj2,obj1);
 
-    assertEquals("top",direction);git a
+    assertEquals("top",direction);
   }
 
 
