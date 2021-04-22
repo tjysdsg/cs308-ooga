@@ -24,6 +24,7 @@ public abstract class BaseSystem {
   public BaseSystem() {
     keymaps = new HashMap<>();
     actionMaps = new HashMap<>();
+    statsSuppliers = new HashMap<>();
   }
 
   protected void addMapping(String code, Consumer<Boolean> callback) {
