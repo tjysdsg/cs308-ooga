@@ -86,6 +86,32 @@ public class CollisionTest {
     assertEquals("right",direction);
   }
 
+  @Test
+  void testCollisionBottom(){
+    obj1.setX(49);
+    obj1.setY(89);
+
+    obj2.setX(50);
+    obj2.setY(50);
+
+    String direction = myCollisionSystem.detectCollisionDirection(obj1,obj2);
+
+    assertEquals("bottom",direction);
+  }
+  @Test
+  void testCollisionTop(){
+    obj1.setX(49);
+    obj1.setY(89);
+
+    obj2.setX(50);
+    obj2.setY(50);
+
+    String direction = myCollisionSystem.detectCollisionDirection(obj2,obj1);
+
+    assertEquals("top",direction);git a
+  }
+
+
 
 
 
