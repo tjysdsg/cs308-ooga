@@ -14,6 +14,13 @@ public abstract class BaseSystem {
   private Map<String, Consumer<CollisionAction>> actionMaps;
   private Map<String, Supplier<List<StatsInfo>>> statsSuppliers;
 
+  /**
+   * Used to trigger the update of a stats.
+   * <p>
+   * Optional since some systems don't need to track stats
+   */
+  private StatsManager statsManager;
+
   public BaseSystem() {
     keymaps = new HashMap<>();
     actionMaps = new HashMap<>();
@@ -40,7 +47,21 @@ public abstract class BaseSystem {
   }
 
   public void registerAllStats(StatsManager statsManager) {
+    this.statsManager = statsManager;
     statsSuppliers.forEach(statsManager::registerStatsSupplier);
+  }
+
+  /**
+   * Trigger the update of a stats, intended to be called in subclasses
+   *
+   * @param stats Stats name
+   */
+  protected void triggerStatsUpdate(String stats) {
+    if (statsManager != null) {
+      statsManager.updateStats(stats);
+    } else {
+      // TODO: warn if statsManager is null (registerAllStats is not called)
+    }
   }
 
   public abstract void update(double deltaTime);

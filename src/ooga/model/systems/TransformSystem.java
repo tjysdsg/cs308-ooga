@@ -11,9 +11,11 @@ import ooga.model.objects.GameObject;
  */
 public class TransformSystem extends GameObjectBasedSystem {
 
+  private static final String POSITION_STATS_NAME = "position";
+
   public TransformSystem(ECManager ecManager) {
     super(ecManager);
-    addStatsSupplier("position", this::positionStatsSupplier);
+    addStatsSupplier(POSITION_STATS_NAME, this::positionStatsSupplier);
   }
 
   private List<StatsInfo> positionStatsSupplier() {
@@ -39,5 +41,7 @@ public class TransformSystem extends GameObjectBasedSystem {
       go.setX(x + deltaTime * v.getX());
       go.setY(y + deltaTime * v.getY());
     }
+
+    triggerStatsUpdate(POSITION_STATS_NAME);
   }
 }
