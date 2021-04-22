@@ -1,5 +1,6 @@
 package ooga.model.actions;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -8,7 +9,7 @@ public class ActionInfo {
   private static final String ANY_SIDE = "any";
   private Set<String> with = Set.of(ANY_ITEM);
   private Set<String> positions = Set.of(ANY_SIDE);
-  private Map<String, String> actions;
+  private List<Action> actions;
 
   public ActionInfo(){};
 
@@ -30,7 +31,7 @@ public class ActionInfo {
     return ret && (positions.contains(ANY_SIDE) || positions.contains(info.position()));
   }
 
-  public Map<String, String> getActions() {
+  public List<Action> getActions() {
     return this.actions;
   }
 
