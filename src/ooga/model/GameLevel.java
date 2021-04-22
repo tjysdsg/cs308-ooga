@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.squareup.moshi.Json;
-import ooga.model.components.Component;
 import ooga.model.objects.GameObject;
 import ooga.model.systems.ActionManager;
 import ooga.model.systems.BaseSystem;
@@ -15,7 +14,7 @@ import ooga.model.systems.InputManager;
 import ooga.model.systems.creature.NPCSystem;
 import ooga.model.systems.creature.PlayerSystem;
 import ooga.model.systems.TransformSystem;
-import ooga.model.systems.creature.SampleAttackSystem;
+import ooga.model.systems.creature.SampleEnemySystem;
 
 // TODO: implement methods
 class GameLevel implements Level {
@@ -42,7 +41,7 @@ class GameLevel implements Level {
     systems.add(new CollisionSystem(ecManager, actionManager));
     systems.add(new PlayerSystem(ecManager));
     systems.add(new TransformSystem(ecManager));
-    systems.add(new SampleAttackSystem(ecManager));
+    systems.add(new SampleEnemySystem(ecManager));
     systems.add(new NPCSystem(ecManager));
 
     ecManager.registerExistingComponents(ecManager.getEntities());

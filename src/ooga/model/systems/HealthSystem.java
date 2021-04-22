@@ -9,7 +9,7 @@ import ooga.model.components.HealthComponent;
 @Track(HealthComponent.class)
 public class HealthSystem extends ComponentBasedSystem {
 
-  ComponentMapper<HealthComponent> componentMapper;
+  protected ComponentMapper<HealthComponent> componentMapper;
 
   public HealthSystem(ECManager ecManager) {
     super(ecManager);

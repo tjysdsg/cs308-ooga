@@ -1,8 +1,9 @@
-package ooga.model.components;
+package ooga.model.components.enemy;
 
+import ooga.model.components.Component;
 import ooga.model.objects.GameObject;
 
-public class HateComponent extends Component{
+public class HateComponent extends Component {
     private double range;
     private boolean hate;
     private int party; // different parties will have different hate relationship

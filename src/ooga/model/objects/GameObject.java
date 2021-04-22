@@ -6,7 +6,6 @@ import ooga.model.Vector;
 import ooga.model.actions.ActionInfo;
 import ooga.model.components.Component;
 import ooga.model.observables.ObservableObject;
-import ooga.model.systems.creature.PlayerSystem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,9 +23,10 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   private double height, width;
   private List<ActionInfo> onCollide = new ArrayList<>();
   private transient Runnable positionCallback;
-  private static final Logger logger = LogManager.getLogger(PlayerSystem.class);
+  private static final Logger logger = LogManager.getLogger(GameObject.class);
 
-  public GameObject(){}
+  public GameObject() {
+  }
 
   public GameObject(int id, String name) {
     this.id = id;
@@ -62,8 +62,6 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   private void notifyPositionUpdate() {
     if (positionCallback != null) {
       positionCallback.run();
-    } else {
-      logger.warn("Null notify position callback");
     }
   }
 
@@ -131,6 +129,10 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
 
   public Vector getVelocity() {
     return velocity;
+  }
+
+  public Vector getLocation(){
+    return new Vector(x,y);
   }
 
   public void setVelocity(Vector velocity) {

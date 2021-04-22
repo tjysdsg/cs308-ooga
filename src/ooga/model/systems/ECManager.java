@@ -7,17 +7,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import ooga.model.Configuration;
 import ooga.model.components.Component;
 import ooga.model.objects.GameObject;
 import ooga.model.objects.ObjectFactory;
 import ooga.model.objects.ObjectInstance;
 import ooga.model.observables.ObservableObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * System for creating, accessing, updating, and deleting entities/components.
  */
 public class ECManager {
+
+  private static final Logger logger = LogManager.getLogger(ECManager.class);
 
   private IDManager idManager;
   private Map<Integer, GameObject> entities;
@@ -26,13 +29,14 @@ public class ECManager {
   private Consumer<ObservableObject> newObjectCallback;
   private Consumer<ObservableObject> deleteObjectCallback;
 
-  public ECManager(ObjectFactory factory, Consumer<ObservableObject> newObjectCallback, Consumer<ObservableObject> deleteObjectCallback) {
+  public ECManager(ObjectFactory factory, Consumer<ObservableObject> newObjectCallback,
+      Consumer<ObservableObject> deleteObjectCallback) {
     this.factory = factory;
     idManager = new IDManager();
     entities = new HashMap<>();
     existingComponents = new HashMap<>();
     this.newObjectCallback = newObjectCallback;
-    this.deleteObjectCallback=deleteObjectCallback;
+    this.deleteObjectCallback = deleteObjectCallback;
   }
 
   public List<GameObject> getEntities() {
@@ -54,7 +58,6 @@ public class ECManager {
    * Delete entity from EntityManager, and remove the components it has from ComponentManager
    */
   public void deleteGameObject(int ID) {
-    // FIXME: how to invalidate the references to the removed GameObject and Components?
     GameObject entity = entities.get(ID);
     notifyObjectDelete(entity);
 
@@ -73,12 +76,13 @@ public class ECManager {
   }
 
   private void notifyNewObject(GameObject newObject) {
-    if (newObjectCallback != null) {
+    if (newObjectCallback != null && newObject != null) {
       newObjectCallback.accept(newObject);
     }
   }
-  private void notifyObjectDelete(GameObject deleteObject){
-    if(deleteObject!=null){
+
+  private void notifyObjectDelete(GameObject deleteObject) {
+    if (deleteObjectCallback != null && deleteObject != null) {
       deleteObjectCallback.accept(deleteObject);
     }
   }
@@ -105,7 +109,10 @@ public class ECManager {
     if (idCompMap != null) {
       idCompMap.remove(id);
     } else {
-      // TODO: log warning
+      logger.warn(
+          "Remove component of type {}, but there is currently no such components",
+          componentType.toString()
+      );
     }
   }
 
@@ -132,7 +139,6 @@ public class ECManager {
   public <T extends Component> T createComponent(
       GameObject owner, Class<T> componentClass
   ) {
-    // TODO: log errors
     T ret = null;
     try {
       var constructor = componentClass.getConstructor(int.class, GameObject.class);
@@ -140,11 +146,11 @@ public class ECManager {
       owner.addComponent(ret);
       addComponentToMap(ret);
     } catch (NoSuchMethodException e) {
-      System.out.println(
+      logger.error(
           "Cannot find a valid constructor in component class: " + componentClass.getName()
       );
     } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
-      System.out.println(
+      logger.error(
           "Failed to instantiate component class: " + componentClass.getName()
       );
     }

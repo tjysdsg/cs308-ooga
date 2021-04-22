@@ -12,13 +12,6 @@ public class ActionInfo {
 
   public ActionInfo(){};
 
-//  public ActionInfo(String with, String position, String action, String payload) {
-//    this.with = with;
-//    this.position = position;
-//    this.action = action;
-//    this.payload = payload;
-//  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
