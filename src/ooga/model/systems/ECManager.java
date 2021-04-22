@@ -26,13 +26,14 @@ public class ECManager {
   private Consumer<ObservableObject> newObjectCallback;
   private Consumer<ObservableObject> deleteObjectCallback;
 
-  public ECManager(ObjectFactory factory, Consumer<ObservableObject> newObjectCallback, Consumer<ObservableObject> deleteObjectCallback) {
+  public ECManager(ObjectFactory factory, Consumer<ObservableObject> newObjectCallback,
+      Consumer<ObservableObject> deleteObjectCallback) {
     this.factory = factory;
     idManager = new IDManager();
     entities = new HashMap<>();
     existingComponents = new HashMap<>();
     this.newObjectCallback = newObjectCallback;
-    this.deleteObjectCallback=deleteObjectCallback;
+    this.deleteObjectCallback = deleteObjectCallback;
   }
 
   public List<GameObject> getEntities() {
@@ -73,12 +74,13 @@ public class ECManager {
   }
 
   private void notifyNewObject(GameObject newObject) {
-    if (newObjectCallback != null) {
+    if (newObjectCallback != null && newObject != null) {
       newObjectCallback.accept(newObject);
     }
   }
-  private void notifyObjectDelete(GameObject deleteObject){
-    if(deleteObject!=null){
+
+  private void notifyObjectDelete(GameObject deleteObject) {
+    if (deleteObjectCallback != null && deleteObject != null) {
       deleteObjectCallback.accept(deleteObject);
     }
   }
