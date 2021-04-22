@@ -19,6 +19,24 @@ public class PlayerComponent extends Component {
   private static final double DEFAULT_JUMP_HEIGHT = 100;
   private static final double DEFAULT_JUMP_TIME = 0.4;
 
+  private double score=0;
+
+  public double getScore(){
+    return score;
+  }
+
+  public void changeScore(double score, boolean allowNegative){
+    double tmpScore=score+this.score;
+    if(tmpScore>0){
+      return;
+    }
+    else{
+      if(!allowNegative){
+        this.score=0;
+      }
+    }
+  }
+
   public enum HorizontalMovementStatus {
     /**
      * Not moving
@@ -120,6 +138,7 @@ public class PlayerComponent extends Component {
    * </ol>
    */
   private Map<Integer, GameObject> obstacles = new HashMap<>();
+
 
   /**
    * Time to reach jump apex

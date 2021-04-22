@@ -6,6 +6,8 @@
     "imageID": "goomba",
     "onCollide": [
       {
+        "actions": [
+        ],
         "actions": {
           "player_blocked_bottom": ""
         },
@@ -40,8 +42,15 @@
     ],
     "components": [
       {
-        "type": "PlayerComponent"
+
+        "type" : "PlayerComponent"
+      },
+      {
+        "type" : "HateComponent",
+        "frequency" : "30",
+        "range" : "50"
       }
+
     ]
   },
   {
