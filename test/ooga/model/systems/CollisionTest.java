@@ -46,7 +46,47 @@ public class CollisionTest {
     assertFalse(obj1.getCollided());
     assertFalse(obj1.getCollided());
   }
-  
+
+  @Test
+  void testNoCollisionY(){
+    obj1.setX(0);
+    obj1.setY(50);
+
+    obj2.setX(0);
+    obj2.setY(101);
+
+    myCollisionSystem.update(.01);
+    assertFalse(obj1.getCollided());
+    assertFalse(obj1.getCollided());
+  }
+
+  @Test
+  void testCollisionLeft(){
+    obj1.setX(49);
+    obj1.setY(50);
+
+    obj2.setX(0);
+    obj2.setY(50);
+
+    String direction = myCollisionSystem.detectCollisionDirection(obj1,obj2);
+
+    assertEquals("left",direction);
+  }
+
+  @Test
+  void testCollisionRight(){
+    obj1.setX(49);
+    obj1.setY(50);
+
+    obj2.setX(0);
+    obj2.setY(50);
+
+    String direction = myCollisionSystem.detectCollisionDirection(obj2,obj1);
+
+    assertEquals("right",direction);
+  }
+
+
 
 
 }
