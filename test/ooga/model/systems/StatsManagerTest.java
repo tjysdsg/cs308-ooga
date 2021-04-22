@@ -40,7 +40,7 @@ public class StatsManagerTest {
 
     List<GameObject> objects = ecManager.getEntities();
     for (GameObject o : objects) {
-      o.setVelocity(new Vector(10, 10));
+      o.setVelocity(new Vector(o.getId(), -o.getId()));
     }
 
     assertTrue(statsManager.getTrackableStatistics().contains("position"));
@@ -51,7 +51,8 @@ public class StatsManagerTest {
     stats.sort(Comparator.comparingInt(StatsInfo::entityID));
     int id = 0;
     for (StatsInfo s : stats) {
-      assertEquals("(10.0, 10.0)", s.value());
+      String expected = "(" + (double) s.entityID() + ", " + (double) (-s.entityID()) + ")";
+      assertEquals(expected, s.value());
       assertEquals(id, s.entityID());
       ++id;
     }
