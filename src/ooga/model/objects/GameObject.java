@@ -95,6 +95,15 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
     return this.width;
   }
 
+
+  public void setWidth(double width){
+    this.width = width;
+
+  }
+  public void setHeight(double height){
+    this.height = height;     
+  }
+
   @Override
   public int getMode() {
     return 0;
