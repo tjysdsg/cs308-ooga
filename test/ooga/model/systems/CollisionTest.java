@@ -111,8 +111,32 @@ public class CollisionTest {
     assertEquals("top",direction);
   }
 
+  @Test
+  void testCollisionRectificationBottom(){
+    obj1.setX(49);
+    obj1.setY(89);
+    obj1.setVelocityY(-1);
 
+    obj2.setX(50);
+    obj2.setY(50);
 
+    myCollisionSystem.update(.01);
+    assertEquals(100, obj1.getY());
 
+  }
+
+  @Test
+  void testCollisionRectificationRight(){
+    obj1.setX(5);
+    obj1.setY(50);
+    obj1.setVelocityX(1);
+
+    obj2.setX(50);
+    obj2.setY(50);
+
+    myCollisionSystem.update(.01);
+    assertEquals(0, obj1.getX());
+
+  }
 
 }
