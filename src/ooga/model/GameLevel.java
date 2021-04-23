@@ -11,6 +11,7 @@ import ooga.model.systems.CollisionSystem;
 import ooga.model.systems.ECManager;
 import ooga.model.systems.HealthSystem;
 import ooga.model.systems.InputManager;
+import ooga.model.systems.StatsManager;
 import ooga.model.systems.creature.NPCSystem;
 import ooga.model.systems.creature.PlayerSystem;
 import ooga.model.systems.TransformSystem;
@@ -26,6 +27,7 @@ class GameLevel implements Level {
   private ECManager ecManager;
   private transient InputManager inputManager = new InputManager();
   private transient ActionManager actionManager = new ActionManager();
+  private transient StatsManager statsManager = new StatsManager();
 
   // MUST BE HERE!!! MOSHI USES THIS
   public GameLevel() {
@@ -49,6 +51,7 @@ class GameLevel implements Level {
     for (var s : systems) {
       s.registerAllInputs(inputManager);
       s.registerAllActions(actionManager);
+      s.registerAllStats(statsManager);
     }
   }
 
@@ -82,5 +85,13 @@ class GameLevel implements Level {
   @Override
   public ECManager getECManager() {
     return ecManager;
+  }
+
+  public StatsManager getStatsManager() {
+    return statsManager;
+  }
+
+  public InputManager getInputManager() {
+    return inputManager;
   }
 }
