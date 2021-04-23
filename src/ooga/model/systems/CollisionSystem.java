@@ -28,6 +28,7 @@ public class CollisionSystem extends GameObjectBasedSystem {
     List<GameObject> collidableObjects = new ArrayList<>();
 
     for (GameObject gameObject : objects) {
+      System.out.println("GameObject Name: "+ gameObject.getName()+ " X cord: "+ gameObject.getX() + " Y Cord: " + gameObject.getY() + " Width: " + gameObject.getWidth() + " Height: " + gameObject.getHeight() + " Velocity: "+ gameObject.getVelocity().magnitude());
       if (gameObject.isCollidable()) {
         collidableObjects.add(gameObject);
       }
@@ -74,13 +75,6 @@ public class CollisionSystem extends GameObjectBasedSystem {
 
     else {
       rectifyCollision(other, self, otherDirection);
-    }
-
-    if(self.getName().equals( "playerblock")){
-      System.out.println(self.getY());
-    }
-    else if(other.getName().equals("playerblock")){
-      System.out.println(other.getY());
     }
 
     CollisionInfo info = new CollisionInfo(self, other, selfDirection);
