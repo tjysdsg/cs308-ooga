@@ -1,5 +1,8 @@
 package ooga.model.systems;
 
+import java.util.ArrayList;
+import java.util.List;
+import ooga.model.StatsInfo;
 import ooga.model.annotations.Track;
 import ooga.model.components.HealthComponent;
 
@@ -10,10 +13,20 @@ import ooga.model.components.HealthComponent;
 public class HealthSystem extends ComponentBasedSystem {
 
   protected ComponentMapper<HealthComponent> componentMapper;
+  private static final String HEALTH_STATS_NAME = "health";
 
   public HealthSystem(ECManager ecManager) {
     super(ecManager);
     componentMapper = getComponentMapper(HealthComponent.class);
+    addStatsSupplier(HEALTH_STATS_NAME, this::healthStatsSupplier);
+  }
+
+  private List<StatsInfo> healthStatsSupplier() {
+    ArrayList<StatsInfo> ret = new ArrayList<>();
+    for (HealthComponent healthComponent : componentMapper.getComponents()) {
+      ret.add(new StatsInfo(healthComponent.getHealth() + "", healthComponent.getOwner().getId()));
+    }
+    return ret;
   }
 
   /**
@@ -24,10 +37,14 @@ public class HealthSystem extends ComponentBasedSystem {
    */
   public void changeHealth(int entityId, double delta, boolean increase) {
     componentMapper.get(entityId).healthIncrement(delta, increase);
+
+    triggerStatsUpdate(HEALTH_STATS_NAME);
   }
 
   protected void destroyObject(int entityId) {
     getECManager().deleteGameObject(entityId);
+
+    triggerStatsUpdate(HEALTH_STATS_NAME);
   }
 
   public void destroyDetection() {
