@@ -21,6 +21,7 @@ class GameLevel implements Level {
 
   private String name;
   int levelID;
+  String background;
   private transient List<BaseSystem> systems = new ArrayList<>();
   @Json(name = "objects")
   private ECManager ecManager;
@@ -54,6 +55,11 @@ class GameLevel implements Level {
 
   public void handleCode(String k, boolean on) {
     inputManager.handleCode(k, on);
+  }
+
+  @Override
+  public String getBackground() {
+    return background;
   }
 
   @Override

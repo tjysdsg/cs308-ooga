@@ -1,0 +1,19 @@
+{
+  "name": "Firsrt Level",
+  "id": "first",
+  "background": "space",
+  "height": 500,
+  "width": 200,
+  "objects": [
+    {
+      "name": "fighter",
+      "x": 100,
+      "y": 100
+    },
+    {
+      "name" : "floor",
+      "x" : 0,
+      "y": 0
+    }
+  ]
+}

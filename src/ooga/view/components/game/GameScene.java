@@ -80,18 +80,19 @@ public class GameScene extends Scene {
 
   private void setBackground(String newBackground) {
     BackgroundImage bg;
+    Image bgImage = images.getImage(newBackground, WIDTH, HEIGHT);
+
     try {
       logger.info("%n%n%nOpenning {} for background%n%n%n", directory + "images/sunny_day.png");
       bg = new BackgroundImage(
-          new Image(
-              new FileInputStream(directory + "images/sunny_day.png")),
+          bgImage,
           BackgroundRepeat.REPEAT,
           BackgroundRepeat.REPEAT,
           BackgroundPosition.DEFAULT,
           BackgroundSize.DEFAULT);
 
     } catch (Exception e) {
-      throw new InvalidDataFileException("thing");
+      throw new InvalidDataFileException(newBackground);
     }
 
     gameArea.setBackground(new Background(bg));
