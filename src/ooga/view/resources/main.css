@@ -491,3 +491,10 @@ TabPane {
 .tab:selected  {
  -fx-background-color: -secondary-color
 }
+
+.object-view {
+	-fx-alignment: BASELINE-LEFT;
+	-fx-background-color: green;
+}
+
+
