@@ -57,17 +57,17 @@ public class GameScene extends Scene {
 
     BackgroundImage bg;
     try {
-      logger.info("%n%n%nOpenning {} for background%n%n%n", directory + "images/sunny_day.png");
+      logger.info("%n%n%nOpenning {} for background%n%n%n", directory + "images/space.png");
        bg = new BackgroundImage(
           new Image(
-            new FileInputStream(directory + "images/sunny_day.png")),
+            new FileInputStream(directory + "images/space.png")),
           BackgroundRepeat.REPEAT,
           BackgroundRepeat.REPEAT,
           BackgroundPosition.DEFAULT,
           BackgroundSize.DEFAULT);
 
     } catch (Exception e) {
-      throw new InvalidDataFileException("thing");
+      throw new InvalidDataFileException("background");
     }
 
     gameArea.setBackground(new Background(bg));
