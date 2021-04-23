@@ -19,4 +19,5 @@ public interface Level {
 
   void handleCode(String k, boolean on);
 
+  String getBackground();
 }
