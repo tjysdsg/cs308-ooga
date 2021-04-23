@@ -400,3 +400,10 @@ JFXDialogLayout Label {
 .pause-dialog JFXButton {
   -fx-pref-width: 30;
 }
+
+.object-view {
+	-fx-alignment: BASELINE-LEFT;
+	-fx-background-color: green;
+}
+
+
