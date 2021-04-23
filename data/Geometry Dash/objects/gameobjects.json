@@ -1,0 +1,70 @@
+[
+  {
+    "name": "playerblock",
+    "height": 50,
+    "width": 50,
+    "imageID": "playerblock",
+    "onCollide": [
+      {
+        "actions": [
+          {
+            "action" : "player_blocked_bottom"
+          }
+        ],
+        "positions": [
+          "bottom"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "player_blocked_top"
+          }
+        ],
+        "positions": [
+          "top"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "player_blocked_left"
+          }
+        ],
+        "positions": [
+          "left"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action" : "player_blocked_right"
+          }
+        ],
+        "positions": [
+          "right"
+        ]
+      }
+    ],
+    "components": [
+      {
+        "type" : "PlayerComponent"
+      }
+    ]
+  },
+
+
+  {
+    "name": "floor",
+    "height": "100",
+    "width": "400",
+    "imageID": "floor"
+  },
+  {
+    "name": "smallblock",
+    "height": 50,
+    "width": 100,
+    "imageID": "smallblock"
+  }
+]
+

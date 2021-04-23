@@ -1,0 +1,25 @@
+{
+  "name": "Stereo Madness",
+  "id": "stereo_madness",
+  "background": "sunny_day",
+  "height": 750,
+  "width": 1300,
+  "objects": [
+
+    {
+      "name": "floor",
+      "x": 0,
+      "y": 50
+    },
+    {
+      "name" : "playerblock",
+      "x": 0,
+      "y": 300
+    },
+    {
+      "name" : "smallblock",
+      "x": 0,
+      "y": 150
+    }
+  ]
+}

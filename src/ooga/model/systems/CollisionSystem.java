@@ -76,6 +76,13 @@ public class CollisionSystem extends GameObjectBasedSystem {
       rectifyCollision(other, self, otherDirection);
     }
 
+    if(self.getName().equals( "playerblock")){
+      System.out.println(self.getY());
+    }
+    else if(other.getName().equals("playerblock")){
+      System.out.println(other.getY());
+    }
+
     CollisionInfo info = new CollisionInfo(self, other, selfDirection);
     myActionManager.handleAction(self, other, info);
     info = new CollisionInfo(other, self, otherDirection);
