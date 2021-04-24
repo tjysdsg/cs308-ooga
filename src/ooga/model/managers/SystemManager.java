@@ -14,6 +14,7 @@ public class SystemManager extends BaseManager {
   private static final Logger logger = LogManager.getLogger(SystemManager.class);
 
   private Map<Class<? extends BaseSystem>, BaseSystem> systems = new HashMap<>();
+  private List<BaseSystem> orderedSystems = new ArrayList<>();
 
   public <T extends BaseSystem>
   T createSystem(Class<T> systemClass, ECManager ecManager) {
@@ -49,6 +50,7 @@ public class SystemManager extends BaseManager {
       var constructor = systemClass.getConstructor(argTypes.toArray(new Class[0]));
       ret = constructor.newInstance((Object[]) args.toArray(new BaseManager[0]));
       systems.put(systemClass, ret);
+      orderedSystems.add(ret);
     } catch (NoSuchMethodException e) {
       logger.error(
           "Cannot find a valid constructor in component class: " + systemClass.getName()
@@ -62,6 +64,6 @@ public class SystemManager extends BaseManager {
   }
 
   public List<BaseSystem> getAllSystems() {
-    return new ArrayList<>(systems.values());
+    return orderedSystems;
   }
 }
