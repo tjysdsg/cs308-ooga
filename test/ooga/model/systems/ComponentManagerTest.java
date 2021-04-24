@@ -5,6 +5,7 @@ import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 import ooga.model.components.Component;
 import ooga.model.components.PlayerComponent;
+import ooga.model.components.TestComponent;
 import ooga.model.systems.creature.PlayerSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,18 +13,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-class TestComponent extends Component {
-
-  public TestComponent(int id, GameObject owner) {
-    super(id, owner);
-  }
-
-  @Override
-  public String typeUnerasure() {
-    return TestComponent.class.getName();
-  }
-}
 
 public class ComponentManagerTest {
 
