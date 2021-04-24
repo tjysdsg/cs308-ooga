@@ -35,7 +35,7 @@ public class LevelFactoryTest {
 
   private void incrementObjectsCount(ObservableObject observableObject) {
     objectsCount.putIfAbsent(observableObject.getName(), 0);
-    objectsCount.put(observableObject.getName(), objectsCount.get(observableObject.getName() + 1));
+    objectsCount.put(observableObject.getName(), objectsCount.get(observableObject.getName()) + 1);
   }
 
 
@@ -55,10 +55,16 @@ public class LevelFactoryTest {
     String marioName = "mario";
     int qBlockCount = 3;
     String qBlockName = "qblock";
-    int brickCount = 37;
+    int brickCount = 3;
     String brickName = "brick";
+    int blockCount = 34;
+    String blockName = "block";
 
-    assertEquals(goombaCount, objectsCount.get("goomba"));
+    assertEquals(goombaCount, objectsCount.get(goombaName));
+    assertEquals(marioCount, objectsCount.get(marioName));
+    assertEquals(qBlockCount, objectsCount.get(qBlockName));
+    assertEquals(brickCount, objectsCount.get(brickName));
+    assertEquals(blockCount, objectsCount.get(blockName));
   }
 
 
