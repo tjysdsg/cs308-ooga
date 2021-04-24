@@ -74,11 +74,17 @@ public class View {
     // TODO: Have a check if a game is currently playing and ask
     // if want to quit
     GameScene newGame = new GameScene(directory, resources);
+    newGame.setOnResize((height, width) -> {
+      stage.setHeight(height);
+      stage.setWidth(width);
+    });
     if (!cssFile.isBlank()) {
       newGame.getStylesheets().add(cssFile);
     }
     newGame.setOnEscape((e) -> {
       setScene(gameSelection);
+      stage.setHeight(HEIGHT);
+      stage.setWidth(WIDTH);
     });
     setScene(newGame);
   }

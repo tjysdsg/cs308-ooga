@@ -5,7 +5,7 @@ import ooga.model.Level;
 
 public interface ObservableModel {
 
-  void setOnLevelChange(Consumer<String> callback);
+  void setOnLevelChange(Consumer<ObservableLevel> callback);
   void setOnNewObject(Consumer<ObservableObject> callback);
   void setOnTextUpdate(Consumer<String> text);
   void setOnObjectDestroy(Consumer<ObservableObject> callback);
