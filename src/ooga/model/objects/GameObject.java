@@ -18,7 +18,7 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   private String imageID;
   private boolean isCollided;
   private List<String> isA;
-  private Vector velocity;
+  private Vector velocity = new Vector(0,0);
   private boolean collidable = true;
   private double height, width;
   private List<ActionInfo> onCollide = new ArrayList<>();

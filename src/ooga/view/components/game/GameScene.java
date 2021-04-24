@@ -83,7 +83,7 @@ public class GameScene extends Scene {
     Image bgImage = images.getImage(newBackground, WIDTH, HEIGHT);
 
     try {
-      logger.info("%n%n%nOpenning {} for background%n%n%n", directory + "images/sunny_day.png");
+      logger.info("%n%n%nOpenning {} for background%n%n%n", directory + "images/geoback.png");
       bg = new BackgroundImage(
           bgImage,
           BackgroundRepeat.REPEAT,
