@@ -25,7 +25,7 @@ public class ScoreSystem extends ComponentBasedSystem {
 
   public ScoreSystem(ECManager ecManager) {
     super(ecManager);
-    addCollisionMapping("change_score", this::scoreIncrement);
+    addCollisionMapping("change_score", this::changeScore);
     scoreMapper = getComponentMapper(ScoreComponent.class);
 
     addStatsSupplier(SCORE_STATS_NAME, this::scoreStatsSupplier);
@@ -39,7 +39,7 @@ public class ScoreSystem extends ComponentBasedSystem {
     return ret;
   }
 
-  public void scoreIncrement(CollisionAction event) {
+  public void changeScore(CollisionAction event) {
     ScoreComponent comp = scoreMapper.get(event.getSelf().getId());
 
     double delta = 0;
@@ -53,6 +53,8 @@ public class ScoreSystem extends ComponentBasedSystem {
     }
 
     comp.changeScore(delta, true);
+
+    triggerStatsUpdate(SCORE_STATS_NAME);
   }
 
   @Override

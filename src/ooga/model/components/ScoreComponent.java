@@ -12,10 +12,8 @@ public class ScoreComponent extends Component {
   }
 
   public void changeScore(double score, boolean allowNegative) {
-    double tmpScore = score + this.score;
-    if (tmpScore > 0) {
-      this.score = tmpScore;
-    } else {
+    this.score = score + this.score;
+    if (this.score < 0) {
       if (!allowNegative) {
         this.score = 0;
       }
