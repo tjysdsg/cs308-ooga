@@ -8,7 +8,7 @@ import ooga.model.components.PlayerComponent.VerticalMovementStatus;
 import ooga.model.objects.GameObject;
 import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
-import ooga.model.systems.ECManager;
+import ooga.model.managers.ECManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

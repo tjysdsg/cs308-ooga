@@ -1,9 +1,8 @@
-package ooga.model.systems;
+package ooga.model.managers;
 
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.MultimapBuilder;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.function.Consumer;
 import ooga.model.actions.Action;
 import ooga.model.actions.ActionInfo;
@@ -13,7 +12,7 @@ import ooga.model.actions.CollisionAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ActionManager {
+public class ActionManager extends BaseManager {
 
   private static final Logger logger = LogManager.getLogger(ActionManager.class);
 

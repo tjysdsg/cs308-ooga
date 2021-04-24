@@ -1,4 +1,4 @@
-package ooga.model.systems;
+package ooga.model.managers;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
  * Consumer)}, then when the specified key is pressed/released, InputManager will call the
  * callback(s).
  */
-public class InputManager {
+public class InputManager extends BaseManager {
 
   private static final Logger logger = LogManager.getLogger(InputManager.class);
 

@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
+import ooga.model.managers.ActionManager;
+import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

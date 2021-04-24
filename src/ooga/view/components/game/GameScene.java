@@ -55,22 +55,7 @@ public class GameScene extends Scene {
       gameArea.addObject(obj);
     });
 
-    BackgroundImage bg;
-    try {
-      logger.info("%n%n%nOpenning {} for background%n%n%n", directory + "images/sunny_day.png");
-       bg = new BackgroundImage(
-          new Image(
-            new FileInputStream(directory + "images/sunny_day.png")),
-          BackgroundRepeat.REPEAT,
-          BackgroundRepeat.REPEAT,
-          BackgroundPosition.DEFAULT,
-          BackgroundSize.DEFAULT);
-
-    } catch (Exception e) {
-      throw new InvalidDataFileException("thing");
-    }
-
-    gameArea.setBackground(new Background(bg));
+    model.setOnLevelChange(this::setBackground);
 
     if (!ModelFactory.verifyGameDirectory(gameDirectory)) {
       handleInvalidGame();
@@ -91,6 +76,26 @@ public class GameScene extends Scene {
     setOnKeyReleased(e -> handleRelease(e.getCode()));
     loop.setOnUpdate(controller::step);
     loop.start();
+  }
+
+  private void setBackground(String newBackground) {
+    BackgroundImage bg;
+    Image bgImage = images.getImage(newBackground, WIDTH, HEIGHT);
+
+    try {
+      logger.info("%n%n%nOpenning {} for background%n%n%n", directory + "images/sunny_day.png");
+      bg = new BackgroundImage(
+          bgImage,
+          BackgroundRepeat.REPEAT,
+          BackgroundRepeat.REPEAT,
+          BackgroundPosition.DEFAULT,
+          BackgroundSize.DEFAULT);
+
+    } catch (Exception e) {
+      throw new InvalidDataFileException(newBackground);
+    }
+
+    gameArea.setBackground(new Background(bg));
   }
 
   private void handleInvalidGame() {}
