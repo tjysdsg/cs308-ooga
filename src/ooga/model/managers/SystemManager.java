@@ -49,6 +49,7 @@ public class SystemManager extends BaseManager {
     try {
       var constructor = systemClass.getConstructor(argTypes.toArray(new Class[0]));
       ret = constructor.newInstance((Object[]) args.toArray(new BaseManager[0]));
+      ret.setSystemManager(this);
       systems.put(systemClass, ret);
       orderedSystems.add(ret);
     } catch (NoSuchMethodException e) {
@@ -65,5 +66,9 @@ public class SystemManager extends BaseManager {
 
   public List<BaseSystem> getAllSystems() {
     return orderedSystems;
+  }
+
+  public <T extends BaseSystem> T getSystem(Class<T> systemClass) {
+    return (T) systems.get(systemClass);
   }
 }

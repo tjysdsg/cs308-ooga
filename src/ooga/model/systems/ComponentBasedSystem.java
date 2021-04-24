@@ -12,6 +12,8 @@ public abstract class ComponentBasedSystem extends BaseSystem {
   private Map<Class<? extends Component>, ComponentMapper<? extends Component>> componentMappers;
 
   public ComponentBasedSystem(ECManager ecManager) {
+    super();
+
     this.ecManager = ecManager;
 
     /* build componentMappers,
