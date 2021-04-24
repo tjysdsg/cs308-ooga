@@ -15,10 +15,10 @@ public class PlayerComponent extends Component {
   public static final int OBSTACLE_KEY_TOP = 2;
   public static final int OBSTACLE_KEY_BOTTOM = 3;
 
-  private static final double DEFAULT_MAX_SPEED = 0;
-  private static final double DEFAULT_JUMP_HEIGHT = 0;
+  private static final double DEFAULT_MAX_SPEED = 150;
+  private static final double DEFAULT_JUMP_HEIGHT = 150;
   private static final double DEFAULT_JUMP_TIME = 0.5;
-
+  private static final double DEFAULT_GRAV_ACCELERATION = 20;
   private double score=0;
 
   public double getScore(){
@@ -123,6 +123,7 @@ public class PlayerComponent extends Component {
    */
   private double maxSpeed = DEFAULT_MAX_SPEED;
 
+  private double gravAccel = DEFAULT_GRAV_ACCELERATION;
   /**
    * Max height the players can jump
    */
@@ -209,6 +210,8 @@ public class PlayerComponent extends Component {
   public void switchDirection() {
     direction = -direction;
   }
+
+  public double getGravAccel(){return gravAccel;}
 
   public void setHorizontalStatus(HorizontalMovementStatus horizontalStatus) {
     this.horizontalStatus = horizontalStatus;
