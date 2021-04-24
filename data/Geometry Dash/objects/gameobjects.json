@@ -48,7 +48,10 @@
     ],
     "components": [
       {
-        "type" : "PlayerComponent"
+        "type" : "PlayerComponent",
+        "jumpHeight": 300,
+        "maxSpeed": 200,
+        "horizontalStatus" : "RUNNING"
       }
     ]
   },

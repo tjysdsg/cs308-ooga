@@ -15,8 +15,8 @@ public class PlayerComponent extends Component {
   public static final int OBSTACLE_KEY_TOP = 2;
   public static final int OBSTACLE_KEY_BOTTOM = 3;
 
-  private static final double DEFAULT_MAX_SPEED = 150;
-  private static final double DEFAULT_JUMP_HEIGHT = 150;
+  private static final double DEFAULT_MAX_SPEED = 0;
+  private static final double DEFAULT_JUMP_HEIGHT = 0;
   private static final double DEFAULT_JUMP_TIME = 0.5;
 
   private double score=0;
