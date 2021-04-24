@@ -1,6 +1,9 @@
 [
   {
     "name": "goomba",
+    "isA": [
+      "goomba"
+    ],
     "height": 50,
     "width": 50,
     "imageID": "goomba",
@@ -59,18 +62,46 @@
   },
   {
     "name": "qblock",
+    "isA": [
+      "qblock"
+    ],
     "height": "50",
     "width": "50",
-    "imageID": "qblock"
+    "imageID": "qblock",
+    "onCollide": [
+      {
+        "with": [
+          "goomba"
+        ],
+        "actions": [
+          {
+            "action": "spawn_object",
+            "payload": "brick,0,0"
+          },
+          {
+            "action": "destroy_object"
+          }
+        ],
+        "positions": [
+          "bottom"
+        ]
+      }
+    ]
   },
   {
     "name": "brick",
+    "isA": [
+      "brick"
+    ],
     "height": "50",
     "width": "50",
     "imageID": "brick"
   },
   {
     "name": "mario",
+    "isA": [
+      "mario"
+    ],
     "height": 50,
     "width": 50,
     "imageID": "mario",
@@ -89,6 +120,9 @@
   },
   {
     "name": "block",
+    "isA": [
+      "block"
+    ],
     "height": 50,
     "width": 50,
     "imageID": "block"
