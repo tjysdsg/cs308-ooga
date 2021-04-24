@@ -5,6 +5,7 @@ import java.util.List;
 import ooga.model.StatsInfo;
 import ooga.model.annotations.Track;
 import ooga.model.components.HealthComponent;
+import ooga.model.managers.ECManager;
 
 /**
  * Managing the Health System and the destroy detection.

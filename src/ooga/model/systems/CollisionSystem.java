@@ -3,8 +3,9 @@ package ooga.model.systems;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import ooga.model.actions.ActionInfo;
 import ooga.model.actions.CollisionInfo;
+import ooga.model.managers.ActionManager;
+import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 
 public class CollisionSystem extends GameObjectBasedSystem {

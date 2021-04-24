@@ -2,6 +2,7 @@ package ooga.model.components;
 
 import ooga.model.objects.GameObject;
 
+// FIXME: remove typeUnerasure
 public abstract class Component {
 
   private transient GameObject owner;

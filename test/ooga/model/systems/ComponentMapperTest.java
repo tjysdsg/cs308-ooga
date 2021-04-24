@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import ooga.model.components.HealthComponent;
 import ooga.model.components.PlayerComponent;
+import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

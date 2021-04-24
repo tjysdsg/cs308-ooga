@@ -3,6 +3,8 @@ package ooga.model.systems;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
+import ooga.model.managers.ActionManager;
+import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

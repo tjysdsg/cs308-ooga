@@ -7,8 +7,16 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import ooga.model.StatsInfo;
 import ooga.model.actions.CollisionAction;
+import ooga.model.managers.ActionManager;
+import ooga.model.managers.InputManager;
+import ooga.model.managers.StatsManager;
+import ooga.model.managers.SystemManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public abstract class BaseSystem {
+
+  private static final Logger logger = LogManager.getLogger(BaseSystem.class);
 
   private Map<String, Consumer<Boolean>> keymaps;
   private Map<String, Consumer<CollisionAction>> actionMaps;
@@ -21,10 +29,34 @@ public abstract class BaseSystem {
    */
   private StatsManager statsManager;
 
+  private SystemManager systemManager;
+
   public BaseSystem() {
     keymaps = new HashMap<>();
     actionMaps = new HashMap<>();
     statsSuppliers = new HashMap<>();
+  }
+
+  public void setSystemManager(SystemManager systemManager) {
+    this.systemManager = systemManager;
+  }
+
+  protected <T extends BaseSystem> T getSystem(Class<? extends BaseSystem> systemClass) {
+    if (systemManager == null) {
+      logger.error(
+          "Cannot get system with type {} because this.systemManager is null", systemClass
+      );
+      return null;
+    }
+    BaseSystem ret = systemManager.getSystem(systemClass);
+    if (ret == null) {
+      logger.error(
+          "Cannot find the requested system {} in this level, did you forget to add the system?",
+          systemClass.toString()
+      );
+      return null;
+    }
+    return (T) ret;
   }
 
   protected void addMapping(String code, Consumer<Boolean> callback) {

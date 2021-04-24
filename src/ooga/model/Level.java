@@ -4,7 +4,7 @@ import java.util.List;
 
 import ooga.model.objects.GameObject;
 import ooga.model.observables.ObservableLevel;
-import ooga.model.systems.ECManager;
+import ooga.model.managers.ECManager;
 
 public interface Level {
 
