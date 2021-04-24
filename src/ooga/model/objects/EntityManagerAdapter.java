@@ -3,7 +3,7 @@ package ooga.model.objects;
 import com.squareup.moshi.FromJson;
 import com.squareup.moshi.ToJson;
 import ooga.model.observables.ObservableObject;
-import ooga.model.systems.ECManager;
+import ooga.model.managers.ECManager;
 
 import java.util.ArrayList;
 import java.util.List;

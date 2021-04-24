@@ -4,7 +4,7 @@ import ooga.model.annotations.Track;
 import ooga.model.components.MovementSquenceComponent;
 import ooga.model.components.PlayerComponent;
 import ooga.model.systems.ComponentMapper;
-import ooga.model.systems.ECManager;
+import ooga.model.managers.ECManager;
 
 import java.util.List;
 
