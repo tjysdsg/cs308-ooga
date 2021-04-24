@@ -50,8 +50,9 @@
       {
         "type" : "PlayerComponent",
         "jumpHeight": 300,
-        "maxSpeed": 200,
-        "horizontalStatus" : "RUNNING"
+        "maxSpeed": 300,
+        "horizontalStatus" : "RUNNING",
+        "gravAccel": 30
       }
     ]
   },
@@ -60,14 +61,26 @@
   {
     "name": "floor",
     "height": "50",
-    "width": "1000",
+    "width": "500",
     "imageID": "floor"
   },
   {
     "name": "smallblock",
     "height": 50,
-    "width": 100,
+    "width": 50,
     "imageID": "smallblock"
+  },
+  {
+    "name": "medblock",
+    "height": 100,
+    "width": 50,
+    "imageID": "smallblock"
+  },
+  {
+    "name": "tallblock",
+    "height": 150,
+    "width": 50,
+    "imageID": "tallblock"
   }
 ]
 

@@ -2,5 +2,6 @@
   "geoback" : "geoback.png",
   "floor" : "floor.png",
   "playerblock" : "playerblock.png",
-  "smallblock" : "smallblock.png"
+  "smallblock" : "smallblock.png",
+  "tallblock" : "smallblock.png"
 }
