@@ -1,8 +1,5 @@
 {
-  "block" : "block.png",
-  "goomba" : "goomba.png",
-  "mario" : "mario.png",
-  "sunny_day" : "sunny_day.png",
-  "brick" : "brick.png",
-  "qblock" : "qblock.png"
+  "fighter": "fighter.png",
+  "space": "space.png",
+  "floor": "floor.png"
 }
