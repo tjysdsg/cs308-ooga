@@ -18,10 +18,4 @@ public class IDManager {
     return counter.getAndIncrement();
   }
 
-  /**
-   * Remove an ID
-   */
-  public void removeId(int id) {
-    // TODO: implement this
-  }
 }

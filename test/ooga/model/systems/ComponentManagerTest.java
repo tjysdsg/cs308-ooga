@@ -78,9 +78,4 @@ public class ComponentManagerTest {
     assertEquals(go, comp2.getOwner());
   }
 
-  @Test
-  void testCreateComponentUniqueIds() {
-    // TODO:
-  }
-
 }

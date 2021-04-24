@@ -17,7 +17,6 @@ import ooga.model.systems.creature.PlayerSystem;
 import ooga.model.systems.TransformSystem;
 import ooga.model.systems.creature.SampleEnemySystem;
 
-// TODO: implement methods
 class GameLevel implements Level {
 
   private String name;
@@ -35,11 +34,6 @@ class GameLevel implements Level {
   }
 
   public void init() {
-    // TODO: create game objects here
-
-    // TODO: load configs and create components
-
-    // TODO: create systems here and add them to systems
     systems.add(new HealthSystem(ecManager));
     systems.add(new CollisionSystem(ecManager, actionManager));
     systems.add(new PlayerSystem(ecManager));
@@ -70,7 +64,6 @@ class GameLevel implements Level {
     return name;
   }
 
-  //TODO: Probably won't need this. And can remove
   @Override
   public int getID() {
     return levelID;
