@@ -30,7 +30,8 @@ public class AttackSystem extends HealthSystem {
       for(HateComponent h:enemyMapper.getComponents()){
         int enemyID=h.getId();
         if(withinRange(w,h)&&faceToEnemy(w,h)){
-          componentMapper.get(enemyID).healthIncrement(w.getAttack(),false);
+          HealthSystem healthSystem = getSystem(HealthSystem.class);
+          healthSystem.changeHealth(enemyID, w.getAttack(), false);
         }
       }
     }
