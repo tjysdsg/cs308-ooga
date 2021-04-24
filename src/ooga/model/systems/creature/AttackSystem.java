@@ -2,14 +2,12 @@ package ooga.model.systems.creature;
 
 import ooga.model.Vector;
 import ooga.model.annotations.Track;
-import ooga.model.components.Component;
 import ooga.model.components.HealthComponent;
 import ooga.model.components.PlayerComponent;
 import ooga.model.components.enemy.HateComponent;
 import ooga.model.components.equipment.WeaponComponent;
-import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
-import ooga.model.systems.ECManager;
+import ooga.model.managers.ECManager;
 import ooga.model.systems.HealthSystem;
 
 @Track({WeaponComponent.class, PlayerComponent.class, HateComponent.class, HealthComponent.class})

@@ -5,11 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import ooga.model.StatsInfo;
 import ooga.model.Vector;
+import ooga.model.managers.ECManager;
+import ooga.model.managers.StatsManager;
 import ooga.model.objects.GameObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

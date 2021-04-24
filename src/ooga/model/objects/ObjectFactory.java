@@ -11,7 +11,7 @@ import ooga.model.LevelFactory;
 import ooga.model.Vector;
 import ooga.model.components.Component;
 import ooga.model.exceptions.TypeNotFoundException;
-import ooga.model.systems.IDManager;
+import ooga.model.managers.IDManager;
 
 public class ObjectFactory {
 

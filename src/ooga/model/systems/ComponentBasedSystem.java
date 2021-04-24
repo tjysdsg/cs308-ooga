@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import ooga.model.annotations.Track;
 import ooga.model.components.Component;
+import ooga.model.managers.ECManager;
 
 public abstract class ComponentBasedSystem extends BaseSystem {
 

@@ -1,4 +1,4 @@
-package ooga.model.systems;
+package ooga.model.managers;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 import ooga.model.StatsInfo;
 import ooga.model.observables.ObservableStatistics;
 
-public class StatsManager implements ObservableStatistics {
+public class StatsManager extends BaseManager implements ObservableStatistics {
 
   Multimap<String, Consumer<List<StatsInfo>>> callbacks;
   Map<String, Supplier<List<StatsInfo>>> suppliers;

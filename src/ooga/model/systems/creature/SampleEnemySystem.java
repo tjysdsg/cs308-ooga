@@ -6,7 +6,7 @@ import ooga.model.components.enemy.HateComponent;
 import ooga.model.components.HealthComponent;
 import ooga.model.components.PlayerComponent;
 import ooga.model.systems.ComponentMapper;
-import ooga.model.systems.ECManager;
+import ooga.model.managers.ECManager;
 
 @Track({HateComponent.class, HealthComponent.class, PlayerComponent.class})
 public class SampleEnemySystem extends EnemySystems {

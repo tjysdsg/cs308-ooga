@@ -3,6 +3,7 @@ package ooga.model.systems;
 import java.util.Arrays;
 import java.util.List;
 import ooga.model.Vector;
+import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 import ooga.model.objects.ObjectInstance;
 

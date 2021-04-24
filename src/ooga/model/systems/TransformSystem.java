@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import ooga.model.StatsInfo;
 import ooga.model.Vector;
+import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 
 /**

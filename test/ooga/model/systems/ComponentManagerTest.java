@@ -1,6 +1,7 @@
 package ooga.model.systems;
 
 import java.util.List;
+import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 import ooga.model.components.Component;
 import ooga.model.components.PlayerComponent;

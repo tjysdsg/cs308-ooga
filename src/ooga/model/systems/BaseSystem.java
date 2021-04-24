@@ -7,6 +7,9 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import ooga.model.StatsInfo;
 import ooga.model.actions.CollisionAction;
+import ooga.model.managers.ActionManager;
+import ooga.model.managers.InputManager;
+import ooga.model.managers.StatsManager;
 
 public abstract class BaseSystem {
 

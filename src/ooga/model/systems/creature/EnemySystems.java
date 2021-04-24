@@ -8,7 +8,7 @@ import ooga.model.components.enemy.HateComponent;
 import ooga.model.components.PlayerComponent;
 import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
-import ooga.model.systems.ECManager;
+import ooga.model.managers.ECManager;
 
 import java.util.HashMap;
 import java.util.List;

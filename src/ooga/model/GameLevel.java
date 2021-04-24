@@ -4,18 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.squareup.moshi.Json;
+import ooga.model.managers.ECManager;
+import ooga.model.managers.SystemManager;
+import ooga.model.managers.ActionManager;
+import ooga.model.managers.StatsManager;
+import ooga.model.managers.InputManager;
 import ooga.model.objects.GameObject;
-import ooga.model.systems.ActionManager;
 import ooga.model.systems.BaseSystem;
 import ooga.model.systems.CollisionSystem;
-import ooga.model.systems.ECManager;
 import ooga.model.systems.HealthSystem;
-import ooga.model.systems.InputManager;
 import ooga.model.systems.LifeCircleSystem;
-import ooga.model.systems.StatsManager;
+import ooga.model.systems.TransformSystem;
 import ooga.model.systems.creature.NPCSystem;
 import ooga.model.systems.creature.PlayerSystem;
-import ooga.model.systems.TransformSystem;
 import ooga.model.systems.creature.SampleEnemySystem;
 
 class GameLevel implements Level {
@@ -29,19 +30,23 @@ class GameLevel implements Level {
   private transient InputManager inputManager = new InputManager();
   private transient ActionManager actionManager = new ActionManager();
   private transient StatsManager statsManager = new StatsManager();
+  private transient SystemManager systemManager;
 
   // MUST BE HERE!!! MOSHI USES THIS
   public GameLevel() {
   }
 
   public void init() {
-    systems.add(new HealthSystem(ecManager));
-    systems.add(new LifeCircleSystem(ecManager));
-    systems.add(new CollisionSystem(ecManager, actionManager));
-    systems.add(new PlayerSystem(ecManager));
-    systems.add(new TransformSystem(ecManager));
-    systems.add(new SampleEnemySystem(ecManager));
-    systems.add(new NPCSystem(ecManager));
+    // MUST be created AFTER ecManger is init by Moshi
+    systemManager = new SystemManager();
+    systemManager.createSystem(HealthSystem.class, ecManager);
+    systemManager.createSystem(LifeCircleSystem.class, ecManager);
+    systemManager.createSystem(CollisionSystem.class, ecManager, actionManager);
+    systemManager.createSystem(PlayerSystem.class, ecManager);
+    systemManager.createSystem(TransformSystem.class, ecManager);
+    systemManager.createSystem(SampleEnemySystem.class, ecManager);
+    systemManager.createSystem(NPCSystem.class, ecManager);
+    systems = systemManager.getAllSystems();
 
     ecManager.registerExistingComponents(ecManager.getEntities());
 

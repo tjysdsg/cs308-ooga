@@ -1,8 +1,8 @@
-package ooga.model.systems;
+package ooga.model.managers;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class IDManager {
+public class IDManager extends BaseManager {
 
   // a unique ID generator based on https://stackoverflow.com/a/5563932/7730917
 

@@ -2,6 +2,7 @@ package ooga.model.systems;
 
 import java.util.List;
 import ooga.model.components.Component;
+import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 
 public class ComponentMapper<T extends Component> {

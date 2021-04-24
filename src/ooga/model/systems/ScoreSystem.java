@@ -5,7 +5,7 @@ import java.util.Map;
 import ooga.model.actions.CollisionAction;
 import ooga.model.annotations.Track;
 import ooga.model.components.PlayerComponent;
-import ooga.model.objects.GameObject;
+import ooga.model.managers.ECManager;
 
 @Track(PlayerComponent.class)
 public class ScoreSystem extends ComponentBasedSystem{

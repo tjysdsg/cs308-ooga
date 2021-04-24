@@ -1,4 +1,4 @@
-package ooga.model.systems;
+package ooga.model.managers;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * System for creating, accessing, updating, and deleting entities/components.
  */
-public class ECManager {
+public class ECManager extends BaseManager {
 
   private static final Logger logger = LogManager.getLogger(ECManager.class);
 
