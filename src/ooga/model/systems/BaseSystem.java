@@ -48,7 +48,15 @@ public abstract class BaseSystem {
       );
       return null;
     }
-    return (T) systemManager.getSystem(systemClass);
+    BaseSystem ret = systemManager.getSystem(systemClass);
+    if (ret == null) {
+      logger.error(
+          "Cannot find the requested system {} in this level, did you forget to add the system?",
+          systemClass.toString()
+      );
+      return null;
+    }
+    return (T) ret;
   }
 
   protected void addMapping(String code, Consumer<Boolean> callback) {
