@@ -1,5 +1,8 @@
 package ooga.model.systems;
 
+import java.util.ArrayList;
+import java.util.List;
+import ooga.model.StatsInfo;
 import ooga.model.actions.CollisionAction;
 import ooga.model.annotations.Track;
 import ooga.model.components.ScoreComponent;
@@ -16,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 public class ScoreSystem extends ComponentBasedSystem {
 
   private static final Logger logger = LogManager.getLogger(ScoreSystem.class);
+  private static final String SCORE_STATS_NAME = "score";
 
   private ComponentMapper<ScoreComponent> scoreMapper;
 
@@ -23,6 +27,16 @@ public class ScoreSystem extends ComponentBasedSystem {
     super(ecManager);
     addCollisionMapping("change_score", this::scoreIncrement);
     scoreMapper = getComponentMapper(ScoreComponent.class);
+
+    addStatsSupplier(SCORE_STATS_NAME, this::scoreStatsSupplier);
+  }
+
+  private List<StatsInfo> scoreStatsSupplier() {
+    ArrayList<StatsInfo> ret = new ArrayList<>();
+    for (ScoreComponent comp : scoreMapper.getComponents()) {
+      ret.add(new StatsInfo(comp.getScore() + "", comp.getOwner().getId()));
+    }
+    return ret;
   }
 
   public void scoreIncrement(CollisionAction event) {
