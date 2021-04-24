@@ -2,6 +2,7 @@ package ooga.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import ooga.model.components.Component;
 import ooga.model.objects.GameObject;
 import ooga.model.observables.ObservableObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,8 +42,6 @@ public class LevelFactoryTest {
 
   @Test
   void buildBasicLevelTest() throws URISyntaxException, IOException {
-    // FIXME: Use a dedicated game config to test this, otherwise number of game objects keeps
-    //  changing during development
     assertEquals(basicLevelObjectsCount, basicLevel.generateObjects().size());
     assertEquals(basicLevelObjectsCount, newObjectsCount);
   }
