@@ -140,6 +140,8 @@ public class PlayerComponent extends Component {
    */
   private Map<Integer, GameObject> obstacles = new HashMap<>();
 
+  private List<String> keyActions = new ArrayList<>();
+
 
   /**
    * Time to reach jump apex
@@ -209,6 +211,10 @@ public class PlayerComponent extends Component {
 
   public void switchDirection() {
     direction = -direction;
+  }
+
+  public List<String> getKeyActions(){
+    return keyActions;
   }
 
   public double getGravAccel(){return gravAccel;}

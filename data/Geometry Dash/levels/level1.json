@@ -32,9 +32,14 @@
       "y": 50
     },
     {
-      "name" : "smallblock",
-      "x": 200,
-      "y": 100
+      "name": "floor",
+      "x": 2000,
+      "y": 50
+    },
+    {
+      "name": "floor",
+      "x": 1500,
+      "y": 50
     },
 
     {
@@ -51,6 +56,32 @@
       "name" : "smallblock",
       "x": 850,
       "y": 150
+    },
+
+    {
+      "name" : "smallblock",
+      "x": 1000,
+      "y": 100
+    },
+    {
+      "name" : "smallblock",
+      "x": 1000,
+      "y": 150
+    },
+    {
+      "name" : "smallblock",
+      "x": 1000,
+      "y": 200
+    },
+    {
+      "name" : "smallblock",
+      "x": 1050,
+      "y": 200
+    },
+    {
+      "name" : "smallblock",
+      "x": 1100,
+      "y": 200
     }
   ]
 }

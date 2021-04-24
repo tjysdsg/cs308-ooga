@@ -1,6 +1,9 @@
 package ooga.model.systems.creature;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import ooga.model.annotations.Track;
 import ooga.model.components.PlayerComponent;
 import ooga.model.components.PlayerComponent.HorizontalMovementStatus;
@@ -25,9 +28,8 @@ public class PlayerSystem extends ComponentBasedSystem {
   public PlayerSystem(ECManager ecManager) {
     super(ecManager);
     componentMapper = getComponentMapper(PlayerComponent.class);
-    addMapping("right", this::handleRight);
-    addMapping("left", this::handleLeft);
-    addMapping("jump", this::handleJump);
+
+    registerKeyMappings();
 
     addCollisionMapping("jump_self", event -> doJump(event.getSelf()));
     addCollisionMapping(
@@ -46,6 +48,24 @@ public class PlayerSystem extends ComponentBasedSystem {
         "player_blocked_top",
         event -> obstacleOnTop(event.getSelf(), event.getHitter())
     );
+  }
+
+  private void registerKeyMappings() {
+    List<PlayerComponent> playerComponents = componentMapper.getComponents();
+    Set<String> actionSet = new HashSet<>();
+    for(PlayerComponent p: playerComponents){
+      actionSet.addAll(p.getKeyActions());
+    }
+    if(actionSet.contains("right")){
+      addMapping("right", this::handleRight);
+    }
+
+    if(actionSet.contains("left")){
+      addMapping("left", this::handleLeft);
+    }
+    if(actionSet.contains("jump")){
+      addMapping("jump", this::handleJump);
+    }
   }
 
   public List<PlayerComponent> getPlayers() {
