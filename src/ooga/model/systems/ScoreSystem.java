@@ -7,25 +7,34 @@ import ooga.model.annotations.Track;
 import ooga.model.components.PlayerComponent;
 import ooga.model.managers.ECManager;
 
+/**
+ * Provides the collision action to change score
+ */
 @Track(PlayerComponent.class)
-public class ScoreSystem extends ComponentBasedSystem{
+public class ScoreSystem extends ComponentBasedSystem {
+
   private ComponentMapper<PlayerComponent> playerMapper;
-  Map<String, Double>scoreChange = new HashMap<>();
+
+  /**
+   * Stores the score the player get when hitting each block
+   */
+  private Map<String, Double> blockScores = new HashMap<>();
 
   public ScoreSystem(ECManager ecManager) {
     super(ecManager);
-    addCollisionMapping("increment_score",e->scoreIncrement(e));
-    playerMapper=getComponentMapper(PlayerComponent.class);
-    scoreChange.put("block",0.0);
-    scoreChange.put("qblock",10.0);
-    scoreChange.put("goomba",20.0);
+    addCollisionMapping("increment_score", this::scoreIncrement);
+    playerMapper = getComponentMapper(PlayerComponent.class);
 
+    // FIXME: magic values
+    blockScores.put("block", 0.0);
+    blockScores.put("qblock", 10.0);
+    blockScores.put("goomba", 20.0);
   }
 
-  public void scoreIncrement(CollisionAction event){
+  public void scoreIncrement(CollisionAction event) {
     PlayerComponent p = playerMapper.get(event.getSelf().getId());
-    String hitterName=event.getHitter().getName();
-    p.changeScore(scoreChange.get(hitterName),true);
+    String hitterName = event.getHitter().getName();
+    p.changeScore(blockScores.get(hitterName), true);
   }
 
   @Override
