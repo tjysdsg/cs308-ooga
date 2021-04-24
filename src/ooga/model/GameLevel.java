@@ -11,6 +11,7 @@ import ooga.model.systems.CollisionSystem;
 import ooga.model.systems.ECManager;
 import ooga.model.systems.HealthSystem;
 import ooga.model.systems.InputManager;
+import ooga.model.systems.LifeCircleSystem;
 import ooga.model.systems.StatsManager;
 import ooga.model.systems.creature.NPCSystem;
 import ooga.model.systems.creature.PlayerSystem;
@@ -35,6 +36,7 @@ class GameLevel implements Level {
 
   public void init() {
     systems.add(new HealthSystem(ecManager));
+    systems.add(new LifeCircleSystem(ecManager));
     systems.add(new CollisionSystem(ecManager, actionManager));
     systems.add(new PlayerSystem(ecManager));
     systems.add(new TransformSystem(ecManager));

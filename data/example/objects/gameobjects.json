@@ -8,7 +8,7 @@
       {
         "actions": [
           {
-            "action" : "player_blocked_bottom"
+            "action": "player_blocked_bottom"
           }
         ],
         "positions": [
@@ -38,7 +38,7 @@
       {
         "actions": [
           {
-            "action" : "player_blocked_right"
+            "action": "player_blocked_right"
           }
         ],
         "positions": [
@@ -48,12 +48,12 @@
     ],
     "components": [
       {
-        "type" : "PlayerComponent"
+        "type": "PlayerComponent"
       },
       {
-        "type" : "HateComponent",
-        "frequency" : "30",
-        "range" : "50"
+        "type": "HateComponent",
+        "frequency": "30",
+        "range": "50"
       }
     ]
   },
@@ -73,7 +73,19 @@
     "name": "mario",
     "height": 50,
     "width": 50,
-    "imageID": "mario"
+    "imageID": "mario",
+    "onCollide": [
+      {
+        "actions": [
+          {
+            "action": "destroy_object"
+          }
+        ],
+        "positions": [
+          "top"
+        ]
+      }
+    ]
   },
   {
     "name": "block",
