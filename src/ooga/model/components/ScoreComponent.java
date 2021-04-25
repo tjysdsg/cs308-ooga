@@ -2,7 +2,6 @@ package ooga.model.components;
 
 import ooga.model.objects.GameObject;
 
-// FIXME: remove score in PlayComponent after MoveComponent is completed
 public class ScoreComponent extends Component {
 
   private double score = 0;
