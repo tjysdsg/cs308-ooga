@@ -3,7 +3,6 @@ package ooga.model.systems;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import ooga.model.actions.Handlers.HandlerFactory;
 import ooga.model.actions.Handlers.MovementActionHandler;
 import ooga.model.annotations.Track;
 import ooga.model.components.MovementComponent;
@@ -11,13 +10,11 @@ import ooga.model.components.MovementComponent.HorizontalMovementStatus;
 import ooga.model.components.MovementComponent.VerticalMovementStatus;
 import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
-import ooga.model.systems.creature.ActionPair;
 
 @Track(MovementComponent.class)
 public class MovementSystem extends ComponentBasedSystem {
 
   private ComponentMapper<MovementComponent> movementMapper;
-  private Map<String, Map<String, MovementActionHandler>> handlers = new HashMap<>();
 
   public MovementSystem(ECManager ecManager) {
     super(ecManager);
@@ -39,30 +36,6 @@ public class MovementSystem extends ComponentBasedSystem {
         "blocked_top",
         event -> obstacleOnTop(event.getSelf(), event.getHitter())
     );
-
-    for (MovementComponent component : movementMapper.getComponents()) {
-      registerAction(component);
-    }
-  }
-
-  private void registerAction(MovementComponent component) {
-    for (ActionPair mapping : component.getActionMapping()) {
-      String input = mapping.getInput();
-      String action = mapping.getAction();
-
-      handlers.putIfAbsent(input, new HashMap<>());
-
-      Map<String, MovementActionHandler> inputHandlers = handlers.get(input);
-      inputHandlers.putIfAbsent(action, HandlerFactory.buildHandler(action));
-
-      MovementActionHandler handler = inputHandlers.get(action);
-
-      handler.addListener(component);
-
-      addMapping(input, (on) -> {
-        inputHandlers.values().forEach((currHandler) -> currHandler.handleAction(on));
-      });
-    }
   }
 
   /**

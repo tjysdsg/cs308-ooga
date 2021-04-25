@@ -51,7 +51,7 @@
     ],
     "components": [
       {
-        "type": "MovementComponent",
+        "type": "PlayerComponent",
         "actionMappings" : [
           {
             "action" : "MoveRight",
@@ -66,6 +66,9 @@
             "input" : "jump"
           }
         ]
+      },
+      {
+        "type": "MovementComponent"
       },
       {
         "type": "HateComponent",
@@ -126,7 +129,7 @@
     ],
     "components": [
       {
-        "type": "MovementComponent",
+        "type": "PlayerComponent",
         "actionMappings" : [
           {
             "action" : "MoveLeft",
@@ -141,6 +144,9 @@
             "input" : "jumpp2"
           }
         ]
+      },
+      {
+        "type": "MovementComponent"
       },
       {
         "type": "HateComponent",

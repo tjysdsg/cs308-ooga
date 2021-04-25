@@ -58,7 +58,6 @@ public class MovementComponent extends Component {
 
   private double jumpTimer = 0;
 
-
   /**
    * which horizontal the player is facing, 1 for right, -1 for left
    */
@@ -90,8 +89,6 @@ public class MovementComponent extends Component {
    */
   private double jumpTime = DEFAULT_JUMP_TIME;
 
-  private List<ActionPair> actionMappings = new ArrayList<>();
-
   // required by moshi
   protected MovementComponent() {
     super();
@@ -99,10 +96,6 @@ public class MovementComponent extends Component {
 
   public MovementComponent(int id, GameObject owner) {
     super(id, owner);
-  }
-
-  public List<ActionPair> getActionMapping() {
-    return actionMappings;
   }
 
   public GameObject getObstacle(int obstacleDirection) {

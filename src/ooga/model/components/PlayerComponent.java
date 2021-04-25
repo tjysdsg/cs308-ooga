@@ -1,6 +1,9 @@
 package ooga.model.components;
 
+import java.util.ArrayList;
+import java.util.List;
 import ooga.model.objects.GameObject;
+import ooga.model.systems.creature.ActionPair;
 
 public class PlayerComponent extends Component {
 
@@ -32,6 +35,11 @@ public class PlayerComponent extends Component {
 
   protected PlayerType playerType = PlayerType.PLAYER;
   protected CharacterStatus characterStatus = CharacterStatus.Active;
+  private List<ActionPair> actionMappings = new ArrayList<>();
+
+  public List<ActionPair> getActionMapping() {
+    return actionMappings;
+  }
 
   public void setPlayerType(PlayerType playerType) {
     this.playerType = playerType;
