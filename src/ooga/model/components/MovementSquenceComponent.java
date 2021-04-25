@@ -17,6 +17,30 @@ public class MovementSquenceComponent extends MovementComponent {
     actionTime = new ArrayList<>();
   }
 
+  public int getActionIndex() {
+    return actionIndex;
+  }
+
+  public double getCumTime() {
+    return cumTime;
+  }
+
+  public List<String> getActionSequence() {
+    return actionSequence;
+  }
+
+  public List<Double> getActionTime() {
+    return actionTime;
+  }
+
+  public void setCumTime(double cumTime) {
+    this.cumTime = cumTime;
+  }
+
+  public void setActionIndex(int actionIndex) {
+    this.actionIndex = actionIndex;
+  }
+
   //TODO: Develop callback for component
   public void execAction(String code, double deltaTime) {
     switch (code) {
@@ -40,17 +64,4 @@ public class MovementSquenceComponent extends MovementComponent {
     this.setDirection(this.getDirection() * -1);
   }
 
-
-  public void update(double deltaTime) {
-    if (cumTime < actionTime.get(actionIndex)) {
-      cumTime += deltaTime;
-    } else {
-      cumTime = 0;
-      actionIndex++;
-    }
-    if (actionIndex >= actionSequence.size()) {
-      actionIndex = 0;
-    }
-    execAction(actionSequence.get(actionIndex), deltaTime);
-  }
 }

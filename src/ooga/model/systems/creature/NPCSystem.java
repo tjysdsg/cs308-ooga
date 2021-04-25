@@ -26,14 +26,31 @@ public class NPCSystem extends PlayerSystem {
 
   @Override
   public void update(double deltaTime) {
-    for (MovementSquenceComponent m : getMovements()) {
-      m.update(deltaTime);
+    for (MovementSquenceComponent ms : getMovements()) {
+      unitUpdate(deltaTime,movementMapper.get(ms.getOwner().getId()),ms);
     }
   }
 
-  public void unitUpdate(MovementComponent m, MovementSquenceComponent ms){
-
+  public void unitUpdate(double deltaTime,MovementComponent m, MovementSquenceComponent ms){
+    double cumTime= ms.getCumTime();
+    List<String> actionSequence=ms.getActionSequence();
+    List<Double> actionTime=ms.getActionTime();
+    int actionIndex = ms.getActionIndex();
+    if (cumTime < actionTime.get(actionIndex)) {
+      cumTime += deltaTime;
+      ms.setCumTime(cumTime);
+    } else {
+      ms.setCumTime(0);
+      ms.setActionIndex(ms.getActionIndex()+1);
+    }
+    if (actionIndex >= actionSequence.size()) {
+      ms.setActionIndex(0);
+    }
+    execAction(actionSequence.get(actionIndex), deltaTime);
   }
+
+
+
 
 
 }
