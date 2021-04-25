@@ -25,6 +25,14 @@ public class ObservableResource {
     resourcesProperty().set(resources);
   }
 
+  public String getLanguage() {
+    ResourceBundle res = resourcesProperty().get();
+    if (res != null) {
+      return res.getString("LANGUAGE");
+    }
+    return null;
+  }
+
   public StringBinding getStringBinding(String key) {
     return new StringBinding() {
       {
