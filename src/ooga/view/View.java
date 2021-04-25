@@ -2,7 +2,9 @@ package ooga.view;
 
 import com.jfoenix.controls.JFXDialog;
 import fr.brouillard.oss.cssfx.CSSFX;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import javafx.animation.*;
 import javafx.beans.property.ObjectProperty;
@@ -48,7 +50,13 @@ public class View {
     CSSFX.start();
     this.stage = stage;
     this.resources = new ObservableResource();
-    String defaultSettings = getClass().getResource("resources/settings/defaultView.json").toExternalForm();
+    String defaultSettings = null;
+    try {
+      defaultSettings = Paths.get(getClass().getResource("resources/settings/defaultView.json").toURI()).toString();
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+
     defaultSettings = defaultSettings.replace("file:","");
     this.viewConfig = ConfigurationFactory.createConfiguration(defaultSettings);
     resources.setResources(ResourceBundle.getBundle(DEFAULT_RESOURCES + "English"));
@@ -64,8 +72,8 @@ public class View {
       logger.warn("Css file could not be loaded");
     }
     createAnimations();
-    // setScene(splashScreen);
-    startGame("data/example/");
+    setScene(splashScreen);
+    //startGame("data/example/");
     gameSelection.setOnGameSelected(this::startGame);
     exitApplication =
         () -> {
