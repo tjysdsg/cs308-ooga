@@ -6,7 +6,6 @@ import ooga.model.Vector;
 import ooga.model.actions.ActionInfo;
 import ooga.model.components.Component;
 import ooga.model.observables.ObservableObject;
-import ooga.model.systems.creature.PlayerSystem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,15 +16,17 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   private String name;
   private double x, y;
   private String imageID;
+  private boolean isCollided;
   private List<String> isA;
   private transient Vector velocity = new Vector(0, 0);
   private boolean collidable = true;
   private double height, width;
   private List<ActionInfo> onCollide = new ArrayList<>();
   private transient Runnable positionCallback;
-  private static final Logger logger = LogManager.getLogger(PlayerSystem.class);
+  private static final Logger logger = LogManager.getLogger(GameObject.class);
 
-  public GameObject(){}
+  public GameObject() {
+  }
 
   public GameObject(int id, String name) {
     this.id = id;
@@ -61,8 +62,6 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   private void notifyPositionUpdate() {
     if (positionCallback != null) {
       positionCallback.run();
-    } else {
-      logger.warn("Null notify position callback");
     }
   }
 
@@ -132,6 +131,10 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
     return velocity;
   }
 
+  public Vector getLocation(){
+    return new Vector(x,y);
+  }
+
   public void setVelocity(Vector velocity) {
     this.velocity = velocity;
   }
@@ -143,6 +146,10 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   public void setVelocityY(double velocityY) {
     this.velocity.setY(velocityY);
   }
+
+  public boolean getCollided(){return isCollided;}
+
+  public void setCollided(boolean collided){isCollided = collided;}
 
   @Override
   public int compareTo(GameObject o) {

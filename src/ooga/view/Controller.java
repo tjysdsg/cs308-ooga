@@ -45,6 +45,10 @@ public class Controller implements ModelController {
     return null;
   }
 
+  public void setKeyMap(Map<KeyCode, String> map) {
+    this.code2action = map;
+  }
+
   // Self
   @Override
   public void setStrokeMapping(KeyCode code, String action) {

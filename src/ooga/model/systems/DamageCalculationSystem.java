@@ -1,8 +1,11 @@
 package ooga.model.systems;
 
-import ooga.model.components.EquipmentComponent;
+import ooga.model.annotations.Track;
+import ooga.model.components.equipment.EquipmentComponent;
 import ooga.model.components.PayloadMultiplier;
+import ooga.model.managers.ECManager;
 
+@Track({EquipmentComponent.class,PayloadMultiplier.class})
 public class DamageCalculationSystem extends ComponentBasedSystem{
     //TODO: discuss whether a new class is needed for the weapon/armor
     ComponentMapper<EquipmentComponent> attackPowerMapper;

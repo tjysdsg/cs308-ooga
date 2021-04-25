@@ -1,9 +1,11 @@
 package ooga.model.systems;
 
 import java.util.List;
+import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 import ooga.model.components.Component;
 import ooga.model.components.PlayerComponent;
+import ooga.model.components.TestComponent;
 import ooga.model.systems.creature.PlayerSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,25 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class TestComponent extends Component {
-
-  public TestComponent(int id, GameObject owner) {
-    super(id, owner);
-  }
-
-  @Override
-  public String typeUnerasure() {
-    return TestComponent.class.getName();
-  }
-}
-
 public class ComponentManagerTest {
 
   ECManager ecManager;
   GameObject go;
 
   ComponentManagerTest() {
-    ecManager = new ECManager(null, null);
+    ecManager = new ECManager(null, null, null);
   }
 
   @BeforeEach
@@ -76,11 +66,6 @@ public class ComponentManagerTest {
     assertNotEquals(9999, comp2.getId());
     assertEquals(go, comp1.getOwner());
     assertEquals(go, comp2.getOwner());
-  }
-
-  @Test
-  void testCreateComponentUniqueIds() {
-    // TODO:
   }
 
 }

@@ -1,12 +1,14 @@
 package ooga.model.systems.creature;
 
+import ooga.model.annotations.Track;
 import ooga.model.components.MovementSquenceComponent;
 import ooga.model.components.PlayerComponent;
 import ooga.model.systems.ComponentMapper;
-import ooga.model.systems.ECManager;
+import ooga.model.managers.ECManager;
 
 import java.util.List;
 
+@Track({MovementSquenceComponent.class, PlayerComponent.class})
 public class NPCSystem extends PlayerSystem{
     protected ComponentMapper<MovementSquenceComponent> movementSequenceMapper;
 

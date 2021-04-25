@@ -31,6 +31,10 @@ public class Vector {
         y - other.getY());
   }
 
+  public static double difference(Vector a, Vector b){
+    return a.difference(b).magnitude();
+  }
+
   public Vector unitVector(){
     Vector unit = new Vector(this.x,this.y);
     double magit=magnitude();

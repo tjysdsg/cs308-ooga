@@ -3,18 +3,20 @@ package ooga.model.systems;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import ooga.model.actions.ActionInfo;
 import ooga.model.actions.CollisionInfo;
+import ooga.model.managers.ActionManager;
+import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 
 public class CollisionSystem extends GameObjectBasedSystem {
 
   private ActionManager myActionManager;
 
+
+
   public CollisionSystem(ECManager ecmanager, ActionManager actionManager) {
     super(ecmanager);
     myActionManager = actionManager;
-
   }
 
   @Override
@@ -61,9 +63,11 @@ public class CollisionSystem extends GameObjectBasedSystem {
     }
   }
 
-  public void collide(GameObject self, GameObject other) {
+  private void collide(GameObject self, GameObject other) {
     String selfDirection = detectCollisionDirection(self, other);
     String otherDirection = detectCollisionDirection(other, self);
+    self.setCollided(true);
+    other.setCollided(true);
 
     if(self.getVelocity().magnitude() >= other.getVelocity().magnitude()){
       rectifyCollision(self, other, selfDirection);
@@ -99,7 +103,7 @@ public class CollisionSystem extends GameObjectBasedSystem {
     }
   }
 
-  private String detectCollisionDirection(GameObject collidingObject, GameObject collidedObject) {
+  public String detectCollisionDirection(GameObject collidingObject, GameObject collidedObject) {
     double x = collidedObject.getX();
     double y = collidedObject.getY();
     double width = collidedObject.getWidth();

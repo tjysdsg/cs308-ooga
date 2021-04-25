@@ -18,6 +18,7 @@ public class ObjectView extends StackPane {
 
   public ObjectView(ObservableObject obj, ImageConfiguration images) {
     this.gameObject = obj;
+		getStyleClass().add("object-view");
     this.playerImage = new ImageView();
 
     Image image = images.getImage(obj.getImageID(), obj.getWidth(), obj.getHeight());
@@ -36,5 +37,9 @@ public class ObjectView extends StackPane {
   private void refreshPosition() {
     setTranslateX(gameObject.getX());
     setTranslateY(-gameObject.getY());
+  }
+
+  protected boolean isObject(ObservableObject o) {
+    return o == this.gameObject;
   }
 }

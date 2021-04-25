@@ -1,0 +1,205 @@
+[
+  {
+    "name": "goomba",
+    "isA": [
+      "goomba"
+    ],
+    "height": 50,
+    "width": 50,
+    "imageID": "goomba",
+    "onCollide": [
+      {
+        "actions": [
+          {
+            "action": "blocked_bottom"
+          }
+        ],
+        "positions": [
+          "bottom"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "blocked_top"
+          }
+        ],
+        "positions": [
+          "top"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "blocked_left"
+          }
+        ],
+        "positions": [
+          "left"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "blocked_right"
+          }
+        ],
+        "positions": [
+          "right"
+        ]
+      }
+    ],
+    "components": [
+      {
+        "type": "PlayerComponent",
+        "actionMappings" : [
+          {
+            "action" : "MoveRight",
+            "input" : "right"
+          },
+          {
+            "action" : "MoveLeft",
+            "input" : "left"
+          },
+          {
+            "action" : "Jump",
+            "input" : "jump"
+          }
+        ]
+      },
+      {
+        "type": "MovementComponent"
+      },
+      {
+        "type": "HateComponent",
+        "frequency": "30",
+        "range": "50"
+      }
+    ]
+  },
+  {
+    "name": "mario",
+    "isA": [
+      "mario"
+    ],
+    "height": 50,
+    "width": 50,
+    "imageID": "mario",
+    "onCollide": [
+      {
+        "actions": [
+          {
+            "action": "blocked_bottom"
+          }
+        ],
+        "positions": [
+          "bottom"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "blocked_top"
+          }
+        ],
+        "positions": [
+          "top"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "blocked_left"
+          }
+        ],
+        "positions": [
+          "left"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "blocked_right"
+          }
+        ],
+        "positions": [
+          "right"
+        ]
+      }
+    ],
+    "components": [
+      {
+        "type": "PlayerComponent",
+        "actionMappings" : [
+          {
+            "action" : "MoveLeft",
+            "input" : "leftp2"
+          },
+          {
+            "action" : "MoveRight",
+            "input" : "rightp2"
+          },
+          {
+            "action" : "Jump",
+            "input" : "jumpp2"
+          }
+        ]
+      },
+      {
+        "type": "MovementComponent"
+      },
+      {
+        "type": "HateComponent",
+        "frequency": "30",
+        "range": "50"
+      }
+    ]
+  },
+  {
+    "name": "qblock",
+    "isA": [
+      "qblock"
+    ],
+    "height": "50",
+    "width": "50",
+    "imageID": "qblock",
+    "onCollide": [
+      {
+        "with": [
+          "goomba"
+        ],
+        "actions": [
+          {
+            "action": "spawn_object",
+            "payload": "brick,0,0"
+          },
+          {
+            "action": "destroy_object"
+          }
+        ],
+        "positions": [
+          "bottom"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "brick",
+    "isA": [
+      "brick"
+    ],
+    "height": "50",
+    "width": "50",
+    "imageID": "brick"
+  },
+  {
+    "name": "block",
+    "isA": [
+      "block"
+    ],
+    "height": 50,
+    "width": 50,
+    "imageID": "block"
+  }
+]
+
