@@ -38,4 +38,8 @@ public class ObjectView extends StackPane {
     setTranslateX(gameObject.getX());
     setTranslateY(-gameObject.getY());
   }
+
+  protected boolean isObject(ObservableObject o) {
+    return o == this.gameObject;
+  }
 }
