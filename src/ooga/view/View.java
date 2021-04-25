@@ -52,12 +52,12 @@ public class View {
     this.resources = new ObservableResource();
     String defaultSettings = null;
     try {
-      defaultSettings = Paths.get(getClass().getResource("resources/settings/defaultView.json").toURI()).toString();
+      defaultSettings =
+          Paths.get(getClass().getResource("resources/settings/defaultView.json").toURI())
+              .toString();
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
-
-    defaultSettings = defaultSettings.replace("file:","");
     this.viewConfig = ConfigurationFactory.createConfiguration(defaultSettings);
     resources.setResources(ResourceBundle.getBundle(DEFAULT_RESOURCES + "English"));
     splashScreen = new SplashScreen(HEIGHT, WIDTH, resources);
@@ -73,7 +73,7 @@ public class View {
     }
     createAnimations();
     setScene(splashScreen);
-    //startGame("data/example/");
+    // startGame("data/example/");
     gameSelection.setOnGameSelected(this::startGame);
     exitApplication =
         () -> {
@@ -135,19 +135,21 @@ public class View {
     // TODO: Have a check if a game is currently playing and ask
     // if want to quit
     currentGame = new GameScene(directory, resources, viewConfig.getKeyMap());
-    currentGame.setOnResize((height, width) -> {
-      stage.setHeight(height);
-      stage.setWidth(width);
-    });
+    currentGame.setOnResize(
+        (height, width) -> {
+          stage.setHeight(height);
+          stage.setWidth(width);
+        });
     if (!cssFile.isBlank()) {
       currentGame.getStylesheets().add(cssFile);
     }
 
-    currentGame.setOnEscape((e) -> {
-      setScene(gameSelection);
-      stage.setHeight(HEIGHT);
-      stage.setWidth(WIDTH);
-    });
+    currentGame.setOnEscape(
+        (e) -> {
+          setScene(gameSelection);
+          stage.setHeight(HEIGHT);
+          stage.setWidth(WIDTH);
+        });
 
     SettingsModule settingsModule = new SettingsModule(resources.getStringBinding("System"));
     ObservableList<String> list = FXCollections.observableArrayList();
