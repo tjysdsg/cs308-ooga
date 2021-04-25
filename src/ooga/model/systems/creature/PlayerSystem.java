@@ -1,6 +1,11 @@
 package ooga.model.systems.creature;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import ooga.model.actions.Handlers.HandlerFactory;
+import ooga.model.actions.Handlers.PlayerActionHandler;
 import ooga.model.annotations.Track;
 import ooga.model.components.PlayerComponent;
 import ooga.model.components.PlayerComponent.HorizontalMovementStatus;
@@ -8,7 +13,7 @@ import ooga.model.components.PlayerComponent.VerticalMovementStatus;
 import ooga.model.objects.GameObject;
 import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
-import ooga.model.systems.ECManager;
+import ooga.model.managers.ECManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,6 +23,7 @@ public class PlayerSystem extends ComponentBasedSystem {
 
   private static final Logger logger = LogManager.getLogger(PlayerSystem.class);
 
+  private Map<String, Map<String, PlayerActionHandler>> handlers = new HashMap<>();
   protected ComponentMapper<PlayerComponent> componentMapper;
 
   // TODO: support active and inactive players
@@ -25,11 +31,14 @@ public class PlayerSystem extends ComponentBasedSystem {
   public PlayerSystem(ECManager ecManager) {
     super(ecManager);
     componentMapper = getComponentMapper(PlayerComponent.class);
-    addMapping("right", this::handleRight);
-    addMapping("left", this::handleLeft);
-    addMapping("jump", this::handleJump);
+    for (PlayerComponent component : componentMapper.getComponents()) {
+      registerAction(component);
+    }
+//    addMapping("right", this::handleRight);
+//    addMapping("left", this::handleLeft);
+//    addMapping("jump", this::handleJump);
 
-    addCollisionMapping("jump_self", event -> doJump(event.getSelf()));
+//    addCollisionMapping("jump_self", event -> doJump(event.getSelf()));
     addCollisionMapping(
         "player_blocked_bottom",
         event -> obstacleOnBottom(event.getSelf(), event.getHitter())
@@ -48,20 +57,28 @@ public class PlayerSystem extends ComponentBasedSystem {
     );
   }
 
-  public List<PlayerComponent> getPlayers() {
-    return componentMapper.getComponents();
+  private void registerAction(PlayerComponent component) {
+    for (ActionPair mapping : component.getActionMapping()) {
+      String input = mapping.getInput();
+      String action = mapping.getAction();
+
+      handlers.putIfAbsent(input, new HashMap<>());
+
+      Map<String, PlayerActionHandler> inputHandlers = handlers.get(input);
+      inputHandlers.putIfAbsent(action, HandlerFactory.buildHandler(action));
+
+      PlayerActionHandler handler = inputHandlers.get(action);
+
+      handler.addListener(component);
+
+      addMapping(input, (on) -> {
+        inputHandlers.values().forEach( (currHandler) -> currHandler.handleAction(on));
+      });
+    }
   }
 
-  private void handleHorizontalMovement(boolean run, int direction) {
-    List<PlayerComponent> players = getPlayers();
-    for (PlayerComponent p : players) {
-      p.setDirection(direction);
-      if (run) {
-        p.setHorizontalStatus(HorizontalMovementStatus.RUNNING);
-      } else {
-        p.setHorizontalStatus(HorizontalMovementStatus.STILL);
-      }
-    }
+  public List<PlayerComponent> getPlayers() {
+    return componentMapper.getComponents();
   }
 
   /**
@@ -87,42 +104,6 @@ public class PlayerSystem extends ComponentBasedSystem {
   private void obstacleOnRight(GameObject go, GameObject other) {
     PlayerComponent p = componentMapper.get(go.getId());
     p.setObstacle(PlayerComponent.OBSTACLE_KEY_RIGHT, other);
-  }
-
-  private void handleRight(boolean on) {
-    handleHorizontalMovement(on, PlayerComponent.RIGHT_DIRECTION);
-  }
-
-  private void handleLeft(boolean on) {
-    logger.info("Left being handled");
-    handleHorizontalMovement(on, PlayerComponent.LEFT_DIRECTION);
-  }
-
-  public void doJump(GameObject go, PlayerComponent p) {
-    if (p.getVerticalStatus() == VerticalMovementStatus.GROUNDED) {
-      go.setVelocityY(p.getJumpHeight() / p.getJumpTime());
-      go.setY(go.getY() + 3.0);
-      p.setVerticalStatus(VerticalMovementStatus.RISING);
-      p.resetJumpTimer();
-      p.setObstacle(PlayerComponent.OBSTACLE_KEY_BOTTOM, null);
-    }
-  }
-
-  public void doJump(GameObject go) {
-    doJump(go, componentMapper.get(go.getId()));
-  }
-
-  private void handleJump(boolean on) {
-    List<PlayerComponent> players = getPlayers();
-    if (on) {
-      for (PlayerComponent p : players) {
-        doJump(p.getOwner(), p);
-      }
-    } else {
-      for (PlayerComponent p : players) {
-        p.setVerticalStatus(VerticalMovementStatus.FALLING);
-      }
-    }
   }
 
   public void initPlayerType(PlayerComponent.PlayerType playerType) {

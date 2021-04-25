@@ -11,7 +11,7 @@ import ooga.model.LevelFactory;
 import ooga.model.Vector;
 import ooga.model.components.Component;
 import ooga.model.exceptions.TypeNotFoundException;
-import ooga.model.systems.IDManager;
+import ooga.model.managers.IDManager;
 
 public class ObjectFactory {
 
@@ -49,7 +49,11 @@ public class ObjectFactory {
 
         clone.setX(instance.getX());
         clone.setY(instance.getY());
-        clone.setVelocity(new Vector(0, 0));
+
+        Vector velocityTest = instance.getVelocity();
+        if (velocityTest != null) {
+            clone.setVelocity(velocityTest);
+        }
 
         return clone;
     }

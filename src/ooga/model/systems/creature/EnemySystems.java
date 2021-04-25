@@ -2,24 +2,25 @@ package ooga.model.systems.creature;
 
 import javafx.util.Pair;
 import ooga.model.Vector;
+import ooga.model.annotations.Track;
 import ooga.model.components.Component;
-import ooga.model.components.HateComponent;
+import ooga.model.components.enemy.HateComponent;
 import ooga.model.components.PlayerComponent;
 import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
-import ooga.model.systems.ECManager;
+import ooga.model.managers.ECManager;
 
-import javax.swing.text.html.HTMLEditorKit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AttackSystems extends ComponentBasedSystem {
+@Track({PlayerComponent.class,HateComponent.class})
+public abstract class EnemySystems extends ComponentBasedSystem {
     private ComponentMapper<HateComponent> hateMapper;
     private ComponentMapper<PlayerComponent> playerComponent;
     protected Map<Pair<HateComponent,PlayerComponent>, AttackDealer> hateMap = new HashMap<>();
 
-    public AttackSystems(ECManager ecManager) {
+    public EnemySystems(ECManager ecManager) {
         super(ecManager);
         hateMapper = getComponentMapper(HateComponent.class);
         playerComponent = getComponentMapper(PlayerComponent.class);

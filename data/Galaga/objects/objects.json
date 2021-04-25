@@ -1,0 +1,32 @@
+[
+  {
+    "name": "fighter",
+    "height": 50,
+    "width": 50,
+    "imageID": "fighter",
+    "onCollide": [
+      {
+        "actions": [
+          {
+            "action": "player_blocked_bottom"
+          }
+        ],
+        "positions": [
+          "bottom"
+        ]
+      }
+    ],
+    "components": [
+      {
+        "type": "PlayerComponent",
+        "DEFAULT_MAX_SPEED": 300
+      }
+    ]
+  },
+  {
+    "name": "floor",
+    "height": 25,
+    "width": 750,
+    "imageID": "floor"
+  }
+]

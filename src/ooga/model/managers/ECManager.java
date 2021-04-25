@@ -1,4 +1,4 @@
-package ooga.model.systems;
+package ooga.model.managers;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -7,32 +7,33 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import ooga.model.Configuration;
 import ooga.model.components.Component;
 import ooga.model.objects.GameObject;
 import ooga.model.objects.ObjectFactory;
 import ooga.model.objects.ObjectInstance;
 import ooga.model.observables.ObservableObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * System for creating, accessing, updating, and deleting entities/components.
  */
-public class ECManager {
+public class ECManager extends BaseManager {
 
-  private IDManager idManager;
-  private Map<Integer, GameObject> entities;
-  private Map<String, Map<Integer, Component>> existingComponents;
+  private static final Logger logger = LogManager.getLogger(ECManager.class);
+
+  private IDManager idManager = new IDManager();
+  private Map<Integer, GameObject> entities = new HashMap<>();
+  private Map<Class<? extends Component>, Map<Integer, Component>> existingComponents = new HashMap<>();
   private ObjectFactory factory;
   private Consumer<ObservableObject> newObjectCallback;
   private Consumer<ObservableObject> deleteObjectCallback;
 
-  public ECManager(ObjectFactory factory, Consumer<ObservableObject> newObjectCallback, Consumer<ObservableObject> deleteObjectCallback) {
+  public ECManager(ObjectFactory factory, Consumer<ObservableObject> newObjectCallback,
+      Consumer<ObservableObject> deleteObjectCallback) {
     this.factory = factory;
-    idManager = new IDManager();
-    entities = new HashMap<>();
-    existingComponents = new HashMap<>();
     this.newObjectCallback = newObjectCallback;
-    this.deleteObjectCallback=deleteObjectCallback;
+    this.deleteObjectCallback = deleteObjectCallback;
   }
 
   public List<GameObject> getEntities() {
@@ -54,7 +55,6 @@ public class ECManager {
    * Delete entity from EntityManager, and remove the components it has from ComponentManager
    */
   public void deleteGameObject(int ID) {
-    // FIXME: how to invalidate the references to the removed GameObject and Components?
     GameObject entity = entities.get(ID);
     notifyObjectDelete(entity);
 
@@ -69,22 +69,28 @@ public class ECManager {
   public void addEntity(ObjectInstance instance) {
     GameObject newObject = factory.buildObject(instance);
     entities.put(newObject.getId(), newObject);
+
+    for (Component component : newObject.getComponents()) {
+      registerExistingComponent(newObject, component);
+    }
+
     notifyNewObject(newObject);
   }
 
   private void notifyNewObject(GameObject newObject) {
-    if (newObjectCallback != null) {
+    if (newObjectCallback != null && newObject != null) {
       newObjectCallback.accept(newObject);
     }
   }
-  private void notifyObjectDelete(GameObject deleteObject){
-    if(deleteObject!=null){
+
+  private void notifyObjectDelete(GameObject deleteObject) {
+    if (deleteObjectCallback != null && deleteObject != null) {
       deleteObjectCallback.accept(deleteObject);
     }
   }
 
   public <T> List<T> getComponents(Class<T> componentClass) {
-    Map<Integer, Component> components = existingComponents.get(componentClass.getName());
+    Map<Integer, Component> components = existingComponents.get(componentClass);
     if (components == null) {
       return new ArrayList<T>();
     }
@@ -105,20 +111,19 @@ public class ECManager {
     if (idCompMap != null) {
       idCompMap.remove(id);
     } else {
-      // TODO: log warning
+      logger.warn(
+          "Remove component of type {}, but there is currently no such components",
+          componentType.toString()
+      );
     }
   }
 
   private <T extends Component> void addComponentToMap(T component) {
     int id = component.getId();
-    Map<Integer, Component> idCompMap = existingComponents.get(component.typeUnerasure());
-    if (idCompMap != null) {
-      idCompMap.put(id, component);
-    } else {
-      idCompMap = new HashMap<>();
-      idCompMap.put(id, component);
-      existingComponents.put(component.typeUnerasure(), idCompMap);
-    }
+
+    existingComponents.putIfAbsent(component.getClass(), new HashMap<>());
+    Map<Integer, Component> idCompMap = existingComponents.get(component.getClass());
+    idCompMap.put(id, component);
   }
 
   public void registerExistingComponents(List<GameObject> gameObjects) {
@@ -132,7 +137,6 @@ public class ECManager {
   public <T extends Component> T createComponent(
       GameObject owner, Class<T> componentClass
   ) {
-    // TODO: log errors
     T ret = null;
     try {
       var constructor = componentClass.getConstructor(int.class, GameObject.class);
@@ -140,11 +144,11 @@ public class ECManager {
       owner.addComponent(ret);
       addComponentToMap(ret);
     } catch (NoSuchMethodException e) {
-      System.out.println(
+      logger.error(
           "Cannot find a valid constructor in component class: " + componentClass.getName()
       );
     } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
-      System.out.println(
+      logger.error(
           "Failed to instantiate component class: " + componentClass.getName()
       );
     }

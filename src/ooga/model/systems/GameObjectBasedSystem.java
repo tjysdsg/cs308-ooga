@@ -1,6 +1,7 @@
 package ooga.model.systems;
 
 import java.util.List;
+import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 
 public abstract class GameObjectBasedSystem extends BaseSystem {

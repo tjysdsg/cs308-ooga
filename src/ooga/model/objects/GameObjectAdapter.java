@@ -19,7 +19,7 @@ public class GameObjectAdapter {
     @ToJson
     ObjectInstance objectToJson(GameObject object) {
         ObjectInstance json = new ObjectInstance(object.getName(),
-                object.getX(), object.getY());
+                object.getX(), object.getY(), object.getVelocity());
         return json;
     }
 }

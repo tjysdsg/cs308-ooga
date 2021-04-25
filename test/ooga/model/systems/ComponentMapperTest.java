@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import ooga.model.components.HealthComponent;
 import ooga.model.components.PlayerComponent;
+import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ public class ComponentMapperTest {
 
   @BeforeEach
   void setup() {
-    ecManager = new ECManager(null, null);
+    ecManager = new ECManager(null, null, null);
 
     go1 = ecManager.createEntity("test entity 1");
     go2 = ecManager.createEntity("test entity 2");

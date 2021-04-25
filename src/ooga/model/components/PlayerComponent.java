@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import ooga.model.objects.GameObject;
+import ooga.model.systems.creature.ActionPair;
 
 public class PlayerComponent extends Component {
 
@@ -16,10 +17,13 @@ public class PlayerComponent extends Component {
   public static final int OBSTACLE_KEY_BOTTOM = 3;
 
   private static final double DEFAULT_MAX_SPEED = 100;
-  private static final double DEFAULT_JUMP_HEIGHT = 100;
+  private static final double DEFAULT_JUMP_HEIGHT = 200;
   private static final double DEFAULT_JUMP_TIME = 0.4;
 
   private double score=0;
+
+  private List<ActionPair> actionMappings = new ArrayList<>();
+
 
   public double getScore(){
     return score;
@@ -35,6 +39,10 @@ public class PlayerComponent extends Component {
         this.score=0;
       }
     }
+  }
+
+  public List<ActionPair> getActionMapping() {
+    return actionMappings;
   }
 
   public enum HorizontalMovementStatus {

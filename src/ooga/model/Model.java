@@ -13,6 +13,7 @@ import ooga.model.exceptions.InvalidDataFileException;
 import ooga.model.exceptions.NotADirectoryException;
 import ooga.model.exceptions.DirectoryNotFoundException;
 import ooga.model.exceptions.RequiredFileNotFoundException;
+import ooga.model.observables.ObservableLevel;
 import ooga.model.observables.ObservableModel;
 import ooga.model.observables.ObservableObject;
 import ooga.model.util.FileReader;
@@ -28,7 +29,7 @@ public class Model implements ObservableModel {
   private String OBJECTS_DIRECTORY_NAME = "objects";
   private String LEVELS_DIRECTORY_NAME = "levels";
   private String CONFIG_FILE_NAME = "config" + FILE_EXTENSION;
-  private Consumer<String> levelChangeCallback;
+  private Consumer<ObservableLevel> levelChangeCallback;
   private Consumer<ObservableObject> newObjectCallback;
   private Consumer<ObservableObject> deleteObjectCallback;
 
@@ -81,12 +82,12 @@ public class Model implements ObservableModel {
   public void setCurrentLevel(String levelName) throws FileNotFoundException, InvalidDataFileException {
     File levelFile = FileReader.getFile(levelsDir, levelName + FILE_EXTENSION);
     currentLevel = levelFactory.buildLevel(levelFile);
-    notifyLevelChange(levelName);
+    notifyLevelChange();
   }
 
-  private void notifyLevelChange(String levelName) {
+  private void notifyLevelChange() {
     if (levelChangeCallback != null) {
-      levelChangeCallback.accept(levelName);
+      levelChangeCallback.accept(currentLevel.asObservable());
     }
   }
 
@@ -103,7 +104,7 @@ public class Model implements ObservableModel {
   }
 
   @Override
-  public void setOnLevelChange(Consumer<String> callback) {
+  public void setOnLevelChange(Consumer<ObservableLevel> callback) {
     levelChangeCallback = callback;
   }
 
