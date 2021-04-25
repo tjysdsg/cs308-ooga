@@ -54,11 +54,11 @@ public class SystemManager extends BaseManager {
       orderedSystems.add(ret);
     } catch (NoSuchMethodException e) {
       logger.error(
-          "Cannot find a valid constructor in component class: " + systemClass.getName()
+          "Cannot find a valid constructor in system class: " + systemClass.getName()
       );
     } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
       logger.error(
-          "Failed to instantiate component class: " + systemClass.getName()
+          "Failed to instantiate system with class: " + systemClass.getName()
       );
     }
     return ret;
