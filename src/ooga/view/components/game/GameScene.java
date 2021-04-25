@@ -63,6 +63,9 @@ public class GameScene extends Scene {
     });
 
     model.setOnLevelChange(this::updateScene);
+    model.setOnObjectDestroy(e -> {
+      gameArea.removeObject(e);
+    });
 
     if (!ModelFactory.verifyGameDirectory(gameDirectory)) {
       handleInvalidGame();
