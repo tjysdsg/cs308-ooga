@@ -20,9 +20,9 @@ public class SettingsPane extends StackPane {
   }
 
   public void addModule(SettingsModule module) {
-    Tab tab = new Tab("", module);
+    Tab tab = new Tab("System", module);
     //tab.textProperty().bind(module.moduleBinding());
-    tab.setText("OKOKO");
+    //tab.setText("OKOKO");
     this.modules.getTabs().add(tab);
   }
 }

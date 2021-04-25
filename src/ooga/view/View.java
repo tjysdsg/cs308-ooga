@@ -95,12 +95,17 @@ public class View {
   }
 
   private void setupSettings() {
-    SettingsModule settingsModule = new SettingsModule(resources.getStringBinding("System"));
+    SettingsModule systemModule = new SettingsModule(resources.getStringBinding("System"));
     ObservableList<String> list =
         FXCollections.observableArrayList(ViewConfiguration.getSupportedLanguages());
     ReadOnlyObjectProperty<String> prop =
-        settingsModule.addListSetting(resources.getStringBinding("LanguageSetting"), list);
+        systemModule.addListSetting(resources.getStringBinding("LanguageSetting"), list);
     prop.addListener((na, old, newVal) -> handleLanguageChange(old, newVal));
+    this.settings = new SettingsPane(resources);
+    settings.addModule(systemModule);
+    if (currentGame != null) {
+      settings.addModule(currentGame.getSettings());
+    }
   }
 
   private void setupPauseMenu() {
@@ -123,7 +128,8 @@ public class View {
     pauseMenu.addOption(
         resources.getStringBinding("Settings"),
         () -> {
-          //pauseDialog.add();
+          setupSettings();
+          pauseDialog.getChildren().add(settings);
         });
 
     pauseMenu.addOption(

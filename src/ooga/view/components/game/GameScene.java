@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import javafx.scene.Scene;
@@ -23,6 +24,7 @@ import ooga.model.observables.ObservableLevel;
 import ooga.model.observables.ObservableModel;
 import ooga.view.Controller;
 import ooga.view.ModelController;
+import ooga.view.components.SettingsModule;
 import ooga.view.util.ConfigurationFactory;
 import ooga.view.util.GameConfiguration;
 import ooga.view.util.ObservableResource;
@@ -47,10 +49,13 @@ public class GameScene extends Scene {
   private ObservableLevel currentLevel;
   private StatsView statsView;
   private GameConfiguration gameConfiguration;
+  private ObservableResource resources;
+  private SettingsModule settings;
 
   public GameScene(String directory, ObservableResource resources) {
     super(new StackPane(), WIDTH, HEIGHT, Color.BLACK);
     logger.debug("Game scene constructing for {}", directory);
+    this.resources = resources;
     this.root = (StackPane) getRoot();
     this.model = new Model();
     this.controller = new Controller(model);
@@ -104,6 +109,7 @@ public class GameScene extends Scene {
     gameArea.requestFocus();
     setOnKeyPressed(e -> handlePress(e.getCode()));
     setOnKeyReleased(e -> handleRelease(e.getCode()));
+    setupSettings();
     loop.setOnUpdate(controller::step);
     loop.start();
   }
@@ -133,6 +139,16 @@ public class GameScene extends Scene {
     }
 
     gameArea.setBackground(new Background(bg));
+  }
+
+
+  private void setupSettings() {
+    this.settings = new SettingsModule(resources.getStringBinding("GameSettings"));
+    settings.addKeysOption(gameConfiguration.getKeyMap(), List.of("left", "right"));
+  }
+
+  public SettingsModule getSettings() {
+    return this.settings;
   }
 
   private void handleInvalidGame() {}
