@@ -1,7 +1,5 @@
 package ooga.view.components.game;
 
-import java.io.File;
-import java.net.MalformedURLException;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,7 +16,7 @@ public class ObjectView extends StackPane {
 
   public ObjectView(ObservableObject obj, ImageConfiguration images) {
     this.gameObject = obj;
-		getStyleClass().add("object-view");
+    getStyleClass().add("object-view");
     this.playerImage = new ImageView();
 
     Image image = images.getImage(obj.getImageID(), obj.getWidth(), obj.getHeight());
