@@ -75,6 +75,81 @@
     ]
   },
   {
+    "name": "mario",
+    "isA": [
+      "mario"
+    ],
+    "height": 50,
+    "width": 50,
+    "imageID": "mario",
+    "onCollide": [
+      {
+        "actions": [
+          {
+            "action": "player_blocked_bottom"
+          }
+        ],
+        "positions": [
+          "bottom"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "player_blocked_top"
+          }
+        ],
+        "positions": [
+          "top"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "player_blocked_left"
+          }
+        ],
+        "positions": [
+          "left"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "player_blocked_right"
+          }
+        ],
+        "positions": [
+          "right"
+        ]
+      }
+    ],
+    "components": [
+      {
+        "type": "PlayerComponent",
+        "actionMappings" : [
+          {
+            "action" : "MoveRight",
+            "input" : "rightP2"
+          },
+          {
+            "action" : "MoveLeft",
+            "input" : "leftP2"
+          },
+          {
+            "action" : "Jump",
+            "input" : "jumpP2"
+          }
+        ]
+      },
+      {
+        "type": "HateComponent",
+        "frequency": "30",
+        "range": "50"
+      }
+    ]
+  },
+  {
     "name": "qblock",
     "isA": [
       "qblock"
@@ -110,27 +185,6 @@
     "height": "50",
     "width": "50",
     "imageID": "brick"
-  },
-  {
-    "name": "mario",
-    "isA": [
-      "mario"
-    ],
-    "height": 50,
-    "width": 50,
-    "imageID": "mario",
-    "onCollide": [
-      {
-        "actions": [
-          {
-            "action": "destroy_object"
-          }
-        ],
-        "positions": [
-          "top"
-        ]
-      }
-    ]
   },
   {
     "name": "block",
