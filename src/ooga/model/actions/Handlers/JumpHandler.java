@@ -1,4 +1,4 @@
-package ooga.model.actions;
+package ooga.model.actions.Handlers;
 
 import java.util.List;
 import ooga.model.components.PlayerComponent;

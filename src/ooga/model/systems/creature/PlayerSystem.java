@@ -1,18 +1,15 @@
 package ooga.model.systems.creature;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
-import ooga.model.actions.HandlerFactory;
-import ooga.model.actions.PlayerActionHandler;
+import ooga.model.actions.Handlers.HandlerFactory;
+import ooga.model.actions.Handlers.PlayerActionHandler;
 import ooga.model.annotations.Track;
 import ooga.model.components.PlayerComponent;
 import ooga.model.components.PlayerComponent.HorizontalMovementStatus;
 import ooga.model.components.PlayerComponent.VerticalMovementStatus;
-import ooga.model.exceptions.UnknownPlayerAction;
 import ooga.model.objects.GameObject;
 import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
@@ -26,7 +23,7 @@ public class PlayerSystem extends ComponentBasedSystem {
 
   private static final Logger logger = LogManager.getLogger(PlayerSystem.class);
 
-  private Map<String, PlayerActionHandler> handlers = new HashMap<>();
+  private Map<String, Map<String, PlayerActionHandler>> handlers = new HashMap<>();
   protected ComponentMapper<PlayerComponent> componentMapper;
 
   // TODO: support active and inactive players
@@ -65,12 +62,18 @@ public class PlayerSystem extends ComponentBasedSystem {
       String input = mapping.getInput();
       String action = mapping.getAction();
 
-      handlers.putIfAbsent(input, HandlerFactory.buildHandler(action));
-      PlayerActionHandler handler = handlers.get(input);
+      handlers.putIfAbsent(input, new HashMap<>());
+
+      Map<String, PlayerActionHandler> inputHandlers = handlers.get(input);
+      inputHandlers.putIfAbsent(action, HandlerFactory.buildHandler(action));
+
+      PlayerActionHandler handler = inputHandlers.get(action);
 
       handler.addListener(component);
 
-      addMapping(input, handler::handleAction);
+      addMapping(input, (on) -> {
+        inputHandlers.values().forEach( (currHandler) -> currHandler.handleAction(on));
+      });
     }
   }
 

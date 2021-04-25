@@ -1,4 +1,4 @@
-package ooga.model.actions;
+package ooga.model.actions.Handlers;
 
 import ooga.model.components.PlayerComponent;
 

@@ -130,15 +130,15 @@
         "actionMappings" : [
           {
             "action" : "MoveRight",
-            "input" : "rightP2"
+            "input" : "left"
           },
           {
             "action" : "MoveLeft",
-            "input" : "leftP2"
+            "input" : "right"
           },
           {
             "action" : "Jump",
-            "input" : "jumpP2"
+            "input" : "jump"
           }
         ]
       },

@@ -1,4 +1,4 @@
-package ooga.model.actions;
+package ooga.model.actions.Handlers;
 
 import java.lang.reflect.InvocationTargetException;
 import ooga.model.exceptions.UnknownPlayerAction;
