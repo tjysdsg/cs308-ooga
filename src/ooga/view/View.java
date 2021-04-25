@@ -45,6 +45,7 @@ public class View {
   private JFXDialog pauseDialog;
   private SplashScreen splashScreen;
   private ViewConfiguration viewConfiguration;
+  private PauseMenu pauseMenu;
   private SettingsPane settings;
 
   public View(Stage stage) {
@@ -102,6 +103,10 @@ public class View {
         systemModule.addListSetting(resources.getStringBinding("LanguageSetting"), list);
     prop.addListener((na, old, newVal) -> handleLanguageChange(old, newVal));
     this.settings = new SettingsPane(resources);
+    settings.setOnClose(
+        () -> {
+          pauseDialog.getChildren().remove(settings);
+        });
     settings.addModule(systemModule);
     if (currentGame != null) {
       settings.addModule(currentGame.getSettings());
@@ -110,7 +115,7 @@ public class View {
 
   private void setupPauseMenu() {
     pauseDialog = new JFXDialog();
-    PauseMenu pauseMenu = new PauseMenu(resources);
+    pauseMenu = new PauseMenu(resources);
     pauseDialog.setContent(pauseMenu);
 
     pauseMenu.addOption(

@@ -59,6 +59,7 @@ public class SettingsModule extends StackPane {
         e -> {
           field.setText(e.getCode().toString());
           if (availableKeys.getValue() != null) {
+            keyMap.remove(e.getCode());
             keyMap.put(e.getCode(), availableKeys.getValue());
           }
         });
