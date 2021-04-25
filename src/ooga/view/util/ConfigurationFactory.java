@@ -10,9 +10,10 @@ import org.apache.logging.log4j.Logger;
 
 public abstract class ConfigurationFactory {
   private static final Logger logger = LogManager.getLogger(MetaGame.class);
-  private static final String thing = "ok";
   private static JsonAdapter<GameConfiguration> adapter =
       new Moshi.Builder().add(new ConfigurationAdapter()).build().adapter(GameConfiguration.class);
+  private static JsonAdapter<ViewConfiguration> viewAdapter =
+      new Moshi.Builder().add(new ConfigurationAdapter()).build().adapter(ViewConfiguration.class);
 
   public static GameConfiguration createConfiguration(String filePath) {
     if (filePath == null || filePath.isBlank()) {
@@ -21,15 +22,30 @@ public abstract class ConfigurationFactory {
     try {
       String string = Files.readString(Path.of(filePath));
       GameConfiguration config = adapter.fromJson(string);
-      logger.debug("View Configuration Created: {}", config);
+      logger.debug("Game Configuration Created: {}", config);
       return config;
     } catch (IOException e) {
-      logger.debug("Unable to create Configuration from directory {}", filePath);
+      logger.debug("Unable to create Game Configuration from directory {}", filePath);
       return null;
     }
   }
 
   public static GameConfiguration createConfiguration() {
     return new GameConfiguration();
+  }
+
+  public static ViewConfiguration createViewConfig(String filePath) {
+    if (filePath == null || filePath.isBlank()) {
+      return null;
+    }
+    try {
+      String string = Files.readString(Path.of(filePath));
+      ViewConfiguration config = viewAdapter.fromJson(string);
+      logger.debug("View Configuration Created: {}", config);
+      return config;
+    } catch (IOException e) {
+      logger.debug("Unable to create Configuration from directory {}", filePath);
+      return null;
+    }
   }
 }

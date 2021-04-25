@@ -2,11 +2,12 @@ package ooga.view;
 
 import com.jfoenix.controls.JFXDialog;
 import fr.brouillard.oss.cssfx.CSSFX;
+
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import javafx.animation.*;
-import javafx.beans.binding.StringBinding;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,7 +19,10 @@ import ooga.view.components.SettingsModule;
 import ooga.view.components.SplashScreen;
 import ooga.view.components.game.GameScene;
 import ooga.view.components.gameselection.GSelectionScene;
+import ooga.view.util.ConfigurationFactory;
 import ooga.view.util.ObservableResource;
+import ooga.view.util.ViewConfiguration;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -42,12 +46,21 @@ public class View {
   private String cssFile;
   private JFXDialog pauseDialog;
   private SplashScreen splashScreen;
+  private ViewConfiguration viewConfiguration;
 
   public View(Stage stage) {
     CSSFX.start();
     this.stage = stage;
-    this.resources = new ObservableResource();
-    resources.setResources(ResourceBundle.getBundle(DEFAULT_RESOURCES + "English"));
+    String defaultConfig = "";
+    try {
+      defaultConfig =
+          Paths.get(getClass().getResource("resources/defaultView.json").toURI())
+              .toString();
+      this.viewConfiguration = ConfigurationFactory.createViewConfig(defaultConfig);
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    this.resources = viewConfiguration.getResources();
     splashScreen = new SplashScreen(HEIGHT, WIDTH, resources);
     gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);
     // this.modelController = model.getController();
@@ -60,7 +73,7 @@ public class View {
       logger.warn("Css file could not be loaded");
     }
     createAnimations();
-    //setScene(splashScreen);
+    // setScene(splashScreen);
     startGame("data/Goomba's Revenge/");
     gameSelection.setOnGameSelected(this::startGame);
     exitApplication =
@@ -145,8 +158,8 @@ public class View {
     currentGame.setOnEscape(
         (e) -> {
           currentGame.pauseGame();
-          //pauseDialog.show(e);
-           e.getChildren().add(settingsModule);
+          // pauseDialog.show(e);
+          e.getChildren().add(settingsModule);
         });
 
     setScene(currentGame);
