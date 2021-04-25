@@ -2,9 +2,7 @@ package ooga.view;
 
 import com.jfoenix.controls.JFXDialog;
 import fr.brouillard.oss.cssfx.CSSFX;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import javafx.animation.*;
 import javafx.beans.property.ObjectProperty;
@@ -18,9 +16,7 @@ import ooga.view.components.SettingsModule;
 import ooga.view.components.SplashScreen;
 import ooga.view.components.game.GameScene;
 import ooga.view.components.gameselection.GSelectionScene;
-import ooga.view.util.ConfigurationFactory;
 import ooga.view.util.ObservableResource;
-import ooga.view.util.GameConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -63,7 +59,7 @@ public class View {
     }
     createAnimations();
     setScene(splashScreen);
-     //startGame("data/example/");
+    // startGame("data/example/");
     gameSelection.setOnGameSelected(this::startGame);
     exitApplication =
         () -> {
