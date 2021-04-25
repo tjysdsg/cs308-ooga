@@ -3,7 +3,10 @@ package ooga.view.components.game;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+
+import javafx.collections.ObservableMap;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -17,6 +20,7 @@ import javafx.scene.paint.Color;
 import ooga.model.Model;
 import ooga.model.ModelFactory;
 import ooga.model.exceptions.InvalidDataFileException;
+import ooga.model.observables.ObservableLevel;
 import ooga.model.observables.ObservableModel;
 import ooga.view.Controller;
 import ooga.view.ModelController;
@@ -38,12 +42,15 @@ public class GameScene extends Scene {
   private Consumer<StackPane> onEscape;
   private GameLoop loop;
   private ImageConfiguration images;
+  private BiConsumer<Double, Double> resizeCallback;
+  private ObservableLevel currentLevel;
 
-  public GameScene(String directory, ObservableResource resources) {
+  public GameScene(String directory, ObservableResource resources, ObservableMap<KeyCode, String> keymaps) {
     super(new StackPane(), WIDTH, HEIGHT, Color.BLACK);
     this.root = (StackPane) getRoot();
     this.model = new Model();
     this.controller = new Controller(model);
+    controller.setKeyMap(keymaps);
     this.directory = directory;
     this.gameArea = new GameArea();
     this.loop = new GameLoop();
@@ -55,7 +62,7 @@ public class GameScene extends Scene {
       gameArea.addObject(obj);
     });
 
-    model.setOnLevelChange(this::setBackground);
+    model.setOnLevelChange(this::updateScene);
 
     if (!ModelFactory.verifyGameDirectory(gameDirectory)) {
       handleInvalidGame();
@@ -78,12 +85,19 @@ public class GameScene extends Scene {
     loop.start();
   }
 
+  private void updateScene(ObservableLevel observableLevel) {
+    currentLevel = observableLevel;
+    setBackground(observableLevel.getBackgroundID());
+    notifyResize();
+  }
+
   private void setBackground(String newBackground) {
     BackgroundImage bg;
     Image bgImage = images.getImage(newBackground, WIDTH, HEIGHT);
 
     try {
-      logger.info("%n%n%nOpenning {} for background%n%n%n", directory + "images/geoback.png");
+
+      logger.info("Openning {} for background", bgImage.getUrl());
       bg = new BackgroundImage(
           bgImage,
           BackgroundRepeat.REPEAT,
@@ -92,7 +106,7 @@ public class GameScene extends Scene {
           BackgroundSize.DEFAULT);
 
     } catch (Exception e) {
-      throw new InvalidDataFileException(newBackground);
+      throw new InvalidDataFileException(bgImage.getUrl());
     }
 
     gameArea.setBackground(new Background(bg));
@@ -107,6 +121,7 @@ public class GameScene extends Scene {
        return;
      }
     controller.handleKeyPress(code);
+    System.out.println("THI SIS: " + KeyCode.getKeyCode(" "));
   }
 
   private void handleRelease(KeyCode code) {
@@ -130,7 +145,20 @@ public class GameScene extends Scene {
     this.onEscape = callback;
   }
 
-  public void pauseGame() {}
+  public void pauseGame() {
+    loop.stop();
+  }
 
-  public void playGame() {}
+  public void setOnResize(BiConsumer<Double, Double> resizeCallback) {
+    this.resizeCallback = resizeCallback;
+    notifyResize();
+  }
+
+  public void notifyResize() {
+    if (resizeCallback != null)
+      resizeCallback.accept((double) currentLevel.getHeight(), (double) currentLevel.getWidth());
+  }
+  public void playGame() {
+    loop.start();
+  }
 }

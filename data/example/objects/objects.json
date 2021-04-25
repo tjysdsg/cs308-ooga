@@ -1,0 +1,131 @@
+[
+  {
+    "name": "goomba",
+    "isA": [
+      "goomba"
+    ],
+    "height": 50,
+    "width": 50,
+    "imageID": "goomba",
+    "onCollide": [
+      {
+        "actions": [
+          {
+            "action": "player_blocked_bottom"
+          }
+        ],
+        "positions": [
+          "bottom"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "player_blocked_top"
+          }
+        ],
+        "positions": [
+          "top"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "player_blocked_left"
+          }
+        ],
+        "positions": [
+          "left"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "player_blocked_right"
+          }
+        ],
+        "positions": [
+          "right"
+        ]
+      }
+    ],
+    "components": [
+      {
+        "type": "PlayerComponent"
+      },
+      {
+        "type": "HateComponent",
+        "frequency": "30",
+        "range": "50"
+      }
+    ]
+  },
+  {
+    "name": "qblock",
+    "isA": [
+      "qblock"
+    ],
+    "height": "50",
+    "width": "50",
+    "imageID": "qblock",
+    "onCollide": [
+      {
+        "with": [
+          "goomba"
+        ],
+        "actions": [
+          {
+            "action": "spawn_object",
+            "payload": "brick,0,0"
+          },
+          {
+            "action": "destroy_object"
+          }
+        ],
+        "positions": [
+          "bottom"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "brick",
+    "isA": [
+      "brick"
+    ],
+    "height": "50",
+    "width": "50",
+    "imageID": "brick"
+  },
+  {
+    "name": "mario",
+    "isA": [
+      "mario"
+    ],
+    "height": 50,
+    "width": 50,
+    "imageID": "mario",
+    "onCollide": [
+      {
+        "actions": [
+          {
+            "action": "destroy_object"
+          }
+        ],
+        "positions": [
+          "top"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "block",
+    "isA": [
+      "block"
+    ],
+    "height": 50,
+    "width": 50,
+    "imageID": "block"
+  }
+]
+

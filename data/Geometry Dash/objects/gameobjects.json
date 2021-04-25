@@ -53,8 +53,19 @@
         "maxSpeed": 250,
         "horizontalStatus" : "RUNNING",
         "gravAccel": 30,
-        "keyActions": [
-          "jump"
+        "actionMappings" : [
+          {
+            "action" : "MoveRight",
+            "input" : "right"
+          },
+          {
+            "action" : "MoveLeft",
+            "input" : "left"
+          },
+          {
+            "action" : "Jump",
+            "input" : "jump"
+          }
         ]
 
       },

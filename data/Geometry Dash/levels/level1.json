@@ -2,8 +2,8 @@
   "name": "Stereo Madness",
   "id": "stereo_madness",
   "background": "geoback",
-  "height": 750,
-  "width": 5000,
+  "height": 1000,
+  "width": 1500,
   "objects": [
     {
       "name" : "playerblock",

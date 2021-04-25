@@ -1,5 +1,7 @@
 package ooga.model;
 
+import java.util.function.Consumer;
+import ooga.model.observables.ObservableLevel;
 import ooga.view.Controller;
 import ooga.view.ModelController;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,9 +26,7 @@ public class ControllerTest {
         numObjects = 0;
 
         model = new Model();
-        model.setOnLevelChange((level) -> {
-                levelChanges++;
-        });
+        model.setOnLevelChange((level) -> levelChanges++);
 
         model.setOnNewObject((thing) -> {
             numObjects++;

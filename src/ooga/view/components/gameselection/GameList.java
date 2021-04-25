@@ -70,7 +70,10 @@ public class GameList extends FlowPane {
     addGame.setOnAction(
         e -> {
           String dirPreset = prefs.get("last_selection_dir", System.getProperty("user.home"));
-          dirChooser.setInitialDirectory(new File(dirPreset));
+          File file = new File(dirPreset);
+          if (file.exists()) {
+            dirChooser.setInitialDirectory(file);
+          }
           dirChooser.setTitle(directoryTitle.getValue());
           File selectedDir = dirChooser.showDialog(getScene().getWindow());
           if (selectedDir != null) {

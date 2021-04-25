@@ -1,9 +1,12 @@
 package ooga.model.systems.creature;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import ooga.model.actions.Handlers.HandlerFactory;
+import ooga.model.actions.Handlers.PlayerActionHandler;
 import ooga.model.annotations.Track;
 import ooga.model.components.PlayerComponent;
 import ooga.model.components.PlayerComponent.HorizontalMovementStatus;
@@ -21,6 +24,7 @@ public class PlayerSystem extends ComponentBasedSystem {
 
   private static final Logger logger = LogManager.getLogger(PlayerSystem.class);
 
+  private Map<String, Map<String, PlayerActionHandler>> handlers = new HashMap<>();
   protected ComponentMapper<PlayerComponent> componentMapper;
 
   // TODO: support active and inactive players
@@ -28,12 +32,14 @@ public class PlayerSystem extends ComponentBasedSystem {
   public PlayerSystem(ECManager ecManager) {
     super(ecManager);
     componentMapper = getComponentMapper(PlayerComponent.class);
+    for (PlayerComponent component : componentMapper.getComponents()) {
+      registerAction(component);
+    }
+//    addMapping("right", this::handleRight);
+//    addMapping("left", this::handleLeft);
+//    addMapping("jump", this::handleJump);
 
-    addMapping("right", this::handleRight);
-    addMapping("left", this::handleLeft);
-    addMapping("jump", this::handleJump);
-
-    addCollisionMapping("jump_self", event -> doJump(event.getSelf()));
+//    addCollisionMapping("jump_self", event -> doJump(event.getSelf()));
     addCollisionMapping(
         "player_blocked_bottom",
         event -> obstacleOnBottom(event.getSelf(), event.getHitter())
@@ -52,17 +58,28 @@ public class PlayerSystem extends ComponentBasedSystem {
     );
   }
 
-  public List<PlayerComponent> getPlayers() {
-    return componentMapper.getComponents();
+  private void registerAction(PlayerComponent component) {
+    for (ActionPair mapping : component.getActionMapping()) {
+      String input = mapping.getInput();
+      String action = mapping.getAction();
+
+      handlers.putIfAbsent(input, new HashMap<>());
+
+      Map<String, PlayerActionHandler> inputHandlers = handlers.get(input);
+      inputHandlers.putIfAbsent(action, HandlerFactory.buildHandler(action));
+
+      PlayerActionHandler handler = inputHandlers.get(action);
+
+      handler.addListener(component);
+
+      addMapping(input, (on) -> {
+        inputHandlers.values().forEach( (currHandler) -> currHandler.handleAction(on));
+      });
+    }
   }
 
-  private void handleHorizontalMovement(boolean run, int direction, PlayerComponent p) {
-      p.setDirection(direction);
-      if (run) {
-        p.setHorizontalStatus(HorizontalMovementStatus.RUNNING);
-      } else {
-        p.setHorizontalStatus(HorizontalMovementStatus.STILL);
-      }
+  public List<PlayerComponent> getPlayers() {
+    return componentMapper.getComponents();
   }
 
   /**
@@ -90,65 +107,6 @@ public class PlayerSystem extends ComponentBasedSystem {
     p.setObstacle(PlayerComponent.OBSTACLE_KEY_RIGHT, other);
   }
 
-  private void handleRight(boolean on) {
-    List<PlayerComponent> players = getPlayers();
-    for (PlayerComponent p : players) {
-      if(p.getKeyActions().contains("right")){
-        handleHorizontalMovement(on, PlayerComponent.RIGHT_DIRECTION, p);
-      }
-    }
-  }
-
-  private void handleLeft(boolean on) {
-    List<PlayerComponent> players = getPlayers();
-    for (PlayerComponent p : players) {
-      if(p.getKeyActions().contains("left")){
-        handleHorizontalMovement(on, PlayerComponent.LEFT_DIRECTION, p);
-      }
-    }
-  }
-
-  public void doJump(GameObject go, PlayerComponent p) {
-    if (p.getVerticalStatus() == VerticalMovementStatus.GROUNDED) {
-      go.setVelocityY(p.getJumpHeight() / p.getJumpTime());
-      go.setY(go.getY() + 3.0);
-      p.setVerticalStatus(VerticalMovementStatus.RISING);
-      p.resetJumpTimer();
-      p.setObstacle(PlayerComponent.OBSTACLE_KEY_BOTTOM, null);
-    }
-  }
-
-  public void doJump(GameObject go) {
-    doJump(go, componentMapper.get(go.getId()));
-  }
-
-  private void handleJump(boolean on) {
-    List<PlayerComponent> players = getPlayers();
-    for(PlayerComponent p: players){
-      if(!p.getKeyActions().contains("jump")){
-        continue;
-      }
-      else if(on){
-        doJump(p.getOwner(), p);
-      }
-      else{
-        p.setVerticalStatus(VerticalMovementStatus.FALLING);
-      }
-    }
-
-    /*
-    if (on) {
-      for (PlayerComponent p : players) {
-        doJump(p.getOwner(), p);
-      }
-    } else {
-      for (PlayerComponent p : players) {
-        p.setVerticalStatus(VerticalMovementStatus.FALLING);
-      }
-    }
-    */
-
-  }
 
   public void initPlayerType(PlayerComponent.PlayerType playerType) {
     List<PlayerComponent> players = getPlayers();

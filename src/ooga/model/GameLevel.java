@@ -10,6 +10,7 @@ import ooga.model.managers.ActionManager;
 import ooga.model.managers.StatsManager;
 import ooga.model.managers.InputManager;
 import ooga.model.objects.GameObject;
+import ooga.model.observables.ObservableLevel;
 import ooga.model.systems.BaseSystem;
 import ooga.model.systems.CollisionSystem;
 import ooga.model.systems.HealthSystem;
@@ -19,11 +20,16 @@ import ooga.model.systems.creature.NPCSystem;
 import ooga.model.systems.creature.PlayerSystem;
 import ooga.model.systems.creature.SampleEnemySystem;
 
-class GameLevel implements Level {
+// TODO: implement methods
+class GameLevel implements Level, ObservableLevel {
 
+  // Moshi Items (add anything that is needed)
   private String name;
-  int levelID;
-  String background;
+  private int levelID;
+  private int height;
+  private int width;
+  private String background;
+
   private transient List<BaseSystem> systems = new ArrayList<>();
   @Json(name = "objects")
   private ECManager ecManager;
@@ -48,7 +54,7 @@ class GameLevel implements Level {
     systemManager.createSystem(NPCSystem.class, ecManager);
     systems = systemManager.getAllSystems();
 
-    ecManager.registerExistingComponents(ecManager.getEntities());
+    //ecManager.registerExistingComponents(ecManager.getEntities());
 
     for (var s : systems) {
       s.registerAllInputs(inputManager);
@@ -62,8 +68,23 @@ class GameLevel implements Level {
   }
 
   @Override
-  public String getBackground() {
+  public String getBackgroundID() {
     return background;
+  }
+
+  @Override
+  public ObservableLevel asObservable() {
+    return this;
+  }
+
+  @Override
+  public int getHeight() {
+    return height;
+  }
+
+  @Override
+  public int getWidth() {
+    return width;
   }
 
   @Override
