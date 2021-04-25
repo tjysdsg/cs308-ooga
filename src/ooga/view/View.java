@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.util.*;
 import ooga.view.components.PauseMenu;
 import ooga.view.components.SettingsModule;
+import ooga.view.components.SettingsPane;
 import ooga.view.components.SplashScreen;
 import ooga.view.components.game.GameScene;
 import ooga.view.components.gameselection.GSelectionScene;
@@ -44,6 +45,7 @@ public class View {
   private JFXDialog pauseDialog;
   private SplashScreen splashScreen;
   private ViewConfiguration viewConfiguration;
+  private SettingsPane settings;
 
   public View(Stage stage) {
     CSSFX.start();
@@ -92,7 +94,14 @@ public class View {
     stage.show();
   }
 
-  private void setupSettings() {}
+  private void setupSettings() {
+    SettingsModule settingsModule = new SettingsModule(resources.getStringBinding("System"));
+    ObservableList<String> list =
+        FXCollections.observableArrayList(ViewConfiguration.getSupportedLanguages());
+    ReadOnlyObjectProperty<String> prop =
+        settingsModule.addListSetting(resources.getStringBinding("LanguageSetting"), list);
+    prop.addListener((na, old, newVal) -> handleLanguageChange(old, newVal));
+  }
 
   private void setupPauseMenu() {
     pauseDialog = new JFXDialog();
@@ -114,7 +123,7 @@ public class View {
     pauseMenu.addOption(
         resources.getStringBinding("Settings"),
         () -> {
-          System.out.println("yay!");
+          //pauseDialog.add();
         });
 
     pauseMenu.addOption(
@@ -143,26 +152,12 @@ public class View {
 
     currentGame.setOnEscape(
         (e) -> {
-          setScene(gameSelection);
-        });
-
-    SettingsModule settingsModule = new SettingsModule(resources.getStringBinding("System"));
-    ObservableList<String> list = FXCollections.observableArrayList();
-    list.addAll("English", "French", "German");
-    settingsModule.addListSetting(resources.getStringBinding("Resume"), list);
-
-    currentGame.setOnEscape(
-        (e) -> {
           currentGame.pauseGame();
-          // pauseDialog.show(e);
-          e.getChildren().add(settingsModule);
+          pauseDialog.show(e);
+          // e.getChildren().add(settingsModule);
         });
 
     setScene(currentGame);
-
-    ReadOnlyObjectProperty<String> prop =
-        settingsModule.addListSetting(resources.getStringBinding("LanguageSetting"), list);
-    prop.addListener((na, old, newVal) -> handleLanguageChange(old, newVal));
   }
 
   private void handleLanguageChange(String old, String newVal) {
