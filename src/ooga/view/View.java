@@ -72,8 +72,8 @@ public class View {
       logger.warn("Css file could not be loaded");
     }
     createAnimations();
-    // setScene(splashScreen);
-    startGame("data/Goomba's Revenge/");
+     setScene(splashScreen);
+    //startGame("data/Goomba's Revenge/");
     gameSelection.setOnGameSelected(this::startGame);
     exitApplication =
         () -> {
@@ -85,11 +85,15 @@ public class View {
                 logger.info("Exited Application");
               });
         };
-    splashScreen.setOnExit(exitApplication);
-    splashScreen.setOnPlay(() -> setScene(gameSelection));
-
     setupPauseMenu();
     setupSettings();
+
+    splashScreen.setOnExit(exitApplication);
+    splashScreen.setOnPlay(() -> setScene(gameSelection));
+    splashScreen.setOnSettings( e -> {
+      pauseDialog.show(e);
+    });
+
 
     logger.info("Displaying Splash Screen");
     stage.show();
