@@ -2,22 +2,24 @@ package ooga.model.components;
 
 import ooga.model.objects.GameObject;
 
-public class PayloadMultiplier extends Component{
-    private double multiplier=0;
-    public PayloadMultiplier(int id, GameObject owner) {
-        super(id, owner);
-    }
+public class PayloadMultiplier extends Component {
 
-    @Override
-    public String typeUnerasure() {
-        return PayloadMultiplier.class.getName();
-    }
+  private double multiplier = 0;
 
-    public void setMultiplier(double multiplier) {
-        this.multiplier = multiplier;
-    }
+  public PayloadMultiplier(int id, GameObject owner) {
+    super(id, owner);
+  }
 
-    public double getMultiplier() {
-        return multiplier;
-    }
+  @Override
+  public String typeUnerasure() {
+    return PayloadMultiplier.class.getName();
+  }
+
+  public double getMultiplier() {
+    return multiplier;
+  }
+
+  public void setMultiplier(double multiplier) {
+    this.multiplier = multiplier;
+  }
 }

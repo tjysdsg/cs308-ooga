@@ -1,14 +1,13 @@
 package ooga.model;
 
+import com.squareup.moshi.Json;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.squareup.moshi.Json;
-import ooga.model.managers.ECManager;
-import ooga.model.managers.SystemManager;
 import ooga.model.managers.ActionManager;
-import ooga.model.managers.StatsManager;
+import ooga.model.managers.ECManager;
 import ooga.model.managers.InputManager;
+import ooga.model.managers.StatsManager;
+import ooga.model.managers.SystemManager;
 import ooga.model.objects.GameObject;
 import ooga.model.observables.ObservableLevel;
 import ooga.model.systems.BaseSystem;

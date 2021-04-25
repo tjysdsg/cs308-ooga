@@ -1,9 +1,6 @@
 package ooga.model.systems;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import ooga.model.actions.Handlers.MovementActionHandler;
 import ooga.model.annotations.Track;
 import ooga.model.components.MovementComponent;
 import ooga.model.components.MovementComponent.HorizontalMovementStatus;

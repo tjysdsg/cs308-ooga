@@ -1,2 +1,5 @@
-package ooga.model.util;public class TriConsumer {
+package ooga.model.util;
+
+public class TriConsumer {
+
 }

@@ -1,11 +1,9 @@
 package ooga.view.components.game;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-
 import javafx.collections.ObservableMap;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -28,8 +26,11 @@ import ooga.view.util.ObservableResource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/** A scene in which games are actually tracked and played. */
+/**
+ * A scene in which games are actually tracked and played.
+ */
 public class GameScene extends Scene {
+
   private static final Logger logger = LogManager.getLogger(GameScene.class);
   private static int WIDTH = 800;
   private static int HEIGHT = 500;
@@ -45,7 +46,8 @@ public class GameScene extends Scene {
   private BiConsumer<Double, Double> resizeCallback;
   private ObservableLevel currentLevel;
 
-  public GameScene(String directory, ObservableResource resources, ObservableMap<KeyCode, String> keymaps) {
+  public GameScene(String directory, ObservableResource resources,
+      ObservableMap<KeyCode, String> keymaps) {
     super(new StackPane(), WIDTH, HEIGHT, Color.BLACK);
     this.root = (StackPane) getRoot();
     this.model = new Model();
@@ -114,14 +116,15 @@ public class GameScene extends Scene {
     gameArea.setBackground(new Background(bg));
   }
 
-  private void handleInvalidGame() {}
+  private void handleInvalidGame() {
+  }
 
   private void handlePress(KeyCode code) {
-     if (code == KeyCode.ESCAPE) {
-       logger.info("Escaping game");
-       notifyEscape();
-       return;
-     }
+    if (code == KeyCode.ESCAPE) {
+      logger.info("Escaping game");
+      notifyEscape();
+      return;
+    }
     controller.handleKeyPress(code);
     System.out.println("THI SIS: " + KeyCode.getKeyCode(" "));
   }
@@ -157,9 +160,11 @@ public class GameScene extends Scene {
   }
 
   public void notifyResize() {
-    if (resizeCallback != null)
+    if (resizeCallback != null) {
       resizeCallback.accept((double) currentLevel.getHeight(), (double) currentLevel.getWidth());
+    }
   }
+
   public void playGame() {
     loop.start();
   }

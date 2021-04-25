@@ -13,8 +13,8 @@ import ooga.model.managers.ECManager;
 @Track(HealthComponent.class)
 public class HealthSystem extends ComponentBasedSystem {
 
-  protected ComponentMapper<HealthComponent> componentMapper;
   private static final String HEALTH_STATS_NAME = "health";
+  protected ComponentMapper<HealthComponent> componentMapper;
 
   public HealthSystem(ECManager ecManager) {
     super(ecManager);

@@ -1,19 +1,17 @@
 package ooga.view.components;
 
 import com.jfoenix.controls.JFXComboBox;
-
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import ooga.view.util.ObservableResource;
 
 public class SettingsModule extends StackPane {
+
   private FlowPane area;
   private StringBinding moduleName;
 
@@ -30,8 +28,7 @@ public class SettingsModule extends StackPane {
   }
 
   /**
-   * Add a setting to the settings pane and return a binding
-   * to track its updates.
+   * Add a setting to the settings pane and return a binding to track its updates.
    *
    * @param label - The label lol
    */

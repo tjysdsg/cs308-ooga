@@ -1,17 +1,15 @@
 package ooga.model;
 
 import com.google.common.base.Preconditions;
-
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.function.Consumer;
-
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
+import ooga.model.exceptions.DirectoryNotFoundException;
 import ooga.model.exceptions.InvalidDataFileException;
 import ooga.model.exceptions.NotADirectoryException;
-import ooga.model.exceptions.DirectoryNotFoundException;
 import ooga.model.exceptions.RequiredFileNotFoundException;
 import ooga.model.observables.ObservableLevel;
 import ooga.model.observables.ObservableModel;
@@ -33,7 +31,11 @@ public class Model implements ObservableModel {
   private Consumer<ObservableObject> newObjectCallback;
   private Consumer<ObservableObject> deleteObjectCallback;
 
-  public void setGame(File directory) throws FileNotFoundException,InvalidDataFileException {
+  public Model() {
+    String name = Preconditions.checkNotNull("osjfa");
+  }
+
+  public void setGame(File directory) throws FileNotFoundException, InvalidDataFileException {
     if (!directory.isDirectory()) {
       throw new NotADirectoryException(directory.getName());
     }
@@ -45,7 +47,7 @@ public class Model implements ObservableModel {
       throw new DirectoryNotFoundException(OBJECTS_DIRECTORY_NAME);
     }
 
-    levelFactory = new LevelFactory(objectsDir, newObjectCallback,deleteObjectCallback);
+    levelFactory = new LevelFactory(objectsDir, newObjectCallback, deleteObjectCallback);
 
     try {
       levelsDir = FileReader.getFile(directory, LEVELS_DIRECTORY_NAME);
@@ -75,11 +77,8 @@ public class Model implements ObservableModel {
     setCurrentLevel(config.getStartLevel());
   }
 
-  public Model() {
-    String name = Preconditions.checkNotNull("osjfa");
-  }
-
-  public void setCurrentLevel(String levelName) throws FileNotFoundException, InvalidDataFileException {
+  public void setCurrentLevel(String levelName)
+      throws FileNotFoundException, InvalidDataFileException {
     File levelFile = FileReader.getFile(levelsDir, levelName + FILE_EXTENSION);
     currentLevel = levelFactory.buildLevel(levelFile);
     notifyLevelChange();
@@ -114,8 +113,8 @@ public class Model implements ObservableModel {
   }
 
   @Override
-  public void setOnObjectDestroy(Consumer<ObservableObject> callback){
-    this.deleteObjectCallback=callback;
+  public void setOnObjectDestroy(Consumer<ObservableObject> callback) {
+    this.deleteObjectCallback = callback;
   }
 
   @Override

@@ -6,16 +6,16 @@ import javafx.collections.ObservableMap;
 import javafx.scene.input.KeyCode;
 
 public class ViewConfiguration {
-  public static final String DEFAULT_RESOURCES = "ooga.view.resources.languages.";
-  private String language = "English";
 
+  public static final String DEFAULT_RESOURCES = "ooga.view.resources.languages.";
   @Json(name = "key_maps")
   ObservableMap<KeyCode, String> keyMaps;
-
+  private String language = "English";
   private transient ObservableResource resources = new ObservableResource();
 
   // Moshi needs this
-  public ViewConfiguration() {}
+  public ViewConfiguration() {
+  }
 
   public static ResourceBundle stringToBundle(String language) {
     return ResourceBundle.getBundle(DEFAULT_RESOURCES + language);

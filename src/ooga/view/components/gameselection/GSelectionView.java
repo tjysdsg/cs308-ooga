@@ -20,14 +20,13 @@ import org.kordamp.ikonli.javafx.FontIcon;
 class GSelectionView extends VBox {
 
   private static final Logger logger = LogManager.getLogger(GSelectionView.class);
+  private static double IMAGE_DIM = 200;
   private final LabelPair gameDateLabel;
   private final LabelPair gameAuthorLabel;
   private final LabelPair gameLevelsLabel;
   private final LabelPair gameTagsLabel;
-
   private String directory = "/home/joshu/Pictures/";
   private ImageView thumbnail;
-  private static double IMAGE_DIM = 200;
   private Label gameTitleLabel;
   private ObservableResource resources;
   private Button playGame;

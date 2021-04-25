@@ -6,13 +6,13 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
-import javafx.animation.*;
+import javafx.animation.FadeTransition;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.util.*;
+import javafx.util.Duration;
 import ooga.view.components.PauseMenu;
 import ooga.view.components.SettingsModule;
 import ooga.view.components.SplashScreen;
@@ -25,12 +25,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class View {
-  private static final double FADE_OPACITY = 0.1;
-  private static final int TRANSITION_SPEED = 700; // milliseconds
+
   public static final int HEIGHT = 700;
   public static final int WIDTH = 700;
   public static final String RESOURCES = "resources/";
   public static final String DEFAULT_RESOURCES = "ooga.view.resources.languages.";
+  private static final double FADE_OPACITY = 0.1;
+  private static final int TRANSITION_SPEED = 700; // milliseconds
   private static final Logger logger = LogManager.getLogger(View.class);
 
   private Runnable exitApplication;
@@ -52,12 +53,13 @@ public class View {
     this.resources = new ObservableResource();
     String defaultSettings = null;
     try {
-      defaultSettings = Paths.get(getClass().getResource("resources/settings/defaultView.json").toURI()).toString();
+      defaultSettings = Paths
+          .get(getClass().getResource("resources/settings/defaultView.json").toURI()).toString();
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
 
-    defaultSettings = defaultSettings.replace("file:","");
+    defaultSettings = defaultSettings.replace("file:", "");
     this.viewConfig = ConfigurationFactory.createConfiguration(defaultSettings);
     resources.setResources(ResourceBundle.getBundle(DEFAULT_RESOURCES + "English"));
     splashScreen = new SplashScreen(HEIGHT, WIDTH, resources);
@@ -95,7 +97,8 @@ public class View {
     stage.show();
   }
 
-  private void setupSettings() {}
+  private void setupSettings() {
+  }
 
   private void setupPauseMenu() {
     pauseDialog = new JFXDialog();

@@ -1,8 +1,5 @@
 package ooga.view.components.game;
 
-import java.io.File;
-import java.net.MalformedURLException;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -10,15 +7,18 @@ import ooga.model.observables.ObservableObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/** A view component which can track with a given gameobject. */
+/**
+ * A view component which can track with a given gameobject.
+ */
 public class ObjectView extends StackPane {
+
   private static final Logger logger = LogManager.getLogger(ObjectView.class);
   private ObservableObject gameObject;
   private ImageView playerImage;
 
   public ObjectView(ObservableObject obj, ImageConfiguration images) {
     this.gameObject = obj;
-		getStyleClass().add("object-view");
+    getStyleClass().add("object-view");
     this.playerImage = new ImageView();
 
     Image image = images.getImage(obj.getImageID(), obj.getWidth(), obj.getHeight());

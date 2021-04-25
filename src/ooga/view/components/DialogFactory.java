@@ -1,15 +1,14 @@
 package ooga.view.components;
 
-import javafx.scene.control.*;
-import org.kordamp.ikonli.javafx.FontIcon;
 import com.jfoenix.controls.JFXDialog;
-import ooga.view.util.ObservableResource;
 import com.jfoenix.controls.JFXDialogLayout;
-
-
+import javafx.scene.control.Label;
+import ooga.view.util.ObservableResource;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 
 public class DialogFactory {
+
   public static JFXDialog createErrorDialog(String text, ObservableResource resources) {
     Label bodyLabel = new Label(text);
     Label headingLabel = new Label();

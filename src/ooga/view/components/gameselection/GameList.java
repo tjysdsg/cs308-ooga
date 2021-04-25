@@ -22,10 +22,11 @@ import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class GameList extends FlowPane {
+
+  private static final Logger logger = LogManager.getLogger(GameList.class);
   private final String GAME_DIRS_KEY = "game_dirs";
   private StackPane dialogPane;
   private Set<String> presentDirectories;
-  private static final Logger logger = LogManager.getLogger(GameList.class);
   private Consumer<String> selectionCallback;
   private ObservableResource resources;
   private Preferences prefs;
@@ -102,7 +103,7 @@ public class GameList extends FlowPane {
 
     getChildren().add(0, newGame);
     newGame.setOnAction(this::notifySelection);
-    newGame.setOnDelete((path) ->  {
+    newGame.setOnDelete((path) -> {
       presentDirectories.remove(path);
 
       String game_dirs = prefs.get(GAME_DIRS_KEY, "");

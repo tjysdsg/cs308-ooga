@@ -1,21 +1,17 @@
 package ooga.view.components.game;
 
-import ooga.model.observables.ObservableObject;
-
+import com.jfoenix.controls.JFXButton;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.jfoenix.controls.JFXButton;
-import javafx.beans.property.DoubleProperty;
-import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-
+import ooga.model.observables.ObservableObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
 public class GameArea extends AnchorPane {
+
   private static final Logger logger = LogManager.getLogger(GameArea.class);
   private static final double LEFT_EDGE = 20;
   private static final double BOTTOM_EDGE = 0;
@@ -53,12 +49,12 @@ public class GameArea extends AnchorPane {
     double position = objectValue.doubleValue() * -1;
     logger.info("obj position: {}", position);
     if (position > 250) {
-      objectsPane.translateYProperty().set(position - 200 );
+      objectsPane.translateYProperty().set(position - 200);
     }
   }
 
   public void addObject(ObjectView object) {
-    if(objectsPane.getChildren().size() == 1) {
+    if (objectsPane.getChildren().size() == 1) {
       setCameraCenter(object);
     }
     objects.add(object);
@@ -67,7 +63,7 @@ public class GameArea extends AnchorPane {
 
   public void removeObject(ObservableObject object) {
     ObjectView viewToRemove = null;
-    for(ObjectView o : objects) {
+    for (ObjectView o : objects) {
       if (o.isObject(object)) {
         objectsPane.getChildren().remove(o);
       }

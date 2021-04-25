@@ -4,8 +4,8 @@
     "left": "A",
     "right": "D",
     "jump": "Space",
-    "leftp2" : "J",
-    "rightp2" : "L",
-    "jumpp2" : "I"
-   }
+    "leftp2": "J",
+    "rightp2": "L",
+    "jumpp2": "I"
+  }
 }

@@ -6,13 +6,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.util.function.Consumer;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class GameItem extends VBox {
+
   private Consumer<String> onClick;
   private String directory;
   private String encodedPath;
@@ -36,14 +38,15 @@ public class GameItem extends VBox {
     VBox.setVgrow(game, Priority.ALWAYS);
     Label label = new Label();
     if (!gamePath.isEmpty()) {
-      game.setStyle(new StringBuilder().append("-fx-background-image: url('").append(encodedPath.replaceAll("'", "%27"))
+      game.setStyle(new StringBuilder().append("-fx-background-image: url('")
+          .append(encodedPath.replaceAll("'", "%27"))
           .append("thumbnail.jpg');").toString());
       label.setText(gameLabel);
     }
     game.setOnAction(e -> notifyAction());
 
     ContextMenu menu = new ContextMenu();
-    menu.getStyleClass().addAll( "game-context-menu");
+    menu.getStyleClass().addAll("game-context-menu");
     menu.getItems().add(createMenuItem("Run"));
     menu.getItems().add(createMenuItem("Delete"));
     game.setContextMenu(menu);

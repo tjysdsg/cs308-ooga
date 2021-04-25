@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-
 import ooga.model.components.Component;
 import ooga.model.objects.GameObject;
 import ooga.model.objects.ObjectFactory;

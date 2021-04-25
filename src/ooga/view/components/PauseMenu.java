@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class PauseMenu extends StackPane {
+
   private static final Logger logger = LogManager.getLogger(PauseMenu.class);
 
   private VBox contents;

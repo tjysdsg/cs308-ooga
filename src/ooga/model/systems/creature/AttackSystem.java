@@ -6,8 +6,8 @@ import ooga.model.components.HealthComponent;
 import ooga.model.components.MovementComponent;
 import ooga.model.components.enemy.HateComponent;
 import ooga.model.components.equipment.WeaponComponent;
-import ooga.model.systems.ComponentMapper;
 import ooga.model.managers.ECManager;
+import ooga.model.systems.ComponentMapper;
 import ooga.model.systems.HealthSystem;
 
 @Track({WeaponComponent.class, MovementComponent.class, HateComponent.class, HealthComponent.class})

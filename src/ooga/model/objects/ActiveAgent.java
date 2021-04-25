@@ -4,6 +4,7 @@ import java.util.List;
 import ooga.model.components.Component;
 
 public class ActiveAgent extends GameObject {
+
   private String type;
   private int height, width;
   private List<Component> components;

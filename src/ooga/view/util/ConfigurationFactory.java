@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public abstract class ConfigurationFactory {
+
   private static final Logger logger = LogManager.getLogger(MetaGame.class);
   private static final String thing = "ok";
   private static JsonAdapter<ViewConfiguration> adapter =

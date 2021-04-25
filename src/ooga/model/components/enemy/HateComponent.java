@@ -4,34 +4,38 @@ import ooga.model.components.Component;
 import ooga.model.objects.GameObject;
 
 public class HateComponent extends Component {
-    private double range;
-    private boolean hate;
-    private int party; // different parties will have different hate relationship
-    private int frequency;
-    public HateComponent(int id, GameObject owner) {
-        super(id, owner);
-    }
 
-    @Override
-    public String typeUnerasure() {
-        return HateComponent.class.getName();
-    }
+  private double range;
+  private boolean hate;
+  private int party; // different parties will have different hate relationship
+  private int frequency;
 
-    public void setRange(double range){
-        this.range=range;
-    }
-    public boolean detectHate(double distance){
-        return distance<this.range;
-    }
-    public void setFrequency(int frequency){
-        this.frequency=frequency;
-    }
+  public HateComponent(int id, GameObject owner) {
+    super(id, owner);
+  }
 
-    public int getFrequency() {
-        return frequency;
-    }
+  @Override
+  public String typeUnerasure() {
+    return HateComponent.class.getName();
+  }
 
-    public boolean getHate(){
-        return hate;
-    }
+  public void setRange(double range) {
+    this.range = range;
+  }
+
+  public boolean detectHate(double distance) {
+    return distance < this.range;
+  }
+
+  public int getFrequency() {
+    return frequency;
+  }
+
+  public void setFrequency(int frequency) {
+    this.frequency = frequency;
+  }
+
+  public boolean getHate() {
+    return hate;
+  }
 }

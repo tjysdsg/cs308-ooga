@@ -1,9 +1,8 @@
 package ooga.model.components;
 
-import ooga.model.objects.GameObject;
-
 import java.util.ArrayList;
 import java.util.List;
+import ooga.model.objects.GameObject;
 
 public class MovementSquenceComponent extends MovementComponent {
 
