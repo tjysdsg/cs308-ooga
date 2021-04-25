@@ -167,6 +167,7 @@ public class View {
 
   private void handleLanguageChange(String old, String newVal) {
     logger.info("Language Changed from {} to {}", old, newVal);
+    viewConfiguration.setLanguage(newVal);
   }
 
   private void createAnimations() {

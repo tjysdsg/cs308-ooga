@@ -19,7 +19,7 @@ public class ViewConfiguration {
   }
 
   public void setLanguage(String lang) {
-    ResourceBundle bundle = ResourceBundle.getBundle(DEFAULT_RESOURCES + language);
+    ResourceBundle bundle = ResourceBundle.getBundle(DEFAULT_RESOURCES + lang);
     language.setResources(bundle);
   }
 
