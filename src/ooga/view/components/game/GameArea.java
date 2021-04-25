@@ -22,7 +22,7 @@ public class GameArea extends AnchorPane {
   private List<ObjectView> objects;
   private StackPane objectsPane;
 
-  public GameArea() {
+  public GameArea(StatsView stats) {
     this.objectsPane = new StackPane();
     getStyleClass().add("game-area");
     this.objects = new ArrayList<>();
@@ -32,7 +32,10 @@ public class GameArea extends AnchorPane {
     objectsPane.getChildren().add(placeholder);
 
     objectsPane.setTranslateX(LEFT_EDGE);
-    getChildren().add(objectsPane);
+    getChildren().addAll(objectsPane, stats);
+    AnchorPane.setTopAnchor(stats, 0.0);
+    AnchorPane.setLeftAnchor(stats, 0.0);
+    AnchorPane.setRightAnchor(stats, 0.0);
     AnchorPane.setBottomAnchor(objectsPane, BOTTOM_EDGE);
     AnchorPane.setLeftAnchor(objectsPane, LEFT_EDGE);
   }
