@@ -29,7 +29,9 @@ public class PlayerSystem extends ComponentBasedSystem {
     super(ecManager);
     componentMapper = getComponentMapper(PlayerComponent.class);
 
-    registerKeyMappings();
+    addMapping("right", this::handleRight);
+    addMapping("left", this::handleLeft);
+    addMapping("jump", this::handleJump);
 
     addCollisionMapping("jump_self", event -> doJump(event.getSelf()));
     addCollisionMapping(
@@ -50,38 +52,17 @@ public class PlayerSystem extends ComponentBasedSystem {
     );
   }
 
-  private void registerKeyMappings() {
-    List<PlayerComponent> playerComponents = componentMapper.getComponents();
-    Set<String> actionSet = new HashSet<>();
-    for(PlayerComponent p: playerComponents){
-      actionSet.addAll(p.getKeyActions());
-    }
-    if(actionSet.contains("right")){
-      addMapping("right", this::handleRight);
-    }
-
-    if(actionSet.contains("left")){
-      addMapping("left", this::handleLeft);
-    }
-    if(actionSet.contains("jump")){
-      addMapping("jump", this::handleJump);
-    }
-  }
-
   public List<PlayerComponent> getPlayers() {
     return componentMapper.getComponents();
   }
 
-  private void handleHorizontalMovement(boolean run, int direction) {
-    List<PlayerComponent> players = getPlayers();
-    for (PlayerComponent p : players) {
+  private void handleHorizontalMovement(boolean run, int direction, PlayerComponent p) {
       p.setDirection(direction);
       if (run) {
         p.setHorizontalStatus(HorizontalMovementStatus.RUNNING);
       } else {
         p.setHorizontalStatus(HorizontalMovementStatus.STILL);
       }
-    }
   }
 
   /**
@@ -110,12 +91,21 @@ public class PlayerSystem extends ComponentBasedSystem {
   }
 
   private void handleRight(boolean on) {
-    handleHorizontalMovement(on, PlayerComponent.RIGHT_DIRECTION);
+    List<PlayerComponent> players = getPlayers();
+    for (PlayerComponent p : players) {
+      if(p.getKeyActions().contains("right")){
+        handleHorizontalMovement(on, PlayerComponent.RIGHT_DIRECTION, p);
+      }
+    }
   }
 
   private void handleLeft(boolean on) {
-    logger.info("Left being handled");
-    handleHorizontalMovement(on, PlayerComponent.LEFT_DIRECTION);
+    List<PlayerComponent> players = getPlayers();
+    for (PlayerComponent p : players) {
+      if(p.getKeyActions().contains("left")){
+        handleHorizontalMovement(on, PlayerComponent.LEFT_DIRECTION, p);
+      }
+    }
   }
 
   public void doJump(GameObject go, PlayerComponent p) {
@@ -134,6 +124,19 @@ public class PlayerSystem extends ComponentBasedSystem {
 
   private void handleJump(boolean on) {
     List<PlayerComponent> players = getPlayers();
+    for(PlayerComponent p: players){
+      if(!p.getKeyActions().contains("jump")){
+        continue;
+      }
+      else if(on){
+        doJump(p.getOwner(), p);
+      }
+      else{
+        p.setVerticalStatus(VerticalMovementStatus.FALLING);
+      }
+    }
+
+    /*
     if (on) {
       for (PlayerComponent p : players) {
         doJump(p.getOwner(), p);
@@ -143,6 +146,8 @@ public class PlayerSystem extends ComponentBasedSystem {
         p.setVerticalStatus(VerticalMovementStatus.FALLING);
       }
     }
+    */
+
   }
 
   public void initPlayerType(PlayerComponent.PlayerType playerType) {

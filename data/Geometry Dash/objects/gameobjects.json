@@ -28,7 +28,7 @@
       {
         "actions": [
           {
-            "action": "destroy_object"
+            "action": "player_blocked_left"
           }
         ],
         "positions": [
@@ -38,7 +38,7 @@
       {
         "actions": [
           {
-            "action" : "destroy_object"
+            "action" : "player_blocked_right"
           }
         ],
         "positions": [
@@ -52,7 +52,11 @@
         "jumpHeight": 300,
         "maxSpeed": 250,
         "horizontalStatus" : "RUNNING",
-        "gravAccel": 30
+        "gravAccel": 30,
+        "keyActions": [
+          "jump"
+        ]
+
       },
       {
         "type" : "HealthComponent",

@@ -51,7 +51,13 @@
     ],
     "components": [
       {
-        "type": "PlayerComponent"
+        "type": "PlayerComponent",
+        "jumpHeight": 300,
+        "maxSpeed": 250,
+        "keyActions": [
+          "jump", "left", "right"
+        ]
+
       },
       {
         "type": "HateComponent",
