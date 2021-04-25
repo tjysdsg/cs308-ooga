@@ -2,11 +2,9 @@ package ooga.view;
 
 import com.jfoenix.controls.JFXDialog;
 import fr.brouillard.oss.cssfx.CSSFX;
-
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.ResourceBundle;
 import javafx.animation.*;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
@@ -22,7 +20,6 @@ import ooga.view.components.gameselection.GSelectionScene;
 import ooga.view.util.ConfigurationFactory;
 import ooga.view.util.ObservableResource;
 import ooga.view.util.ViewConfiguration;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -54,8 +51,7 @@ public class View {
     String defaultConfig = "";
     try {
       defaultConfig =
-          Paths.get(getClass().getResource("resources/defaultView.json").toURI())
-              .toString();
+          Paths.get(getClass().getResource("resources/defaultView.json").toURI()).toString();
       this.viewConfiguration = ConfigurationFactory.createViewConfig(defaultConfig);
     } catch (URISyntaxException e) {
       e.printStackTrace();
