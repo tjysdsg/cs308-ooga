@@ -134,7 +134,7 @@ public class MovementComponent extends Component {
 
   @Override
   public String typeUnerasure() {
-    return null;
+    return MovementComponent.class.getName();
   }
 
   public enum HorizontalMovementStatus {
