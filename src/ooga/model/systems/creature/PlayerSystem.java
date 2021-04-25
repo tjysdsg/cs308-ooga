@@ -1,10 +1,15 @@
 package ooga.model.systems.creature;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 import ooga.model.annotations.Track;
 import ooga.model.components.PlayerComponent;
 import ooga.model.components.PlayerComponent.HorizontalMovementStatus;
 import ooga.model.components.PlayerComponent.VerticalMovementStatus;
+import ooga.model.exceptions.UnknownPlayerAction;
 import ooga.model.objects.GameObject;
 import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
@@ -25,9 +30,14 @@ public class PlayerSystem extends ComponentBasedSystem {
   public PlayerSystem(ECManager ecManager) {
     super(ecManager);
     componentMapper = getComponentMapper(PlayerComponent.class);
-    addMapping("right", this::handleRight);
-    addMapping("left", this::handleLeft);
-    addMapping("jump", this::handleJump);
+    for (PlayerComponent component : componentMapper.getComponents()) {
+      for (ActionPair mapping : component.getActionMapping()) {
+        addMapping(mapping.getInput(), toMethod(mapping.getAction()));
+      }
+    }
+//    addMapping("right", this::handleRight);
+//    addMapping("left", this::handleLeft);
+//    addMapping("jump", this::handleJump);
 
     addCollisionMapping("jump_self", event -> doJump(event.getSelf()));
     addCollisionMapping(
@@ -46,6 +56,22 @@ public class PlayerSystem extends ComponentBasedSystem {
         "player_blocked_top",
         event -> obstacleOnTop(event.getSelf(), event.getHitter())
     );
+  }
+
+  private Consumer<Boolean> toMethod(String action) {
+    String methodPrefix = "handle";
+    try {
+      Method actionMethod = getClass().getDeclaredMethod(methodPrefix + action, boolean.class);
+      return (on) -> {
+        try {
+          actionMethod.invoke(this, on);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+          throw new UnknownPlayerAction(action);
+        }
+      };
+    } catch (NoSuchMethodException e) {
+      throw new UnknownPlayerAction(action);
+    }
   }
 
   public List<PlayerComponent> getPlayers() {
@@ -89,11 +115,11 @@ public class PlayerSystem extends ComponentBasedSystem {
     p.setObstacle(PlayerComponent.OBSTACLE_KEY_RIGHT, other);
   }
 
-  private void handleRight(boolean on) {
+  private void handleMoveRight(boolean on) {
     handleHorizontalMovement(on, PlayerComponent.RIGHT_DIRECTION);
   }
 
-  private void handleLeft(boolean on) {
+  private void handleMoveLeft(boolean on) {
     logger.info("Left being handled");
     handleHorizontalMovement(on, PlayerComponent.LEFT_DIRECTION);
   }

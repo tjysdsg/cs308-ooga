@@ -51,7 +51,21 @@
     ],
     "components": [
       {
-        "type": "PlayerComponent"
+        "type": "PlayerComponent",
+        "actionMappings" : [
+          {
+            "action" : "MoveRight",
+            "input" : "right"
+          },
+          {
+            "action" : "MoveLeft",
+            "input" : "left"
+          },
+          {
+            "action" : "Jump",
+            "input" : "jump"
+          }
+        ]
       },
       {
         "type": "HateComponent",

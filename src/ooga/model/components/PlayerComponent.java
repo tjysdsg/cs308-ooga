@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import ooga.model.objects.GameObject;
+import ooga.model.systems.creature.ActionPair;
 
 public class PlayerComponent extends Component {
 
@@ -21,6 +22,9 @@ public class PlayerComponent extends Component {
 
   private double score=0;
 
+  private List<ActionPair> actionMappings = new ArrayList<>();
+
+
   public double getScore(){
     return score;
   }
@@ -35,6 +39,10 @@ public class PlayerComponent extends Component {
         this.score=0;
       }
     }
+  }
+
+  public List<ActionPair> getActionMapping() {
+    return actionMappings;
   }
 
   public enum HorizontalMovementStatus {
