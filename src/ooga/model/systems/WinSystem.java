@@ -18,13 +18,13 @@ public class WinSystem extends ComponentBasedSystem{
   private Consumer<Boolean> setOnLevelEnd;
 
 
-  public WinSystem(ECManager ecManager, Consumer<Boolean> setOnLevelEnd) {
+  public WinSystem(ECManager ecManager) {
     super(ecManager);
     playerMapper=getComponentMapper(PlayerComponent.class);
     healthMapper = getComponentMapper(HealthComponent.class);
     scoreMapper = getComponentMapper(ScoreComponent.class);
     winMapper = getComponentMapper(WinComponent.class);
-    this.setOnLevelEnd = setOnLevelEnd;
+    //this.setOnLevelEnd = setOnLevelEnd;
 
     addCollisionMapping(
         "lose_game",
