@@ -185,7 +185,7 @@ public class GameScene extends Scene {
   }
 
   public void pauseGame() {
-    loop.stop();
+    loop.pause();
   }
 
   public void setOnResize(BiConsumer<Double, Double> resizeCallback) {
@@ -199,6 +199,6 @@ public class GameScene extends Scene {
   }
 
   public void playGame() {
-    loop.start();
+    loop.play();
   }
 }
