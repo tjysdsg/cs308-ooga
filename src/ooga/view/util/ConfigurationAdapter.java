@@ -5,6 +5,7 @@ import com.squareup.moshi.ToJson;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.beans.property.SimpleMapProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import javafx.scene.input.KeyCode;
 
@@ -12,9 +13,9 @@ public class ConfigurationAdapter {
 
   @FromJson
   ObservableMap<KeyCode, String> objectFromJson(Map<String, String> keyMaps) {
-    SimpleMapProperty<KeyCode, String> convertedMap = new SimpleMapProperty<>();
+    Map<KeyCode, String> convertedMap = new HashMap<>();
     keyMaps.forEach((key, val) -> convertedMap.put(KeyCode.getKeyCode(key), val));
-    return convertedMap;
+    return FXCollections.observableMap(convertedMap);
   }
 
   @ToJson

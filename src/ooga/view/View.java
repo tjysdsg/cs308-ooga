@@ -48,7 +48,9 @@ public class View {
     CSSFX.start();
     this.stage = stage;
     this.resources = new ObservableResource();
-    this.viewConfig = ConfigurationFactory.createConfiguration();
+    String defaultSettings = getClass().getResource("resources/settings/defaultView.json").toExternalForm();
+    defaultSettings = defaultSettings.replace("file:","");
+    this.viewConfig = ConfigurationFactory.createConfiguration(defaultSettings);
     resources.setResources(ResourceBundle.getBundle(DEFAULT_RESOURCES + "English"));
     splashScreen = new SplashScreen(HEIGHT, WIDTH, resources);
     gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);

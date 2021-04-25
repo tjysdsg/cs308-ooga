@@ -12,7 +12,7 @@ public abstract class ConfigurationFactory {
   private static final Logger logger = LogManager.getLogger(MetaGame.class);
   private static final String thing = "ok";
   private static JsonAdapter<ViewConfiguration> adapter =
-      new Moshi.Builder().build().adapter(ViewConfiguration.class);
+      new Moshi.Builder().add(new ConfigurationAdapter()).build().adapter(ViewConfiguration.class);
 
   public static ViewConfiguration createConfiguration(String filePath) {
     if (filePath == null || filePath.isBlank()) {
