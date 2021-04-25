@@ -3,6 +3,8 @@ package ooga.view;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Map;
+
 import javafx.scene.input.KeyCode;
 
 public interface ModelController {
@@ -11,6 +13,8 @@ public interface ModelController {
   void handleKeyPress(KeyCode code);
 
   void handleKeyRelease(KeyCode code);
+
+  void setKeyMap(Map<KeyCode, String> map);
 
   /**
    * Returns a list of the strings which can trigger certain actions within the model.

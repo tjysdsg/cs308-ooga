@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.function.Consumer;
+
+import javafx.collections.ObservableMap;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -39,11 +41,12 @@ public class GameScene extends Scene {
   private GameLoop loop;
   private ImageConfiguration images;
 
-  public GameScene(String directory, ObservableResource resources) {
+  public GameScene(String directory, ObservableResource resources, ObservableMap<KeyCode, String> keymaps) {
     super(new StackPane(), WIDTH, HEIGHT, Color.BLACK);
     this.root = (StackPane) getRoot();
     this.model = new Model();
     this.controller = new Controller(model);
+    controller.setKeyMap(keymaps);
     this.directory = directory;
     this.gameArea = new GameArea();
     this.loop = new GameLoop();
@@ -102,6 +105,7 @@ public class GameScene extends Scene {
        return;
      }
     controller.handleKeyPress(code);
+    System.out.println("THI SIS: " + KeyCode.getKeyCode(" "));
   }
 
   private void handleRelease(KeyCode code) {

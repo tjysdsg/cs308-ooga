@@ -126,7 +126,7 @@ public class View {
     logger.info("Game Selected {}", directory);
     // TODO: Have a check if a game is currently playing and ask
     // if want to quit
-    currentGame = new GameScene(directory, resources);
+    currentGame = new GameScene(directory, resources, viewConfig.getKeyMap());
     if (!cssFile.isBlank()) {
       currentGame.getStylesheets().add(cssFile);
     }

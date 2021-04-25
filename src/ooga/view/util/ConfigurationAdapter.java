@@ -14,7 +14,7 @@ public class ConfigurationAdapter {
   @FromJson
   ObservableMap<KeyCode, String> objectFromJson(Map<String, String> keyMaps) {
     Map<KeyCode, String> convertedMap = new HashMap<>();
-    keyMaps.forEach((key, val) -> convertedMap.put(KeyCode.getKeyCode(key), val));
+    keyMaps.forEach((key, val) -> convertedMap.put(KeyCode.getKeyCode(val), key));
     return FXCollections.observableMap(convertedMap);
   }
 

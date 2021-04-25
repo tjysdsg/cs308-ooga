@@ -21,6 +21,10 @@ public class ViewConfiguration {
     return ResourceBundle.getBundle(DEFAULT_RESOURCES + language);
   }
 
+  public ObservableMap<KeyCode, String> getKeyMap() {
+    return this.keyMaps;
+  }
+
   public ObservableResource getResources() {
     return this.resources;
   }
