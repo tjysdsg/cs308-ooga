@@ -3,14 +3,15 @@ package ooga.model.systems.creature;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import ooga.model.actions.Handlers.HandlerFactory;
-import ooga.model.actions.Handlers.MovementActionHandler;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import ooga.model.annotations.Track;
 import ooga.model.components.MovementComponent;
 import ooga.model.components.PlayerComponent;
 import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
 import ooga.model.managers.ECManager;
+import ooga.model.systems.MovementSystem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +23,11 @@ public class PlayerSystem extends ComponentBasedSystem {
 
   protected ComponentMapper<PlayerComponent> playerMapper;
   protected ComponentMapper<MovementComponent> movementMapper;
-  private Map<String, Map<String, MovementActionHandler>> handlers = new HashMap<>();
+  private final Map<String, BiConsumer<Integer, Boolean>> movementActionExecutors = Map.of(
+      "MoveLeft", this::moveLeft,
+      "MoveRight", this::moveRight,
+      "Jump", this::jump
+  );
 
   // TODO: support active and inactive players
 
@@ -40,27 +45,31 @@ public class PlayerSystem extends ComponentBasedSystem {
     for (ActionPair mapping : player.getActionMapping()) {
       int goId = player.getOwner().getId();
       MovementComponent movementComp = movementMapper.get(goId);
-      logger.error(
-          "PlayerComponent requires a MovementComponent on the its game object, but object {} doesn't",
-          goId
-      );
+      if (movementComp == null) {
+        logger.error(
+            "PlayerComponent requires a MovementComponent on the its game object, but object {} doesn't",
+            goId
+        );
+      }
 
-      String input = mapping.getInput();
-      String action = mapping.getAction();
-
-      handlers.putIfAbsent(input, new HashMap<>());
-
-      Map<String, MovementActionHandler> inputHandlers = handlers.get(input);
-      inputHandlers.putIfAbsent(action, HandlerFactory.buildHandler(action));
-
-      MovementActionHandler handler = inputHandlers.get(action);
-
-      handler.addListener(movementComp);
-
-      addMapping(input, (on) -> {
-        inputHandlers.values().forEach((currHandler) -> currHandler.handleAction(on));
-      });
+      BiConsumer<Integer, Boolean> executor = movementActionExecutors.get(mapping.getAction());
+      addMapping(mapping.getInput(), on -> executor.accept(goId, on));
     }
+  }
+
+  public void moveLeft(int entityId, boolean on) {
+    MovementSystem movementSystem = getSystem(MovementSystem.class);
+    movementSystem.moveLeft(entityId, on);
+  }
+
+  public void moveRight(int entityId, boolean on) {
+    MovementSystem movementSystem = getSystem(MovementSystem.class);
+    movementSystem.moveRight(entityId, on);
+  }
+
+  public void jump(int entityId, boolean on) {
+    MovementSystem movementSystem = getSystem(MovementSystem.class);
+    movementSystem.jump(entityId, on);
   }
 
   public List<PlayerComponent> getPlayers() {

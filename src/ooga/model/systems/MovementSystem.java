@@ -1,9 +1,6 @@
 package ooga.model.systems;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import ooga.model.actions.Handlers.MovementActionHandler;
 import ooga.model.annotations.Track;
 import ooga.model.components.MovementComponent;
 import ooga.model.components.MovementComponent.HorizontalMovementStatus;
@@ -61,6 +58,40 @@ public class MovementSystem extends ComponentBasedSystem {
   private void obstacleOnRight(GameObject go, GameObject other) {
     MovementComponent p = movementMapper.get(go.getId());
     p.setObstacle(MovementComponent.OBSTACLE_KEY_RIGHT, other);
+  }
+
+  public void moveLeft(int entityId, boolean on) {
+    handleHorizontalMovement(entityId, on, MovementComponent.LEFT_DIRECTION);
+  }
+
+  public void moveRight(int entityId, boolean on) {
+    handleHorizontalMovement(entityId, on, MovementComponent.RIGHT_DIRECTION);
+  }
+
+  protected void handleHorizontalMovement(int entityId, boolean run, int direction) {
+    MovementComponent p = movementMapper.get(entityId);
+    p.setDirection(direction);
+    if (run) {
+      p.setHorizontalStatus(HorizontalMovementStatus.RUNNING);
+    } else {
+      p.setHorizontalStatus(HorizontalMovementStatus.STILL);
+    }
+  }
+
+  public void jump(int entityId, boolean on) {
+    MovementComponent p = movementMapper.get(entityId);
+    if (on) {
+      GameObject go = p.getOwner();
+      if (p.getVerticalStatus() == VerticalMovementStatus.GROUNDED) {
+        go.setVelocityY(p.getJumpHeight() / p.getJumpTime());
+        go.setY(go.getY() + 3.0);
+        p.setVerticalStatus(VerticalMovementStatus.RISING);
+        p.resetJumpTimer();
+        p.setObstacle(MovementComponent.OBSTACLE_KEY_BOTTOM, null);
+      }
+    } else {
+      p.setVerticalStatus(VerticalMovementStatus.FALLING);
+    }
   }
 
   @Override

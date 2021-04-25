@@ -31,6 +31,10 @@ public abstract class BaseSystem {
 
   private SystemManager systemManager;
 
+  /**
+   * At this stage system communication is not functional yet, so don't call {@link
+   * BaseSystem#getSystem(Class)} in the constructor
+   */
   public BaseSystem() {
     keymaps = new HashMap<>();
     actionMaps = new HashMap<>();
