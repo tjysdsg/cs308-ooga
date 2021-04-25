@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXComboBox;
 
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -41,12 +42,12 @@ public class SettingsModule extends StackPane {
     return null;
   }
 
-  public ObjectProperty<String> addListSetting(StringBinding text, ObservableList<String> list) {
+  public ReadOnlyObjectProperty<String> addListSetting(StringBinding text, ObservableList<String> list) {
     JFXComboBox<String> comboBox = new JFXComboBox<>(list);
     Label label = new Label();
     label.textProperty().bind(text);
     createPair(label, comboBox);
-    return comboBox.valueProperty();
+    return comboBox.getSelectionModel().selectedItemProperty();
   }
 
   private void createPair(Label label, Node value) {

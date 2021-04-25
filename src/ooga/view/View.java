@@ -5,7 +5,9 @@ import fr.brouillard.oss.cssfx.CSSFX;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.*;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -58,8 +60,8 @@ public class View {
       logger.warn("Css file could not be loaded");
     }
     createAnimations();
-    setScene(splashScreen);
-    // startGame("data/example/");
+    //setScene(splashScreen);
+    startGame("data/Goomba's Revenge/");
     gameSelection.setOnGameSelected(this::startGame);
     exitApplication =
         () -> {
@@ -133,8 +135,6 @@ public class View {
     currentGame.setOnEscape(
         (e) -> {
           setScene(gameSelection);
-          stage.setHeight(HEIGHT);
-          stage.setWidth(WIDTH);
         });
 
     SettingsModule settingsModule = new SettingsModule(resources.getStringBinding("System"));
@@ -145,16 +145,15 @@ public class View {
     currentGame.setOnEscape(
         (e) -> {
           currentGame.pauseGame();
-          pauseDialog.show(e);
-          // e.getChildren().add(settingsModule);
+          //pauseDialog.show(e);
+           e.getChildren().add(settingsModule);
         });
 
     setScene(currentGame);
 
-    ObjectProperty<String> prop =
+    ReadOnlyObjectProperty<String> prop =
         settingsModule.addListSetting(resources.getStringBinding("LanguageSetting"), list);
-    System.out.println(prop.get());
-    prop.addListener((s, old, newVal) -> handleLanguageChange(old, newVal));
+    prop.addListener((na, old, newVal) -> handleLanguageChange(old, newVal));
   }
 
   private void handleLanguageChange(String old, String newVal) {

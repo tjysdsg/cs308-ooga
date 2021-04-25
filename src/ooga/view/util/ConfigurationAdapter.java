@@ -5,7 +5,7 @@ import com.squareup.moshi.ToJson;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javafx.beans.property.SimpleMapProperty;
+import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -35,5 +35,18 @@ public class ConfigurationAdapter {
   @ToJson
   List<String> objectFromJson(ObservableList<String> stats) {
     return stats;
+  }
+
+  @FromJson
+  ObservableResource objectFromJson(String language) {
+    ObservableResource resources = new ObservableResource();
+    ResourceBundle res = ResourceBundle.getBundle(ViewConfiguration.DEFAULT_RESOURCES + language);
+    resources.setResources(res);
+    return resources;
+  }
+
+  @ToJson
+  String objectFromJson(ObservableResource resources) {
+    return resources.getLanguage();
   }
 }
