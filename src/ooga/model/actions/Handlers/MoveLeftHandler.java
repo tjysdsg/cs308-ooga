@@ -1,11 +1,11 @@
 package ooga.model.actions.Handlers;
 
-import ooga.model.components.PlayerComponent;
+import ooga.model.components.MovementComponent;
 
 public class MoveLeftHandler extends MovementHandler {
 
   @Override
   public void handleAction(boolean on) {
-    handleHorizontalMovement(on, PlayerComponent.LEFT_DIRECTION);
+    handleHorizontalMovement(on, MovementComponent.LEFT_DIRECTION);
   }
 }

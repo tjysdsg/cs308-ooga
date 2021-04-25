@@ -11,7 +11,7 @@
       {
         "actions": [
           {
-            "action": "player_blocked_bottom"
+            "action": "blocked_bottom"
           }
         ],
         "positions": [
@@ -21,7 +21,7 @@
       {
         "actions": [
           {
-            "action": "player_blocked_top"
+            "action": "blocked_top"
           }
         ],
         "positions": [
@@ -31,7 +31,7 @@
       {
         "actions": [
           {
-            "action": "player_blocked_left"
+            "action": "blocked_left"
           }
         ],
         "positions": [
@@ -41,7 +41,7 @@
       {
         "actions": [
           {
-            "action": "player_blocked_right"
+            "action": "blocked_right"
           }
         ],
         "positions": [
@@ -51,7 +51,7 @@
     ],
     "components": [
       {
-        "type": "PlayerComponent",
+        "type": "MovementComponent",
         "actionMappings" : [
           {
             "action" : "MoveRight",
@@ -86,7 +86,7 @@
       {
         "actions": [
           {
-            "action": "player_blocked_bottom"
+            "action": "blocked_bottom"
           }
         ],
         "positions": [
@@ -96,7 +96,7 @@
       {
         "actions": [
           {
-            "action": "player_blocked_top"
+            "action": "blocked_top"
           }
         ],
         "positions": [
@@ -106,7 +106,7 @@
       {
         "actions": [
           {
-            "action": "player_blocked_left"
+            "action": "blocked_left"
           }
         ],
         "positions": [
@@ -116,7 +116,7 @@
       {
         "actions": [
           {
-            "action": "player_blocked_right"
+            "action": "blocked_right"
           }
         ],
         "positions": [
@@ -126,7 +126,7 @@
     ],
     "components": [
       {
-        "type": "PlayerComponent",
+        "type": "MovementComponent",
         "actionMappings" : [
           {
             "action" : "MoveLeft",

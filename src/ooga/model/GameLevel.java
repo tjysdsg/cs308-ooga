@@ -15,6 +15,7 @@ import ooga.model.systems.BaseSystem;
 import ooga.model.systems.CollisionSystem;
 import ooga.model.systems.HealthSystem;
 import ooga.model.systems.LifeCircleSystem;
+import ooga.model.systems.MovementSystem;
 import ooga.model.systems.TransformSystem;
 import ooga.model.systems.creature.NPCSystem;
 import ooga.model.systems.creature.PlayerSystem;
@@ -49,6 +50,7 @@ class GameLevel implements Level, ObservableLevel {
     systemManager.createSystem(LifeCircleSystem.class, ecManager);
     systemManager.createSystem(CollisionSystem.class, ecManager, actionManager);
     systemManager.createSystem(PlayerSystem.class, ecManager);
+    systemManager.createSystem(MovementSystem.class, ecManager);
     systemManager.createSystem(TransformSystem.class, ecManager);
     systemManager.createSystem(SampleEnemySystem.class, ecManager);
     systemManager.createSystem(NPCSystem.class, ecManager);

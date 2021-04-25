@@ -7,10 +7,10 @@ public class HandlerFactory {
 
   public static final String HANDLER_SUFFIX = "Handler";
 
-  public static PlayerActionHandler buildHandler(String action) {
+  public static MovementActionHandler buildHandler(String action) {
     try {
       Class clazz = Class.forName(HandlerFactory.class.getPackageName() + "." + action + HANDLER_SUFFIX);
-      return (PlayerActionHandler) clazz.getConstructor().newInstance();
+      return (MovementActionHandler) clazz.getConstructor().newInstance();
     } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
       throw new UnknownPlayerAction(action);
     }

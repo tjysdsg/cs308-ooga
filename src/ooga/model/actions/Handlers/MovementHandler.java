@@ -1,13 +1,14 @@
 package ooga.model.actions.Handlers;
 
 import java.util.List;
-import ooga.model.components.PlayerComponent;
-import ooga.model.components.PlayerComponent.HorizontalMovementStatus;
+import ooga.model.components.MovementComponent;
+import ooga.model.components.MovementComponent.HorizontalMovementStatus;
 
-public abstract class MovementHandler extends PlayerActionHandler {
+public abstract class MovementHandler extends MovementActionHandler {
+
   protected void handleHorizontalMovement(boolean run, int direction) {
-    List<PlayerComponent> players = getListeners();
-    for (PlayerComponent p : players) {
+    List<MovementComponent> players = getListeners();
+    for (MovementComponent p : players) {
       p.setDirection(direction);
       if (run) {
         p.setHorizontalStatus(HorizontalMovementStatus.RUNNING);
