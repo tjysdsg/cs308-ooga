@@ -19,6 +19,9 @@
         "actions": [
           {
             "action": "player_blocked_top"
+          },
+          {
+            "action": "change_score"
           }
         ],
         "positions": [
@@ -27,6 +30,9 @@
       },
       {
         "actions": [
+          {
+            "action": "lose_game"
+          },
           {
             "action": "player_blocked_left"
           }
@@ -70,9 +76,23 @@
 
       },
       {
-        "type" : "HealthComponent",
-        "health": 1
+        "type" : "ScoreComponent",
+        "score": 0
+      },
+      {
+        "type" : "WinComponent",
+        "winConds": [
+          {
+            "condition": "score",
+            "threshold": 20,
+            "operator" : "gt",
+            "win" : true
+          }
+
+        ]
+
       }
+
     ]
   },
 

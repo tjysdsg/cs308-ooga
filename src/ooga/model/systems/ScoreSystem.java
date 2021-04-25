@@ -42,7 +42,7 @@ public class ScoreSystem extends ComponentBasedSystem {
   public void changeScore(CollisionAction event) {
     ScoreComponent comp = scoreMapper.get(event.getSelf().getId());
 
-    double delta = 0;
+    double delta = 1;
     try {
       delta = Double.parseDouble(event.getPayload());
     } catch (NullPointerException | NumberFormatException e) {

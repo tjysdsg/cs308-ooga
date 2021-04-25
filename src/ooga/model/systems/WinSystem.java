@@ -56,12 +56,12 @@ public class WinSystem extends ComponentBasedSystem{
 
   private void checkWin(WinComponent w) {
     List<WinCondition> winConditions = w.getWinConds();
-
     for(WinCondition wCond: winConditions){
 
       if(wCond.getCondition().equals("score")){
         double score = scoreMapper.get(w.getOwner().getId()).getScore();
         boolean comp = wCond.checkCondition(score);
+        System.out.println("SCORE"  + score);
         executeWinOrLose(comp, wCond);
         return;
       }
