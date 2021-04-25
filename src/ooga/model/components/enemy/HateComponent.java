@@ -9,6 +9,7 @@ public class HateComponent extends Component {
   private boolean hate;
   private int party; // different parties will have different hate relationship
   private int frequency;
+  private double damage=10;
 
   public HateComponent(int id, GameObject owner) {
     super(id, owner);
@@ -37,5 +38,9 @@ public class HateComponent extends Component {
 
   public boolean getHate() {
     return hate;
+  }
+
+  public double getDamage() {
+    return damage;
   }
 }

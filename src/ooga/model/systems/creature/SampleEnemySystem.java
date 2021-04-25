@@ -11,7 +11,6 @@ import ooga.model.systems.ComponentMapper;
 @Track({HateComponent.class, HealthComponent.class, PlayerComponent.class})
 public class SampleEnemySystem extends EnemySystems {
 
-  private final int sampleDecrease = 10;
   private ComponentMapper<HealthComponent> healthMapper;
 
 
@@ -27,7 +26,7 @@ public class SampleEnemySystem extends EnemySystems {
       AttackDealer tmpDealer = hateMap.get(p);
       if (tmpDealer.attackOrNot()) {
         HealthComponent health = healthMapper.get(p.getValue().getId());
-        health.healthIncrement(sampleDecrease, false);
+        health.healthIncrement(p.getKey().getDamage(), false);
       }
     }
   }
