@@ -1,5 +1,4 @@
 {
-  "language": "English",
   "key_maps": {
     "left": "A",
     "right": "D",
@@ -7,5 +6,9 @@
     "leftp2" : "J",
     "rightp2" : "L",
     "jumpp2" : "I"
-   }
+   },
+   "stats": [
+     "Health",
+     "Points"
+   ]
 }

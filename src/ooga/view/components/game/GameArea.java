@@ -54,10 +54,6 @@ public class GameArea extends AnchorPane {
 
   private void offsetY(Number objectValue) {
     double position = objectValue.doubleValue() * -1;
-    logger.info("obj position: {}", position);
-    if (position > 250) {
-      objectsPane.translateYProperty().set(position - 200 );
-    }
   }
 
   public void addObject(ObjectView object) {

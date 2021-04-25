@@ -1,12 +1,12 @@
 package ooga.view.components.game;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-
-import javafx.collections.ObservableMap;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -24,6 +24,9 @@ import ooga.model.observables.ObservableLevel;
 import ooga.model.observables.ObservableModel;
 import ooga.view.Controller;
 import ooga.view.ModelController;
+import ooga.view.components.SettingsModule;
+import ooga.view.util.ConfigurationFactory;
+import ooga.view.util.GameConfiguration;
 import ooga.view.util.ObservableResource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -45,13 +48,27 @@ public class GameScene extends Scene {
   private BiConsumer<Double, Double> resizeCallback;
   private ObservableLevel currentLevel;
   private StatsView statsView;
+  private GameConfiguration gameConfiguration;
+  private ObservableResource resources;
+  private SettingsModule settings;
 
-  public GameScene(String directory, ObservableResource resources, ObservableMap<KeyCode, String> keymaps) {
+  public GameScene(String directory, ObservableResource resources) {
     super(new StackPane(), WIDTH, HEIGHT, Color.BLACK);
+    logger.debug("Game scene constructing for {}", directory);
+    this.resources = resources;
     this.root = (StackPane) getRoot();
     this.model = new Model();
     this.controller = new Controller(model);
-    controller.setKeyMap(keymaps);
+    String defaultConfig = "";
+    try {
+      defaultConfig =
+          Paths.get(getClass().getResource("resources/settings/defaultView.json").toURI())
+              .toString();
+      this.gameConfiguration = ConfigurationFactory.createConfiguration(defaultConfig);
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    controller.setKeyMap(gameConfiguration.getKeyMap());
     this.directory = directory;
     this.statsView = new StatsView(resources);
     this.gameArea = new GameArea(statsView);
@@ -63,15 +80,17 @@ public class GameScene extends Scene {
     statsView.updateStat("Points", "50");
     // End temporary
     File gameDirectory = new File(directory);
-    model.setOnNewObject(e -> {
-      ObjectView obj = new ObjectView(e, images);
-      gameArea.addObject(obj);
-    });
+    model.setOnNewObject(
+        e -> {
+          ObjectView obj = new ObjectView(e, images);
+          gameArea.addObject(obj);
+        });
 
     model.setOnLevelChange(this::updateScene);
-    model.setOnObjectDestroy(e -> {
-      gameArea.removeObject(e);
-    });
+    model.setOnObjectDestroy(
+        e -> {
+          gameArea.removeObject(e);
+        });
 
     if (!ModelFactory.verifyGameDirectory(gameDirectory)) {
       handleInvalidGame();
@@ -90,6 +109,7 @@ public class GameScene extends Scene {
     gameArea.requestFocus();
     setOnKeyPressed(e -> handlePress(e.getCode()));
     setOnKeyReleased(e -> handleRelease(e.getCode()));
+    setupSettings();
     loop.setOnUpdate(controller::step);
     loop.start();
   }
@@ -97,7 +117,7 @@ public class GameScene extends Scene {
   private void updateScene(ObservableLevel observableLevel) {
     currentLevel = observableLevel;
     setBackground(observableLevel.getBackgroundID());
-    //notifyResize();
+    // notifyResize();
   }
 
   private void setBackground(String newBackground) {
@@ -106,12 +126,13 @@ public class GameScene extends Scene {
 
     try {
       logger.info("Openning {} for background", bgImage.getUrl());
-      bg = new BackgroundImage(
-          bgImage,
-          BackgroundRepeat.REPEAT,
-          BackgroundRepeat.REPEAT,
-          BackgroundPosition.DEFAULT,
-          BackgroundSize.DEFAULT);
+      bg =
+          new BackgroundImage(
+              bgImage,
+              BackgroundRepeat.REPEAT,
+              BackgroundRepeat.REPEAT,
+              BackgroundPosition.DEFAULT,
+              BackgroundSize.DEFAULT);
 
     } catch (Exception e) {
       throw new InvalidDataFileException(bgImage.getUrl());
@@ -120,14 +141,24 @@ public class GameScene extends Scene {
     gameArea.setBackground(new Background(bg));
   }
 
+
+  private void setupSettings() {
+    this.settings = new SettingsModule(resources.getStringBinding("GameSettings"));
+    settings.addKeysOption(gameConfiguration.getKeyMap(), List.of("left", "right"));
+  }
+
+  public SettingsModule getSettings() {
+    return this.settings;
+  }
+
   private void handleInvalidGame() {}
 
   private void handlePress(KeyCode code) {
-     if (code == KeyCode.ESCAPE) {
-       logger.info("Escaping game");
-       notifyEscape();
-       return;
-     }
+    if (code == KeyCode.ESCAPE) {
+      logger.info("Escaping game");
+      notifyEscape();
+      return;
+    }
     controller.handleKeyPress(code);
     System.out.println("THI SIS: " + KeyCode.getKeyCode(" "));
   }
@@ -154,19 +185,20 @@ public class GameScene extends Scene {
   }
 
   public void pauseGame() {
-    loop.stop();
+    loop.pause();
   }
 
   public void setOnResize(BiConsumer<Double, Double> resizeCallback) {
     this.resizeCallback = resizeCallback;
-    //notifyResize();
+    // notifyResize();
   }
 
   public void notifyResize() {
     if (resizeCallback != null)
       resizeCallback.accept((double) currentLevel.getHeight(), (double) currentLevel.getWidth());
   }
+
   public void playGame() {
-    loop.start();
+    loop.play();
   }
 }
