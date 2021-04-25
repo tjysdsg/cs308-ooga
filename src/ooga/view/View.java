@@ -44,21 +44,11 @@ public class View {
   private String cssFile;
   private JFXDialog pauseDialog;
   private SplashScreen splashScreen;
-  private GameConfiguration viewConfig;
 
   public View(Stage stage) {
     CSSFX.start();
     this.stage = stage;
     this.resources = new ObservableResource();
-    String defaultSettings = null;
-    try {
-      defaultSettings =
-          Paths.get(getClass().getResource("resources/settings/defaultView.json").toURI())
-              .toString();
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
-    this.viewConfig = ConfigurationFactory.createConfiguration(defaultSettings);
     resources.setResources(ResourceBundle.getBundle(DEFAULT_RESOURCES + "English"));
     splashScreen = new SplashScreen(HEIGHT, WIDTH, resources);
     gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);
@@ -73,7 +63,7 @@ public class View {
     }
     createAnimations();
     setScene(splashScreen);
-    // startGame("data/example/");
+     //startGame("data/example/");
     gameSelection.setOnGameSelected(this::startGame);
     exitApplication =
         () -> {
@@ -134,7 +124,7 @@ public class View {
     logger.info("Game Selected {}", directory);
     // TODO: Have a check if a game is currently playing and ask
     // if want to quit
-    currentGame = new GameScene(directory, resources, viewConfig.getKeyMap());
+    currentGame = new GameScene(directory, resources);
     currentGame.setOnResize(
         (height, width) -> {
           stage.setHeight(height);

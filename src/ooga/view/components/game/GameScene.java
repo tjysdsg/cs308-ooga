@@ -3,6 +3,8 @@ package ooga.view.components.game;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -17,6 +19,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import ooga.view.util.GameConfiguration;
 import ooga.model.Model;
 import ooga.model.ModelFactory;
 import ooga.model.exceptions.InvalidDataFileException;
@@ -24,6 +27,7 @@ import ooga.model.observables.ObservableLevel;
 import ooga.model.observables.ObservableModel;
 import ooga.view.Controller;
 import ooga.view.ModelController;
+import ooga.view.util.ConfigurationFactory;
 import ooga.view.util.ObservableResource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -45,13 +49,24 @@ public class GameScene extends Scene {
   private BiConsumer<Double, Double> resizeCallback;
   private ObservableLevel currentLevel;
   private StatsView statsView;
+  private GameConfiguration gameConfiguration;
 
-  public GameScene(String directory, ObservableResource resources, ObservableMap<KeyCode, String> keymaps) {
+  public GameScene(String directory, ObservableResource resources) {
     super(new StackPane(), WIDTH, HEIGHT, Color.BLACK);
+    logger.debug("Game scene constructing for {}", directory);
     this.root = (StackPane) getRoot();
     this.model = new Model();
     this.controller = new Controller(model);
-    controller.setKeyMap(keymaps);
+    String defaultConfig = "";
+    try {
+      defaultConfig =
+          Paths.get(getClass().getResource("resources/settings/defaultView.json").toURI())
+              .toString();
+    this.gameConfiguration = ConfigurationFactory.createConfiguration(defaultConfig);
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    controller.setKeyMap(gameConfiguration.getKeyMap());
     this.directory = directory;
     this.statsView = new StatsView(resources);
     this.gameArea = new GameArea(statsView);

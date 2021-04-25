@@ -12,10 +12,15 @@ public class GameConfiguration {
   ObservableMap<KeyCode, String> keyMaps;
 
   ObservableList<String> stats;
+
   // Moshi needs this
   public GameConfiguration() {}
 
   public ObservableMap<KeyCode, String> getKeyMap() {
     return this.keyMaps;
+  }
+
+  public ObservableList<String> getStats() {
+    return this.stats;
   }
 }
