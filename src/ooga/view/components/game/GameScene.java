@@ -93,7 +93,7 @@ public class GameScene extends Scene {
   private void updateScene(ObservableLevel observableLevel) {
     currentLevel = observableLevel;
     setBackground(observableLevel.getBackgroundID());
-    notifyResize();
+    //notifyResize();
   }
 
   private void setBackground(String newBackground) {
@@ -156,7 +156,7 @@ public class GameScene extends Scene {
 
   public void setOnResize(BiConsumer<Double, Double> resizeCallback) {
     this.resizeCallback = resizeCallback;
-    notifyResize();
+    //notifyResize();
   }
 
   public void notifyResize() {
