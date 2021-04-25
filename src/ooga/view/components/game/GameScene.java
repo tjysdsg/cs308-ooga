@@ -42,6 +42,7 @@ public class GameScene extends Scene {
   private ImageConfiguration images;
   private BiConsumer<Double, Double> resizeCallback;
   private ObservableLevel currentLevel;
+  private StatsView statsView;
 
   public GameScene(
       String directory, ObservableResource resources, ObservableMap<KeyCode, String> keymaps) {
@@ -51,10 +52,15 @@ public class GameScene extends Scene {
     this.controller = new Controller(model);
     controller.setKeyMap(keymaps);
     this.directory = directory;
+    this.statsView = new StatsView(resources);
+    this.gameArea = new GameArea(statsView);
     this.loop = new GameLoop();
     this.images = new ImageConfiguration(directory);
-    this.gameArea = new GameArea();
-
+    // Temporary
+    statsView.addStatistics("Health", "Points");
+    statsView.updateStat("Health", "30");
+    statsView.updateStat("Points", "50");
+    // End temporary
     File gameDirectory = new File(directory);
     model.setOnNewObject(
         e -> {
