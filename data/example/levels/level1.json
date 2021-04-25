@@ -16,34 +16,34 @@
       "y": 150
     },
     {
-      "name": "qblock",
-      "x": 250,
-      "y": 300
+      "name" : "qblock",
+      "x" : 250,
+      "y" : 350
     },
     {
-      "name": "qblock",
-      "x": 500,
-      "y": 300
+      "name" : "qblock",
+      "x" : 500,
+      "y" : 350
     },
     {
-      "name": "qblock",
-      "x": 600,
-      "y": 300
+      "name" : "qblock",
+      "x" : 600,
+      "y" : 350
     },
     {
-      "name": "brick",
-      "x": 550,
-      "y": 300
+      "name" : "brick",
+      "x" : 550,
+      "y" : 350
     },
     {
-      "name": "brick",
-      "x": 450,
-      "y": 300
+      "name" : "brick",
+      "x" : 450,
+      "y" : 350
     },
     {
-      "name": "brick",
-      "x": 650,
-      "y": 300
+      "name" : "brick",
+      "x" : 650,
+      "y" : 350
     },
     {
       "name": "block",

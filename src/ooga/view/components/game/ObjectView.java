@@ -18,6 +18,7 @@ public class ObjectView extends StackPane {
 
   public ObjectView(ObservableObject obj, ImageConfiguration images) {
     this.gameObject = obj;
+		getStyleClass().add("object-view");
     this.playerImage = new ImageView();
 
     Image image = images.getImage(obj.getImageID(), obj.getWidth(), obj.getHeight());

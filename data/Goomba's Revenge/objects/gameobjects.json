@@ -129,16 +129,16 @@
         "type": "PlayerComponent",
         "actionMappings" : [
           {
-            "action" : "MoveRight",
-            "input" : "left"
+            "action" : "MoveLeft",
+            "input" : "leftp2"
           },
           {
-            "action" : "MoveLeft",
-            "input" : "right"
+            "action" : "MoveRight",
+            "input" : "rightp2"
           },
           {
             "action" : "Jump",
-            "input" : "jump"
+            "input" : "jumpp2"
           }
         ]
       },
