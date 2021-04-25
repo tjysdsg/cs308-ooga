@@ -2,7 +2,6 @@ package ooga.model.components;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import ooga.model.objects.GameObject;
 import ooga.model.systems.WinCondition;
 

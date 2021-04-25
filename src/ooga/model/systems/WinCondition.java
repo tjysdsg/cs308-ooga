@@ -26,4 +26,16 @@ public class WinCondition {
     return false;
   }
 
+  public String getCondition() {
+    return condition;
+  }
+
+  public double getThreshold() {
+    return threshold;
+  }
+
+  public boolean isWin() {
+    return win;
+  }
+
 }

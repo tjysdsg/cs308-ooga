@@ -16,7 +16,7 @@ public class WinSystem extends ComponentBasedSystem{
   private ComponentMapper<ScoreComponent> scoreMapper;
   private ComponentMapper<WinComponent> winMapper;
   private Consumer<Boolean> setOnLevelEnd;
-  
+
 
   public WinSystem(ECManager ecManager, Consumer<Boolean> setOnLevelEnd) {
     super(ecManager);
@@ -49,17 +49,51 @@ public class WinSystem extends ComponentBasedSystem{
     }
 
     for(WinComponent w: winComps){
+      checkWin(w);
+    }
+
+  }
+
+  private void checkWin(WinComponent w) {
+    List<WinCondition> winConditions = w.getWinConds();
+
+    for(WinCondition wCond: winConditions){
+
+      if(wCond.getCondition().equals("score")){
+        double score = scoreMapper.get(w.getOwner().getId()).getScore();
+        boolean comp = wCond.checkCondition(score);
+        executeWinOrLose(comp, wCond);
+        return;
+      }
+
+      else if(wCond.getCondition().equals("health")){
+        double health = healthMapper.get(w.getOwner().getId()).getHealth();
+        boolean comp = wCond.checkCondition(health);
+        executeWinOrLose(comp, wCond);
+        return;
+      }
 
     }
 
   }
 
+  private void executeWinOrLose(boolean comp, WinCondition wCond) {
+    if(comp && wCond.isWin()){
+      winGame();
+    }
+    if(comp && !wCond.isWin()){
+      loseGame();
+    }
+  }
+
   private void loseGame(){
-    setOnLevelEnd.accept(false);
+    System.out.println("I LOSE");
+    //etOnLevelEnd.accept(false);
   }
 
   private void winGame(){
-    setOnLevelEnd.accept(true);
+    System.out.println("I WIN");
+    //setOnLevelEnd.accept(true);
   }
 
 }
