@@ -22,9 +22,9 @@ public class ECManager extends BaseManager {
 
   private static final Logger logger = LogManager.getLogger(ECManager.class);
 
-  private IDManager idManager;
-  private Map<Integer, GameObject> entities;
-  private Map<String, Map<Integer, Component>> existingComponents;
+  private IDManager idManager = new IDManager();
+  private Map<Integer, GameObject> entities = new HashMap<>();
+  private Map<Class<? extends Component>, Map<Integer, Component>> existingComponents = new HashMap<>();
   private ObjectFactory factory;
   private Consumer<ObservableObject> newObjectCallback;
   private Consumer<ObservableObject> deleteObjectCallback;
@@ -32,9 +32,6 @@ public class ECManager extends BaseManager {
   public ECManager(ObjectFactory factory, Consumer<ObservableObject> newObjectCallback,
       Consumer<ObservableObject> deleteObjectCallback) {
     this.factory = factory;
-    idManager = new IDManager();
-    entities = new HashMap<>();
-    existingComponents = new HashMap<>();
     this.newObjectCallback = newObjectCallback;
     this.deleteObjectCallback = deleteObjectCallback;
   }
@@ -72,6 +69,11 @@ public class ECManager extends BaseManager {
   public void addEntity(ObjectInstance instance) {
     GameObject newObject = factory.buildObject(instance);
     entities.put(newObject.getId(), newObject);
+
+    for (Component component : newObject.getComponents()) {
+      registerExistingComponent(newObject, component);
+    }
+
     notifyNewObject(newObject);
   }
 
@@ -88,7 +90,7 @@ public class ECManager extends BaseManager {
   }
 
   public <T> List<T> getComponents(Class<T> componentClass) {
-    Map<Integer, Component> components = existingComponents.get(componentClass.getName());
+    Map<Integer, Component> components = existingComponents.get(componentClass);
     if (components == null) {
       return new ArrayList<T>();
     }
@@ -118,14 +120,10 @@ public class ECManager extends BaseManager {
 
   private <T extends Component> void addComponentToMap(T component) {
     int id = component.getId();
-    Map<Integer, Component> idCompMap = existingComponents.get(component.typeUnerasure());
-    if (idCompMap != null) {
-      idCompMap.put(id, component);
-    } else {
-      idCompMap = new HashMap<>();
-      idCompMap.put(id, component);
-      existingComponents.put(component.typeUnerasure(), idCompMap);
-    }
+
+    existingComponents.putIfAbsent(component.getClass(), new HashMap<>());
+    Map<Integer, Component> idCompMap = existingComponents.get(component.getClass());
+    idCompMap.put(id, component);
   }
 
   public void registerExistingComponents(List<GameObject> gameObjects) {

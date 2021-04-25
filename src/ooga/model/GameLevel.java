@@ -54,7 +54,7 @@ class GameLevel implements Level, ObservableLevel {
     systemManager.createSystem(NPCSystem.class, ecManager);
     systems = systemManager.getAllSystems();
 
-    ecManager.registerExistingComponents(ecManager.getEntities());
+    //ecManager.registerExistingComponents(ecManager.getEntities());
 
     for (var s : systems) {
       s.registerAllInputs(inputManager);
