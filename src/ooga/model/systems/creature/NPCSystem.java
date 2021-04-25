@@ -1,6 +1,7 @@
 package ooga.model.systems.creature;
 
 import java.util.List;
+import java.util.Random;
 import ooga.model.annotations.Track;
 import ooga.model.components.MovementComponent;
 import ooga.model.components.MovementComponent.HorizontalMovementStatus;
@@ -51,14 +52,31 @@ public class NPCSystem extends ComponentBasedSystem {
   private void execAction(String actionCode, double deltaTime, MovementComponent m, MovementSquenceComponent ms){
     switch (actionCode){
       case "move_left":
-        moveLeft(deltaTime,m,ms);
+        moveLeft(deltaTime,m);
+        break;
+      case "move_right":
+        moveRight(deltaTime,m);
+        break;
+      case "stand_still":
+        standStill(m);
+        break;
+      default:
         break;
     }
   }
 
-  private void moveLeft(double deltaTime, MovementComponent m, MovementSquenceComponent ms){
+  private void moveRight(double deltaTime, MovementComponent m){
     m.setHorizontalStatus(HorizontalMovementStatus.RUNNING);
+    m.setDirection(1);
+  }
 
+  private void standStill(MovementComponent m){
+    m.setHorizontalStatus(HorizontalMovementStatus.STILL);
+  }
+
+  private void moveLeft(double deltaTime, MovementComponent m){
+    m.setHorizontalStatus(HorizontalMovementStatus.RUNNING);
+    m.setDirection(-1);
   }
 
   private void unitUpdate(double deltaTime,MovementComponent m, MovementSquenceComponent ms){
