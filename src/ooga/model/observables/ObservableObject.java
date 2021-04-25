@@ -11,7 +11,7 @@ public interface ObservableObject {
   double getWidth();
   int getMode();
   boolean isVisible();
-  String objectId();
+  int getID();
   String getName();
   String getImageID();
 }
