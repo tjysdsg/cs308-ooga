@@ -71,6 +71,19 @@
         "type": "HateComponent",
         "frequency": "30",
         "range": "50"
+      },
+      {
+        "type" : "WinComponent",
+        "win": [
+          {
+            "condition": "score",
+            "threshold": 100,
+            "operator" : "equals",
+            "win" : true
+          }
+
+        ]
+
       }
     ]
   },

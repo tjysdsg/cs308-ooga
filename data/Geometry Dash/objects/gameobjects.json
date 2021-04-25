@@ -28,7 +28,7 @@
       {
         "actions": [
           {
-            "action": "destroy_object"
+            "action": "player_blocked_left"
           }
         ],
         "positions": [
@@ -38,7 +38,7 @@
       {
         "actions": [
           {
-            "action" : "destroy_object"
+            "action" : "player_blocked_right"
           }
         ],
         "positions": [
