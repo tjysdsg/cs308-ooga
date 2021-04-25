@@ -11,16 +11,16 @@ import org.apache.logging.log4j.Logger;
 public abstract class ConfigurationFactory {
   private static final Logger logger = LogManager.getLogger(MetaGame.class);
   private static final String thing = "ok";
-  private static JsonAdapter<ViewConfiguration> adapter =
-      new Moshi.Builder().add(new ConfigurationAdapter()).build().adapter(ViewConfiguration.class);
+  private static JsonAdapter<GameConfiguration> adapter =
+      new Moshi.Builder().add(new ConfigurationAdapter()).build().adapter(GameConfiguration.class);
 
-  public static ViewConfiguration createConfiguration(String filePath) {
+  public static GameConfiguration createConfiguration(String filePath) {
     if (filePath == null || filePath.isBlank()) {
       return createConfiguration();
     }
     try {
       String string = Files.readString(Path.of(filePath));
-      ViewConfiguration config = adapter.fromJson(string);
+      GameConfiguration config = adapter.fromJson(string);
       logger.debug("View Configuration Created: {}", config);
       return config;
     } catch (IOException e) {
@@ -29,7 +29,7 @@ public abstract class ConfigurationFactory {
     }
   }
 
-  public static ViewConfiguration createConfiguration() {
-    return new ViewConfiguration();
+  public static GameConfiguration createConfiguration() {
+    return new GameConfiguration();
   }
 }

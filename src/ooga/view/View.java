@@ -20,7 +20,7 @@ import ooga.view.components.game.GameScene;
 import ooga.view.components.gameselection.GSelectionScene;
 import ooga.view.util.ConfigurationFactory;
 import ooga.view.util.ObservableResource;
-import ooga.view.util.ViewConfiguration;
+import ooga.view.util.GameConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,7 +44,7 @@ public class View {
   private String cssFile;
   private JFXDialog pauseDialog;
   private SplashScreen splashScreen;
-  private ViewConfiguration viewConfig;
+  private GameConfiguration viewConfig;
 
   public View(Stage stage) {
     CSSFX.start();
