@@ -19,6 +19,9 @@ public class WinComponent extends Component {
   }
 
 
+  public List<WinCondition> getWinConds(){
+    return winConds;
+  }
 
   @Override
   public String typeUnerasure() {

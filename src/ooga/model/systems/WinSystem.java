@@ -15,8 +15,8 @@ public class WinSystem extends ComponentBasedSystem{
   private ComponentMapper<HealthComponent> healthMapper;
   private ComponentMapper<ScoreComponent> scoreMapper;
   private ComponentMapper<WinComponent> winMapper;
-
-  private WinStatus myStatus = WinStatus.NEITHER;
+  private Consumer<Boolean> setOnLevelEnd;
+  
 
   public WinSystem(ECManager ecManager, Consumer<Boolean> setOnLevelEnd) {
     super(ecManager);
@@ -24,6 +24,7 @@ public class WinSystem extends ComponentBasedSystem{
     healthMapper = getComponentMapper(HealthComponent.class);
     scoreMapper = getComponentMapper(ScoreComponent.class);
     winMapper = getComponentMapper(WinComponent.class);
+    this.setOnLevelEnd = setOnLevelEnd;
 
     addCollisionMapping(
         "lose_game",
@@ -37,18 +38,13 @@ public class WinSystem extends ComponentBasedSystem{
   }
 
 
-  public enum WinStatus{
-    WIN,
-    LOSE,
-    NEITHER
-  }
 
   @Override
   public void update(double deltaTime) {
     List<WinComponent> winComps = winMapper.getComponents();
 
     if(winComps.size() == 0){
-      myStatus = WinStatus.LOSE;
+      loseGame();
       return;
     }
 
@@ -59,15 +55,11 @@ public class WinSystem extends ComponentBasedSystem{
   }
 
   private void loseGame(){
-    myStatus = WinStatus.LOSE;
-
+    setOnLevelEnd.accept(false);
   }
 
   private void winGame(){
-    myStatus = WinStatus.WIN;
+    setOnLevelEnd.accept(true);
   }
 
-  public WinStatus getWinStatus(){
-    return myStatus;
-  }
 }
