@@ -1,5 +1,6 @@
 package ooga.view.components.game;
 
+import ooga.model.observables.ObservableLevel;
 import ooga.model.observables.ObservableObject;
 
 import java.util.ArrayList;
@@ -35,6 +36,15 @@ public class GameArea extends AnchorPane {
     getChildren().add(objectsPane);
     AnchorPane.setBottomAnchor(objectsPane, BOTTOM_EDGE);
     AnchorPane.setLeftAnchor(objectsPane, LEFT_EDGE);
+  }
+
+  public void setLevel(ObservableLevel level) {
+    level.setOnFocusUpdate(id -> {
+      objects.stream()
+        .filter(obj -> obj.isObject(id))
+        .findFirst()
+        .ifPresent(this::setCameraCenter);
+    });
   }
 
   public void setCameraCenter(ObjectView center) {

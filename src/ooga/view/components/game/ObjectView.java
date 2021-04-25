@@ -42,4 +42,8 @@ public class ObjectView extends StackPane {
   protected boolean isObject(ObservableObject o) {
     return o == this.gameObject;
   }
+
+  protected boolean isObject(int objectID) {
+    return gameObject.getID() == objectID;
+  }
 }

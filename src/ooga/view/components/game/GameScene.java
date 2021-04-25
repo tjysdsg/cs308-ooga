@@ -52,19 +52,19 @@ public class GameScene extends Scene {
     this.controller = new Controller(model);
     controller.setKeyMap(keymaps);
     this.directory = directory;
-    this.gameArea = new GameArea();
     this.loop = new GameLoop();
     this.images = new ImageConfiguration(directory);
+    this.gameArea = new GameArea();
 
     File gameDirectory = new File(directory);
     model.setOnNewObject(e -> {
       ObjectView obj = new ObjectView(e, images);
-      gameArea.addObject(obj);
+      this.gameArea.addObject(obj);
     });
 
     model.setOnLevelChange(this::updateScene);
     model.setOnObjectDestroy(e -> {
-      gameArea.removeObject(e);
+      this.gameArea.removeObject(e);
     });
 
     if (!ModelFactory.verifyGameDirectory(gameDirectory)) {
