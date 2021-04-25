@@ -3,6 +3,9 @@
   "key_maps": {
     "left": "A",
     "right": "D",
-    "jump": "Space"
-  }
+    "jump": "Space",
+    "leftp2" : "J",
+    "rightp2" : "L",
+    "jumpp2" : "I"
+   }
 }
