@@ -43,6 +43,15 @@
     ],
     "components": [
       {
+        "type" : "WinComponent",
+        "winConds": [
+          {
+            "condition": "none"
+          }
+
+        ]
+      },
+      {
         "type": "PlayerComponent",
         "DEFAULT_MAX_SPEED": 300,
         "actionMappings" : [
@@ -131,7 +140,7 @@
       }
     ],
     "velocity" : {
-      "y" : 75
+      "y" : 150
     }
   }
 ]
