@@ -36,6 +36,51 @@
       "x": 2000,
       "y": 50
     },
+    {
+      "name": "floor",
+      "x": 2500,
+      "y": 50
+    },
+    {
+      "name": "floor",
+      "x": 3000,
+      "y": 50
+    },
+    {
+      "name": "floor",
+      "x": 3500,
+      "y": 50
+    },
+    {
+      "name": "floor",
+      "x": 4000,
+      "y": 50
+    },
+    {
+      "name": "floor",
+      "x": 4500,
+      "y": 50
+    },
+    {
+      "name": "floor",
+      "x": 5000,
+      "y": 50
+    },
+    {
+      "name": "floor",
+      "x": 5500,
+      "y": 50
+    },
+    {
+      "name": "floor",
+      "x": 6000,
+      "y": 50
+    },
+    {
+      "name": "floor",
+      "x": 6500,
+      "y": 50
+    },
 
     {
       "name" : "smallblock",
@@ -130,14 +175,199 @@
       "y": 100
     },
     {
+      "name" : "spike",
+      "x": 1550,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 1600,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 1650,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 1700,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 1750,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 1800,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 1850,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 1900,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 1950,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 2000,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 2050,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 2100,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 2150,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 2200,
+      "y": 100
+    },
+    {
       "name" : "platform",
-      "x": 1350,
+      "x": 1400,
+      "y": 250
+    },
+
+    {
+      "name" : "platform",
+      "x": 1550,
+      "y": 300
+    },
+    {
+      "name" : "gridblock",
+      "x": 1700,
+      "y": 320
+    },
+
+    {
+      "name" : "gridblockthick",
+      "x": 2700,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 3200,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 3250,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 3300,
+      "y": 100
+    },
+    {
+      "name" : "gridblockthick",
+      "x": 3350,
+      "y": 100
+    },
+
+    {
+      "name" : "platform",
+      "x": 3950,
+      "y": 200
+    },
+    {
+      "name" : "platform",
+      "x": 4100,
       "y": 250
     },
     {
-      "name" : "tallblock",
-      "x": 2500,
-      "y": 0
+      "name" : "platform",
+      "x": 4250,
+      "y": 300
+    },
+    {
+      "name" : "platform",
+      "x": 4400,
+      "y": 350
+    },
+    {
+      "name" : "platform",
+      "x": 4550,
+      "y": 400
+    },
+    {
+      "name" : "pinkspikes",
+      "x": 3850,
+      "y": 100
+    },
+    {
+      "name" : "pinkspikes",
+      "x": 3950,
+      "y": 100
+    },
+    {
+      "name" : "pinkspikes",
+      "x": 4050,
+      "y": 100
+    },
+    {
+      "name" : "pinkspikes",
+      "x": 4150,
+      "y": 100
+    },
+    {
+      "name" : "pinkspikes",
+      "x": 4250,
+      "y": 100
+    },
+    {
+      "name" : "pinkspikes",
+      "x": 4350,
+      "y": 100
+    },
+    {
+      "name" : "pinkspikes",
+      "x": 4450,
+      "y": 100
+    },
+    {
+      "name" : "pinkspikes",
+      "x": 4550,
+      "y": 100
+    },
+    {
+      "name" : "pinkspikes",
+      "x": 4650,
+      "y": 100
+    },
+    {
+      "name" : "gridblock",
+      "x": 4750,
+      "y": 420
+    },
+
+    {
+      "name" : "crown",
+      "x": 6000,
+      "y": 100
     }
+
   ]
 }

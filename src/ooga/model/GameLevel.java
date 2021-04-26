@@ -37,6 +37,7 @@ class GameLevel implements Level, ObservableLevel {
   private int height;
   private int width;
   private String background;
+  private String focus;
 
   private transient List<BaseSystem> systems = new ArrayList<>();
   @Json(name = "objects")
@@ -45,6 +46,7 @@ class GameLevel implements Level, ObservableLevel {
   private transient ActionManager actionManager = new ActionManager();
   private transient StatsManager statsManager = new StatsManager();
   private transient SystemManager systemManager;
+  private transient Consumer<ObservableObject> focusChangeCallback;
 
   // MUST BE HERE!!! MOSHI USES THIS
   public GameLevel() {
@@ -71,6 +73,19 @@ class GameLevel implements Level, ObservableLevel {
       s.registerAllInputs(inputManager);
       s.registerAllActions(actionManager);
       s.registerAllStats(statsManager);
+    }
+
+    for (GameObject object : ecManager.getEntities()) {
+      if (object.getName().equals(focus)) {
+        notifyFocusChange(object);
+        break;
+      }
+    }
+  }
+
+  private void notifyFocusChange(GameObject object) {
+    if (focusChangeCallback != null) {
+      focusChangeCallback.accept(object);
     }
   }
 
@@ -99,9 +114,8 @@ class GameLevel implements Level, ObservableLevel {
   }
 
   @Override
-  public void setOnFocusUpdate(Consumer<Integer> callback) {
-    // TODO: implement this
-    // TODO: add input handler by which user presses a key to change main player
+  public void setOnFocusUpdate(Consumer<ObservableObject> callback) {
+    focusChangeCallback = callback;
   }
 
   @Override
@@ -117,6 +131,11 @@ class GameLevel implements Level, ObservableLevel {
   @Override
   public List<String> getAvailableActions() {
     return getActionManager().getAvailableActions();
+  }
+
+  @Override
+  public List<String> getAvailableInputs() {
+    return getInputManager().getRegisteredKeys();
   }
 
   @Override

@@ -1,5 +1,6 @@
 {
   "fighter": "fighter.png",
   "space": "space.png",
-  "floor": "floor.png"
+  "floor": "white.png",
+  "basice" : "basice.png"
 }

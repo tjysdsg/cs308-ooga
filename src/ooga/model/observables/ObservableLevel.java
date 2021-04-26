@@ -18,7 +18,7 @@ public interface ObservableLevel {
    *
    * @param callback The integer represents the object id
    */
-  void setOnFocusUpdate(Consumer<Integer> callback);
+  void setOnFocusUpdate(Consumer<ObservableObject> callback);
 
   /**
    * Set the callback that is called, when a certain statistics is updated, such as "score", or
@@ -35,10 +35,14 @@ public interface ObservableLevel {
   List<String> getAvailableStats();
 
   /**
-   * Get the names of all action available in this game level
+   * Get the names of all collision action available in this game level
    */
   List<String> getAvailableActions();
 
+  /**
+   * Get the names of all input action available in this game level
+   */
+  List<String> getAvailableInputs();
   void setOnNewObject(Consumer<ObservableObject> callback);
 
   void setOnObjectDestroy(Consumer<ObservableObject> callback);

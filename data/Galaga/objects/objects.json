@@ -8,25 +8,77 @@
       {
         "actions": [
           {
-            "action": "player_blocked_bottom"
+            "action": "blocked_bottom"
           }
         ],
         "positions": [
           "bottom"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "blocked_left"
+          }
+        ],
+        "positions": [
+          "left"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "blocked_right"
+          }
+        ],
+        "positions": [
+          "right"
         ]
       }
     ],
     "components": [
       {
         "type": "PlayerComponent",
-        "DEFAULT_MAX_SPEED": 300
+        "DEFAULT_MAX_SPEED": 300,
+        "actionMappings" : [
+          {
+            "action" : "MoveRight",
+            "input" : "right"
+          },
+          {
+            "action" : "MoveLeft",
+            "input" : "left"
+          }
+        ]
+      },
+      {
+        "type" : "MovementComponent"
       }
     ]
   },
   {
     "name": "floor",
     "height": 25,
-    "width": 750,
+    "width": 450,
     "imageID": "floor"
+  },
+  {
+    "name" : "wall",
+    "height" : 500,
+    "width" : 25,
+    "imageID" : "floor"
+  },
+  {
+    "name" : "camera",
+    "height" : 1,
+    "width" : 1,
+    "imageID" : "floor",
+    "collidable" : false
+  },
+  {
+    "name" : "enemy",
+    "height" : 50,
+    "width" : 50,
+    "imageID" : "basice"
   }
 ]
