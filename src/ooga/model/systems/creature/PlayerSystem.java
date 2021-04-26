@@ -1,5 +1,6 @@
 package ooga.model.systems.creature;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,6 +77,7 @@ public class PlayerSystem extends ComponentBasedSystem {
     return playerMapper.getComponents();
   }
 
+
   public void initPlayerType(PlayerComponent.PlayerType playerType) {
     List<PlayerComponent> players = getPlayers();
     for (PlayerComponent p : players) {
@@ -85,5 +87,6 @@ public class PlayerSystem extends ComponentBasedSystem {
 
   @Override
   public void update(double deltaTime) {
+
   }
 }

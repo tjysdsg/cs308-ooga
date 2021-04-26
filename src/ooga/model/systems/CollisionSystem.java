@@ -29,6 +29,7 @@ public class CollisionSystem extends GameObjectBasedSystem {
     List<GameObject> collidableObjects = new ArrayList<>();
 
     for (GameObject gameObject : objects) {
+      //System.out.println("GameObject Name: "+ gameObject.getName()+ " X cord: "+ gameObject.getX() + " Y Cord: " + gameObject.getY() + " Width: " + gameObject.getWidth() + " Height: " + gameObject.getHeight() + " Velocity: "+ gameObject.getVelocity().magnitude());
       if (gameObject.isCollidable()) {
         collidableObjects.add(gameObject);
       }
@@ -66,6 +67,7 @@ public class CollisionSystem extends GameObjectBasedSystem {
   private void collide(GameObject self, GameObject other) {
     String selfDirection = detectCollisionDirection(self, other);
     String otherDirection = detectCollisionDirection(other, self);
+    
     self.setCollided(true);
     other.setCollided(true);
 
@@ -95,10 +97,10 @@ public class CollisionSystem extends GameObjectBasedSystem {
         self.setX(other.getX()-self.getWidth());
         break;
       case "top":
-        self.setY(other.getY()-other.getHeight());
+        self.setY(other.getY()-self.getHeight());
         break;
       case "bottom":
-        self.setY(other.getY()+self.getHeight());
+        self.setY(other.getY()+other.getHeight());
         break;
     }
   }

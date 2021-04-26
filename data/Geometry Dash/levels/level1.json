@@ -1,0 +1,143 @@
+{
+  "name": "Stereo Madness",
+  "id": "stereo_madness",
+  "background": "geoback",
+  "height": 1000,
+  "width": 1500,
+  "objects": [
+    {
+      "name" : "playerblock",
+      "x": 0,
+      "y": 100
+    },
+
+    {
+      "name": "floor",
+      "x": 0,
+      "y": 50
+    },
+    {
+      "name": "floor",
+      "x": 500,
+      "y": 50
+    },
+    {
+      "name": "floor",
+      "x": 1000,
+      "y": 50
+    },
+    {
+      "name": "floor",
+      "x": 1500,
+      "y": 50
+    },
+    {
+      "name": "floor",
+      "x": 2000,
+      "y": 50
+    },
+
+    {
+      "name" : "smallblock",
+      "x": 700,
+      "y": 100
+    },
+    {
+      "name" : "smallblock",
+      "x": 850,
+      "y": 100
+    },
+    {
+      "name" : "smallblock",
+      "x": 850,
+      "y": 150
+    },
+
+    {
+      "name" : "smallblock",
+      "x": 1000,
+      "y": 100
+    },
+    {
+      "name" : "smallblock",
+      "x": 1000,
+      "y": 150
+    },
+    {
+      "name" : "smallblock",
+      "x": 1000,
+      "y": 200
+    },
+    {
+      "name" : "smallblock",
+      "x": 1050,
+      "y": 200
+    },
+    {
+      "name" : "smallblock",
+      "x": 1100,
+      "y": 200
+    },
+    {
+      "name" : "smallblock",
+      "x": 1150,
+      "y": 200
+    },
+    {
+      "name" : "smallblock",
+      "x": 1200,
+      "y": 200
+    },
+    {
+      "name" : "smallblock",
+      "x": 1250,
+      "y": 200
+    },
+    {
+      "name" : "smallblock",
+      "x": 1250,
+      "y": 150
+    },
+    {
+      "name" : "smallblock",
+      "x": 1250,
+      "y": 100
+    },
+
+    {
+      "name" : "spike",
+      "x": 1300,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 1350,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 1400,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 1450,
+      "y": 100
+    },
+    {
+      "name" : "spike",
+      "x": 1500,
+      "y": 100
+    },
+    {
+      "name" : "platform",
+      "x": 1350,
+      "y": 250
+    },
+    {
+      "name" : "tallblock",
+      "x": 2500,
+      "y": 0
+    }
+  ]
+}

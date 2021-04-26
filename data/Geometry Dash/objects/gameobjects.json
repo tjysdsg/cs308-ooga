@@ -1,0 +1,142 @@
+[
+  {
+    "name": "playerblock",
+    "height": 50,
+    "width": 50,
+    "imageID": "playerblock",
+    "onCollide": [
+      {
+        "actions": [
+          {
+            "action" : "blocked_bottom"
+          }
+        ],
+        "positions": [
+          "bottom"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "lose_game"
+          },
+          {
+            "action": "blocked_top"
+          }
+        ],
+        "positions": [
+          "top"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "lose_game"
+          },
+          {
+            "action": "blocked_left"
+          }
+        ],
+        "positions": [
+          "left"
+        ]
+      },
+      {
+        "actions": [
+          {
+            "action": "lose_game"
+          },
+          {
+            "action" : "blocked_right"
+          }
+        ],
+        "positions": [
+          "right"
+        ]
+      }
+    ],
+    "components": [
+      {
+        "type" : "PlayerComponent",
+        "actionMappings" : [
+          {
+            "action" : "MoveRight",
+            "input" : "right"
+          },
+          {
+            "action" : "MoveLeft",
+            "input" : "left"
+          },
+          {
+            "action" : "Jump",
+            "input" : "jump"
+          }
+        ]
+
+      },
+
+      {
+        "type" : "MovementComponent",
+        "jumpHeight": 400,
+        "maxSpeed": 250,
+        "gravAccel": 30,
+        "horizontalStatus" : "RUNNING"
+      },
+      {
+        "type" : "ScoreComponent",
+        "score": 0
+      },
+      {
+        "type" : "WinComponent",
+        "winConds": [
+          {
+            "condition": "none"
+          }
+
+        ]
+
+      }
+
+    ]
+  },
+
+
+  {
+    "name": "floor",
+    "height": "50",
+    "width": "500",
+    "imageID": "floor"
+  },
+  {
+    "name": "smallblock",
+    "height": 50,
+    "width": 50,
+    "imageID": "smallblock"
+  },
+  {
+    "name": "medblock",
+    "height": 100,
+    "width": 50,
+    "imageID": "smallblock"
+  },
+  {
+    "name": "tallblock",
+    "height": 600,
+    "width": 50,
+    "imageID": "tallblock"
+  },
+  {
+    "name": "spike",
+    "height": 50,
+    "width": 50,
+    "imageID": "spike"
+  },
+
+  {
+    "name": "platform",
+    "height": 20,
+    "width": 50,
+    "imageID": "platform"
+  }
+]
+

@@ -128,6 +128,7 @@ public class GameScene extends Scene {
     Image bgImage = images.getImage(newBackground, WIDTH, HEIGHT);
 
     try {
+
       logger.info("Openning {} for background", bgImage.getUrl());
       bg =
           new BackgroundImage(

@@ -49,6 +49,7 @@ public class PlayerComponent extends Component {
     this.characterStatus = characterStatus;
   }
 
+
   // only for moshi
   protected PlayerComponent() {
     super();
@@ -57,6 +58,7 @@ public class PlayerComponent extends Component {
   public PlayerComponent(int id, GameObject owner) {
     super(id, owner);
   }
+
 
   public String typeUnerasure() {
     return PlayerComponent.class.getName();
