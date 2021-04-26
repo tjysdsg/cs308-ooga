@@ -22,7 +22,7 @@ public class CollisionTest {
 
   @BeforeEach
   void setUp(){
-    myECManager = new ECManager(null, null, null);
+    myECManager = new ECManager(null);
     myActionManager = new ActionManager();
     myCollisionSystem = new CollisionSystem(myECManager, myActionManager);
 

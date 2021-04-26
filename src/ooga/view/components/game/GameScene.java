@@ -77,7 +77,6 @@ public class GameScene extends Scene {
     controller.setKeyMap(gameConfiguration.getKeyMap());
     this.directory = directory;
     this.statsView = new StatsView(resources);
-    this.gameArea = new GameArea(statsView);
     this.loop = new GameLoop();
     this.images = new ImageConfiguration(directory);
     // Temporary
@@ -86,17 +85,8 @@ public class GameScene extends Scene {
     statsView.updateStat("Points", "50");
     // End temporary
     File gameDirectory = new File(directory);
-    model.setOnNewObject(
-        e -> {
-          ObjectView obj = new ObjectView(e, images);
-          gameArea.addObject(obj);
-        });
 
     model.setOnLevelChange(this::updateScene);
-    model.setOnObjectDestroy(
-        e -> {
-          gameArea.removeObject(e);
-        });
 
     if (!ModelFactory.verifyGameDirectory(gameDirectory)) {
       handleInvalidGame();
@@ -111,8 +101,6 @@ public class GameScene extends Scene {
 
     root.getStyleClass().add("game-scene");
     // this.controller = game.getController();
-    root.getChildren().add(gameArea);
-    gameArea.requestFocus();
     setOnKeyPressed(e -> handlePress(e.getCode()));
     setOnKeyReleased(e -> handleRelease(e.getCode()));
     setupSettings();
@@ -121,7 +109,24 @@ public class GameScene extends Scene {
   }
 
   private void updateScene(ObservableLevel observableLevel) {
-    currentLevel = observableLevel;
+    this.currentLevel = observableLevel;
+    if (this.gameArea != null) {
+      root.getChildren().remove(gameArea);
+    }
+    this.gameArea = new GameArea(observableLevel, statsView);
+    root.getChildren().add(gameArea);
+    observableLevel.getAvailableGameObjects().forEach(obj -> {
+      gameArea.addObject(new ObjectView(obj, images));
+    });
+    observableLevel.setOnNewObject(
+        e -> {
+          ObjectView obj = new ObjectView(e, images);
+          gameArea.addObject(obj);
+        });
+    observableLevel.setOnObjectDestroy(
+        e -> {
+          gameArea.removeObject(e);
+        });
     logger.info("Available stats {}", observableLevel.getAvailableStats());
     setBackground(observableLevel.getBackgroundID());
     // notifyResize();
@@ -153,7 +158,7 @@ public class GameScene extends Scene {
 
   private void setupSettings() {
     this.settings = new SettingsModule(resources.getStringBinding("GameSettings"));
-    settings.addKeysOption(gameConfiguration.getKeyMap(), List.of("left", "right"));
+    settings.addKeysOption(gameConfiguration.getKeyMap(), currentLevel.getAvailableActions());
   }
 
   public SettingsModule getSettings() {

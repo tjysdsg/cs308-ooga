@@ -10,25 +10,21 @@ import ooga.model.observables.ObservableObject;
 
 public class EntityManagerAdapter {
 
-  private ObjectFactory factory;
-  private Consumer<ObservableObject> newObjectCallback;
-  private Consumer<ObservableObject> deleteObjectCallback;
+    private ObjectFactory factory;
 
-  public EntityManagerAdapter(ObjectFactory factory, Consumer<ObservableObject> newObjectCallback,
-      Consumer<ObservableObject> deleteObjectCallback) {
-    this.factory = factory;
-    this.newObjectCallback = newObjectCallback;
-    this.deleteObjectCallback = deleteObjectCallback;
-  }
-
-  @FromJson
-  ECManager listToManager(List<ObjectInstance> instanceList) {
-    ECManager manager = new ECManager(factory, newObjectCallback, deleteObjectCallback);
-    for (ObjectInstance instance : instanceList) {
-      manager.addEntity(instance);
+    public EntityManagerAdapter(ObjectFactory factory) {
+        this.factory = factory;
     }
-    return manager;
-  }
+
+    @FromJson
+    ECManager listToManager(List<ObjectInstance> instanceList) {
+        ECManager manager = new ECManager(factory);
+        for (ObjectInstance instance : instanceList) {
+            manager.addEntity(instance);
+        }
+        return manager;
+    }
+
 
   @ToJson
   List<ObjectInstance> managerToList(ECManager manager) {

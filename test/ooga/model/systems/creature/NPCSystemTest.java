@@ -25,7 +25,7 @@ class NPCSystemTest {
 
   @BeforeEach
   void setup(){
-    ecManager =  new ECManager(null, null, null);
+    ecManager =  new ECManager(null);
     go = ecManager.createEntity("test");
     movementComponent= ecManager.createComponent(go,MovementComponent.class);
     movementSquenceComponent=ecManager.createComponent(go, MovementSequenceComponent.class);

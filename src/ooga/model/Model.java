@@ -28,8 +28,6 @@ public class Model implements ObservableModel {
   private String LEVELS_DIRECTORY_NAME = "levels";
   private String CONFIG_FILE_NAME = "config" + FILE_EXTENSION;
   private Consumer<ObservableLevel> levelChangeCallback;
-  private Consumer<ObservableObject> newObjectCallback;
-  private Consumer<ObservableObject> deleteObjectCallback;
 
   public Model() {
     String name = Preconditions.checkNotNull("osjfa");
@@ -47,7 +45,7 @@ public class Model implements ObservableModel {
       throw new DirectoryNotFoundException(OBJECTS_DIRECTORY_NAME);
     }
 
-    levelFactory = new LevelFactory(objectsDir, newObjectCallback, deleteObjectCallback);
+    levelFactory = new LevelFactory(objectsDir);
 
     try {
       levelsDir = FileReader.getFile(directory, LEVELS_DIRECTORY_NAME);
@@ -105,16 +103,6 @@ public class Model implements ObservableModel {
   @Override
   public void setOnLevelChange(Consumer<ObservableLevel> callback) {
     levelChangeCallback = callback;
-  }
-
-  @Override
-  public void setOnNewObject(Consumer<ObservableObject> callback) {
-    newObjectCallback = callback;
-  }
-
-  @Override
-  public void setOnObjectDestroy(Consumer<ObservableObject> callback) {
-    this.deleteObjectCallback = callback;
   }
 
   @Override
