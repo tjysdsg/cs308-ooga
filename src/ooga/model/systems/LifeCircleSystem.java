@@ -24,7 +24,7 @@ public class LifeCircleSystem extends GameObjectBasedSystem {
     super(entityManager);
     addCollisionMapping(
         "spawn_object",
-        event -> spawnObject(event.getSelf(), event.getPayload())
+        event -> spawnObject(event.getSelf(), event.getPayload().get("which"))
     );
 
     addCollisionMapping(

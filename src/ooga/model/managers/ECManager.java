@@ -158,4 +158,10 @@ public class ECManager extends BaseManager {
     }
     return ret;
   }
+
+  public List<GameObject> getEntities(String whose) {
+    List<GameObject> ret = new ArrayList<>(getEntities());
+    ret.removeIf((entity) -> !entity.getName().equals(whose));
+    return ret;
+  }
 }

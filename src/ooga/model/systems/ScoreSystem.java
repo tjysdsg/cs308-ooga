@@ -2,11 +2,13 @@ package ooga.model.systems;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import ooga.model.StatsInfo;
 import ooga.model.actions.CollisionAction;
 import ooga.model.annotations.Track;
 import ooga.model.components.ScoreComponent;
 import ooga.model.managers.ECManager;
+import ooga.model.objects.GameObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,20 +42,24 @@ public class ScoreSystem extends ComponentBasedSystem {
   }
 
   public void changeScore(CollisionAction event) {
-    ScoreComponent comp = scoreMapper.get(event.getSelf().getId());
+    Map<String, String> payload = event.getPayload();
+    if (payload.containsKey("whose"))
+      for (GameObject entity : getECManager().getEntities(payload.get("whose"))) {
+        ScoreComponent comp = scoreMapper.get(entity.getID());
 
-    double delta = 1;
-    try {
-      delta = Double.parseDouble(event.getPayload());
-    } catch (NullPointerException | NumberFormatException e) {
-      logger.error(
-          "Cannot parse payload of 'change_score' action as a double: {}",
-          event.getPayload()
-      );
-    }
+        double delta = 1;
+        try {
+          delta = Double.parseDouble(payload.get("amount"));
+        } catch (NullPointerException | NumberFormatException e) {
+          logger.error(
+              "Cannot parse payload of 'change_score' action as a double: {}",
+              event.getPayload()
+          );
+        }
 
-    comp.changeScore(delta, true);
-
+        comp.changeScore(delta, true);
+        logger.debug("Score of {} is now {}", entity.getName(), comp.getScore());
+      }
     triggerStatsUpdate(SCORE_STATS_NAME);
   }
 

@@ -63,6 +63,9 @@
       },
       {
         "type" : "MovementComponent"
+      },
+      {
+        "type": "ScoreComponent"
       }
     ]
   },
@@ -116,6 +119,13 @@
         "actions": [
           {
             "action": "destroy_object"
+          },
+          {
+            "action" : "change_score",
+            "payload" : {
+              "amount" : 50,
+              "whose" : "fighter"
+            }
           }
         ]
       }

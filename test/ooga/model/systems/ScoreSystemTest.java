@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import ooga.model.StatsInfo;
 import ooga.model.Vector;
 import ooga.model.actions.CollisionAction;
@@ -44,7 +45,7 @@ public class ScoreSystemTest {
   void testChangeScore() {
     scoreComponent.changeScore(-10, true);
     assertEquals(-10, scoreComponent.getScore());
-    scoreSystem.changeScore(new CollisionAction(go, null, "10"));
+    scoreSystem.changeScore(new CollisionAction(go, null, Map.of("amount","10")));
     assertEquals(0, scoreComponent.getScore());
   }
 
@@ -53,7 +54,7 @@ public class ScoreSystemTest {
     statsManager.setOnStatisticUpdate("score", info -> stats = info);
     assertTrue(statsManager.getTrackableStatistics().contains("score"));
 
-    scoreSystem.changeScore(new CollisionAction(go, null, "10"));
+    scoreSystem.changeScore(new CollisionAction(go, null, Map.of("amount","10")));
     assertEquals(1, stats.size());
     assertEquals(10, Double.parseDouble(stats.get(0).value()));
   }

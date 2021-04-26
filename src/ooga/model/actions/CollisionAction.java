@@ -1,14 +1,15 @@
 package ooga.model.actions;
 
+import java.util.Map;
 import ooga.model.objects.GameObject;
 
 public class CollisionAction {
 
   private GameObject self;
   private GameObject hitter;
-  private String payload;
+  private Map<String, String> payload;
 
-  public CollisionAction(GameObject self, GameObject hitter, String payload) {
+  public CollisionAction(GameObject self, GameObject hitter, Map<String, String> payload) {
     this.self = self;
     this.hitter = hitter;
     this.payload = payload;
@@ -22,7 +23,7 @@ public class CollisionAction {
     return hitter;
   }
 
-  public String getPayload() {
+  public Map<String, String> getPayload() {
     return payload;
   }
 }

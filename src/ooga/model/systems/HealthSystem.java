@@ -34,7 +34,7 @@ public class HealthSystem extends ComponentBasedSystem {
   }
 
   private void changeHealth(CollisionAction collisionAction) {
-    double delta = Double.parseDouble(collisionAction.getPayload());
+    double delta = Double.parseDouble(collisionAction.getPayload().get("amount"));
     changeHealth(collisionAction.getSelf().getId(), delta, delta >= 0);
   }
 
