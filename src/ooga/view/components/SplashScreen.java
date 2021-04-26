@@ -3,7 +3,8 @@ package ooga.view.components;
 import com.jfoenix.controls.JFXButton;
 import java.util.function.Consumer;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -14,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class SplashScreen extends Scene {
+
   private static final Logger logger = LogManager.getLogger(SplashScreen.class);
   private StackPane root;
   private Runnable exitCallback;

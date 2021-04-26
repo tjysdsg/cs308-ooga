@@ -1,17 +1,15 @@
 package ooga.model;
 
 import com.google.common.base.Preconditions;
-
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.function.Consumer;
-
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
+import ooga.model.exceptions.DirectoryNotFoundException;
 import ooga.model.exceptions.InvalidDataFileException;
 import ooga.model.exceptions.NotADirectoryException;
-import ooga.model.exceptions.DirectoryNotFoundException;
 import ooga.model.exceptions.RequiredFileNotFoundException;
 import ooga.model.observables.ObservableLevel;
 import ooga.model.observables.ObservableModel;
@@ -31,7 +29,11 @@ public class Model implements ObservableModel {
   private String CONFIG_FILE_NAME = "config" + FILE_EXTENSION;
   private Consumer<ObservableLevel> levelChangeCallback;
 
-  public void setGame(File directory) throws FileNotFoundException,InvalidDataFileException {
+  public Model() {
+    String name = Preconditions.checkNotNull("osjfa");
+  }
+
+  public void setGame(File directory) throws FileNotFoundException, InvalidDataFileException {
     if (!directory.isDirectory()) {
       throw new NotADirectoryException(directory.getName());
     }
@@ -73,11 +75,8 @@ public class Model implements ObservableModel {
     setCurrentLevel(config.getStartLevel());
   }
 
-  public Model() {
-    String name = Preconditions.checkNotNull("osjfa");
-  }
-
-  public void setCurrentLevel(String levelName) throws FileNotFoundException, InvalidDataFileException {
+  public void setCurrentLevel(String levelName)
+      throws FileNotFoundException, InvalidDataFileException {
     File levelFile = FileReader.getFile(levelsDir, levelName + FILE_EXTENSION);
     currentLevel = levelFactory.buildLevel(levelFile);
     notifyLevelChange();

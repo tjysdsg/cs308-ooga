@@ -64,6 +64,10 @@
           {
             "action" : "Jump",
             "input" : "jump"
+          },
+          {
+            "action" : "Attack",
+            "input" : "attack"
           }
         ]
       },
@@ -71,9 +75,8 @@
         "type": "MovementComponent"
       },
       {
-        "type": "HateComponent",
-        "frequency": "30",
-        "range": "50"
+        "type": "HealthComponent",
+        "health": "100.0"
       }
     ]
   },
@@ -129,29 +132,17 @@
     ],
     "components": [
       {
-        "type": "PlayerComponent",
-        "actionMappings" : [
-          {
-            "action" : "MoveLeft",
-            "input" : "leftp2"
-          },
-          {
-            "action" : "MoveRight",
-            "input" : "rightp2"
-          },
-          {
-            "action" : "Jump",
-            "input" : "jumpp2"
-          }
-        ]
-      },
-      {
         "type": "MovementComponent"
       },
       {
         "type": "HateComponent",
-        "frequency": "30",
-        "range": "50"
+        "frequency": "3",
+        "range": "60",
+        "damage": "-3.0"
+      },
+      {
+        "type": "HealthComponent",
+        "health": "100.0"
       }
     ]
   },

@@ -1,11 +1,8 @@
 package ooga.model.components;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import ooga.model.objects.GameObject;
-import ooga.model.systems.creature.ActionPair;
 
 public class MovementComponent extends Component {
 
@@ -45,40 +42,36 @@ public class MovementComponent extends Component {
   public static final int OBSTACLE_KEY_RIGHT = 1;
   public static final int OBSTACLE_KEY_TOP = 2;
   public static final int OBSTACLE_KEY_BOTTOM = 3;
-
   private static final double DEFAULT_MAX_SPEED = 100;
   private static final double DEFAULT_JUMP_HEIGHT = 200;
   private static final double DEFAULT_JUMP_TIME = 0.4;
   private static final double DEFAULT_GRAV_ACCEL = 20;
 
+
   /**
    * Status of the player in terms of vertical movement
    */
   protected VerticalMovementStatus verticalStatus = VerticalMovementStatus.GROUNDED;
-
   /**
    * Status of the player in terms of horizontal movement
    */
   protected HorizontalMovementStatus horizontalStatus = HorizontalMovementStatus.STILL;
-
-  private double jumpTimer = 0;
-
   /**
    * which horizontal the player is facing, 1 for right, -1 for left
    */
   protected int direction = RIGHT_DIRECTION;
-
+  private double jumpTimer = 0;
   /**
    * Max horizontal movement speed
    */
   private double maxSpeed = DEFAULT_MAX_SPEED;
-
   /**
    * Max height the players can jump
    */
   private double jumpHeight = DEFAULT_JUMP_HEIGHT;
 
   private double gravAccel = DEFAULT_GRAV_ACCEL;
+
 
 
   /**
@@ -91,7 +84,6 @@ public class MovementComponent extends Component {
    * </ol>
    */
   private Map<Integer, GameObject> obstacles = new HashMap<>();
-
   /**
    * Time to reach jump apex
    */
@@ -162,24 +154,26 @@ public class MovementComponent extends Component {
     direction = -direction;
   }
 
-  public void setHorizontalStatus(HorizontalMovementStatus horizontalStatus) {
-    this.horizontalStatus = horizontalStatus;
-  }
-
   public HorizontalMovementStatus getHorizontalStatus() {
     return horizontalStatus;
   }
 
-  public void setVerticalStatus(VerticalMovementStatus verticalStatus) {
-    this.verticalStatus = verticalStatus;
+  public void setHorizontalStatus(HorizontalMovementStatus horizontalStatus) {
+    this.horizontalStatus = horizontalStatus;
   }
 
   public VerticalMovementStatus getVerticalStatus() {
     return verticalStatus;
   }
 
+  public void setVerticalStatus(VerticalMovementStatus verticalStatus) {
+    this.verticalStatus = verticalStatus;
+  }
+
   @Override
   public String typeUnerasure() {
-    return null;
+    return MovementComponent.class.getName();
   }
+
+
 }

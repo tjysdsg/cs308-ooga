@@ -11,15 +11,15 @@ public class HealthComponent extends Component {
   }
 
   public void healthIncrement(double delta, boolean increase) {
-      if(increase){
-          if(delta>=0){
-              health+=delta;
-          }
-          return;
+    if (increase) {
+      if (delta >= 0) {
+        health += delta;
       }
-      if(delta<0){
-          health+=delta;
-      }
+      return;
+    }
+    if (delta < 0) {
+      health += delta;
+    }
   }
 
   public double getHealth() {

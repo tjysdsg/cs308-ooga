@@ -5,6 +5,8 @@ import java.util.function.Consumer;
 import ooga.model.StatsInfo;
 
 public interface ObservableStatistics {
-    public void setOnStatisticUpdate(String statistic, Consumer<List<StatsInfo>> consumer);
-    public List<String> getTrackableStatistics();
+
+  public void setOnStatisticUpdate(String statistic, Consumer<List<StatsInfo>> consumer);
+
+  public List<String> getTrackableStatistics();
 }

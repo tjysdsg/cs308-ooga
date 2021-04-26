@@ -1,10 +1,10 @@
 package ooga.view.components.game;
 
 import java.util.function.Consumer;
-
 import javafx.animation.AnimationTimer;
 
 public class GameLoop extends AnimationTimer {
+
   private Consumer<Double> callback;
   private long prevTime = System.nanoTime();
   private double delta;
@@ -19,6 +19,7 @@ public class GameLoop extends AnimationTimer {
     }
     prevTime = currentNanoTime;
   }
+
 
   public void pause() {
     this.isPaused = true;

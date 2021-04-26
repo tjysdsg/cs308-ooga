@@ -14,6 +14,7 @@ import org.kordamp.ikonli.javafx.FontIcon;
 public class GenericMenu extends StackPane {
   private static final Logger logger = LogManager.getLogger(GenericMenu.class);
 
+
   private VBox contents;
 
   public GenericMenu(StringBinding title) {

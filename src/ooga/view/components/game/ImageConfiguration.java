@@ -15,10 +15,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class ImageConfiguration {
+
+  private static final Logger logger = LogManager.getLogger(ImageConfiguration.class);
   private Map<String, String> codeToPath;
   private Map<String, Image> cachedImages;
   private String directory;
-  private static final Logger logger = LogManager.getLogger(ImageConfiguration.class);
 
   public ImageConfiguration(String directory) {
     this.directory = directory;
@@ -46,7 +47,7 @@ public class ImageConfiguration {
     String fileName = codeToPath.get(mode);
     System.out.println(width);
     try {
-    System.out.println(new File(directory, mode).toURI().toURL().toExternalForm());
+      System.out.println(new File(directory, mode).toURI().toURL().toExternalForm());
       Image image =
           new Image(
               new File(directory, mode).toURI().toURL().toExternalForm(),

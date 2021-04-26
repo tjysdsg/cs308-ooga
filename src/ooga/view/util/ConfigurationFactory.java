@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public abstract class ConfigurationFactory {
+
   private static final Logger logger = LogManager.getLogger(MetaGame.class);
   private static JsonAdapter<GameConfiguration> adapter =
       new Moshi.Builder().add(new ConfigurationAdapter()).build().adapter(GameConfiguration.class);

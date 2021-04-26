@@ -5,7 +5,8 @@
     "jump": "Space",
     "leftp2" : "J",
     "rightp2" : "L",
-    "jumpp2" : "I"
+    "jumpp2" : "I",
+    "attack" : "K"
    },
    "stats": [
      "Health",

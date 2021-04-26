@@ -3,7 +3,7 @@ package ooga.model;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
-
+import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,20 +11,15 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Consumer;
-
-import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory;
 import ooga.model.components.Component;
-import ooga.model.components.PlayerComponent;
 import ooga.model.exceptions.InvalidDataFileException;
-import ooga.model.objects.EntityManagerAdapter;
 import ooga.model.exceptions.NotADirectoryException;
+import ooga.model.objects.EntityManagerAdapter;
 import ooga.model.objects.GameObject;
 import ooga.model.objects.ObjectFactory;
 import ooga.model.observables.ObservableObject;
 import ooga.model.util.FileReader;
-import org.checkerframework.checker.units.qual.C;
 import org.reflections.Reflections;
 
 public class LevelFactory {
@@ -54,6 +49,16 @@ public class LevelFactory {
     objectFactory = new ObjectFactory(presetMap);
   }
 
+  public static PolymorphicJsonAdapterFactory<Component> createComponentAdapter() {
+    PolymorphicJsonAdapterFactory<Component> adapter = PolymorphicJsonAdapterFactory
+        .of(Component.class, "type");
+    Reflections reflections = new Reflections(Component.class.getPackageName());
+    for (Class subclass : reflections.getSubTypesOf(Component.class)) {
+      adapter = adapter.withSubtype(subclass, subclass.getSimpleName());
+    }
+    return adapter;
+  }
+
   private void addObjects(File objectsFile, JsonAdapter<List<GameObject>> adapter,
       Map<String, GameObject> presetMap) throws FileNotFoundException, InvalidDataFileException {
     String objectsText = FileReader.readFile(objectsFile);
@@ -69,8 +74,6 @@ public class LevelFactory {
       presetMap.put(object.getName(), object);
     }
   }
-
-
 
   Level buildLevel(File levelFile) throws FileNotFoundException, InvalidDataFileException {
     EntityManagerAdapter entityManagerAdapter = new EntityManagerAdapter(objectFactory);
@@ -93,14 +96,5 @@ public class LevelFactory {
 
     newLevel.init();
     return newLevel;
-  }
-
-  public static PolymorphicJsonAdapterFactory<Component> createComponentAdapter() {
-    PolymorphicJsonAdapterFactory<Component> adapter = PolymorphicJsonAdapterFactory.of(Component.class, "type");
-    Reflections reflections = new Reflections(Component.class.getPackageName());
-    for (Class subclass : reflections.getSubTypesOf(Component.class)) {
-      adapter = adapter.withSubtype(subclass, subclass.getSimpleName());
-    }
-    return adapter;
   }
 }
