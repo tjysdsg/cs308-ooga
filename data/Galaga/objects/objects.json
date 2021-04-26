@@ -57,7 +57,7 @@
           {
             "action" : "SpawnObject",
             "input" : "shoot",
-            "payload" : "bullet,0,0,1"
+            "payload" : "bullet,25,50,0.75"
           }
         ]
       },
