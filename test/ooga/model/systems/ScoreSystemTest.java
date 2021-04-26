@@ -30,7 +30,7 @@ public class ScoreSystemTest {
   void setup() {
     statsManager = new StatsManager();
     systemManager = new SystemManager();
-    ecManager = new ECManager(null, null, null);
+    ecManager = new ECManager(null);
 
     scoreSystem = systemManager.createSystem(ScoreSystem.class, ecManager);
 

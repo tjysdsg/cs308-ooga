@@ -12,12 +12,18 @@ import ooga.model.managers.StatsManager;
 import ooga.model.managers.InputManager;
 import ooga.model.objects.GameObject;
 import ooga.model.observables.ObservableLevel;
+import ooga.model.observables.ObservableObject;
 import ooga.model.systems.BaseSystem;
 import ooga.model.systems.CollisionSystem;
 import ooga.model.systems.HealthSystem;
 import ooga.model.systems.LifeCircleSystem;
+
+import ooga.model.systems.ScoreSystem;
+
 import ooga.model.systems.MovementSystem;
+
 import ooga.model.systems.TransformSystem;
+import ooga.model.systems.WinSystem;
 import ooga.model.systems.creature.NPCSystem;
 import ooga.model.systems.creature.PlayerSystem;
 import ooga.model.systems.creature.SampleEnemySystem;
@@ -55,6 +61,8 @@ class GameLevel implements Level, ObservableLevel {
     systemManager.createSystem(TransformSystem.class, ecManager);
     systemManager.createSystem(SampleEnemySystem.class, ecManager);
     systemManager.createSystem(NPCSystem.class, ecManager);
+    systemManager.createSystem(WinSystem.class, ecManager);
+    systemManager.createSystem(ScoreSystem.class, ecManager);
     systems = systemManager.getAllSystems();
 
     //ecManager.registerExistingComponents(ecManager.getEntities());
@@ -107,6 +115,11 @@ class GameLevel implements Level, ObservableLevel {
   }
 
   @Override
+  public List<String> getAvailableActions() {
+    return getActionManager().getAvailableActions();
+  }
+
+  @Override
   public String getName() {
     return name;
   }
@@ -139,5 +152,24 @@ class GameLevel implements Level, ObservableLevel {
 
   public InputManager getInputManager() {
     return inputManager;
+  }
+
+  public ActionManager getActionManager() {
+    return actionManager;
+  }
+
+  @Override
+  public void setOnNewObject(Consumer<ObservableObject> callback) {
+    ecManager.setNewObjectCallback(callback);
+  }
+
+  @Override
+  public void setOnObjectDestroy(Consumer<ObservableObject> callback) {
+    ecManager.setDeleteObjectCallback(callback);
+  }
+
+  @Override
+  public List<? extends ObservableObject> getAvailableGameObjects() {
+    return ecManager.getEntities();
   }
 }

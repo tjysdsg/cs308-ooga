@@ -493,6 +493,6 @@ TabPane {
 }
 
 .object-view {
-	-fx-alignment: BASELINE-LEFT;
+	-fx-alignment: BOTTOM-LEFT;
 }
 

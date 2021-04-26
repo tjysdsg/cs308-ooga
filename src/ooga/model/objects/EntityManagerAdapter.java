@@ -12,18 +12,14 @@ import java.util.function.Consumer;
 public class EntityManagerAdapter {
 
     private ObjectFactory factory;
-    private Consumer<ObservableObject> newObjectCallback;
-    private Consumer<ObservableObject> deleteObjectCallback;
 
-    public EntityManagerAdapter(ObjectFactory factory, Consumer<ObservableObject> newObjectCallback,Consumer<ObservableObject>deleteObjectCallback) {
+    public EntityManagerAdapter(ObjectFactory factory) {
         this.factory = factory;
-        this.newObjectCallback = newObjectCallback;
-        this.deleteObjectCallback=deleteObjectCallback;
     }
 
     @FromJson
     ECManager listToManager(List<ObjectInstance> instanceList) {
-        ECManager manager = new ECManager(factory, newObjectCallback,deleteObjectCallback);
+        ECManager manager = new ECManager(factory);
         for (ObjectInstance instance : instanceList) {
             manager.addEntity(instance);
         }
