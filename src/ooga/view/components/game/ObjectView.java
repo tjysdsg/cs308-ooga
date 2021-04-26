@@ -29,7 +29,7 @@ public class ObjectView extends StackPane {
     obj.setOnPositionUpdate(this::refreshPosition);
     refreshPosition();
     getChildren().add(playerImage);
-    logger.info("New object created at {} {}", getTranslateX(), getTranslateY());
+    logger.debug("New object created at {} {}", getTranslateX(), getTranslateY());
   }
 
   private void refreshPosition() {
