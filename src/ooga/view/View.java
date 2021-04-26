@@ -72,8 +72,8 @@ public class View {
       logger.warn("Css file could not be loaded");
     }
     createAnimations();
-    setScene(splashScreen);
-    //startGame("data/example/");
+    //setScene(splashScreen);
+    startGame("data/Geometry Dash/");
     gameSelection.setOnGameSelected(this::startGame);
     exitApplication =
         () -> {
