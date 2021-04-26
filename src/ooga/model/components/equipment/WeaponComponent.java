@@ -21,7 +21,6 @@ public class WeaponComponent extends EquipmentComponent {
   }
 
   public double getAttack() {
-    healthIncrement(-1, false);
     return getPayLoad();
   }
 

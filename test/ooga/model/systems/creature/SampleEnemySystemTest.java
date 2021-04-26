@@ -3,13 +3,17 @@ package ooga.model.systems.creature;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
+import ooga.model.components.AttackComponent;
 import ooga.model.components.HealthComponent;
 import ooga.model.components.MovementComponent;
 import ooga.model.components.PlayerComponent;
 import ooga.model.components.enemy.HateComponent;
+import ooga.model.components.equipment.WeaponComponent;
 import ooga.model.managers.ECManager;
+import ooga.model.managers.SystemManager;
 import ooga.model.objects.GameObject;
 import ooga.model.systems.HealthSystem;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,16 +22,21 @@ class SampleEnemySystemTest {
   GameObject player;
   HealthComponent healthComponentP;
   HealthComponent healthComponentE;
+  AttackComponent attackComponent;
+  WeaponComponent weaponComponent;
+
 
   GameObject enemy;
   HateComponent hateComponent;
   PlayerComponent playerComponent;
   MovementComponent movementComponentP;
   MovementComponent movementComponentE;
+  SystemManager systemManager;
 
   PlayerSystem playerSystem;
   SampleEnemySystem sampleEnemySystem;
   HealthSystem healthSystem;
+  AttackSystem attackSystem;
 
   @BeforeEach
   void setup(){
@@ -42,8 +51,11 @@ class SampleEnemySystemTest {
     healthComponentP=ecManager.createComponent(player,HealthComponent.class);
     movementComponentE=ecManager.createComponent(enemy,MovementComponent.class);
     movementComponentP=ecManager.createComponent(player,MovementComponent.class);
+    weaponComponent = ecManager.createComponent(player,WeaponComponent.class);
+    attackComponent = ecManager.createComponent(player,AttackComponent.class);
+    systemManager = new SystemManager();
 
-    enemy.setX(0);
+    enemy.setX(10);
     enemy.setY(0);
     player.setY(0);
     player.setX(5);
@@ -52,15 +64,25 @@ class SampleEnemySystemTest {
     hateComponent.setDamage(-10);
     healthComponentP.setHealth(100);
     healthComponentE.setHealth(100);
-    healthSystem= new HealthSystem(ecManager);
-    playerSystem=new PlayerSystem(ecManager);
-
-    sampleEnemySystem = new SampleEnemySystem(ecManager);
+    attackComponent.setFrequency(10);
+    weaponComponent.setPayLoad(-10);
+    weaponComponent.setAttackRange(100);
+    systemManager.createSystem(HealthSystem.class,ecManager);
+    systemManager.createSystem(PlayerSystem.class,ecManager);
+    systemManager.createSystem(AttackSystem.class,ecManager);
+    systemManager.createSystem(SampleEnemySystem.class,ecManager);
+    healthSystem= systemManager.getSystem(HealthSystem.class);
+    playerSystem=systemManager.getSystem(PlayerSystem.class);
+    attackSystem=systemManager.getSystem(AttackSystem.class);
+    sampleEnemySystem = systemManager.getSystem(SampleEnemySystem.class);
 
   }
 
   @Test
   void update(){
+    attackSystem.attack(true);
+    attackSystem.attack(true);
+    assertEquals(90,healthComponentE.getHealth());
     sampleEnemySystem.update(0.1);
     assertEquals(90,healthComponentP.getHealth());
 
@@ -83,7 +105,5 @@ class SampleEnemySystemTest {
     List<PlayerComponent> tmp=ecManager.getComponents(PlayerComponent.class);
     assertEquals(0,ecManager.getComponents(PlayerComponent.class).size());
   }
-
-
 
 }

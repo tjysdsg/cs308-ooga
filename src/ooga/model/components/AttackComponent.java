@@ -26,7 +26,7 @@ public class AttackComponent extends Component {
   }
 
   public void update() {
-    counter += 1;
+    counter ++;
     counter = counter % frequency;
   }
 
