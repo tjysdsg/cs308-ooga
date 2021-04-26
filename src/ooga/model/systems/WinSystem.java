@@ -86,7 +86,6 @@ public class WinSystem extends ComponentBasedSystem{
   }
 
   private void loseGame(){
-    System.out.println("I am a loser");
     setOnLevelEnd.accept(false);
   }
 
