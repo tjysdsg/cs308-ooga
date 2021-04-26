@@ -118,6 +118,7 @@ public class GameScene extends Scene {
 
   private void updateScene(ObservableLevel observableLevel) {
     currentLevel = observableLevel;
+    logger.info("Available stats {}", observableLevel.getAvailableStats());
     setBackground(observableLevel.getBackgroundID());
     // notifyResize();
   }
@@ -156,7 +157,6 @@ public class GameScene extends Scene {
   private void handleInvalidGame() {}
 
   private void handlePress(KeyCode code) {
-    notifyEnd(true);
     if (code == KeyCode.ESCAPE) {
       logger.info("Escaping game");
       notifyEscape();
