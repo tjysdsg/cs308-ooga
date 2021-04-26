@@ -42,7 +42,7 @@ class SampleEnemySystemTest {
 
   @BeforeEach
   void setup(){
-    ecManager = new ECManager(null,null, null);
+    ecManager = new ECManager(null);
 
     enemy=ecManager.createEntity("enemy");
     player=ecManager.createEntity("player");

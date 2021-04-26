@@ -24,7 +24,7 @@ class PlayerSystemTest {
 
   @BeforeEach
   void setup(){
-    ecManager = new ECManager(null,null, null);
+    ecManager = new ECManager(null);
     systemManager = new SystemManager();
     systemManager.createSystem(MovementSystem.class,ecManager);
     systemManager.createSystem(PlayerSystem.class,ecManager);

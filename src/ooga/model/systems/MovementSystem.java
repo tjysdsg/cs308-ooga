@@ -124,7 +124,10 @@ public class MovementSystem extends ComponentBasedSystem {
       }
 
       // update vertical velocity according to vertical movement status
-      if (p.getVerticalStatus() == VerticalMovementStatus.RISING) {
+      if (p.getVerticalStatus() != VerticalMovementStatus.GROUNDED) {
+        go.setVelocityY(go.getVelocity().getY()-p.getGravAccel());
+      }
+        /*
         if (p.getJumpTimer() >= p.getJumpTime()) {
           p.setVerticalStatus(VerticalMovementStatus.FALLING);
         } else {
@@ -134,7 +137,9 @@ public class MovementSystem extends ComponentBasedSystem {
       if (p.getVerticalStatus() == VerticalMovementStatus.FALLING) {
         go.setVelocityY(-p.getJumpHeight() / p.getJumpTime());
       }
-      if (p.getVerticalStatus() == VerticalMovementStatus.GROUNDED) {
+
+         */
+      else if (p.getVerticalStatus() == VerticalMovementStatus.GROUNDED) {
         go.setVelocityY(0);
       }
 

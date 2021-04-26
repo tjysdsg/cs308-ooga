@@ -1,14 +1,16 @@
 package ooga.model.systems.creature;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import ooga.model.actions.ObjectSpawner;
 import ooga.model.annotations.Track;
 import ooga.model.components.MovementComponent;
 import ooga.model.components.PlayerComponent;
-import ooga.model.managers.ECManager;
+import ooga.model.objects.ObjectInstance;
 import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
 import ooga.model.managers.ECManager;
@@ -27,8 +29,7 @@ public class PlayerSystem extends ComponentBasedSystem {
   private final Map<String, BiConsumer<Integer, Boolean>> movementActionExecutors = Map.of(
       "MoveLeft", this::moveLeft,
       "MoveRight", this::moveRight,
-      "Jump", this::jump
-  );
+      "Jump", this::jump);
 
   // TODO: support active and inactive players
 
@@ -53,8 +54,14 @@ public class PlayerSystem extends ComponentBasedSystem {
         );
       }
 
-      BiConsumer<Integer, Boolean> executor = movementActionExecutors.get(mapping.getAction());
-      addMapping(mapping.getInput(), on -> executor.accept(goId, on));
+      // Getting around the hardcoded methods
+      if (mapping.getAction().equals("SpawnObject")) {
+        ObjectSpawner spawner = new ObjectSpawner(mapping.getPayload(), getECManager());
+        addMapping(mapping.getInput(), on -> spawner.handleSpawn(goId, on));
+      }  else {
+        BiConsumer<Integer, Boolean> executor = movementActionExecutors.get(mapping.getAction());
+        addMapping(mapping.getInput(), on -> executor.accept(goId, on));
+      }
     }
   }
 
@@ -81,5 +88,6 @@ public class PlayerSystem extends ComponentBasedSystem {
 
   @Override
   public void update(double deltaTime) {
+
   }
 }

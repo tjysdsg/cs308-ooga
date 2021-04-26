@@ -41,6 +41,7 @@ public abstract class EnemySystems extends ComponentBasedSystem {
    * Now assume that the the enemy will only attack the player.
    */
   public void loopHateMap() {
+    hateMap.clear();
     List<HateComponent> hateAll = hateMapper.getComponents();
     List<PlayerComponent> playerComponents = getPlayers();
     for (HateComponent hateComponent : hateAll) {

@@ -18,7 +18,9 @@ public class HealthSystemTest {
 
   @BeforeEach
   void setup() {
-    ecManager = new ECManager(null, null,null);
+
+    ecManager = new ECManager(null);
+    healthSystem = new HealthSystem(ecManager);
 
     go = ecManager.createEntity("test entity");
     healthComponent = ecManager.createComponent(go, HealthComponent.class);

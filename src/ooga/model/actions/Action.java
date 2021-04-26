@@ -1,15 +1,16 @@
 package ooga.model.actions;
 
 import com.squareup.moshi.Json;
+import java.util.Map;
 
 public class Action {
 
-  private String payload;
+  private Map<String, String> payload;
 
   @Json(name = "action")
   private String name;
 
-  public String getPayload() {
+  public Map<String, String>  getPayload() {
     return payload;
   }
 

@@ -3,6 +3,7 @@ package ooga.model.systems;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import ooga.model.actions.ActionInfo;
 import ooga.model.actions.CollisionInfo;
 import ooga.model.managers.ActionManager;
 import ooga.model.managers.ECManager;
@@ -28,6 +29,7 @@ public class CollisionSystem extends GameObjectBasedSystem {
     List<GameObject> collidableObjects = new ArrayList<>();
 
     for (GameObject gameObject : objects) {
+      //System.out.println("GameObject Name: "+ gameObject.getName()+ " X cord: "+ gameObject.getX() + " Y Cord: " + gameObject.getY() + " Width: " + gameObject.getWidth() + " Height: " + gameObject.getHeight() + " Velocity: "+ gameObject.getVelocity().magnitude());
       if (gameObject.isCollidable()) {
         collidableObjects.add(gameObject);
       }
@@ -65,19 +67,41 @@ public class CollisionSystem extends GameObjectBasedSystem {
   private void collide(GameObject self, GameObject other) {
     String selfDirection = detectCollisionDirection(self, other);
     String otherDirection = detectCollisionDirection(other, self);
+/*
+    if(self.getName().equals("playerblock")){
+      System.out.println(selfDirection);
+    }
+    else if(other.getName().equals("playerblock")){
+      System.out.println(otherDirection);
+    }
+*/
     self.setCollided(true);
     other.setCollided(true);
 
-    if (self.getVelocity().magnitude() >= other.getVelocity().magnitude()) {
+    CollisionInfo selfInfo = new CollisionInfo(self, other, selfDirection);
+    CollisionInfo otherInfo = new CollisionInfo(other, self, otherDirection);
+
+    if (!(canCollide(self, selfInfo) || canCollide(other, otherInfo))) {
+      return;
+    }
+
+    if(self.getVelocity().magnitude() >= other.getVelocity().magnitude()){
       rectifyCollision(self, other, selfDirection);
     } else {
       rectifyCollision(other, self, otherDirection);
     }
 
-    CollisionInfo info = new CollisionInfo(self, other, selfDirection);
-    myActionManager.handleAction(self, other, info);
-    info = new CollisionInfo(other, self, otherDirection);
-    myActionManager.handleAction(other, self, info);
+    myActionManager.handleAction(self, other, selfInfo);
+    myActionManager.handleAction(other, self, otherInfo);
+  }
+
+  private boolean canCollide(GameObject self, CollisionInfo collisionInfo) {
+    for (ActionInfo action : self.getActions()) {
+      if (action.equals(collisionInfo)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private void rectifyCollision(GameObject self, GameObject other, String selfDirection) {
@@ -92,10 +116,10 @@ public class CollisionSystem extends GameObjectBasedSystem {
         self.setX(other.getX() - self.getWidth());
         break;
       case "top":
-        self.setY(other.getY() - other.getHeight());
+        self.setY(other.getY()-self.getHeight());
         break;
       case "bottom":
-        self.setY(other.getY() + self.getHeight());
+        self.setY(other.getY()+other.getHeight());
         break;
     }
   }

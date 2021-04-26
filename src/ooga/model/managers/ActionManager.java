@@ -2,6 +2,7 @@ package ooga.model.managers;
 
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.MultimapBuilder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import ooga.model.actions.Action;
@@ -49,6 +50,10 @@ public class ActionManager extends BaseManager {
         actions.accept(new CollisionAction(self, other, actionInstance.getPayload()));
       }
     }
+  }
+
+  public List<String> getAvailableActions() {
+    return new ArrayList<String>(actions.keys());
   }
 
 }

@@ -28,11 +28,8 @@ public class ECManager extends BaseManager {
   private Consumer<ObservableObject> newObjectCallback;
   private Consumer<ObservableObject> deleteObjectCallback;
 
-  public ECManager(ObjectFactory factory, Consumer<ObservableObject> newObjectCallback,
-      Consumer<ObservableObject> deleteObjectCallback) {
+  public ECManager(ObjectFactory factory) {
     this.factory = factory;
-    this.newObjectCallback = newObjectCallback;
-    this.deleteObjectCallback = deleteObjectCallback;
   }
 
   public List<GameObject> getEntities() {
@@ -55,13 +52,17 @@ public class ECManager extends BaseManager {
    */
   public void deleteGameObject(int ID) {
     GameObject entity = entities.get(ID);
+    if (entity == null) {
+      return;
+    }
+
     notifyObjectDelete(entity);
 
     // remove all of its components
     for (Component component : entity.getComponents()) {
       removeComponent(component.getClass(), component.getId());
     }
-
+    logger.debug("Removing {}", ID);
     entities.remove(ID);
   }
 
@@ -74,6 +75,14 @@ public class ECManager extends BaseManager {
     }
 
     notifyNewObject(newObject);
+  }
+
+  public void setNewObjectCallback(Consumer<ObservableObject> newObjectCallback) {
+    this.newObjectCallback = newObjectCallback;
+  }
+
+  public void setDeleteObjectCallback(Consumer<ObservableObject> deleteObjectCallback) {
+    this.deleteObjectCallback = deleteObjectCallback;
   }
 
   private void notifyNewObject(GameObject newObject) {
@@ -151,6 +160,12 @@ public class ECManager extends BaseManager {
           "Failed to instantiate component class: " + componentClass.getName()
       );
     }
+    return ret;
+  }
+
+  public List<GameObject> getEntities(String whose) {
+    List<GameObject> ret = new ArrayList<>(getEntities());
+    ret.removeIf((entity) -> !entity.getName().equals(whose));
     return ret;
   }
 }

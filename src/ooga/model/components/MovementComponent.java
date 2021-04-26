@@ -6,6 +6,36 @@ import ooga.model.objects.GameObject;
 
 public class MovementComponent extends Component {
 
+  public double getGravAccel() {
+    return gravAccel;
+  }
+
+  public enum HorizontalMovementStatus {
+    /**
+     * Not moving
+     */
+    STILL,
+    /**
+     * Running at maxSpeed
+     */
+    RUNNING,
+  }
+
+  public enum VerticalMovementStatus {
+    /**
+     * Standing/running on ground
+     */
+    GROUNDED,
+    /**
+     * Rising in air
+     */
+    RISING,
+    /**
+     * Free falling
+     */
+    FALLING,
+  }
+
   public static final int RIGHT_DIRECTION = 1;
   public static final int LEFT_DIRECTION = -1;
   public static final int OBSTACLE_KEY_LEFT = 0;
@@ -15,6 +45,9 @@ public class MovementComponent extends Component {
   private static final double DEFAULT_MAX_SPEED = 100;
   private static final double DEFAULT_JUMP_HEIGHT = 200;
   private static final double DEFAULT_JUMP_TIME = 0.4;
+  private static final double DEFAULT_GRAV_ACCEL = 20;
+
+
   /**
    * Status of the player in terms of vertical movement
    */
@@ -36,6 +69,11 @@ public class MovementComponent extends Component {
    * Max height the players can jump
    */
   private double jumpHeight = DEFAULT_JUMP_HEIGHT;
+
+  private double gravAccel = DEFAULT_GRAV_ACCEL;
+
+
+
   /**
    * Obstacles the player currently collide with
    *
@@ -137,29 +175,5 @@ public class MovementComponent extends Component {
     return MovementComponent.class.getName();
   }
 
-  public enum HorizontalMovementStatus {
-    /**
-     * Not moving
-     */
-    STILL,
-    /**
-     * Running at maxSpeed
-     */
-    RUNNING,
-  }
 
-  public enum VerticalMovementStatus {
-    /**
-     * Standing/running on ground
-     */
-    GROUNDED,
-    /**
-     * Rising in air
-     */
-    RISING,
-    /**
-     * Free falling
-     */
-    FALLING,
-  }
 }

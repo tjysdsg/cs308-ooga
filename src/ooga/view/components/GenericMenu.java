@@ -11,18 +11,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.javafx.FontIcon;
 
-public class PauseMenu extends StackPane {
+public class GenericMenu extends StackPane {
+  private static final Logger logger = LogManager.getLogger(GenericMenu.class);
 
-  private static final Logger logger = LogManager.getLogger(PauseMenu.class);
 
   private VBox contents;
 
-  public PauseMenu(ObservableResource resources) {
+  public GenericMenu(StringBinding title) {
     super();
     getStyleClass().add("pause-dialog");
     this.contents = new VBox();
     Label pauseLabel = new Label();
-    pauseLabel.textProperty().bind(resources.getStringBinding("Paused"));
+    pauseLabel.textProperty().bind(title);
     contents.getChildren().addAll(pauseLabel);
     getChildren().addAll(contents);
   }

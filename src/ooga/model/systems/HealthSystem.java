@@ -3,6 +3,7 @@ package ooga.model.systems;
 import java.util.ArrayList;
 import java.util.List;
 import ooga.model.StatsInfo;
+import ooga.model.actions.CollisionAction;
 import ooga.model.annotations.Track;
 import ooga.model.components.HealthComponent;
 import ooga.model.managers.ECManager;
@@ -20,6 +21,8 @@ public class HealthSystem extends ComponentBasedSystem {
     super(ecManager);
     componentMapper = getComponentMapper(HealthComponent.class);
     addStatsSupplier(HEALTH_STATS_NAME, this::healthStatsSupplier);
+
+    addCollisionMapping("change_health", this::changeHealth);
   }
 
   private List<StatsInfo> healthStatsSupplier() {
@@ -28,6 +31,11 @@ public class HealthSystem extends ComponentBasedSystem {
       ret.add(new StatsInfo(healthComponent.getHealth() + "", healthComponent.getOwner().getId()));
     }
     return ret;
+  }
+
+  private void changeHealth(CollisionAction collisionAction) {
+    double delta = Double.parseDouble(collisionAction.getPayload().get("amount"));
+    changeHealth(collisionAction.getSelf().getId(), delta, delta >= 0);
   }
 
   /**

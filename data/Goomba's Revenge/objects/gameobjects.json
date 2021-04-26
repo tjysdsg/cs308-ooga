@@ -136,23 +136,13 @@
       },
       {
         "type": "HateComponent",
-        "frequency": "10",
-        "range": "50"
+        "frequency": "3",
+        "range": "60",
+        "damage": "-3.0"
       },
       {
         "type": "HealthComponent",
         "health": "100.0"
-      },
-      {
-        "type" : "MovementSequenceComponent",
-        "actionSequence": [
-          "move_left",
-          "move_right"
-        ],
-        "actionTime": [
-          "0.5",
-          "0.5"
-        ]
       }
     ]
   },
@@ -172,7 +162,13 @@
         "actions": [
           {
             "action": "spawn_object",
-            "payload": "brick,0,0"
+            "payload": {
+              "which": "brick",
+              "offsetX": "0",
+              "offsetY": "0",
+              "velocityX": "0",
+              "velocityY": "0"
+            }
           },
           {
             "action": "destroy_object"

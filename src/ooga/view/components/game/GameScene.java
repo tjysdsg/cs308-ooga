@@ -7,6 +7,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
 import javafx.collections.ObservableMap;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -55,6 +57,7 @@ public class GameScene extends Scene {
   private GameConfiguration gameConfiguration;
   private ObservableResource resources;
   private SettingsModule settings;
+  private Consumer<Boolean> ionly;
 
 
   public GameScene(String directory, ObservableResource resources) {
@@ -65,37 +68,26 @@ public class GameScene extends Scene {
     this.model = new Model();
     this.controller = new Controller(model);
     String defaultConfig = "";
-    try {
-      defaultConfig =
-          Paths.get(getClass().getResource("resources/settings/defaultView.json").toURI())
-              .toString();
-      this.gameConfiguration = ConfigurationFactory.createConfiguration(defaultConfig);
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+    defaultConfig =
+        Paths.get(directory + "view.json")
+            .toString();
+    this.gameConfiguration = ConfigurationFactory.createConfiguration(defaultConfig);
+
     controller.setKeyMap(gameConfiguration.getKeyMap());
     this.directory = directory;
     this.statsView = new StatsView(resources);
-    this.gameArea = new GameArea(statsView);
     this.loop = new GameLoop();
     this.images = new ImageConfiguration(directory);
     // Temporary
-    statsView.addStatistics("Health", "Points");
-    statsView.updateStat("Health", "30");
-    statsView.updateStat("Points", "50");
+
+    statsView.addStatistics(gameConfiguration.getStats());
+//    statsView.updateStat("Health", "30");
+//    statsView.updateStat("Points", "50");
     // End temporary
     File gameDirectory = new File(directory);
-    model.setOnNewObject(
-        e -> {
-          ObjectView obj = new ObjectView(e, images);
-          gameArea.addObject(obj);
-        });
 
     model.setOnLevelChange(this::updateScene);
-    model.setOnObjectDestroy(
-        e -> {
-          gameArea.removeObject(e);
-        });
+    model.setOnGameEnd(this::notifyEnd);
 
     if (!ModelFactory.verifyGameDirectory(gameDirectory)) {
       handleInvalidGame();
@@ -110,8 +102,6 @@ public class GameScene extends Scene {
 
     root.getStyleClass().add("game-scene");
     // this.controller = game.getController();
-    root.getChildren().add(gameArea);
-    gameArea.requestFocus();
     setOnKeyPressed(e -> handlePress(e.getCode()));
     setOnKeyReleased(e -> handleRelease(e.getCode()));
     setupSettings();
@@ -120,7 +110,25 @@ public class GameScene extends Scene {
   }
 
   private void updateScene(ObservableLevel observableLevel) {
-    currentLevel = observableLevel;
+    this.currentLevel = observableLevel;
+    if (this.gameArea != null) {
+      root.getChildren().remove(gameArea);
+    }
+    this.gameArea = new GameArea(observableLevel, statsView);
+    root.getChildren().add(gameArea);
+    observableLevel.getAvailableGameObjects().forEach(obj -> {
+      gameArea.addObject(new ObjectView(obj, images));
+    });
+    observableLevel.setOnNewObject(
+        e -> {
+          ObjectView obj = new ObjectView(e, images);
+          gameArea.addObject(obj);
+        });
+    observableLevel.setOnObjectDestroy(
+        e -> {
+          gameArea.removeObject(e);
+        });
+    logger.info("Available stats {}", observableLevel.getAvailableStats());
     setBackground(observableLevel.getBackgroundID());
     // notifyResize();
   }
@@ -130,6 +138,7 @@ public class GameScene extends Scene {
     Image bgImage = images.getImage(newBackground, WIDTH, HEIGHT);
 
     try {
+
       logger.info("Openning {} for background", bgImage.getUrl());
       bg =
           new BackgroundImage(
@@ -150,7 +159,7 @@ public class GameScene extends Scene {
 
   private void setupSettings() {
     this.settings = new SettingsModule(resources.getStringBinding("GameSettings"));
-    settings.addKeysOption(gameConfiguration.getKeyMap(), List.of("left", "right"));
+    settings.addKeysOption(gameConfiguration.getKeyMap(), currentLevel.getAvailableInputs());
   }
 
   public SettingsModule getSettings() {
@@ -180,6 +189,10 @@ public class GameScene extends Scene {
     }
   }
 
+  public void setOnEnd(Consumer<Boolean> callback) {
+    this.ionly = callback;
+  }
+
   /**
    * Notify that the user has tried to escape the game.
    *
@@ -200,10 +213,20 @@ public class GameScene extends Scene {
     // notifyResize();
   }
 
+  private void notifyEnd(boolean victory) {
+    if (this.ionly != null) {
+      ionly.accept(victory); // 😤
+    }
+  }
+
   public void notifyResize() {
     if (resizeCallback != null) {
       resizeCallback.accept((double) currentLevel.getHeight(), (double) currentLevel.getWidth());
     }
+  }
+
+  public StackPane getRootCover() {
+    return this.root;
   }
 
   public void playGame() {

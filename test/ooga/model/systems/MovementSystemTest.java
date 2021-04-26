@@ -29,7 +29,7 @@ class MovementSystemTest {
 
   @BeforeEach
   void setup() throws NoSuchMethodException {
-    ecManager= new ECManager(null,null,null);
+    ecManager= new ECManager(null);
     movementSystem = new MovementSystem(ecManager);
 
     go0=ecManager.createEntity("test ent1");

@@ -18,8 +18,8 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   private double x, y;
   private String imageID;
   private boolean isCollided;
-  private List<String> isA;
-  private transient Vector velocity = new Vector(0, 0);
+  private List<String> isA = new ArrayList<>();
+  private Vector velocity = new Vector(0,0);
   private boolean collidable = true;
   private double height, width;
   private List<ActionInfo> onCollide = new ArrayList<>();
@@ -39,7 +39,7 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   }
 
   public boolean isA(String type) {
-    return isA.contains(type);
+    return isA.contains(type) || name.equals(type);
   }
 
   public String getImageID() {
@@ -93,6 +93,15 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   @Override
   public double getWidth() {
     return this.width;
+  }
+
+
+  public void setWidth(double width){
+    this.width = width;
+
+  }
+  public void setHeight(double height){
+    this.height = height;
   }
 
   @Override

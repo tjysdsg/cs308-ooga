@@ -7,13 +7,15 @@ import java.net.URL;
 import java.nio.file.Paths;
 
 import javafx.animation.*;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import ooga.view.components.PauseMenu;
+import javafx.util.*;
+import ooga.view.components.GenericMenu;
+
 import ooga.view.components.SettingsModule;
 import ooga.view.components.SettingsPane;
 import ooga.view.components.SplashScreen;
@@ -47,8 +49,10 @@ public class View {
   private JFXDialog pauseDialog;
   private SplashScreen splashScreen;
   private ViewConfiguration viewConfiguration;
-  private PauseMenu pauseMenu;
+  private GenericMenu pauseMenu;
   private SettingsPane settings;
+  private GenericMenu endScreen;
+  private String currentGameDir;
 
   public View(Stage stage) {
     CSSFX.start();
@@ -102,6 +106,24 @@ public class View {
     stage.show();
   }
 
+  private void setupEndscreen(boolean victory) {
+    StringBinding title;
+    StringBinding nextPlay;
+    StringBinding exit = resources.getStringBinding("Exit");
+    if (victory) {
+      title = resources.getStringBinding("YouWin");
+      nextPlay = resources.getStringBinding("TryAgain");
+    } else {
+      title = resources.getStringBinding("YouLose");
+      nextPlay = resources.getStringBinding("PlayAgain");
+    }
+    this.endScreen = new GenericMenu(title);
+    endScreen.addOption(nextPlay, () -> startGame(this.currentGameDir),
+        "secondary", "play");
+    endScreen.addOption(exit, () -> setScene(splashScreen),
+        "secondary", "play");
+  }
+
   private void setupSettings() {
 
     SettingsModule systemModule = new SettingsModule(resources.getStringBinding("System"));
@@ -123,7 +145,7 @@ public class View {
 
   private void setupPauseMenu() {
     pauseDialog = new JFXDialog();
-    pauseMenu = new PauseMenu(resources);
+    pauseMenu = new GenericMenu(resources.getStringBinding("Paused"));
     pauseDialog.setContent(pauseMenu);
 
     pauseMenu.addOption(
@@ -157,9 +179,14 @@ public class View {
 
   private void startGame(String directory) {
     logger.info("Game Selected {}", directory);
+    this.currentGameDir = directory;
     // TODO: Have a check if a game is currently playing and ask
     // if want to quit
     currentGame = new GameScene(directory, resources);
+    currentGame.setOnEnd( b -> {
+      setupEndscreen(b);
+      currentGame.getRootCover().getChildren().add(endScreen);
+    });
     currentGame.setOnResize(
         (height, width) -> {
           stage.setHeight(height);

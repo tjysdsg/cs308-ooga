@@ -14,8 +14,6 @@ public class ActionInfo {
   public ActionInfo() {
   }
 
-  ;
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {

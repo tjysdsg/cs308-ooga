@@ -16,12 +16,18 @@ import ooga.model.managers.StatsManager;
 import ooga.model.managers.SystemManager;
 import ooga.model.objects.GameObject;
 import ooga.model.observables.ObservableLevel;
+import ooga.model.observables.ObservableObject;
 import ooga.model.systems.BaseSystem;
 import ooga.model.systems.CollisionSystem;
 import ooga.model.systems.HealthSystem;
 import ooga.model.systems.LifeCircleSystem;
+
+import ooga.model.systems.ScoreSystem;
+
 import ooga.model.systems.MovementSystem;
+
 import ooga.model.systems.TransformSystem;
+import ooga.model.systems.WinSystem;
 import ooga.model.systems.creature.AttackSystem;
 import ooga.model.systems.creature.NPCSystem;
 import ooga.model.systems.creature.PlayerSystem;
@@ -36,6 +42,8 @@ class GameLevel implements Level, ObservableLevel {
   private int height;
   private int width;
   private String background;
+  private String focus;
+  private int levelNumber;
 
   private transient List<BaseSystem> systems = new ArrayList<>();
   @Json(name = "objects")
@@ -44,6 +52,7 @@ class GameLevel implements Level, ObservableLevel {
   private transient ActionManager actionManager = new ActionManager();
   private transient StatsManager statsManager = new StatsManager();
   private transient SystemManager systemManager;
+  private transient Consumer<ObservableObject> focusChangeCallback;
 
   // MUST BE HERE!!! MOSHI USES THIS
   public GameLevel() {
@@ -60,6 +69,8 @@ class GameLevel implements Level, ObservableLevel {
     systemManager.createSystem(TransformSystem.class, ecManager);
     systemManager.createSystem(SampleEnemySystem.class, ecManager);
     systemManager.createSystem(NPCSystem.class, ecManager);
+    systemManager.createSystem(WinSystem.class, ecManager);
+    systemManager.createSystem(ScoreSystem.class, ecManager);
     systemManager.createSystem(AttackSystem.class,ecManager);
     systems = systemManager.getAllSystems();
 
@@ -69,6 +80,19 @@ class GameLevel implements Level, ObservableLevel {
       s.registerAllInputs(inputManager);
       s.registerAllActions(actionManager);
       s.registerAllStats(statsManager);
+    }
+
+    for (GameObject object : ecManager.getEntities()) {
+      if (object.getName().equals(focus)) {
+        notifyFocusChange(object);
+        break;
+      }
+    }
+  }
+
+  private void notifyFocusChange(GameObject object) {
+    if (focusChangeCallback != null) {
+      focusChangeCallback.accept(object);
     }
   }
 
@@ -87,6 +111,13 @@ class GameLevel implements Level, ObservableLevel {
   }
 
   @Override
+  public void setOnLevelEnd(Consumer<Boolean> update) {
+    WinSystem winSystem = systemManager.getSystem(WinSystem.class);
+    winSystem.setSetOnLevelEnd(update);
+  }
+
+
+  @Override
   public int getHeight() {
     return height;
   }
@@ -97,9 +128,8 @@ class GameLevel implements Level, ObservableLevel {
   }
 
   @Override
-  public void setOnFocusUpdate(Consumer<Integer> callback) {
-    // TODO: implement this
-    // TODO: add input handler by which user presses a key to change main player
+  public void setOnFocusUpdate(Consumer<ObservableObject> callback) {
+    focusChangeCallback = callback;
   }
 
   @Override
@@ -110,6 +140,16 @@ class GameLevel implements Level, ObservableLevel {
   @Override
   public List<String> getAvailableStats() {
     return getStatsManager().getTrackableStatistics();
+  }
+
+  @Override
+  public List<String> getAvailableActions() {
+    return getActionManager().getAvailableActions();
+  }
+
+  @Override
+  public List<String> getAvailableInputs() {
+    return getInputManager().getRegisteredKeys();
   }
 
   @Override
@@ -145,5 +185,28 @@ class GameLevel implements Level, ObservableLevel {
 
   public InputManager getInputManager() {
     return inputManager;
+  }
+
+  public ActionManager getActionManager() {
+    return actionManager;
+  }
+
+  @Override
+  public void setOnNewObject(Consumer<ObservableObject> callback) {
+    ecManager.setNewObjectCallback(callback);
+  }
+
+  @Override
+  public void setOnObjectDestroy(Consumer<ObservableObject> callback) {
+    ecManager.setDeleteObjectCallback(callback);
+  }
+
+  @Override
+  public List<? extends ObservableObject> getAvailableGameObjects() {
+    return ecManager.getEntities();
+  }
+  @Override
+  public int getLevelNumber(){
+    return levelNumber;
   }
 }
