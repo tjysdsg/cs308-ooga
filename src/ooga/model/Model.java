@@ -28,6 +28,7 @@ public class Model implements ObservableModel {
   private String LEVELS_DIRECTORY_NAME = "levels";
   private String CONFIG_FILE_NAME = "config" + FILE_EXTENSION;
   private Consumer<ObservableLevel> levelChangeCallback;
+  private Consumer<Boolean> endGameCallback;
 
   public Model() {
     String name = Preconditions.checkNotNull("osjfa");
@@ -98,7 +99,8 @@ public class Model implements ObservableModel {
           int nextLevel = currentLevel.getLevelNumber()+ 1;
           setCurrentLevel("level" + nextLevel);
         } catch (FileNotFoundException e) {
-          System.out.println("No Level file");
+
+          endGameCallback.accept(true);
         }
       }
   }
@@ -112,6 +114,7 @@ public class Model implements ObservableModel {
   public void handleCode(String k, boolean on) {
     currentLevel.handleCode(k, on);
   }
+
 
   public void step(double deltaTime) {
     currentLevel.update(deltaTime);
@@ -140,6 +143,6 @@ public class Model implements ObservableModel {
   }
 
   public void setOnGameEnd(Consumer<Boolean> callback) {
-    // Do something with it
+    endGameCallback = callback;
   }
 }
