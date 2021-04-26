@@ -79,14 +79,6 @@
     "name" : "enemy",
     "height" : 50,
     "width" : 50,
-    "imageID" : "basice",
-    "components" : [
-      {
-        "type" : "MovementSequenceComponent",
-        "actionSequence" : [
-
-        ]
-      }
-    ]
+    "imageID" : "basice"
   }
 ]
