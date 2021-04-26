@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ViewConfiguration {
+
   public static final String DEFAULT_RESOURCES = "ooga.view.resources.languages.";
 
   private ObservableResource language = new ObservableResource();

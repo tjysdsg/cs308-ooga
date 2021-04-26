@@ -28,9 +28,9 @@ public class ControllerTest {
         model = new Model();
         model.setOnLevelChange((level) -> levelChanges++);
 
-//        model.setOnNewObject((thing) -> {
-//            numObjects++;
-//        });
+        model.setOnLevelChange((thing) -> {
+            numObjects++;
+        });
 
         controller = new Controller(model);
     }

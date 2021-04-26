@@ -1,10 +1,9 @@
 package ooga.model;
 
 import java.util.List;
-
+import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 import ooga.model.observables.ObservableLevel;
-import ooga.model.managers.ECManager;
 
 public interface Level {
 

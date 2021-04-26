@@ -1,13 +1,15 @@
 package ooga.model;
 
-import ooga.model.observables.ObservableModel;
 import java.io.File;
-import org.apache.logging.log4j.Logger;
+import ooga.model.observables.ObservableModel;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public interface  ModelFactory {
+public interface ModelFactory {
+
   // Make private once moved to abstract class
   static final Logger logger = LogManager.getLogger(ModelFactory.class);
+
   public static ObservableModel createObservableModel() {
     return null;
   }

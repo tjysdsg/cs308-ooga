@@ -1,6 +1,7 @@
 package ooga.view.components;
 
 import com.jfoenix.controls.JFXComboBox;
+
 import com.jfoenix.controls.JFXTextField;
 import java.util.List;
 import javafx.beans.binding.StringBinding;
@@ -16,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
 public class SettingsModule extends StackPane {
+
   private FlowPane area;
   private StringBinding moduleName;
 

@@ -2,13 +2,14 @@ package ooga.model.components;
 
 import ooga.model.objects.GameObject;
 
-public class AOEComponent extends Component{
-    public AOEComponent(int id, GameObject owner) {
-        super(id, owner);
-    }
+public class AOEComponent extends Component {
 
-    @Override
-    public String typeUnerasure() {
-        return AOEComponent.class.getName();
-    }
+  public AOEComponent(int id, GameObject owner) {
+    super(id, owner);
+  }
+
+  @Override
+  public String typeUnerasure() {
+    return AOEComponent.class.getName();
+  }
 }

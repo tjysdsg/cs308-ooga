@@ -14,13 +14,31 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class MetaGame {
+
   private static final Logger logger = LogManager.getLogger(MetaGame.class);
+  private static final JsonAdapter<MetaGame> adapter = new Moshi.Builder().build()
+      .adapter(MetaGame.class);
   private String author = "Unknown";
   private String dateCreated = "Unknown";
   private List<String> levels = new ArrayList<>();
   private List<String> tags = new ArrayList<>();
-  private static final JsonAdapter<MetaGame> adapter = new Moshi.Builder().build()
-      .adapter(MetaGame.class);
+
+  // Do not remove! Moshi needs this :).
+  public MetaGame() {
+  }
+
+  public static MetaGame createMetaDataFromDirectory(File directory) {
+    Preconditions.checkArgument(directory != null);
+    try {
+      String content = Files.readString(Path.of(directory.getPath() + "/meta.json"));
+      MetaGame metadata = adapter.fromJson(content);
+      logger.debug("MetaData created: {}", metadata);
+      return metadata;
+    } catch (IOException e) {
+      logger.debug("Unable to create MetaData from directory {}", directory.getPath());
+      return null;
+    }
+  }
 
   public String getDateCreated() {
     return dateCreated;
@@ -32,10 +50,6 @@ public class MetaGame {
 
   public List<String> getTags() {
     return tags;
-  }
-
-  // Do not remove! Moshi needs this :).
-  public MetaGame() {
   }
 
   @Override
@@ -50,18 +64,5 @@ public class MetaGame {
 
   public String getAuthor() {
     return this.author;
-  }
-
-  public static MetaGame createMetaDataFromDirectory(File directory) {
-    Preconditions.checkArgument(directory != null);
-    try {
-      String content = Files.readString(Path.of(directory.getPath() + "/meta.json"));
-      MetaGame metadata = adapter.fromJson(content);
-      logger.debug("MetaData created: {}", metadata);
-      return metadata;
-    } catch (IOException e) {
-      logger.debug("Unable to create MetaData from directory {}", directory.getPath());
-      return null;
-    }
   }
 }

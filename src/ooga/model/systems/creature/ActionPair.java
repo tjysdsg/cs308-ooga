@@ -1,6 +1,7 @@
 package ooga.model.systems.creature;
 
 public class ActionPair {
+
   private String input;
   private String action;
   private String payload;

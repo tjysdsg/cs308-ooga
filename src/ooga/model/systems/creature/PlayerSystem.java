@@ -85,12 +85,6 @@ public class PlayerSystem extends ComponentBasedSystem {
   }
 
 
-  public void initPlayerType(PlayerComponent.PlayerType playerType) {
-    List<PlayerComponent> players = getPlayers();
-    for (PlayerComponent p : players) {
-      p.setPlayerType(playerType);
-    }
-  }
 
   @Override
   public void update(double deltaTime) {
