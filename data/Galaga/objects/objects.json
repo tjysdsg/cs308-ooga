@@ -6,6 +6,9 @@
     "imageID": "fighter",
     "onCollide": [
       {
+        "with" : [
+          "floor"
+        ],
         "actions": [
           {
             "action": "blocked_bottom"
@@ -16,6 +19,7 @@
         ]
       },
       {
+        "with" : ["wall"],
         "actions": [
           {
             "action": "blocked_left"
@@ -26,6 +30,7 @@
         ]
       },
       {
+        "with" : ["wall"],
         "actions": [
           {
             "action": "blocked_right"
@@ -48,6 +53,11 @@
           {
             "action" : "MoveLeft",
             "input" : "left"
+          },
+          {
+            "action" : "SpawnObject",
+            "input" : "shoot",
+            "payload" : "bullet,0,0"
           }
         ]
       },
@@ -80,5 +90,14 @@
     "height" : 50,
     "width" : 50,
     "imageID" : "basice"
+  },
+  {
+    "name" : "bullet",
+    "height" : 10,
+    "width" : 10,
+    "imageID" : "laser",
+    "velocity" : {
+      "y" : 50
+    }
   }
 ]

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javafx.beans.binding.StringBinding;
+import javafx.collections.ObservableList;
 import javafx.scene.layout.HBox;
 import ooga.view.util.LabelPair;
 import ooga.view.util.ObservableResource;
@@ -19,7 +20,7 @@ public class StatsView extends HBox {
     this.stats = new HashMap<>();
   }
 
-  public void addStatistics(String... newStats) {
+  public void addStatistics(ObservableList<String> newStats) {
     for (String stat : newStats) {
       StringBinding binding = resources.getStringBinding(stat);
       LabelPair pair = new LabelPair(binding);
