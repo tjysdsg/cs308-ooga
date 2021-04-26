@@ -35,7 +35,12 @@ public interface ObservableLevel {
   List<String> getAvailableStats();
 
   /**
-   * Get the names of all action available in this game level
+   * Get the names of all collision action available in this game level
    */
   List<String> getAvailableActions();
+
+  /**
+   * Get the names of all input action available in this game level
+   */
+  List<String> getAvailableInputs();
 }

@@ -134,6 +134,11 @@ class GameLevel implements Level, ObservableLevel {
   }
 
   @Override
+  public List<String> getAvailableInputs() {
+    return getInputManager().getRegisteredKeys();
+  }
+
+  @Override
   public String getName() {
     return name;
   }
