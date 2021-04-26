@@ -62,14 +62,11 @@ public class GameScene extends Scene {
     this.model = new Model();
     this.controller = new Controller(model);
     String defaultConfig = "";
-    try {
-      defaultConfig =
-          Paths.get(getClass().getResource("resources/settings/defaultView.json").toURI())
-              .toString();
-      this.gameConfiguration = ConfigurationFactory.createConfiguration(defaultConfig);
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
+    defaultConfig =
+        Paths.get(directory + "view.json")
+            .toString();
+    this.gameConfiguration = ConfigurationFactory.createConfiguration(defaultConfig);
+
     controller.setKeyMap(gameConfiguration.getKeyMap());
     this.directory = directory;
     this.statsView = new StatsView(resources);
@@ -77,9 +74,10 @@ public class GameScene extends Scene {
     this.loop = new GameLoop();
     this.images = new ImageConfiguration(directory);
     // Temporary
-    statsView.addStatistics("Health", "Points");
-    statsView.updateStat("Health", "30");
-    statsView.updateStat("Points", "50");
+
+    statsView.addStatistics(gameConfiguration.getStats());
+//    statsView.updateStat("Health", "30");
+//    statsView.updateStat("Points", "50");
     // End temporary
     File gameDirectory = new File(directory);
     model.setOnNewObject(
