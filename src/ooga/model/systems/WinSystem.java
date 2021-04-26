@@ -37,8 +37,6 @@ public class WinSystem extends ComponentBasedSystem{
     );
   }
 
-
-
   @Override
   public void update(double deltaTime) {
     List<WinComponent> winComps = winMapper.getComponents();
@@ -87,12 +85,12 @@ public class WinSystem extends ComponentBasedSystem{
   }
 
   private void loseGame(){
-    System.out.println("I LOSE");
+    //System.out.println("I LOSE");
     //etOnLevelEnd.accept(false);
   }
 
   private void winGame(){
-    System.out.println("I WIN");
+    //System.out.println("I WIN");
     //setOnLevelEnd.accept(true);
   }
 

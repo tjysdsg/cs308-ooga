@@ -77,7 +77,7 @@
 
       {
         "type" : "MovementComponent",
-        "jumpHeight": 250,
+        "jumpHeight": 400,
         "maxSpeed": 250,
         "gravAccel": 30,
         "horizontalStatus" : "RUNNING"
@@ -121,7 +121,7 @@
   },
   {
     "name": "tallblock",
-    "height": 150,
+    "height": 600,
     "width": 50,
     "imageID": "tallblock"
   },
