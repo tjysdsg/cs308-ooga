@@ -7,6 +7,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
 import javafx.collections.ObservableMap;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -118,6 +120,13 @@ public class GameScene extends Scene {
 
   private void updateScene(ObservableLevel observableLevel) {
     currentLevel = observableLevel;
+    observableLevel.setOnStatsUpdate("health", e -> {
+      String listedValues = e.stream()
+        .map(n -> n.value())
+        .collect(Collectors.joining(","));
+      statsView.updateStat("Health", listedValues);
+      logger.debug("Updated: {}", e);
+    });
     logger.info("Available stats {}", observableLevel.getAvailableStats());
     setBackground(observableLevel.getBackgroundID());
     // notifyResize();
