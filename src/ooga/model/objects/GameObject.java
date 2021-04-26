@@ -105,6 +105,7 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
     return false;
   }
 
+
   @Override
   public int getID() {
     return this.id;

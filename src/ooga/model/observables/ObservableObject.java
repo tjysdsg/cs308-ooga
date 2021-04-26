@@ -16,7 +16,6 @@ public interface ObservableObject {
 
   boolean isVisible();
 
-  String objectId();
 
   int getID();
   String getName();
