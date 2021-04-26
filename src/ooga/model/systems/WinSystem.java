@@ -7,14 +7,17 @@ import ooga.model.components.HealthComponent;
 import ooga.model.components.PlayerComponent;
 import ooga.model.components.ScoreComponent;
 import ooga.model.components.WinComponent;
+import ooga.model.components.enemy.HateComponent;
 import ooga.model.managers.ECManager;
 
-@Track({PlayerComponent.class, HealthComponent.class, ScoreComponent.class, WinComponent.class})
+@Track({PlayerComponent.class, HealthComponent.class, ScoreComponent.class, WinComponent.class,
+    HateComponent.class})
 public class WinSystem extends ComponentBasedSystem{
   private ComponentMapper<PlayerComponent> playerMapper;
   private ComponentMapper<HealthComponent> healthMapper;
   private ComponentMapper<ScoreComponent> scoreMapper;
   private ComponentMapper<WinComponent> winMapper;
+  private ComponentMapper<HateComponent> hateMapper;
   private Consumer<Boolean> setOnLevelEnd;
 
   private boolean hasWon = false;
@@ -25,6 +28,7 @@ public class WinSystem extends ComponentBasedSystem{
     healthMapper = getComponentMapper(HealthComponent.class);
     scoreMapper = getComponentMapper(ScoreComponent.class);
     winMapper = getComponentMapper(WinComponent.class);
+    hateMapper = getComponentMapper(HateComponent.class);
 
     addCollisionMapping(
         "lose_game",
@@ -70,6 +74,11 @@ public class WinSystem extends ComponentBasedSystem{
         return;
       }
 
+      else if(wCond.getCondition().equals("enemy")) {
+        boolean comp = wCond.checkCondition(hateMapper.getComponents().size());
+        executeWinOrLose(comp, wCond);
+        return;
+      }
     }
 
   }

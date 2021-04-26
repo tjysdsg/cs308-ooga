@@ -56,7 +56,10 @@
         "type" : "WinComponent",
         "winConds": [
           {
-            "condition": "none"
+            "condition": "enemy",
+            "threshold" : 0,
+            "win" : true,
+            "operator" : "equal"
           }
 
         ]
@@ -130,6 +133,9 @@
         "gravAccel" : 0
       },
       {
+        "type" : "HateComponent"
+      },
+      {
         "type" : "MovementSequenceComponent",
         "actionSequence" : [
           {
@@ -147,7 +153,7 @@
           }
         ],
         "actionTime" : [
-          1, 1, 1, 1
+          1, 1, 0, 1
         ]
       }
     ]
