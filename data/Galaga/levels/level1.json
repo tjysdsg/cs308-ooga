@@ -2,18 +2,39 @@
   "name": "Firsrt Level",
   "id": "first",
   "background": "space",
-  "height": 500,
-  "width": 200,
+  "focus" : "camera",
+  "height": 750,
+  "width": 500,
   "objects": [
+    {
+      "name" : "camera",
+      "x" : 250,
+      "y" : 375
+    },
     {
       "name": "fighter",
       "x": 100,
-      "y": 100
+      "y": 25
     },
     {
       "name": "floor",
-      "x": 0,
+      "x": 25,
       "y": 0
+    },
+    {
+      "name" : "wall",
+      "x" : 0,
+      "y" : 0
+    },
+    {
+      "name" : "wall",
+      "x" : 475,
+      "y" : 0
+    },
+    {
+      "name" : "enemy",
+      "x" : 250,
+      "y" : 375
     }
   ]
 }

@@ -18,7 +18,7 @@ public interface ObservableLevel {
    *
    * @param callback The integer represents the object id
    */
-  void setOnFocusUpdate(Consumer<Integer> callback);
+  void setOnFocusUpdate(Consumer<ObservableObject> callback);
 
   /**
    * Set the callback that is called, when a certain statistics is updated, such as "score", or
