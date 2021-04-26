@@ -1,11 +1,13 @@
 package ooga.view.components;
 
+
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.layout.AnchorPane;
 import ooga.view.util.ObservableResource;
+
 
 public class SettingsPane extends AnchorPane {
   private TabPane modules;

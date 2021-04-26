@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+
 import ooga.model.observables.ObservableLevel;
 import ooga.model.observables.ObservableObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class GameArea extends AnchorPane {
+
   private static final Logger logger = LogManager.getLogger(GameArea.class);
   private static final double LEFT_EDGE = 20;
   private static final double BOTTOM_EDGE = 0;

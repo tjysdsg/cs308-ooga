@@ -5,21 +5,21 @@ import com.squareup.moshi.ToJson;
 
 public class GameObjectAdapter {
 
-    private ObjectFactory objectFactory;
+  private ObjectFactory objectFactory;
 
-    public GameObjectAdapter(ObjectFactory objectFactory) {
-        this.objectFactory = objectFactory;
-    }
+  public GameObjectAdapter(ObjectFactory objectFactory) {
+    this.objectFactory = objectFactory;
+  }
 
-    @FromJson
-    GameObject objectFromJson(ObjectInstance instance) {
-        return objectFactory.buildObject(instance);
-    }
+  @FromJson
+  GameObject objectFromJson(ObjectInstance instance) {
+    return objectFactory.buildObject(instance);
+  }
 
-    @ToJson
-    ObjectInstance objectToJson(GameObject object) {
-        ObjectInstance json = new ObjectInstance(object.getName(),
-                object.getX(), object.getY(), object.getVelocity());
-        return json;
-    }
+  @ToJson
+  ObjectInstance objectToJson(GameObject object) {
+    ObjectInstance json = new ObjectInstance(object.getName(),
+        object.getX(), object.getY(), object.getVelocity());
+    return json;
+  }
 }

@@ -32,8 +32,11 @@ import ooga.view.util.ObservableResource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/** A scene in which games are actually tracked and played. */
+/**
+ * A scene in which games are actually tracked and played.
+ */
 public class GameScene extends Scene {
+
   private static final Logger logger = LogManager.getLogger(GameScene.class);
   private static int WIDTH = 800;
   private static int HEIGHT = 500;
@@ -53,6 +56,7 @@ public class GameScene extends Scene {
   private ObservableResource resources;
   private SettingsModule settings;
   private Consumer<Boolean> ionly;
+
 
   public GameScene(String directory, ObservableResource resources) {
     super(new StackPane(), WIDTH, HEIGHT, Color.BLACK);
@@ -146,6 +150,7 @@ public class GameScene extends Scene {
   }
 
 
+
   private void setupSettings() {
     this.settings = new SettingsModule(resources.getStringBinding("GameSettings"));
     settings.addKeysOption(gameConfiguration.getKeyMap(), List.of("left", "right"));
@@ -156,6 +161,7 @@ public class GameScene extends Scene {
   }
 
   private void handleInvalidGame() {}
+
 
   private void handlePress(KeyCode code) {
     if (code == KeyCode.ESCAPE) {
@@ -208,8 +214,9 @@ public class GameScene extends Scene {
   }
 
   public void notifyResize() {
-    if (resizeCallback != null)
+    if (resizeCallback != null) {
       resizeCallback.accept((double) currentLevel.getHeight(), (double) currentLevel.getWidth());
+    }
   }
 
   public StackPane getRootCover() {

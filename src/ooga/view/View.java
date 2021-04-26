@@ -5,6 +5,7 @@ import fr.brouillard.oss.cssfx.CSSFX;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
+
 import javafx.animation.*;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -14,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.*;
 import ooga.view.components.GenericMenu;
+
 import ooga.view.components.SettingsModule;
 import ooga.view.components.SettingsPane;
 import ooga.view.components.SplashScreen;
@@ -26,12 +28,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class View {
-  private static final double FADE_OPACITY = 0.1;
-  private static final int TRANSITION_SPEED = 700; // milliseconds
+
   public static final int HEIGHT = 700;
   public static final int WIDTH = 700;
   public static final String RESOURCES = "resources/";
   public static final String DEFAULT_RESOURCES = "ooga.view.resources.languages.";
+  private static final double FADE_OPACITY = 0.1;
+  private static final int TRANSITION_SPEED = 700; // milliseconds
   private static final Logger logger = LogManager.getLogger(View.class);
 
   private Runnable exitApplication;
@@ -56,6 +59,7 @@ public class View {
     this.stage = stage;
     String defaultConfig = "";
     try {
+
       defaultConfig =
           Paths.get(getClass().getResource("resources/defaultView.json").toURI()).toString();
       this.viewConfiguration = ConfigurationFactory.createViewConfig(defaultConfig);
@@ -121,6 +125,7 @@ public class View {
   }
 
   private void setupSettings() {
+
     SettingsModule systemModule = new SettingsModule(resources.getStringBinding("System"));
     ObservableList<String> list =
         FXCollections.observableArrayList(ViewConfiguration.getSupportedLanguages());

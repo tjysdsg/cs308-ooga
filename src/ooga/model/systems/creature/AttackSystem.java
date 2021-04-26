@@ -2,41 +2,53 @@ package ooga.model.systems.creature;
 
 import ooga.model.Vector;
 import ooga.model.annotations.Track;
+import ooga.model.components.AttackComponent;
+import ooga.model.components.CriticalHitMultiplier;
 import ooga.model.components.HealthComponent;
 import ooga.model.components.MovementComponent;
 import ooga.model.components.enemy.HateComponent;
 import ooga.model.components.equipment.WeaponComponent;
-import ooga.model.systems.ComponentMapper;
 import ooga.model.managers.ECManager;
+import ooga.model.systems.ComponentBasedSystem;
+import ooga.model.systems.ComponentMapper;
 import ooga.model.systems.HealthSystem;
+import org.checkerframework.checker.units.qual.A;
 
-@Track({WeaponComponent.class, MovementComponent.class, HateComponent.class, HealthComponent.class})
-public class AttackSystem extends HealthSystem {
+@Track({WeaponComponent.class, MovementComponent.class, HateComponent.class, HealthComponent.class,  AttackComponent.class,CriticalHitMultiplier.class})
+public class AttackSystem extends ComponentBasedSystem {
 
   private ComponentMapper<WeaponComponent> weaponMapper;
   private ComponentMapper<MovementComponent> movementMapper;
   private ComponentMapper<HateComponent> enemyMapper;
+  private ComponentMapper<AttackComponent> attackMapper;
+  private ComponentMapper<CriticalHitMultiplier> criticalHitMapper;
 
   public AttackSystem(ECManager ecManager) {
     super(ecManager);
     weaponMapper = getComponentMapper(WeaponComponent.class);
     movementMapper = getComponentMapper(MovementComponent.class);
     enemyMapper = getComponentMapper(HateComponent.class);
+    attackMapper=getComponentMapper(AttackComponent.class);
+    criticalHitMapper=getComponentMapper(CriticalHitMultiplier.class);
 
-    addMapping("attack", this::attack);
+    addMapping("Attack", this::attack);
   }
 
   public void attack(boolean on) {
     for (WeaponComponent w : weaponMapper.getComponents()) {
+      AttackComponent attacker=attackMapper.get(w.getOwner().getId());
+      CriticalHitMultiplier multiplier=criticalHitMapper.get(w.getOwner().getId());
       for (HateComponent h : enemyMapper.getComponents()) {
-        int enemyID = h.getId();
-        if (withinRange(w, h) && faceToEnemy(w, h)) {
+        int enemyID = h.getOwner().getId();
+        if (withinRange(w, h) && faceToEnemy(w, h)&& attacker.attack()) {
           HealthSystem healthSystem = getSystem(HealthSystem.class);
-          healthSystem.changeHealth(enemyID, w.getAttack(), false);
+          healthSystem.changeHealth(enemyID, w.getAttack()*multiplier.getMultiplier(), false);
         }
+        attacker.update();
       }
     }
   }
+
 
   private boolean withinRange(WeaponComponent w, HateComponent h) {
     return (Vector.difference(w.getOwner().getLocation(), h.getOwner().getLocation()) < w
@@ -46,7 +58,12 @@ public class AttackSystem extends HealthSystem {
   private boolean faceToEnemy(WeaponComponent w, HateComponent h) {
     Vector delta = h.getOwner().getLocation().difference(w.getOwner().getLocation());
     double deltaX = delta.getX();
-    return deltaX * movementMapper.get(w.getId()).getDirection() > 0;
+    return deltaX * movementMapper.get(w.getOwner().getId()).getDirection() >= 0;
   }
 
+  @Override
+  public void update(double deltaTime) {
+    HealthSystem healthSystem= getSystem(HealthSystem.class);
+    healthSystem.update(deltaTime);
+  }
 }

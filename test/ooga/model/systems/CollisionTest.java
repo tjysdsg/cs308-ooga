@@ -73,6 +73,7 @@ public class CollisionTest {
     String direction = myCollisionSystem.detectCollisionDirection(obj1,obj2);
 
     assertEquals("left",direction);
+
   }
 
   @Test

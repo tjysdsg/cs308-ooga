@@ -1,8 +1,7 @@
 package ooga.model;
 
-import java.lang.Math;
-
 public class Vector {
+
   private double x;
   private double y;
 
@@ -10,19 +9,24 @@ public class Vector {
 
   }
   public Vector(double x, double y) {
-    this.x = x; this.y = y;
+    this.x = x;
+    this.y = y;
+  }
+
+  public static double difference(Vector a, Vector b) {
+    return a.difference(b).magnitude();
   }
 
   public double getX() {
     return x;
   }
 
-  public double getY() {
-    return y;
-  }
-
   public void setX(double x) {
     this.x = x;
+  }
+
+  public double getY() {
+    return y;
   }
 
   public void setY(double y) {
@@ -34,15 +38,11 @@ public class Vector {
         y - other.getY());
   }
 
-  public static double difference(Vector a, Vector b){
-    return a.difference(b).magnitude();
-  }
-
-  public Vector unitVector(){
-    Vector unit = new Vector(this.x,this.y);
-    double magit=magnitude();
-    unit.setX(this.x/magit);
-    unit.setY(this.y/magit);
+  public Vector unitVector() {
+    Vector unit = new Vector(this.x, this.y);
+    double magit = magnitude();
+    unit.setX(this.x / magit);
+    unit.setY(this.y / magit);
     return unit;
   }
 

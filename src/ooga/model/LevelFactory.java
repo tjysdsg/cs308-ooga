@@ -3,7 +3,7 @@ package ooga.model;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
-
+import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,20 +11,15 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Consumer;
-
-import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory;
 import ooga.model.components.Component;
-import ooga.model.components.PlayerComponent;
 import ooga.model.exceptions.InvalidDataFileException;
-import ooga.model.objects.EntityManagerAdapter;
 import ooga.model.exceptions.NotADirectoryException;
+import ooga.model.objects.EntityManagerAdapter;
 import ooga.model.objects.GameObject;
 import ooga.model.objects.ObjectFactory;
 import ooga.model.observables.ObservableObject;
 import ooga.model.util.FileReader;
-import org.checkerframework.checker.units.qual.C;
 import org.reflections.Reflections;
 
 public class LevelFactory {
@@ -34,10 +29,11 @@ public class LevelFactory {
   private Consumer<ObservableObject> newObjectCallback;
   private Consumer<ObservableObject> deleteObjectCallback;
 
-  public LevelFactory(File objectsDir , Consumer<ObservableObject> newObjectCallback, Consumer<ObservableObject>deleteObjectCallback) throws FileNotFoundException {
+  public LevelFactory(File objectsDir, Consumer<ObservableObject> newObjectCallback,
+      Consumer<ObservableObject> deleteObjectCallback) throws FileNotFoundException {
     this(objectsDir);
     this.newObjectCallback = newObjectCallback;
-    this.deleteObjectCallback=deleteObjectCallback;
+    this.deleteObjectCallback = deleteObjectCallback;
   }
 
   public LevelFactory(File objectsDir) throws FileNotFoundException {
@@ -62,6 +58,16 @@ public class LevelFactory {
     objectFactory = new ObjectFactory(presetMap);
   }
 
+  public static PolymorphicJsonAdapterFactory<Component> createComponentAdapter() {
+    PolymorphicJsonAdapterFactory<Component> adapter = PolymorphicJsonAdapterFactory
+        .of(Component.class, "type");
+    Reflections reflections = new Reflections(Component.class.getPackageName());
+    for (Class subclass : reflections.getSubTypesOf(Component.class)) {
+      adapter = adapter.withSubtype(subclass, subclass.getSimpleName());
+    }
+    return adapter;
+  }
+
   private void addObjects(File objectsFile, JsonAdapter<List<GameObject>> adapter,
       Map<String, GameObject> presetMap) throws FileNotFoundException, InvalidDataFileException {
     String objectsText = FileReader.readFile(objectsFile);
@@ -78,10 +84,9 @@ public class LevelFactory {
     }
   }
 
-
-
   Level buildLevel(File levelFile) throws FileNotFoundException, InvalidDataFileException {
-    EntityManagerAdapter entityManagerAdapter = new EntityManagerAdapter(objectFactory, newObjectCallback,deleteObjectCallback);
+    EntityManagerAdapter entityManagerAdapter = new EntityManagerAdapter(objectFactory,
+        newObjectCallback, deleteObjectCallback);
     Moshi objectMoshi = new Moshi.Builder().add(entityManagerAdapter).build();
     JsonAdapter<GameLevel> levelAdapter = objectMoshi.adapter(GameLevel.class);
 
@@ -101,14 +106,5 @@ public class LevelFactory {
 
     newLevel.init();
     return newLevel;
-  }
-
-  public static PolymorphicJsonAdapterFactory<Component> createComponentAdapter() {
-    PolymorphicJsonAdapterFactory<Component> adapter = PolymorphicJsonAdapterFactory.of(Component.class, "type");
-    Reflections reflections = new Reflections(Component.class.getPackageName());
-    for (Class subclass : reflections.getSubTypesOf(Component.class)) {
-      adapter = adapter.withSubtype(subclass, subclass.getSimpleName());
-    }
-    return adapter;
   }
 }

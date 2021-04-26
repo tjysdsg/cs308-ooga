@@ -13,7 +13,6 @@ public class CollisionSystem extends GameObjectBasedSystem {
   private ActionManager myActionManager;
 
 
-
   public CollisionSystem(ECManager ecmanager, ActionManager actionManager) {
     super(ecmanager);
     myActionManager = actionManager;
@@ -71,11 +70,9 @@ public class CollisionSystem extends GameObjectBasedSystem {
     self.setCollided(true);
     other.setCollided(true);
 
-    if(self.getVelocity().magnitude() >= other.getVelocity().magnitude()){
+    if (self.getVelocity().magnitude() >= other.getVelocity().magnitude()) {
       rectifyCollision(self, other, selfDirection);
-    }
-
-    else {
+    } else {
       rectifyCollision(other, self, otherDirection);
     }
 
@@ -86,21 +83,22 @@ public class CollisionSystem extends GameObjectBasedSystem {
   }
 
   private void rectifyCollision(GameObject self, GameObject other, String selfDirection) {
-    if(self.getVelocity().magnitude() == 0){
+    if (self.getVelocity().magnitude() == 0) {
       return;
     }
-    switch (selfDirection){
+    switch (selfDirection) {
       case "left":
-        self.setX(other.getX()+other.getWidth());
+        self.setX(other.getX() + other.getWidth());
         break;
       case "right":
-        self.setX(other.getX()-self.getWidth());
+        self.setX(other.getX() - self.getWidth());
         break;
       case "top":
         self.setY(other.getY()-self.getHeight());
         break;
       case "bottom":
         self.setY(other.getY()+other.getHeight());
+
         break;
     }
   }

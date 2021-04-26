@@ -6,6 +6,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 public class LabelPair extends HBox {
+
   private Label value;
 
   public LabelPair(StringBinding labelTitle) {
