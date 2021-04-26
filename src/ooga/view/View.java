@@ -12,7 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.*;
-import ooga.view.components.PauseMenu;
+import ooga.view.components.GenericMenu;
 import ooga.view.components.SettingsModule;
 import ooga.view.components.SettingsPane;
 import ooga.view.components.SplashScreen;
@@ -45,7 +45,7 @@ public class View {
   private JFXDialog pauseDialog;
   private SplashScreen splashScreen;
   private ViewConfiguration viewConfiguration;
-  private PauseMenu pauseMenu;
+  private GenericMenu pauseMenu;
   private SettingsPane settings;
 
   public View(Stage stage) {
@@ -119,7 +119,7 @@ public class View {
 
   private void setupPauseMenu() {
     pauseDialog = new JFXDialog();
-    pauseMenu = new PauseMenu(resources);
+    pauseMenu = new GenericMenu(resources);
     pauseDialog.setContent(pauseMenu);
 
     pauseMenu.addOption(
