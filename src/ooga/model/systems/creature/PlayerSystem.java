@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 import ooga.model.annotations.Track;
 import ooga.model.components.MovementComponent;
 import ooga.model.components.PlayerComponent;
+import ooga.model.managers.ECManager;
 import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
 import ooga.model.managers.ECManager;
@@ -76,12 +77,7 @@ public class PlayerSystem extends ComponentBasedSystem {
     return playerMapper.getComponents();
   }
 
-  public void initPlayerType(PlayerComponent.PlayerType playerType) {
-    List<PlayerComponent> players = getPlayers();
-    for (PlayerComponent p : players) {
-      p.setPlayerType(playerType);
-    }
-  }
+
 
   @Override
   public void update(double deltaTime) {

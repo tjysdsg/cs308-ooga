@@ -6,6 +6,14 @@ public class ScoreComponent extends Component {
 
   private double score = 0;
 
+  protected ScoreComponent() {
+    super();
+  }
+
+  public ScoreComponent(int id, GameObject owner) {
+    super(id, owner);
+  }
+
   public double getScore() {
     return score;
   }
@@ -17,14 +25,6 @@ public class ScoreComponent extends Component {
         this.score = 0;
       }
     }
-  }
-
-  protected ScoreComponent() {
-    super();
-  }
-
-  public ScoreComponent(int id, GameObject owner) {
-    super(id, owner);
   }
 
   public String typeUnerasure() {

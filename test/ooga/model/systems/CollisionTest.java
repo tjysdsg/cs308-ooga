@@ -28,6 +28,5 @@ public class CollisionTest {
   @Test
   void testNoCollision(){
     GameObject obj1 = myECManager.createEntity("obj1");
-
   }
 }

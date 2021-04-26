@@ -1,11 +1,11 @@
 package ooga.view.components.gameselection;
 
-import java.io.File;
 import java.util.function.Consumer;
 import java.util.prefs.Preferences;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -27,7 +27,7 @@ public class GSelectionScene extends Scene {
     super(new StackPane(), width, height, Color.BLACK);
     this.root = (StackPane) getRoot();
     this.resources = resources;
-  //TODO: Find a betterway to handle stackpane passing
+    //TODO: Find a betterway to handle stackpane passing
     gamesList = new GameList(resources, root);
     this.gameView = new GSelectionView(resources);
     gamesList.setOnSelection(gameView::setDirectory);

@@ -8,8 +8,11 @@ import ooga.model.observables.ObservableObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/** A view component which can track with a given gameobject. */
+/**
+ * A view component which can track with a given gameobject.
+ */
 public class ObjectView extends StackPane {
+
   private static final Logger logger = LogManager.getLogger(ObjectView.class);
   private ObservableObject gameObject;
   private ImageView playerImage;

@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 public class GameObject implements ObservableObject, Comparable<GameObject> {
 
+  private static final Logger logger = LogManager.getLogger(GameObject.class);
   private List<Component> components = new ArrayList<>();
   private int id;
   private String name;
@@ -23,7 +24,6 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   private double height, width;
   private List<ActionInfo> onCollide = new ArrayList<>();
   private transient Runnable positionCallback;
-  private static final Logger logger = LogManager.getLogger(GameObject.class);
 
   public GameObject() {
   }
@@ -65,24 +65,24 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
     }
   }
 
-  public void setX(double x) {
-    this.x = x;
-    notifyPositionUpdate();
-  }
-
-  public void setY(double y) {
-    this.y = y;
-    notifyPositionUpdate();
-  }
-
   @Override
   public double getX() {
     return x;
   }
 
+  public void setX(double x) {
+    this.x = x;
+    notifyPositionUpdate();
+  }
+
   @Override
   public double getY() {
     return y;
+  }
+
+  public void setY(double y) {
+    this.y = y;
+    notifyPositionUpdate();
   }
 
   @Override
@@ -104,6 +104,7 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   public boolean isVisible() {
     return false;
   }
+
 
   @Override
   public int getID() {
@@ -131,12 +132,12 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
     return velocity;
   }
 
-  public Vector getLocation(){
-    return new Vector(x,y);
-  }
-
   public void setVelocity(Vector velocity) {
     this.velocity = velocity;
+  }
+
+  public Vector getLocation() {
+    return new Vector(x, y);
   }
 
   public void setVelocityX(double velocityX) {
@@ -147,9 +148,13 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
     this.velocity.setY(velocityY);
   }
 
-  public boolean getCollided(){return isCollided;}
+  public boolean getCollided() {
+    return isCollided;
+  }
 
-  public void setCollided(boolean collided){isCollided = collided;}
+  public void setCollided(boolean collided) {
+    isCollided = collided;
+  }
 
   @Override
   public int compareTo(GameObject o) {

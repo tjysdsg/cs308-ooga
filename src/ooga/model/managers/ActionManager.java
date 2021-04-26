@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.function.Consumer;
 import ooga.model.actions.Action;
 import ooga.model.actions.ActionInfo;
+import ooga.model.actions.CollisionAction;
 import ooga.model.actions.CollisionInfo;
 import ooga.model.objects.GameObject;
-import ooga.model.actions.CollisionAction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

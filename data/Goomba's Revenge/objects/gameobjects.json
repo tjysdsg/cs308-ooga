@@ -64,6 +64,10 @@
           {
             "action" : "Jump",
             "input" : "jump"
+          },
+          {
+            "action" : "Attack",
+            "input" : "attack"
           }
         ]
       },
@@ -74,6 +78,17 @@
         "type": "HateComponent",
         "frequency": "30",
         "range": "50"
+      },
+      {
+        "type" : "MoveSequenceMovement",
+        "actionSequence": [
+          "move_left",
+          "move_right"
+        ],
+        "actionTime": [
+          "1.0",
+          "1.0"
+        ]
       }
     ]
   },

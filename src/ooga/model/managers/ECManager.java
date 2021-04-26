@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-
 import ooga.model.components.Component;
 import ooga.model.objects.GameObject;
 import ooga.model.objects.ObjectFactory;
@@ -107,7 +106,7 @@ public class ECManager extends BaseManager {
    * @apiNote This doesn't remove the component from its parent's component list
    */
   public <T> void removeComponent(Class<T> componentType, int id) {
-    Map<Integer, Component> idCompMap = existingComponents.get(componentType.getName());
+    Map<Integer, Component> idCompMap = existingComponents.get(componentType);
     if (idCompMap != null) {
       idCompMap.remove(id);
     } else {

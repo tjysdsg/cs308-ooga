@@ -1,18 +1,25 @@
 package ooga.model.observables;
 
-import java.util.function.Consumer;
-
 public interface ObservableObject {
+
   void setOnPositionUpdate(Runnable callback);
 
   double getX();
+
   double getY();
+
   double getHeight();
+
   double getWidth();
+
   int getMode();
+
   boolean isVisible();
+
+
   int getID();
   String getName();
+
   String getImageID();
 }
 
