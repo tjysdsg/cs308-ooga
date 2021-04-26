@@ -52,6 +52,10 @@ public class ECManager extends BaseManager {
    */
   public void deleteGameObject(int ID) {
     GameObject entity = entities.get(ID);
+    if (entity == null) {
+      return;
+    }
+
     notifyObjectDelete(entity);
 
     // remove all of its components
