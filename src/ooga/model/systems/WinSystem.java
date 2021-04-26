@@ -59,7 +59,6 @@ public class WinSystem extends ComponentBasedSystem{
       if(wCond.getCondition().equals("score")){
         double score = scoreMapper.get(w.getOwner().getId()).getScore();
         boolean comp = wCond.checkCondition(score);
-        System.out.println("SCORE"  + score);
         executeWinOrLose(comp, wCond);
         return;
       }
