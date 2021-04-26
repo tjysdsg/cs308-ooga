@@ -63,8 +63,8 @@ class GameLevel implements Level, ObservableLevel {
     systemManager.createSystem(TransformSystem.class, ecManager);
     systemManager.createSystem(SampleEnemySystem.class, ecManager);
     systemManager.createSystem(NPCSystem.class, ecManager);
-    systemManager.createSystem(WinSystem.class,ecManager);
-    systemManager.createSystem(ScoreSystem.class,ecManager);
+    systemManager.createSystem(WinSystem.class, ecManager);
+    systemManager.createSystem(ScoreSystem.class, ecManager);
     systems = systemManager.getAllSystems();
 
     //ecManager.registerExistingComponents(ecManager.getEntities());
@@ -129,6 +129,11 @@ class GameLevel implements Level, ObservableLevel {
   }
 
   @Override
+  public List<String> getAvailableActions() {
+    return getActionManager().getAvailableActions();
+  }
+
+  @Override
   public String getName() {
     return name;
   }
@@ -161,5 +166,9 @@ class GameLevel implements Level, ObservableLevel {
 
   public InputManager getInputManager() {
     return inputManager;
+  }
+
+  public ActionManager getActionManager() {
+    return actionManager;
   }
 }

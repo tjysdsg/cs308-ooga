@@ -33,4 +33,9 @@ public interface ObservableLevel {
    * ObservableLevel#setOnStatsUpdate(String, Consumer)}
    */
   List<String> getAvailableStats();
+
+  /**
+   * Get the names of all action available in this game level
+   */
+  List<String> getAvailableActions();
 }
