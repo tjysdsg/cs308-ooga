@@ -85,6 +85,7 @@ public class GameScene extends Scene {
     File gameDirectory = new File(directory);
 
     model.setOnLevelChange(this::updateScene);
+    model.setOnGameEnd(this::notifyEnd);
 
     if (!ModelFactory.verifyGameDirectory(gameDirectory)) {
       handleInvalidGame();
