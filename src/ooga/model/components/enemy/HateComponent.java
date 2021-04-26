@@ -8,8 +8,10 @@ public class HateComponent extends Component {
   private double range;
   private boolean hate;
   private int party; // different parties will have different hate relationship
-  private int frequency;
+  private int frequency = 240;
   private double damage=10;
+
+  public HateComponent(){};
 
   public HateComponent(int id, GameObject owner) {
     super(id, owner);
