@@ -1,7 +1,6 @@
 package ooga.model.systems;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
 import ooga.model.Vector;
 import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
@@ -24,7 +23,7 @@ public class LifeCircleSystem extends GameObjectBasedSystem {
     super(entityManager);
     addCollisionMapping(
         "spawn_object",
-        event -> spawnObject(event.getSelf(), event.getPayload().get("which"))
+        event -> spawnObject(event.getSelf(), event.getPayload())
     );
 
     addCollisionMapping(
@@ -33,14 +32,15 @@ public class LifeCircleSystem extends GameObjectBasedSystem {
     );
   }
 
-  private void spawnObject(GameObject self, String payload) {
-    List<String> tokens = Arrays.asList(payload.split(","));
-    String name = tokens.get(0);
-    double x = self.getX();
-    double y = self.getY();
-    Vector v = new Vector(Double.parseDouble(tokens.get(1)), Double.parseDouble(tokens.get(2)));
-    System.out.println("Creating object " + name + "at" + x + ", " + y + " with velocity " + v);
-    ecManager.addEntity(new ObjectInstance(name, x, y, v));
+  private void spawnObject(GameObject self, Map<String, String> payload) {
+    String which = payload.get("which");
+    double x = self.getX() + Double.parseDouble(payload.getOrDefault("offsetX", "0"));
+    double y = self.getY() + Double.parseDouble(payload.getOrDefault("offsetY", "0"));
+    double vx = Double.parseDouble(payload.getOrDefault("velocityX", "0"));
+    double vy = Double.parseDouble(payload.getOrDefault("velocityY", "0"));
+    Vector v = new Vector(vx, vy);
+    System.out.println("Creating object " + which + "at" + x + ", " + y + " with velocity " + v);
+    ecManager.addEntity(new ObjectInstance(which, x, y, v));
   }
 
   private void destroyObject(int entityId) {
