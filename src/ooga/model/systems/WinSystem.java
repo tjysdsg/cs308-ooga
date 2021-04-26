@@ -42,7 +42,6 @@ public class WinSystem extends ComponentBasedSystem{
     List<WinComponent> winComps = winMapper.getComponents();
 
     if(winComps.size() == 0){
-      loseGame();
       return;
     }
 
