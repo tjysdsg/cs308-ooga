@@ -167,4 +167,9 @@ class GameLevel implements Level, ObservableLevel {
   public void setOnObjectDestroy(Consumer<ObservableObject> callback) {
     ecManager.setDeleteObjectCallback(callback);
   }
+
+  @Override
+  public List<? extends ObservableObject> getAvailableGameObjects() {
+    return ecManager.getEntities();
+  }
 }

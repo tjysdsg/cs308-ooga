@@ -42,4 +42,6 @@ public interface ObservableLevel {
   void setOnNewObject(Consumer<ObservableObject> callback);
 
   void setOnObjectDestroy(Consumer<ObservableObject> callback);
+
+  List<? extends ObservableObject> getAvailableGameObjects();
 }
