@@ -64,6 +64,10 @@
           {
             "action" : "Jump",
             "input" : "jump"
+          },
+          {
+            "action" : "Attack",
+            "input" : "j"
           }
         ]
       },

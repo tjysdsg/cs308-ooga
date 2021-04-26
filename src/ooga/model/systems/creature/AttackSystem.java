@@ -31,7 +31,7 @@ public class AttackSystem extends ComponentBasedSystem {
     attackMapper=getComponentMapper(AttackComponent.class);
     criticalHitMapper=getComponentMapper(CriticalHitMultiplier.class);
 
-    addMapping("attack", this::attack);
+    addMapping("Attack", this::attack);
   }
 
   public void attack(boolean on) {
