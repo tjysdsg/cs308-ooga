@@ -80,7 +80,7 @@
         "range": "50"
       },
       {
-        "type" : "MoveSequenceMovement",
+        "type" : "MoveSequenceComponent",
         "actionSequence": [
           "move_left",
           "move_right"
