@@ -29,11 +29,8 @@ public class ECManager extends BaseManager {
   private Consumer<ObservableObject> newObjectCallback;
   private Consumer<ObservableObject> deleteObjectCallback;
 
-  public ECManager(ObjectFactory factory, Consumer<ObservableObject> newObjectCallback,
-      Consumer<ObservableObject> deleteObjectCallback) {
+  public ECManager(ObjectFactory factory) {
     this.factory = factory;
-    this.newObjectCallback = newObjectCallback;
-    this.deleteObjectCallback = deleteObjectCallback;
   }
 
   public List<GameObject> getEntities() {
@@ -75,6 +72,14 @@ public class ECManager extends BaseManager {
     }
 
     notifyNewObject(newObject);
+  }
+
+  public void setNewObjectCallback(Consumer<ObservableObject> newObjectCallback) {
+    this.newObjectCallback = newObjectCallback;
+  }
+
+  public void setDeleteObjectCallback(Consumer<ObservableObject> deleteObjectCallback) {
+    this.deleteObjectCallback = deleteObjectCallback;
   }
 
   private void notifyNewObject(GameObject newObject) {

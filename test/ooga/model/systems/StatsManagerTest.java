@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 
 public class StatsManagerTest {
 
-  ECManager ecManager = new ECManager(null, null, null);
+  ECManager ecManager = new ECManager(null);
   StatsManager statsManager = new StatsManager();
   List<BaseSystem> systems = new ArrayList<>();
   List<StatsInfo> stats;

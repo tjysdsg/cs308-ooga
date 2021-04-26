@@ -38,4 +38,8 @@ public interface ObservableLevel {
    * Get the names of all action available in this game level
    */
   List<String> getAvailableActions();
+
+  void setOnNewObject(Consumer<ObservableObject> callback);
+
+  void setOnObjectDestroy(Consumer<ObservableObject> callback);
 }

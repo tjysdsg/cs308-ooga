@@ -12,6 +12,7 @@ import ooga.model.managers.StatsManager;
 import ooga.model.managers.InputManager;
 import ooga.model.objects.GameObject;
 import ooga.model.observables.ObservableLevel;
+import ooga.model.observables.ObservableObject;
 import ooga.model.systems.BaseSystem;
 import ooga.model.systems.CollisionSystem;
 import ooga.model.systems.HealthSystem;
@@ -155,5 +156,15 @@ class GameLevel implements Level, ObservableLevel {
 
   public ActionManager getActionManager() {
     return actionManager;
+  }
+
+  @Override
+  public void setOnNewObject(Consumer<ObservableObject> callback) {
+    ecManager.setNewObjectCallback(callback);
+  }
+
+  @Override
+  public void setOnObjectDestroy(Consumer<ObservableObject> callback) {
+    ecManager.setDeleteObjectCallback(callback);
   }
 }

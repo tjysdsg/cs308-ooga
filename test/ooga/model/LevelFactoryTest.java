@@ -30,8 +30,9 @@ public class LevelFactoryTest {
   void setup() throws IOException, URISyntaxException {
     objectsCount = new HashMap<>();
     newObjectsCount = 0;
-    factory = new LevelFactory(getFile(objectDirectory), this::incrementObjectsCount, null);
+    factory = new LevelFactory(getFile(objectDirectory));
     basicLevel = factory.buildLevel(getFile(basicLevelFile));
+    basicLevel.getECManager().setNewObjectCallback(this::incrementObjectsCount);
   }
 
   private void incrementObjectsCount(ObservableObject observableObject) {
