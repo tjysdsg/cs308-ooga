@@ -107,16 +107,6 @@ public class Model implements ObservableModel {
   }
 
   @Override
-  public void setOnNewObject(Consumer<ObservableObject> callback) {
-    // FIXME: remove this
-  }
-
-  @Override
-  public void setOnObjectDestroy(Consumer<ObservableObject> callback){
-    // FIXME: remove this
-  }
-
-  @Override
   public void setOnTextUpdate(Consumer<String> text) {
 
   }
