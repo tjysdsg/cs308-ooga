@@ -57,7 +57,7 @@
           {
             "action" : "SpawnObject",
             "input" : "shoot",
-            "payload" : "bullet,0,0"
+            "payload" : "bullet,0,0,1"
           }
         ]
       },
@@ -89,15 +89,39 @@
     "name" : "enemy",
     "height" : 50,
     "width" : 50,
-    "imageID" : "basice"
+    "imageID" : "basice",
+    "onCollide" : [
+      {
+        "with" : [
+          "bullet"
+        ],
+        "actions": [
+          {
+            "action": "destroy_object"
+          }
+        ]
+      }
+    ]
   },
   {
     "name" : "bullet",
     "height" : 10,
     "width" : 10,
     "imageID" : "laser",
+    "onCollide" : [
+      {
+        "with" : [
+          "enemy"
+        ],
+        "actions": [
+          {
+            "action": "destroy_object"
+          }
+        ]
+      }
+    ],
     "velocity" : {
-      "y" : 50
+      "y" : 75
     }
   }
 ]
