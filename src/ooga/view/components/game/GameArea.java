@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+
+import ooga.model.observables.ObservableLevel;
 import ooga.model.observables.ObservableObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 
 public class GameArea extends AnchorPane {
 
@@ -18,7 +19,7 @@ public class GameArea extends AnchorPane {
   private List<ObjectView> objects;
   private StackPane objectsPane;
 
-  public GameArea() {
+  public GameArea(StatsView stats) {
     this.objectsPane = new StackPane();
     getStyleClass().add("game-area");
     this.objects = new ArrayList<>();
@@ -28,9 +29,22 @@ public class GameArea extends AnchorPane {
     objectsPane.getChildren().add(placeholder);
 
     objectsPane.setTranslateX(LEFT_EDGE);
-    getChildren().add(objectsPane);
+    getChildren().addAll(objectsPane, stats);
+    AnchorPane.setTopAnchor(stats, 0.0);
+    AnchorPane.setLeftAnchor(stats, 0.0);
+    AnchorPane.setRightAnchor(stats, 0.0);
     AnchorPane.setBottomAnchor(objectsPane, BOTTOM_EDGE);
     AnchorPane.setLeftAnchor(objectsPane, LEFT_EDGE);
+  }
+
+  public void setLevel(ObservableLevel level) {
+    level.setOnFocusUpdate(
+        id -> {
+          objects.stream()
+              .filter(obj -> obj.isObject(id))
+              .findFirst()
+              .ifPresent(this::setCameraCenter);
+        });
   }
 
   public void setCameraCenter(ObjectView center) {

@@ -3,6 +3,12 @@ package ooga.model;
 import com.squareup.moshi.Json;
 import java.util.ArrayList;
 import java.util.List;
+
+
+import com.squareup.moshi.Json;
+import java.util.function.Consumer;
+import ooga.model.managers.ECManager;
+import ooga.model.managers.SystemManager;
 import ooga.model.managers.ActionManager;
 import ooga.model.managers.ECManager;
 import ooga.model.managers.InputManager;
@@ -86,6 +92,22 @@ class GameLevel implements Level, ObservableLevel {
   @Override
   public int getWidth() {
     return width;
+  }
+
+  @Override
+  public void setOnFocusUpdate(Consumer<Integer> callback) {
+    // TODO: implement this
+    // TODO: add input handler by which user presses a key to change main player
+  }
+
+  @Override
+  public void setOnStatsUpdate(String statsName, Consumer<List<StatsInfo>> callback) {
+    getStatsManager().setOnStatisticUpdate(statsName, callback);
+  }
+
+  @Override
+  public List<String> getAvailableStats() {
+    return getStatsManager().getTrackableStatistics();
   }
 
   @Override

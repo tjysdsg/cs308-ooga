@@ -18,6 +18,7 @@ public interface ObservableObject {
 
   String objectId();
 
+  int getID();
   String getName();
 
   String getImageID();

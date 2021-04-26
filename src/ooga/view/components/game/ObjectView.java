@@ -1,5 +1,6 @@
 package ooga.view.components.game;
 
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -41,5 +42,9 @@ public class ObjectView extends StackPane {
 
   protected boolean isObject(ObservableObject o) {
     return o == this.gameObject;
+  }
+
+  protected boolean isObject(int objectID) {
+    return gameObject.getID() == objectID;
   }
 }

@@ -67,7 +67,7 @@
           },
           {
             "action" : "Attack",
-            "input" : "j"
+            "input" : "attack"
           }
         ]
       },

@@ -5,9 +5,9 @@ import fr.brouillard.oss.cssfx.CSSFX;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.ResourceBundle;
-import javafx.animation.FadeTransition;
-import javafx.beans.property.ObjectProperty;
+
+import javafx.animation.*;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import ooga.view.components.PauseMenu;
 import ooga.view.components.SettingsModule;
+import ooga.view.components.SettingsPane;
 import ooga.view.components.SplashScreen;
 import ooga.view.components.game.GameScene;
 import ooga.view.components.gameselection.GSelectionScene;
@@ -45,23 +46,23 @@ public class View {
   private String cssFile;
   private JFXDialog pauseDialog;
   private SplashScreen splashScreen;
-  private ViewConfiguration viewConfig;
+  private ViewConfiguration viewConfiguration;
+  private PauseMenu pauseMenu;
+  private SettingsPane settings;
 
   public View(Stage stage) {
     CSSFX.start();
     this.stage = stage;
-    this.resources = new ObservableResource();
-    String defaultSettings = null;
+    String defaultConfig = "";
     try {
-      defaultSettings = Paths
-          .get(getClass().getResource("resources/settings/defaultView.json").toURI()).toString();
+
+      defaultConfig =
+          Paths.get(getClass().getResource("resources/defaultView.json").toURI()).toString();
+      this.viewConfiguration = ConfigurationFactory.createViewConfig(defaultConfig);
     } catch (URISyntaxException e) {
       e.printStackTrace();
     }
-
-    defaultSettings = defaultSettings.replace("file:", "");
-    this.viewConfig = ConfigurationFactory.createConfiguration(defaultSettings);
-    resources.setResources(ResourceBundle.getBundle(DEFAULT_RESOURCES + "English"));
+    this.resources = viewConfiguration.getResources();
     splashScreen = new SplashScreen(HEIGHT, WIDTH, resources);
     gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);
     // this.modelController = model.getController();
@@ -74,8 +75,8 @@ public class View {
       logger.warn("Css file could not be loaded");
     }
     createAnimations();
-    setScene(splashScreen);
-    //startGame("data/example/");
+     setScene(splashScreen);
+    //startGame("data/Goomba's Revenge/");
     gameSelection.setOnGameSelected(this::startGame);
     exitApplication =
         () -> {
@@ -87,22 +88,42 @@ public class View {
                 logger.info("Exited Application");
               });
         };
-    splashScreen.setOnExit(exitApplication);
-    splashScreen.setOnPlay(() -> setScene(gameSelection));
-
     setupPauseMenu();
     setupSettings();
+
+    splashScreen.setOnExit(exitApplication);
+    splashScreen.setOnPlay(() -> setScene(gameSelection));
+    splashScreen.setOnSettings( e -> {
+      pauseDialog.show(e);
+    });
+
 
     logger.info("Displaying Splash Screen");
     stage.show();
   }
 
   private void setupSettings() {
+
+    SettingsModule systemModule = new SettingsModule(resources.getStringBinding("System"));
+    ObservableList<String> list =
+        FXCollections.observableArrayList(ViewConfiguration.getSupportedLanguages());
+    ReadOnlyObjectProperty<String> prop =
+        systemModule.addListSetting(resources.getStringBinding("LanguageSetting"), list);
+    prop.addListener((na, old, newVal) -> handleLanguageChange(old, newVal));
+    this.settings = new SettingsPane(resources);
+    settings.setOnClose(
+        () -> {
+          pauseDialog.getChildren().remove(settings);
+        });
+    settings.addModule(systemModule);
+    if (currentGame != null) {
+      settings.addModule(currentGame.getSettings());
+    }
   }
 
   private void setupPauseMenu() {
     pauseDialog = new JFXDialog();
-    PauseMenu pauseMenu = new PauseMenu(resources);
+    pauseMenu = new PauseMenu(resources);
     pauseDialog.setContent(pauseMenu);
 
     pauseMenu.addOption(
@@ -120,7 +141,8 @@ public class View {
     pauseMenu.addOption(
         resources.getStringBinding("Settings"),
         () -> {
-          System.out.println("yay!");
+          setupSettings();
+          pauseDialog.getChildren().add(settings);
         });
 
     pauseMenu.addOption(
@@ -137,25 +159,15 @@ public class View {
     logger.info("Game Selected {}", directory);
     // TODO: Have a check if a game is currently playing and ask
     // if want to quit
-    currentGame = new GameScene(directory, resources, viewConfig.getKeyMap());
-    currentGame.setOnResize((height, width) -> {
-      stage.setHeight(height);
-      stage.setWidth(width);
-    });
+    currentGame = new GameScene(directory, resources);
+    currentGame.setOnResize(
+        (height, width) -> {
+          stage.setHeight(height);
+          stage.setWidth(width);
+        });
     if (!cssFile.isBlank()) {
       currentGame.getStylesheets().add(cssFile);
     }
-
-    currentGame.setOnEscape((e) -> {
-      setScene(gameSelection);
-      stage.setHeight(HEIGHT);
-      stage.setWidth(WIDTH);
-    });
-
-    SettingsModule settingsModule = new SettingsModule(resources.getStringBinding("System"));
-    ObservableList<String> list = FXCollections.observableArrayList();
-    list.addAll("English", "French", "German");
-    settingsModule.addListSetting(resources.getStringBinding("Resume"), list);
 
     currentGame.setOnEscape(
         (e) -> {
@@ -165,15 +177,11 @@ public class View {
         });
 
     setScene(currentGame);
-
-    ObjectProperty<String> prop =
-        settingsModule.addListSetting(resources.getStringBinding("LanguageSetting"), list);
-    System.out.println(prop.get());
-    prop.addListener((s, old, newVal) -> handleLanguageChange(old, newVal));
   }
 
   private void handleLanguageChange(String old, String newVal) {
     logger.info("Language Changed from {} to {}", old, newVal);
+    viewConfiguration.setLanguage(newVal);
   }
 
   private void createAnimations() {
