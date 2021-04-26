@@ -9,6 +9,7 @@ import ooga.model.objects.GameObject;
 public class MovementSequenceComponent extends MovementComponent {
   private transient Random RNJesus = new Random();
   List<NPCAction> actionSequence;
+  List<Double> actualActionTime;
   List<Double> actionTime;
   private double cumTime = 0;
   private int actionIndex = 0;
@@ -19,6 +20,7 @@ public class MovementSequenceComponent extends MovementComponent {
     super(id, owner);
     actionSequence = new ArrayList<>();
     actionTime = new ArrayList<>();
+    actualActionTime=new ArrayList<>();
   }
 
   public int getActionIndex() {
@@ -34,6 +36,25 @@ public class MovementSequenceComponent extends MovementComponent {
   }
 
   public List<Double> getActionTime() {
+<<<<<<< HEAD
+    if(actionIndex==0&&cumTime==0){
+      if(actualActionTime==null){
+        actualActionTime=new ArrayList<>();
+      }
+      else{
+        actualActionTime.clear();
+      }
+      for(double t: actionTime){
+        if(t==-1){
+          actualActionTime.add(Math.random());
+        }
+        else{
+          actualActionTime.add(t);
+        }
+      }
+    }
+    return actualActionTime;
+=======
     List<Double> ret = new ArrayList<>();
     for (Double time : actionTime) {
       if (time < 0) {
@@ -43,6 +64,7 @@ public class MovementSequenceComponent extends MovementComponent {
       }
     }
     return actionTime;
+>>>>>>> 21d222a4603a2ff9b4e5d58820f6f85fda485aa5
   }
 
   public void setCumTime(double cumTime) {
