@@ -36,7 +36,6 @@ public class MovementSequenceComponent extends MovementComponent {
   }
 
   public List<Double> getActionTime() {
-<<<<<<< HEAD
     if(actionIndex==0&&cumTime==0){
       if(actualActionTime==null){
         actualActionTime=new ArrayList<>();
@@ -54,17 +53,6 @@ public class MovementSequenceComponent extends MovementComponent {
       }
     }
     return actualActionTime;
-=======
-    List<Double> ret = new ArrayList<>();
-    for (Double time : actionTime) {
-      if (time < 0) {
-        ret.add(RNJesus.nextDouble() * Math.abs(time) + 1);
-      } else {
-        ret.add(time);
-      }
-    }
-    return actionTime;
->>>>>>> 21d222a4603a2ff9b4e5d58820f6f85fda485aa5
   }
 
   public void setCumTime(double cumTime) {
