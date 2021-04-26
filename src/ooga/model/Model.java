@@ -130,4 +130,8 @@ public class Model implements ObservableModel {
   private void checkCollisions() {
 
   }
+
+  public void setOnGameEnd(Consumer<Boolean> callback) {
+    // Do something with it
+  }
 }

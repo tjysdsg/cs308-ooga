@@ -2,11 +2,7 @@
   "key_maps": {
     "left": "A",
     "right": "D",
-    "jump": "Space",
-    "leftp2" : "J",
-    "rightp2" : "L",
-    "jumpp2" : "I",
-    "attack" : "K"
+    "shoot": "Space"
    },
    "stats": [
      "Health",

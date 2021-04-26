@@ -2,5 +2,6 @@
   "fighter": "fighter.png",
   "space": "space.png",
   "floor": "white.png",
-  "basice" : "basice.png"
+  "basice" : "basice.png",
+  "laser" : "white.png"
 }

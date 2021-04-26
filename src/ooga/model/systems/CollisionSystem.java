@@ -3,6 +3,7 @@ package ooga.model.systems;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import ooga.model.actions.ActionInfo;
 import ooga.model.actions.CollisionInfo;
 import ooga.model.managers.ActionManager;
 import ooga.model.managers.ECManager;
@@ -77,16 +78,30 @@ public class CollisionSystem extends GameObjectBasedSystem {
     self.setCollided(true);
     other.setCollided(true);
 
-    if (self.getVelocity().magnitude() >= other.getVelocity().magnitude()) {
+    CollisionInfo selfInfo = new CollisionInfo(self, other, selfDirection);
+    CollisionInfo otherInfo = new CollisionInfo(other, self, otherDirection);
+
+    if (!(canCollide(self, selfInfo) || canCollide(other, otherInfo))) {
+      return;
+    }
+
+    if(self.getVelocity().magnitude() >= other.getVelocity().magnitude()){
       rectifyCollision(self, other, selfDirection);
     } else {
       rectifyCollision(other, self, otherDirection);
     }
 
-    CollisionInfo info = new CollisionInfo(self, other, selfDirection);
-    myActionManager.handleAction(self, other, info);
-    info = new CollisionInfo(other, self, otherDirection);
-    myActionManager.handleAction(other, self, info);
+    myActionManager.handleAction(self, other, selfInfo);
+    myActionManager.handleAction(other, self, otherInfo);
+  }
+
+  private boolean canCollide(GameObject self, CollisionInfo collisionInfo) {
+    for (ActionInfo action : self.getActions()) {
+      if (action.equals(collisionInfo)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private void rectifyCollision(GameObject self, GameObject other, String selfDirection) {

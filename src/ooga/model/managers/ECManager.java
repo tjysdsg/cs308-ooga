@@ -58,7 +58,7 @@ public class ECManager extends BaseManager {
     for (Component component : entity.getComponents()) {
       removeComponent(component.getClass(), component.getId());
     }
-
+    logger.debug("Removing {}", ID);
     entities.remove(ID);
   }
 
