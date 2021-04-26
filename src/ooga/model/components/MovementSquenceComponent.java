@@ -40,28 +40,4 @@ public class MovementSquenceComponent extends MovementComponent {
   public void setActionIndex(int actionIndex) {
     this.actionIndex = actionIndex;
   }
-
-  //TODO: Develop callback for component
-  public void execAction(String code, double deltaTime) {
-    switch (code) {
-      case "mv_X":
-        mvX(deltaTime);
-        break;
-      case "reverse_dir":
-        reverseDirection();
-        break;
-      default:
-        break;
-    }
-  }
-
-  public void mvX(double deltaTime) {
-    GameObject self = this.getOwner();
-    self.setX((this.getDirection() * self.getVelocity().getX() * deltaTime) + self.getX());
-  }
-
-  public void reverseDirection() {
-    this.setDirection(this.getDirection() * -1);
-  }
-
 }

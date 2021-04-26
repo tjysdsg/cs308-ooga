@@ -11,37 +11,22 @@ import ooga.model.managers.ECManager;
 import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
 
-@Track({MovementSquenceComponent.class, PlayerComponent.class, MovementSquenceComponent.class})
+@Track({MovementSquenceComponent.class, PlayerComponent.class, MovementComponent.class})
 public class NPCSystem extends ComponentBasedSystem {
 
   private ComponentMapper<MovementSquenceComponent> movementSequenceMapper;
-  private ComponentMapper<PlayerComponent> playerMapper;
   private ComponentMapper<MovementComponent> movementMapper;
 
   public NPCSystem(ECManager ecManager) {
     super(ecManager);
     movementSequenceMapper = getComponentMapper(MovementSquenceComponent.class);
-    playerMapper = getComponentMapper(PlayerComponent.class);
     movementMapper= getComponentMapper(MovementComponent.class);
-    initPlayerType(PlayerComponent.PlayerType.NEUTRAL);
   }
 
   private List<MovementSquenceComponent> getMovementSequence() {
     return movementSequenceMapper.getComponents();
   }
-  private List<MovementComponent> getMovement(){
-    return movementMapper.getComponents();
-  }
-  private List<PlayerComponent> getPlayers(){
-    return playerMapper.getComponents();
-  }
 
-  private void initPlayerType(PlayerComponent.PlayerType playerType) {
-    List<PlayerComponent> players = getPlayers();
-    for (PlayerComponent p : players) {
-      p.setPlayerType(playerType);
-    }
-  }
   @Override
   public void update(double deltaTime) {
     for (MovementSquenceComponent ms : getMovementSequence()) {
@@ -89,7 +74,8 @@ public class NPCSystem extends ComponentBasedSystem {
       ms.setCumTime(cumTime);
     } else {
       ms.setCumTime(0);
-      ms.setActionIndex(ms.getActionIndex()+1);
+      actionIndex++;
+      ms.setActionIndex(actionIndex);
     }
     if (actionIndex >= actionSequence.size()) {
       ms.setActionIndex(0);
