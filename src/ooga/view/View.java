@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import javafx.animation.*;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -47,6 +48,8 @@ public class View {
   private ViewConfiguration viewConfiguration;
   private GenericMenu pauseMenu;
   private SettingsPane settings;
+  private GenericMenu endScreen;
+  private String currentGameDir;
 
   public View(Stage stage) {
     CSSFX.start();
@@ -99,6 +102,24 @@ public class View {
     stage.show();
   }
 
+  private void setupEndscreen(boolean victory) {
+    StringBinding title;
+    StringBinding nextPlay;
+    StringBinding exit = resources.getStringBinding("Exit");
+    if (victory) {
+      title = resources.getStringBinding("YouWin");
+      nextPlay = resources.getStringBinding("TryAgain");
+    } else {
+      title = resources.getStringBinding("YouLose");
+      nextPlay = resources.getStringBinding("PlayAgain");
+    }
+    this.endScreen = new GenericMenu(title);
+    endScreen.addOption(nextPlay, () -> startGame(this.currentGameDir),
+        "secondary", "play");
+    endScreen.addOption(exit, () -> setScene(splashScreen),
+        "secondary", "play");
+  }
+
   private void setupSettings() {
     SettingsModule systemModule = new SettingsModule(resources.getStringBinding("System"));
     ObservableList<String> list =
@@ -119,7 +140,7 @@ public class View {
 
   private void setupPauseMenu() {
     pauseDialog = new JFXDialog();
-    pauseMenu = new GenericMenu(resources);
+    pauseMenu = new GenericMenu(resources.getStringBinding("Paused"));
     pauseDialog.setContent(pauseMenu);
 
     pauseMenu.addOption(
@@ -153,9 +174,14 @@ public class View {
 
   private void startGame(String directory) {
     logger.info("Game Selected {}", directory);
+    this.currentGameDir = directory;
     // TODO: Have a check if a game is currently playing and ask
     // if want to quit
     currentGame = new GameScene(directory, resources);
+    currentGame.setOnEnd( b -> {
+      setupEndscreen(b);
+      currentGame.getRootCover().getChildren().add(endScreen);
+    });
     currentGame.setOnResize(
         (height, width) -> {
           stage.setHeight(height);

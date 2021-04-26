@@ -52,6 +52,7 @@ public class GameScene extends Scene {
   private GameConfiguration gameConfiguration;
   private ObservableResource resources;
   private SettingsModule settings;
+  private Consumer<Boolean> ionly;
 
   public GameScene(String directory, ObservableResource resources) {
     super(new StackPane(), WIDTH, HEIGHT, Color.BLACK);
@@ -155,6 +156,7 @@ public class GameScene extends Scene {
   private void handleInvalidGame() {}
 
   private void handlePress(KeyCode code) {
+    notifyEnd(true);
     if (code == KeyCode.ESCAPE) {
       logger.info("Escaping game");
       notifyEscape();
@@ -172,6 +174,10 @@ public class GameScene extends Scene {
     if (this.onEscape != null) {
       onEscape.accept(this.root);
     }
+  }
+
+  public void setOnEnd(Consumer<Boolean> callback) {
+    this.ionly = callback;
   }
 
   /**
@@ -194,9 +200,19 @@ public class GameScene extends Scene {
     // notifyResize();
   }
 
+  private void notifyEnd(boolean victory) {
+    if (this.ionly != null) {
+      ionly.accept(victory); // 😤
+    }
+  }
+
   public void notifyResize() {
     if (resizeCallback != null)
       resizeCallback.accept((double) currentLevel.getHeight(), (double) currentLevel.getWidth());
+  }
+
+  public StackPane getRootCover() {
+    return this.root;
   }
 
   public void playGame() {
