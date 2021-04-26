@@ -3,6 +3,7 @@ package ooga.model.systems.creature;
 import ooga.model.Vector;
 import ooga.model.annotations.Track;
 import ooga.model.components.AttackComponent;
+import ooga.model.components.CriticalHitMultiplier;
 import ooga.model.components.HealthComponent;
 import ooga.model.components.MovementComponent;
 import ooga.model.components.enemy.HateComponent;
@@ -13,13 +14,14 @@ import ooga.model.systems.ComponentMapper;
 import ooga.model.systems.HealthSystem;
 import org.checkerframework.checker.units.qual.A;
 
-@Track({WeaponComponent.class, MovementComponent.class, HateComponent.class, HealthComponent.class,  AttackComponent.class})
+@Track({WeaponComponent.class, MovementComponent.class, HateComponent.class, HealthComponent.class,  AttackComponent.class,CriticalHitMultiplier.class})
 public class AttackSystem extends ComponentBasedSystem {
 
   private ComponentMapper<WeaponComponent> weaponMapper;
   private ComponentMapper<MovementComponent> movementMapper;
   private ComponentMapper<HateComponent> enemyMapper;
   private ComponentMapper<AttackComponent> attackMapper;
+  private ComponentMapper<CriticalHitMultiplier> criticalHitMapper;
 
   public AttackSystem(ECManager ecManager) {
     super(ecManager);
@@ -27,6 +29,7 @@ public class AttackSystem extends ComponentBasedSystem {
     movementMapper = getComponentMapper(MovementComponent.class);
     enemyMapper = getComponentMapper(HateComponent.class);
     attackMapper=getComponentMapper(AttackComponent.class);
+    criticalHitMapper=getComponentMapper(CriticalHitMultiplier.class);
 
     addMapping("attack", this::attack);
   }
@@ -34,13 +37,14 @@ public class AttackSystem extends ComponentBasedSystem {
   public void attack(boolean on) {
     for (WeaponComponent w : weaponMapper.getComponents()) {
       AttackComponent attacker=attackMapper.get(w.getOwner().getId());
+      CriticalHitMultiplier multiplier=criticalHitMapper.get(w.getOwner().getId());
       for (HateComponent h : enemyMapper.getComponents()) {
         int enemyID = h.getOwner().getId();
         if (withinRange(w, h) && faceToEnemy(w, h)&& attacker.attack()) {
           HealthSystem healthSystem = getSystem(HealthSystem.class);
-          healthSystem.changeHealth(enemyID, w.getAttack(), false);
-          attacker.update();
+          healthSystem.changeHealth(enemyID, w.getAttack()*multiplier.getMultiplier(), false);
         }
+        attacker.update();
       }
     }
   }

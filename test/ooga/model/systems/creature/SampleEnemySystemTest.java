@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 import ooga.model.components.AttackComponent;
+import ooga.model.components.CriticalHitMultiplier;
 import ooga.model.components.HealthComponent;
 import ooga.model.components.MovementComponent;
 import ooga.model.components.PlayerComponent;
@@ -31,6 +32,7 @@ class SampleEnemySystemTest {
   PlayerComponent playerComponent;
   MovementComponent movementComponentP;
   MovementComponent movementComponentE;
+  CriticalHitMultiplier hitMultiplier;
   SystemManager systemManager;
 
   PlayerSystem playerSystem;
@@ -53,6 +55,7 @@ class SampleEnemySystemTest {
     movementComponentP=ecManager.createComponent(player,MovementComponent.class);
     weaponComponent = ecManager.createComponent(player,WeaponComponent.class);
     attackComponent = ecManager.createComponent(player,AttackComponent.class);
+    hitMultiplier=ecManager.createComponent(player,CriticalHitMultiplier.class);
     systemManager = new SystemManager();
 
     enemy.setX(10);
@@ -67,6 +70,7 @@ class SampleEnemySystemTest {
     attackComponent.setFrequency(10);
     weaponComponent.setPayLoad(-10);
     weaponComponent.setAttackRange(100);
+    hitMultiplier.setChance(0);
     systemManager.createSystem(HealthSystem.class,ecManager);
     systemManager.createSystem(PlayerSystem.class,ecManager);
     systemManager.createSystem(AttackSystem.class,ecManager);
@@ -83,9 +87,12 @@ class SampleEnemySystemTest {
     attackSystem.attack(true);
     attackSystem.attack(true);
     assertEquals(90,healthComponentE.getHealth());
-    sampleEnemySystem.update(0.1);
-    assertEquals(90,healthComponentP.getHealth());
+    hitMultiplier.setChance(1);
+    for(int i=0;i<9;i++)
+      attackSystem.attack(true);
 
+    assertEquals(70,healthComponentE.getHealth());
+    sampleEnemySystem.update(0.1);
     sampleEnemySystem.update(0.1);
     assertEquals(90,healthComponentP.getHealth());
     for(int i=0;i<9;i++){
