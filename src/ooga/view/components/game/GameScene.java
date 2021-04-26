@@ -155,7 +155,7 @@ public class GameScene extends Scene {
 
   private void setupSettings() {
     this.settings = new SettingsModule(resources.getStringBinding("GameSettings"));
-    settings.addKeysOption(gameConfiguration.getKeyMap(), currentLevel.getAvailableActions());
+    settings.addKeysOption(gameConfiguration.getKeyMap(), currentLevel.getAvailableInputs());
   }
 
   public SettingsModule getSettings() {
