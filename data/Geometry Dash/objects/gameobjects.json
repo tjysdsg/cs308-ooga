@@ -55,6 +55,22 @@
       },
       {
         "with": [
+          "floor", "platform", "smallblock", "gridblock" , "gridblockthick"
+        ],
+        "actions": [
+          {
+            "action": "lose_game"
+          },
+          {
+            "action": "blocked_right"
+          }
+        ],
+        "positions": [
+          "right"
+        ]
+      },
+      {
+        "with": [
           "spike", "pinkspikes"
         ],
         "actions": [

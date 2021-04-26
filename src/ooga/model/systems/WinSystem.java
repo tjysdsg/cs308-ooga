@@ -24,7 +24,6 @@ public class WinSystem extends ComponentBasedSystem{
     healthMapper = getComponentMapper(HealthComponent.class);
     scoreMapper = getComponentMapper(ScoreComponent.class);
     winMapper = getComponentMapper(WinComponent.class);
-    //this.setOnLevelEnd = setOnLevelEnd;
 
     addCollisionMapping(
         "lose_game",
@@ -73,6 +72,9 @@ public class WinSystem extends ComponentBasedSystem{
     }
 
   }
+  public void setSetOnLevelEnd(Consumer<Boolean> setOnLevelEnd){
+    this.setOnLevelEnd = setOnLevelEnd;
+  }
 
   private void executeWinOrLose(boolean comp, WinCondition wCond) {
     if(comp && wCond.isWin()){
@@ -84,13 +86,12 @@ public class WinSystem extends ComponentBasedSystem{
   }
 
   private void loseGame(){
-    System.out.println("I LOSE");
-    //etOnLevelEnd.accept(false);
+    System.out.println("I am a loser");
+    setOnLevelEnd.accept(false);
   }
 
   private void winGame(){
-    System.out.println("I WIN");
-    //setOnLevelEnd.accept(true);
+    setOnLevelEnd.accept(true);
   }
 
 }

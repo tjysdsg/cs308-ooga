@@ -1,6 +1,7 @@
 package ooga.model;
 
 import java.util.List;
+import java.util.function.Consumer;
 import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 import ooga.model.observables.ObservableLevel;
@@ -22,4 +23,6 @@ public interface Level {
   String getBackgroundID();
 
   ObservableLevel asObservable();
+
+  void setOnLevelEnd(Consumer<Boolean> update);
 }

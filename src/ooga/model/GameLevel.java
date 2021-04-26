@@ -110,6 +110,13 @@ class GameLevel implements Level, ObservableLevel {
   }
 
   @Override
+  public void setOnLevelEnd(Consumer<Boolean> update) {
+    WinSystem winSystem = systemManager.getSystem(WinSystem.class);
+    winSystem.setSetOnLevelEnd(update);
+  }
+
+
+  @Override
   public int getHeight() {
     return height;
   }
