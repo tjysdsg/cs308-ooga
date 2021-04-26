@@ -17,6 +17,7 @@ public class WinSystem extends ComponentBasedSystem{
   private ComponentMapper<WinComponent> winMapper;
   private Consumer<Boolean> setOnLevelEnd;
 
+  private boolean hasWon = false;
 
   public WinSystem(ECManager ecManager) {
     super(ecManager);
@@ -86,11 +87,17 @@ public class WinSystem extends ComponentBasedSystem{
   }
 
   private void loseGame(){
-    setOnLevelEnd.accept(false);
+    if(!hasWon){
+      hasWon = true;
+      setOnLevelEnd.accept(false);
+    }
   }
 
   private void winGame(){
-    setOnLevelEnd.accept(true);
+    if(!hasWon){
+      hasWon = true; 
+      setOnLevelEnd.accept(true);
+    }
   }
 
 
