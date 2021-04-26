@@ -32,7 +32,7 @@ public abstract class EnemySystems extends ComponentBasedSystem {
 
   //TODO: put these thing into Hate system when the system design is done
   private boolean detectHate(HateComponent hate0, Component hate) {
-    Vector difference = hate0.getOwner().getVelocity().difference(hate.getOwner().getVelocity());
+    Vector difference = hate0.getOwner().getLocation().difference(hate.getOwner().getLocation());
     double distance = difference.magnitude();
     return hate0.detectHate(distance);
   }
@@ -68,6 +68,8 @@ public abstract class EnemySystems extends ComponentBasedSystem {
       if (hate) {
         if (counter == 0) {
           attack = true;
+          update(frequency);
+          return;
         }
       }
       attack = false;

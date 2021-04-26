@@ -43,4 +43,8 @@ public class HateComponent extends Component {
   public double getDamage() {
     return damage;
   }
+
+  public void setDamage(double damage) {
+    this.damage = damage;
+  }
 }

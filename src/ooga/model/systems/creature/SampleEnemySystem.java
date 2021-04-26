@@ -25,7 +25,7 @@ public class SampleEnemySystem extends EnemySystems {
     for (Pair<HateComponent, PlayerComponent> p : hateMap.keySet()) {
       AttackDealer tmpDealer = hateMap.get(p);
       if (tmpDealer.attackOrNot()) {
-        HealthComponent health = healthMapper.get(p.getValue().getId());
+        HealthComponent health = healthMapper.get(p.getValue().getOwner().getId());
         health.healthIncrement(p.getKey().getDamage(), false);
       }
     }
