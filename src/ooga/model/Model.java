@@ -30,8 +30,6 @@ public class Model implements ObservableModel {
   private String LEVELS_DIRECTORY_NAME = "levels";
   private String CONFIG_FILE_NAME = "config" + FILE_EXTENSION;
   private Consumer<ObservableLevel> levelChangeCallback;
-  private Consumer<ObservableObject> newObjectCallback;
-  private Consumer<ObservableObject> deleteObjectCallback;
 
   public void setGame(File directory) throws FileNotFoundException,InvalidDataFileException {
     if (!directory.isDirectory()) {
@@ -45,7 +43,7 @@ public class Model implements ObservableModel {
       throw new DirectoryNotFoundException(OBJECTS_DIRECTORY_NAME);
     }
 
-    levelFactory = new LevelFactory(objectsDir, newObjectCallback,deleteObjectCallback);
+    levelFactory = new LevelFactory(objectsDir);
 
     try {
       levelsDir = FileReader.getFile(directory, LEVELS_DIRECTORY_NAME);
@@ -109,16 +107,6 @@ public class Model implements ObservableModel {
   }
 
   @Override
-  public void setOnNewObject(Consumer<ObservableObject> callback) {
-    newObjectCallback = callback;
-  }
-
-  @Override
-  public void setOnObjectDestroy(Consumer<ObservableObject> callback){
-    this.deleteObjectCallback=callback;
-  }
-
-  @Override
   public void setOnTextUpdate(Consumer<String> text) {
 
   }
@@ -129,5 +117,9 @@ public class Model implements ObservableModel {
 
   private void checkCollisions() {
 
+  }
+
+  public void setOnGameEnd(Consumer<Boolean> callback) {
+    // Do something with it
   }
 }

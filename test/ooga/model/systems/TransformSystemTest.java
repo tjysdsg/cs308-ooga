@@ -14,7 +14,7 @@ public class TransformSystemTest {
   ECManager ecManager;
 
   TransformSystemTest() {
-    ecManager = new ECManager(null, null, null);
+    ecManager = new ECManager(null);
   }
 
   @BeforeEach

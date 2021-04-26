@@ -1,6 +1,8 @@
 package ooga.view.components.game;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.beans.binding.StringBinding;
 import javafx.collections.ObservableList;
@@ -31,5 +33,14 @@ public class StatsView extends HBox {
     if (stats.containsKey(stat)) {
       stats.get(stat).setValue(value);
     }
+  }
+
+  public Collection<String> getTrackedStats() {
+    System.out.println(stats.keySet());
+    return stats.keySet();
+  }
+
+  public void clear() {
+    stats.values().forEach(o -> o.setValue(""));
   }
 }

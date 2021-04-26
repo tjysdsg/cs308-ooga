@@ -67,7 +67,7 @@ public class CollisionSystem extends GameObjectBasedSystem {
   private void collide(GameObject self, GameObject other) {
     String selfDirection = detectCollisionDirection(self, other);
     String otherDirection = detectCollisionDirection(other, self);
-    
+
     self.setCollided(true);
     other.setCollided(true);
 
