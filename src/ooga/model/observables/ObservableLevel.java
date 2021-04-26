@@ -43,4 +43,9 @@ public interface ObservableLevel {
    * Get the names of all input action available in this game level
    */
   List<String> getAvailableInputs();
+  void setOnNewObject(Consumer<ObservableObject> callback);
+
+  void setOnObjectDestroy(Consumer<ObservableObject> callback);
+
+  List<? extends ObservableObject> getAvailableGameObjects();
 }
