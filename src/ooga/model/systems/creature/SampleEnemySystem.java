@@ -27,8 +27,6 @@ public class SampleEnemySystem extends EnemySystems {
       if (tmpDealer.attackOrNot()) {
         HealthComponent health = healthMapper.get(p.getValue().getOwner().getId());
         health.healthIncrement(p.getKey().getDamage(), false);
-        System.out.println(health.getHealth());
-        System.out.println(p.getKey().getDamage());
       }
     }
   }
