@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 import ooga.model.Vector;
 import ooga.model.components.MovementComponent;
-import ooga.model.components.MovementSquenceComponent;
+import ooga.model.components.MovementSequenceComponent;
 import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 import ooga.model.systems.MovementSystem;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 class NPCSystemTest {
   ECManager ecManager;
   MovementComponent movementComponent;
-  MovementSquenceComponent movementSquenceComponent;
+  MovementSequenceComponent movementSquenceComponent;
 
   MovementSystem movementSystem;
   NPCSystem npcSystem;
@@ -28,7 +28,7 @@ class NPCSystemTest {
     ecManager =  new ECManager(null, null, null);
     go = ecManager.createEntity("test");
     movementComponent= ecManager.createComponent(go,MovementComponent.class);
-    movementSquenceComponent=ecManager.createComponent(go,MovementSquenceComponent.class);
+    movementSquenceComponent=ecManager.createComponent(go, MovementSequenceComponent.class);
     npcSystem = new NPCSystem(ecManager);
     movementSystem= new MovementSystem(ecManager);
     transformSystem=new TransformSystem(ecManager);

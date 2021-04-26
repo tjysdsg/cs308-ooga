@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import ooga.model.objects.GameObject;
 
-public class MovementSquenceComponent extends MovementComponent {
+public class MovementSequenceComponent extends MovementComponent {
 
   List<String> actionSequence;
   List<Double> actionTime;
   private double cumTime = 0;
   private int actionIndex = 0;
 
-  public MovementSquenceComponent(int id, GameObject owner) {
+  public MovementSequenceComponent(int id, GameObject owner) {
     super(id, owner);
     actionSequence = new ArrayList<>();
     actionTime = new ArrayList<>();
