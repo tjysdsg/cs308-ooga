@@ -7,6 +7,16 @@
     "onCollide": [
       {
         "with" : [
+          "enemyBullet"
+        ],
+        "actions" : [
+          {
+            "action" : "lose_game"
+          }
+        ]
+      },
+      {
+        "with" : [
           "floor"
         ],
         "actions": [
@@ -66,7 +76,7 @@
           {
             "action" : "SpawnObject",
             "input" : "shoot",
-            "payload" : "bullet,25,50,0.75"
+            "payload" : "bullet,25,50,0.5"
           }
         ]
       },
@@ -113,6 +123,33 @@
           }
         ]
       }
+    ],
+    "components" : [
+      {
+        "type" : "MovementComponent",
+        "gravAccel" : 0
+      },
+      {
+        "type" : "MovementSequenceComponent",
+        "actionSequence" : [
+          {
+            "action" : "move_left"
+          },
+          {
+            "action" : "stand_still"
+          },
+          {
+            "action" : "spawn_object",
+            "payload" : "enemyBullet,0,0,1"
+          },
+          {
+            "action" : "move_right"
+          }
+        ],
+        "actionTime" : [
+          1, 1, 1, 1
+        ]
+      }
     ]
   },
   {
@@ -141,6 +178,27 @@
     ],
     "velocity" : {
       "y" : 150
+    }
+  },
+  {
+    "name" : "enemyBullet",
+    "height" : 10,
+    "width" : 10,
+    "imageID" : "laser",
+    "onCollide" : [
+      {
+        "with" : [
+          "fighter"
+        ],
+        "actions": [
+          {
+            "action": "destroy_object"
+          }
+        ]
+      }
+    ],
+    "velocity" : {
+      "y" : -150
     }
   }
 ]

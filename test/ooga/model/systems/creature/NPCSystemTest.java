@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 import ooga.model.Vector;
+import ooga.model.actions.NPCAction;
 import ooga.model.components.MovementComponent;
 import ooga.model.components.MovementSequenceComponent;
 import ooga.model.managers.ECManager;
@@ -32,10 +33,10 @@ class NPCSystemTest {
     npcSystem = new NPCSystem(ecManager);
     movementSystem= new MovementSystem(ecManager);
     transformSystem=new TransformSystem(ecManager);
-    List<String> moves=movementSquenceComponent.getActionSequence();
+    List<NPCAction> moves=movementSquenceComponent.getActionSequence();
     List<Double> times=movementSquenceComponent.getActionTime();
-    moves.add("move_right");
-    moves.add("move_left");
+    moves.add(new NPCAction("move_right"));
+    moves.add(new NPCAction("move_left"));
     times.add(1.0);
     times.add(1.0);
 

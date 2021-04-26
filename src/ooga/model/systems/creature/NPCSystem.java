@@ -1,6 +1,8 @@
 package ooga.model.systems.creature;
 
 import java.util.List;
+import ooga.model.actions.NPCAction;
+import ooga.model.actions.ObjectSpawner;
 import ooga.model.annotations.Track;
 import ooga.model.components.MovementComponent;
 import ooga.model.components.MovementComponent.HorizontalMovementStatus;
@@ -33,8 +35,8 @@ public class NPCSystem extends ComponentBasedSystem {
     }
   }
 
-  private void execAction(String actionCode, double deltaTime, MovementComponent m, MovementSequenceComponent ms){
-    switch (actionCode){
+  private void execAction(NPCAction actionCode, double deltaTime, MovementComponent m, MovementSequenceComponent ms){
+    switch (actionCode.getAction()){
       case "move_left":
         moveLeft(deltaTime,m);
         break;
@@ -44,6 +46,9 @@ public class NPCSystem extends ComponentBasedSystem {
       case "stand_still":
         standStill(m);
         break;
+      case "spawn_object":
+        ObjectSpawner spawner = new ObjectSpawner(actionCode.getPayload(), getECManager());
+        spawner.handleSpawn(ms.getOwner().getId(), true);
       default:
         break;
     }
@@ -65,7 +70,7 @@ public class NPCSystem extends ComponentBasedSystem {
 
   private void unitUpdate(double deltaTime,MovementComponent m, MovementSequenceComponent ms){
     double cumTime= ms.getCumTime();
-    List<String> actionSequence=ms.getActionSequence();
+    List<NPCAction> actionSequence=ms.getActionSequence();
     List<Double> actionTime=ms.getActionTime();
     int actionIndex = ms.getActionIndex();
     if (cumTime < actionTime.get(actionIndex)) {

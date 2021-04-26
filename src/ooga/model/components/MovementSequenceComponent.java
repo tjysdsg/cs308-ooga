@@ -2,11 +2,12 @@ package ooga.model.components;
 
 import java.util.ArrayList;
 import java.util.List;
+import ooga.model.actions.NPCAction;
 import ooga.model.objects.GameObject;
 
 public class MovementSequenceComponent extends MovementComponent {
 
-  List<String> actionSequence;
+  List<NPCAction> actionSequence;
   List<Double> actionTime;
   private double cumTime = 0;
   private int actionIndex = 0;
@@ -25,7 +26,7 @@ public class MovementSequenceComponent extends MovementComponent {
     return cumTime;
   }
 
-  public List<String> getActionSequence() {
+  public List<NPCAction> getActionSequence() {
     return actionSequence;
   }
 

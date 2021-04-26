@@ -5,6 +5,7 @@
   "focus" : "camera",
   "height": 750,
   "width": 500,
+  "levelNumber" : 1,
   "objects": [
     {
       "name" : "camera",
