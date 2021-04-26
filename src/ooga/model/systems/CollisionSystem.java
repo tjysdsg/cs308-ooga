@@ -67,14 +67,14 @@ public class CollisionSystem extends GameObjectBasedSystem {
   private void collide(GameObject self, GameObject other) {
     String selfDirection = detectCollisionDirection(self, other);
     String otherDirection = detectCollisionDirection(other, self);
-
+/*
     if(self.getName().equals("playerblock")){
       System.out.println(selfDirection);
     }
     else if(other.getName().equals("playerblock")){
       System.out.println(otherDirection);
     }
-
+*/
     self.setCollided(true);
     other.setCollided(true);
 

@@ -25,4 +25,6 @@ public interface Level {
   ObservableLevel asObservable();
 
   void setOnLevelEnd(Consumer<Boolean> update);
+
+  int getLevelNumber();
 }

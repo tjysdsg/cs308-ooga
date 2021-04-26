@@ -88,9 +88,17 @@ public class Model implements ObservableModel {
   private void changeLevel(boolean change){
       if(!change){
         try {
-          setCurrentLevel("level1");
+          setCurrentLevel("level" + currentLevel.getLevelNumber());
         } catch (FileNotFoundException e) {
           e.printStackTrace();
+        }
+      }
+      else{
+        try {
+          int nextLevel = currentLevel.getLevelNumber()+ 1;
+          setCurrentLevel("level" + nextLevel);
+        } catch (FileNotFoundException e) {
+          System.out.println("No Level file");
         }
       }
   }

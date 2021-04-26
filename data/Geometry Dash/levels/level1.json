@@ -2,6 +2,7 @@
   "name": "Stereo Madness",
   "id": "stereo_madness",
   "background": "geoback",
+  "levelNumber" : 1,
   "height": 1000,
   "width": 1500,
   "objects": [

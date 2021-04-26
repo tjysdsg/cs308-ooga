@@ -43,6 +43,7 @@ class GameLevel implements Level, ObservableLevel {
   private int width;
   private String background;
   private String focus;
+  private int levelNumber;
 
   private transient List<BaseSystem> systems = new ArrayList<>();
   @Json(name = "objects")
@@ -203,5 +204,9 @@ class GameLevel implements Level, ObservableLevel {
   @Override
   public List<? extends ObservableObject> getAvailableGameObjects() {
     return ecManager.getEntities();
+  }
+  @Override
+  public int getLevelNumber(){
+    return levelNumber;
   }
 }
