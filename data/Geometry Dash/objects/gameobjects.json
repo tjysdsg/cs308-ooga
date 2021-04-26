@@ -8,7 +8,7 @@
       {
         "actions": [
           {
-            "action" : "player_blocked_bottom"
+            "action" : "blocked_bottom"
           }
         ],
         "positions": [
@@ -21,7 +21,7 @@
             "action": "lose_game"
           },
           {
-            "action": "player_blocked_top"
+            "action": "blocked_top"
           }
         ],
         "positions": [
@@ -34,7 +34,7 @@
             "action": "lose_game"
           },
           {
-            "action": "player_blocked_left"
+            "action": "blocked_left"
           }
         ],
         "positions": [
@@ -47,7 +47,7 @@
             "action": "lose_game"
           },
           {
-            "action" : "player_blocked_right"
+            "action" : "blocked_right"
           }
         ],
         "positions": [
@@ -58,10 +58,6 @@
     "components": [
       {
         "type" : "PlayerComponent",
-        "jumpHeight": 300,
-        "maxSpeed": 250,
-        "horizontalStatus" : "RUNNING",
-        "gravAccel": 30,
         "actionMappings" : [
           {
             "action" : "MoveRight",
@@ -77,6 +73,14 @@
           }
         ]
 
+      },
+
+      {
+        "type" : "MovementComponent",
+        "jumpHeight": 250,
+        "maxSpeed": 250,
+        "gravAccel": 30,
+        "horizontalStatus" : "RUNNING"
       },
       {
         "type" : "ScoreComponent",

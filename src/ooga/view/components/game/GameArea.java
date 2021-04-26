@@ -1,19 +1,14 @@
 package ooga.view.components.game;
 
-import ooga.model.observables.ObservableObject;
-
+import com.jfoenix.controls.JFXButton;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.jfoenix.controls.JFXButton;
-import javafx.beans.property.DoubleProperty;
-import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-
+import ooga.model.observables.ObservableLevel;
+import ooga.model.observables.ObservableObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 
 public class GameArea extends AnchorPane {
   private static final Logger logger = LogManager.getLogger(GameArea.class);
@@ -22,7 +17,7 @@ public class GameArea extends AnchorPane {
   private List<ObjectView> objects;
   private StackPane objectsPane;
 
-  public GameArea() {
+  public GameArea(StatsView stats) {
     this.objectsPane = new StackPane();
     getStyleClass().add("game-area");
     this.objects = new ArrayList<>();
@@ -32,9 +27,22 @@ public class GameArea extends AnchorPane {
     objectsPane.getChildren().add(placeholder);
 
     objectsPane.setTranslateX(LEFT_EDGE);
-    getChildren().add(objectsPane);
+    getChildren().addAll(objectsPane, stats);
+    AnchorPane.setTopAnchor(stats, 0.0);
+    AnchorPane.setLeftAnchor(stats, 0.0);
+    AnchorPane.setRightAnchor(stats, 0.0);
     AnchorPane.setBottomAnchor(objectsPane, BOTTOM_EDGE);
     AnchorPane.setLeftAnchor(objectsPane, LEFT_EDGE);
+  }
+
+  public void setLevel(ObservableLevel level) {
+    level.setOnFocusUpdate(
+        id -> {
+          objects.stream()
+              .filter(obj -> obj.isObject(id))
+              .findFirst()
+              .ifPresent(this::setCameraCenter);
+        });
   }
 
   public void setCameraCenter(ObjectView center) {
@@ -53,12 +61,12 @@ public class GameArea extends AnchorPane {
     double position = objectValue.doubleValue() * -1;
     logger.info("obj position: {}", position);
     if (position > 250) {
-      objectsPane.translateYProperty().set(position - 200 );
+      objectsPane.translateYProperty().set(position - 200);
     }
   }
 
   public void addObject(ObjectView object) {
-    if(objectsPane.getChildren().size() == 1) {
+    if (objectsPane.getChildren().size() == 1) {
       setCameraCenter(object);
     }
     objects.add(object);
@@ -67,7 +75,7 @@ public class GameArea extends AnchorPane {
 
   public void removeObject(ObservableObject object) {
     ObjectView viewToRemove = null;
-    for(ObjectView o : objects) {
+    for (ObjectView o : objects) {
       if (o.isObject(object)) {
         objectsPane.getChildren().remove(o);
       }

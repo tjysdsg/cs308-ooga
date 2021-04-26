@@ -1,11 +1,9 @@
 package ooga.view.components.game;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-
 import javafx.collections.ObservableMap;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -44,28 +42,37 @@ public class GameScene extends Scene {
   private ImageConfiguration images;
   private BiConsumer<Double, Double> resizeCallback;
   private ObservableLevel currentLevel;
+  private StatsView statsView;
 
-  public GameScene(String directory, ObservableResource resources, ObservableMap<KeyCode, String> keymaps) {
+  public GameScene(
+      String directory, ObservableResource resources, ObservableMap<KeyCode, String> keymaps) {
     super(new StackPane(), WIDTH, HEIGHT, Color.BLACK);
     this.root = (StackPane) getRoot();
     this.model = new Model();
     this.controller = new Controller(model);
     controller.setKeyMap(keymaps);
     this.directory = directory;
-    this.gameArea = new GameArea();
+    this.statsView = new StatsView(resources);
+    this.gameArea = new GameArea(statsView);
     this.loop = new GameLoop();
     this.images = new ImageConfiguration(directory);
-
+    // Temporary
+    statsView.addStatistics("Health", "Points");
+    statsView.updateStat("Health", "30");
+    statsView.updateStat("Points", "50");
+    // End temporary
     File gameDirectory = new File(directory);
-    model.setOnNewObject(e -> {
-      ObjectView obj = new ObjectView(e, images);
-      gameArea.addObject(obj);
-    });
+    model.setOnNewObject(
+        e -> {
+          ObjectView obj = new ObjectView(e, images);
+          this.gameArea.addObject(obj);
+        });
 
     model.setOnLevelChange(this::updateScene);
-    model.setOnObjectDestroy(e -> {
-      gameArea.removeObject(e);
-    });
+    model.setOnObjectDestroy(
+        e -> {
+          this.gameArea.removeObject(e);
+        });
 
     if (!ModelFactory.verifyGameDirectory(gameDirectory)) {
       handleInvalidGame();
@@ -91,7 +98,7 @@ public class GameScene extends Scene {
   private void updateScene(ObservableLevel observableLevel) {
     currentLevel = observableLevel;
     setBackground(observableLevel.getBackgroundID());
-    notifyResize();
+    // notifyResize();
   }
 
   private void setBackground(String newBackground) {
@@ -101,12 +108,13 @@ public class GameScene extends Scene {
     try {
 
       logger.info("Openning {} for background", bgImage.getUrl());
-      bg = new BackgroundImage(
-          bgImage,
-          BackgroundRepeat.REPEAT,
-          BackgroundRepeat.REPEAT,
-          BackgroundPosition.DEFAULT,
-          BackgroundSize.DEFAULT);
+      bg =
+          new BackgroundImage(
+              bgImage,
+              BackgroundRepeat.REPEAT,
+              BackgroundRepeat.REPEAT,
+              BackgroundPosition.DEFAULT,
+              BackgroundSize.DEFAULT);
 
     } catch (Exception e) {
       throw new InvalidDataFileException(bgImage.getUrl());
@@ -118,11 +126,11 @@ public class GameScene extends Scene {
   private void handleInvalidGame() {}
 
   private void handlePress(KeyCode code) {
-     if (code == KeyCode.ESCAPE) {
-       logger.info("Escaping game");
-       notifyEscape();
-       return;
-     }
+    if (code == KeyCode.ESCAPE) {
+      logger.info("Escaping game");
+      notifyEscape();
+      return;
+    }
     controller.handleKeyPress(code);
     System.out.println("THI SIS: " + KeyCode.getKeyCode(" "));
   }
@@ -154,13 +162,14 @@ public class GameScene extends Scene {
 
   public void setOnResize(BiConsumer<Double, Double> resizeCallback) {
     this.resizeCallback = resizeCallback;
-    notifyResize();
+    // notifyResize();
   }
 
   public void notifyResize() {
     if (resizeCallback != null)
       resizeCallback.accept((double) currentLevel.getHeight(), (double) currentLevel.getWidth());
   }
+
   public void playGame() {
     loop.start();
   }
