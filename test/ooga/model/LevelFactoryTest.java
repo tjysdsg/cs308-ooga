@@ -3,6 +3,7 @@ package ooga.model;
 import java.util.HashMap;
 import java.util.Map;
 import ooga.model.components.Component;
+import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 import ooga.model.observables.ObservableObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,29 +24,18 @@ public class LevelFactoryTest {
 
   String basicLevelFile = exampleDir + "levels/level1.json";
   int basicLevelObjectsCount = 42;
-  int newObjectsCount;
   Level basicLevel;
 
   @BeforeEach
   void setup() throws IOException, URISyntaxException {
     objectsCount = new HashMap<>();
-    newObjectsCount = 0;
     factory = new LevelFactory(getFile(objectDirectory));
     basicLevel = factory.buildLevel(getFile(basicLevelFile));
-    basicLevel.getECManager().setNewObjectCallback(this::incrementObjectsCount);
   }
-
-  private void incrementObjectsCount(ObservableObject observableObject) {
-    // FIXME:
-    //  objectsCount.putIfAbsent(observableObject.getName(), 0);
-    //  objectsCount.put(observableObject.getName(), objectsCount.get(observableObject.getName()) + 1);
-  }
-
 
   @Test
   void buildBasicLevelTest() throws URISyntaxException, IOException {
     assertEquals(basicLevelObjectsCount, basicLevel.generateObjects().size());
-    assertEquals(basicLevelObjectsCount, newObjectsCount);
   }
 
   @Test
@@ -61,13 +51,14 @@ public class LevelFactoryTest {
     int blockCount = 34;
     String blockName = "block";
 
-    assertEquals(goombaCount, objectsCount.get(goombaName));
-    assertEquals(marioCount, objectsCount.get(marioName));
-    assertEquals(qBlockCount, objectsCount.get(qBlockName));
-    assertEquals(brickCount, objectsCount.get(brickName));
-    assertEquals(blockCount, objectsCount.get(blockName));
-  }
+    ECManager ecManager = basicLevel.getECManager();
 
+    assertEquals(goombaCount, ecManager.getEntities(goombaName).size());
+    assertEquals(marioCount, ecManager.getEntities(marioName).size());
+    assertEquals(qBlockCount, ecManager.getEntities(qBlockName).size());
+    assertEquals(brickCount, ecManager.getEntities(brickName).size());
+    assertEquals(blockCount, ecManager.getEntities(blockName).size());
+  }
 
   File getFile(String fileName) throws URISyntaxException {
     return new File(getClass().getClassLoader().getResource(fileName).toURI());
