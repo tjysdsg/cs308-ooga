@@ -15,8 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Baseclass of all systems. Manage input keymaps, action maps, statistics maps, handles @Track
- * annotations, and provides component mappers.
+ * Baseclass of all systems. Manage input keymaps, action maps, and statistics maps.
  */
 public abstract class BaseSystem {
 
