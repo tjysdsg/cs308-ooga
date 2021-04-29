@@ -4,7 +4,5 @@
   "floor": "floor.png",
   "basice" : "basice.png",
   "laser" : "laser.png",
-  "enemylaser" : "enemyLaser.png",
-  "white" : "white.png",
-  "explosion" : "explosion.gif"
+  "white" : "white.png"
 }
