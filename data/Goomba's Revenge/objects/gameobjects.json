@@ -64,10 +64,10 @@
         ],
         "actions": [
           {
-            "action": "change_health",
-            "payload": {
-              "amount": "-5"
-            }
+            "action": "destroy_object"
+          },
+          {
+            "action": "lose_game"
           }
         ],
         "positions": [
@@ -111,10 +111,7 @@
         "type": "WinComponent",
         "winConds": [
           {
-            "condition": "health",
-            "threshold": 0.1,
-            "win": false,
-            "operator": "lt"
+            "condition": "none"
           }
         ]
       }
