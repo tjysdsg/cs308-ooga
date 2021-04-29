@@ -127,7 +127,7 @@
         "winConds": [
           {
             "condition": "health",
-            "threshold": 0,
+            "threshold": 10,
             "win": false,
             "operator": "lt"
           }
