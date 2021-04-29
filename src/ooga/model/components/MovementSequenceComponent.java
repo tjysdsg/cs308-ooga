@@ -35,7 +35,7 @@ public class MovementSequenceComponent extends MovementComponent {
     return actionSequence;
   }
 
-  public List<Double> getActionTime() {
+  public List<Double> getActualActionTime() {
     if(actionIndex==0&&cumTime==0){
       if(actualActionTime==null){
         actualActionTime=new ArrayList<>();
@@ -53,6 +53,10 @@ public class MovementSequenceComponent extends MovementComponent {
       }
     }
     return actualActionTime;
+  }
+
+  public List<Double> getActionTime() {
+    return actionTime;
   }
 
   public void setCumTime(double cumTime) {

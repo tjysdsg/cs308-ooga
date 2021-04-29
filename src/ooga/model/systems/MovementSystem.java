@@ -11,6 +11,11 @@ import ooga.model.objects.GameObject;
 @Track(MovementComponent.class)
 public class MovementSystem extends ComponentBasedSystem {
 
+  private static final String BLOCKED_BOTTOM_ACTION_NAME = "blocked_bottom";
+  private static final String BLOCKED_RIGHT_ACTION_NAME = "blocked_right";
+  private static final String BLOCKED_LEFT_ACTION_NAME = "blocked_left";
+  private static final String BLOCKED_TOP_ACTION_NAME = "blocked_top";
+
   private ComponentMapper<MovementComponent> movementMapper;
 
   public MovementSystem(ECManager ecManager) {
@@ -18,19 +23,19 @@ public class MovementSystem extends ComponentBasedSystem {
     movementMapper = getComponentMapper(MovementComponent.class);
 
     addCollisionMapping(
-        "blocked_bottom",
+        BLOCKED_BOTTOM_ACTION_NAME,
         event -> obstacleOnBottom(event.getSelf(), event.getHitter())
     );
     addCollisionMapping(
-        "blocked_right",
+        BLOCKED_RIGHT_ACTION_NAME,
         event -> obstacleOnRight(event.getSelf(), event.getHitter())
     );
     addCollisionMapping(
-        "blocked_left",
+        BLOCKED_LEFT_ACTION_NAME,
         event -> obstacleOnLeft(event.getSelf(), event.getHitter())
     );
     addCollisionMapping(
-        "blocked_top",
+        BLOCKED_TOP_ACTION_NAME,
         event -> obstacleOnTop(event.getSelf(), event.getHitter())
     );
   }
@@ -40,8 +45,10 @@ public class MovementSystem extends ComponentBasedSystem {
    */
   private void obstacleOnBottom(GameObject go, GameObject other) {
     MovementComponent p = movementMapper.get(go.getId());
-    p.setVerticalStatus(VerticalMovementStatus.GROUNDED);
-    p.setObstacle(MovementComponent.OBSTACLE_KEY_BOTTOM, other);
+    if (p != null) {
+      p.setVerticalStatus(VerticalMovementStatus.GROUNDED);
+      p.setObstacle(MovementComponent.OBSTACLE_KEY_BOTTOM, other);
+    }
   }
 
   private void obstacleOnTop(GameObject go, GameObject other) {
@@ -125,21 +132,8 @@ public class MovementSystem extends ComponentBasedSystem {
 
       // update vertical velocity according to vertical movement status
       if (p.getVerticalStatus() != VerticalMovementStatus.GROUNDED) {
-        go.setVelocityY(go.getVelocity().getY()-p.getGravAccel());
-      }
-        /*
-        if (p.getJumpTimer() >= p.getJumpTime()) {
-          p.setVerticalStatus(VerticalMovementStatus.FALLING);
-        } else {
-          go.setVelocityY(p.getJumpHeight() / p.getJumpTime());
-        }
-      }
-      if (p.getVerticalStatus() == VerticalMovementStatus.FALLING) {
-        go.setVelocityY(-p.getJumpHeight() / p.getJumpTime());
-      }
-
-         */
-      else if (p.getVerticalStatus() == VerticalMovementStatus.GROUNDED) {
+        go.setVelocityY(go.getVelocity().getY() - p.getGravAccel());
+      } else if (p.getVerticalStatus() == VerticalMovementStatus.GROUNDED) {
         go.setVelocityY(0);
       }
 

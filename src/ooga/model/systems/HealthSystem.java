@@ -15,6 +15,9 @@ import ooga.model.managers.ECManager;
 public class HealthSystem extends ComponentBasedSystem {
 
   private static final String HEALTH_STATS_NAME = "health";
+  private static final String CHANGE_HEALTH_ACTION_NAME = "change_health";
+  private static final String AMOUNT_PAYLOAD_KEY = "amount";
+
   protected ComponentMapper<HealthComponent> componentMapper;
 
   public HealthSystem(ECManager ecManager) {
@@ -22,7 +25,7 @@ public class HealthSystem extends ComponentBasedSystem {
     componentMapper = getComponentMapper(HealthComponent.class);
     addStatsSupplier(HEALTH_STATS_NAME, this::healthStatsSupplier);
 
-    addCollisionMapping("change_health", this::changeHealth);
+    addCollisionMapping(CHANGE_HEALTH_ACTION_NAME, this::changeHealth);
   }
 
   private List<StatsInfo> healthStatsSupplier() {
@@ -34,7 +37,7 @@ public class HealthSystem extends ComponentBasedSystem {
   }
 
   private void changeHealth(CollisionAction collisionAction) {
-    double delta = Double.parseDouble(collisionAction.getPayload().get("amount"));
+    double delta = Double.parseDouble(collisionAction.getPayload().get(AMOUNT_PAYLOAD_KEY));
     changeHealth(collisionAction.getSelf().getId(), delta, delta >= 0);
   }
 

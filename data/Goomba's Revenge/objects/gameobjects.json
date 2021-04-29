@@ -52,22 +52,18 @@
     "components": [
       {
         "type": "PlayerComponent",
-        "actionMappings" : [
+        "actionMappings": [
           {
-            "action" : "MoveRight",
-            "input" : "right"
+            "action": "MoveRight",
+            "input": "right"
           },
           {
-            "action" : "MoveLeft",
-            "input" : "left"
+            "action": "MoveLeft",
+            "input": "left"
           },
           {
-            "action" : "Jump",
-            "input" : "jump"
-          },
-          {
-            "action" : "Attack",
-            "input" : "attack"
+            "action": "Jump",
+            "input": "jump"
           }
         ]
       },
@@ -128,6 +124,19 @@
         "positions": [
           "right"
         ]
+      },
+      {
+        "actions": [
+          {
+            "with": [
+              "goomba"
+            ],
+            "action": "destroy_object"
+          }
+        ],
+        "positions": [
+          "top"
+        ]
       }
     ],
     "components": [
@@ -135,14 +144,21 @@
         "type": "MovementComponent"
       },
       {
-        "type": "HateComponent",
-        "frequency": "3",
-        "range": "60",
-        "damage": "-3.0"
-      },
-      {
-        "type": "HealthComponent",
-        "health": "100.0"
+        "type" : "MovementSequenceComponent",
+        "actionSequence" : [
+          {
+            "action" : "move_left"
+          },
+          {
+            "action" : "stand_still"
+          },
+          {
+            "action" : "move_right"
+          }
+        ],
+        "actionTime" : [
+          -1, -1, -1, -1
+        ]
       }
     ]
   },

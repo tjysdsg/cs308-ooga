@@ -97,7 +97,7 @@ public abstract class BaseSystem {
     if (statsManager != null) {
       statsManager.updateStats(stats);
     } else {
-      // TODO: warn if statsManager is null (registerAllStats is not called)
+      logger.warn("StatsManager is null, but triggerStatsUpdate() is called");
     }
   }
 

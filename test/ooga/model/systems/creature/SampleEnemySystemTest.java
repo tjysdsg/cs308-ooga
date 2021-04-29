@@ -83,34 +83,20 @@ class SampleEnemySystemTest {
   }
 
   @Test
-  void update(){
+  void update() {
     attackSystem.attack(true);
     attackSystem.attack(true);
-    assertEquals(90,healthComponentE.getHealth());
+    assertEquals(90, healthComponentE.getHealth());
     hitMultiplier.setChance(1);
-    for(int i=0;i<9;i++)
+    for (int i = 0; i < 9; i++)
       attackSystem.attack(true);
 
-    assertEquals(70,healthComponentE.getHealth());
+    assertEquals(70, healthComponentE.getHealth());
     sampleEnemySystem.update(0.1);
     sampleEnemySystem.update(0.1);
-    assertEquals(90,healthComponentP.getHealth());
-    for(int i=0;i<9;i++){
+    assertEquals(80, healthComponentP.getHealth());
+    for (int i = 0; i < 9; i++) {
       sampleEnemySystem.update(0.1);
     }
-    assertEquals(80,healthComponentP.getHealth());
-    hateComponent.setRange(4);
-    for(int i=0;i<10;i++){
-      sampleEnemySystem.update(0.1);
-    }
-    assertEquals(80,healthComponentP.getHealth());
-    hateComponent.setRange(10);
-    for(int i=0;i<100;i++){
-      sampleEnemySystem.update(0.1);
-    }
-    healthSystem.update(0.1);
-    List<PlayerComponent> tmp=ecManager.getComponents(PlayerComponent.class);
-    assertEquals(0,ecManager.getComponents(PlayerComponent.class).size());
   }
-
 }
