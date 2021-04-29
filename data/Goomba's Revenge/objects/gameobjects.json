@@ -47,6 +47,16 @@
         "positions": [
           "right"
         ]
+      },
+      {
+        "with": [
+          "crown"
+        ],
+        "actions": [
+          {
+            "action": "win_game"
+          }
+        ]
       }
     ],
     "components": [
@@ -69,7 +79,8 @@
       },
       {
         "type": "MovementComponent",
-        "jumpHeight": 250
+        "jumpHeight": 250,
+        "maxSpeed": 150
       },
       {
         "type": "HealthComponent",
@@ -77,6 +88,14 @@
       },
       {
         "type": "ScoreComponent"
+      },
+      {
+        "type": "WinComponent",
+        "winConds": [
+          {
+            "condition": "none"
+          }
+        ]
       }
     ]
   },
@@ -258,6 +277,15 @@
           "bottom"
         ]
       }
+    ]
+  },
+  {
+    "name": "crown",
+    "height": 50,
+    "width": 75,
+    "imageID": "crown",
+    "isA": [
+      "crown"
     ]
   }
 ]
