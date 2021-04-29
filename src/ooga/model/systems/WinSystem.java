@@ -10,10 +10,15 @@ import ooga.model.components.WinComponent;
 import ooga.model.components.enemy.HateComponent;
 import ooga.model.managers.ECManager;
 
-@Track({PlayerComponent.class, HealthComponent.class, ScoreComponent.class, WinComponent.class,
-    HateComponent.class})
-public class WinSystem extends ComponentBasedSystem{
-  private ComponentMapper<PlayerComponent> playerMapper;
+@Track({HealthComponent.class, ScoreComponent.class, WinComponent.class, HateComponent.class})
+public class WinSystem extends ComponentBasedSystem {
+
+  private static final String LOSE_GAME_ACTION = "lose_game";
+  private static final String WIN_GAME_ACTION = "win_game";
+  private static final String SCORE_CONDITION_NAME = "score";
+  private static final String HEALTH_CONDITION_NAME = "health";
+  private static final String ENEMY_CONDITION_NAME = "enemy";
+
   private ComponentMapper<HealthComponent> healthMapper;
   private ComponentMapper<ScoreComponent> scoreMapper;
   private ComponentMapper<WinComponent> winMapper;
@@ -24,19 +29,18 @@ public class WinSystem extends ComponentBasedSystem{
 
   public WinSystem(ECManager ecManager) {
     super(ecManager);
-    playerMapper=getComponentMapper(PlayerComponent.class);
     healthMapper = getComponentMapper(HealthComponent.class);
     scoreMapper = getComponentMapper(ScoreComponent.class);
     winMapper = getComponentMapper(WinComponent.class);
     hateMapper = getComponentMapper(HateComponent.class);
 
     addCollisionMapping(
-        "lose_game",
+        LOSE_GAME_ACTION,
         event -> loseGame()
     );
 
     addCollisionMapping(
-        "win_game",
+        WIN_GAME_ACTION,
         event -> winGame()
     );
   }
@@ -45,11 +49,11 @@ public class WinSystem extends ComponentBasedSystem{
   public void update(double deltaTime) {
     List<WinComponent> winComps = winMapper.getComponents();
 
-    if(winComps.size() == 0){
+    if (winComps.size() == 0) {
       return;
     }
 
-    for(WinComponent w: winComps){
+    for (WinComponent w : winComps) {
       checkWin(w);
     }
 
@@ -57,23 +61,19 @@ public class WinSystem extends ComponentBasedSystem{
 
   private void checkWin(WinComponent w) {
     List<WinCondition> winConditions = w.getWinConds();
-    for(WinCondition wCond: winConditions){
+    for (WinCondition wCond : winConditions) {
 
-      if(wCond.getCondition().equals("score")){
+      if (wCond.getCondition().equals(SCORE_CONDITION_NAME)) {
         double score = scoreMapper.get(w.getOwner().getId()).getScore();
         boolean comp = wCond.checkCondition(score);
         executeWinOrLose(comp, wCond);
         return;
-      }
-
-      else if(wCond.getCondition().equals("health")){
+      } else if (wCond.getCondition().equals(HEALTH_CONDITION_NAME)) {
         double health = healthMapper.get(w.getOwner().getId()).getHealth();
         boolean comp = wCond.checkCondition(health);
         executeWinOrLose(comp, wCond);
         return;
-      }
-
-      else if(wCond.getCondition().equals("enemy")) {
+      } else if (wCond.getCondition().equals(ENEMY_CONDITION_NAME)) {
         boolean comp = wCond.checkCondition(hateMapper.getComponents().size());
         executeWinOrLose(comp, wCond);
         return;
@@ -81,33 +81,33 @@ public class WinSystem extends ComponentBasedSystem{
     }
 
   }
-  public void setSetOnLevelEnd(Consumer<Boolean> setOnLevelEnd){
+
+  public void setSetOnLevelEnd(Consumer<Boolean> setOnLevelEnd) {
     this.setOnLevelEnd = setOnLevelEnd;
   }
 
   private void executeWinOrLose(boolean comp, WinCondition wCond) {
-    if(comp && wCond.isWin()){
+    if (comp && wCond.isWin()) {
       winGame();
     }
-    if(comp && !wCond.isWin()){
+    if (comp && !wCond.isWin()) {
       loseGame();
     }
   }
 
-  private void loseGame(){
-    if(!hasWon){
+  private void loseGame() {
+    if (!hasWon) {
       hasWon = true;
       setOnLevelEnd.accept(false);
     }
   }
 
-  private void winGame(){
-    if(!hasWon){
-      hasWon = true; 
+  private void winGame() {
+    if (!hasWon) {
+      hasWon = true;
       setOnLevelEnd.accept(true);
     }
   }
-
 
 
 }
