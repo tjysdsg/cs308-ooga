@@ -47,6 +47,34 @@
         "positions": [
           "right"
         ]
+      },
+      {
+        "with": [
+          "crown"
+        ],
+        "actions": [
+          {
+            "action": "win_game"
+          }
+        ]
+      },
+      {
+        "with": [
+          "mario"
+        ],
+        "actions": [
+          {
+            "action": "change_health",
+            "payload": {
+              "amount": "-5"
+            }
+          }
+        ],
+        "positions": [
+          "right",
+          "left",
+          "top"
+        ]
       }
     ],
     "components": [
@@ -68,11 +96,24 @@
         ]
       },
       {
-        "type": "MovementComponent"
+        "type": "MovementComponent",
+        "jumpHeight": 250,
+        "maxSpeed": 150
       },
       {
         "type": "HealthComponent",
-        "health": "100.0"
+        "health": 100.0
+      },
+      {
+        "type": "ScoreComponent"
+      },
+      {
+        "type": "WinComponent",
+        "winConds": [
+          {
+            "condition": "none"
+          }
+        ]
       }
     ]
   },
@@ -132,6 +173,16 @@
               "goomba"
             ],
             "action": "destroy_object"
+          },
+          {
+            "with": [
+              "goomba"
+            ],
+            "action": "change_score",
+            "payload": {
+              "whose": "goomba",
+              "amount": "10"
+            }
           }
         ],
         "positions": [
@@ -144,20 +195,23 @@
         "type": "MovementComponent"
       },
       {
-        "type" : "MovementSequenceComponent",
-        "actionSequence" : [
+        "type": "MovementSequenceComponent",
+        "actionSequence": [
           {
-            "action" : "move_left"
+            "action": "move_left"
           },
           {
-            "action" : "stand_still"
+            "action": "stand_still"
           },
           {
-            "action" : "move_right"
+            "action": "move_right"
           }
         ],
-        "actionTime" : [
-          -1, -1, -1, -1
+        "actionTime": [
+          -1,
+          -1,
+          -1,
+          -1
         ]
       }
     ]
@@ -188,6 +242,13 @@
           },
           {
             "action": "destroy_object"
+          },
+          {
+            "action": "change_score",
+            "payload": {
+              "whose": "goomba",
+              "amount": "10"
+            }
           }
         ],
         "positions": [
@@ -212,7 +273,38 @@
     ],
     "height": 50,
     "width": 50,
-    "imageID": "block"
+    "imageID": "block",
+    "onCollide": [
+      {
+        "with": [
+          "goomba"
+        ],
+        "actions": [
+          {
+            "action": "destroy_object"
+          },
+          {
+            "action": "change_score",
+            "payload": {
+              "whose": "goomba",
+              "amount": "10"
+            }
+          }
+        ],
+        "positions": [
+          "bottom"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "crown",
+    "height": 50,
+    "width": 75,
+    "imageID": "crown",
+    "isA": [
+      "crown"
+    ]
   }
 ]
 
