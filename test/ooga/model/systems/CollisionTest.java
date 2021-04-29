@@ -124,6 +124,8 @@ public class CollisionTest {
     obj2.setY(50);
 
     myCollisionSystem.update(.01);
+    String dir = myCollisionSystem.detectCollisionDirection(obj1,obj2);
+    myCollisionSystem.rectifyCollision(obj1,obj2,dir);
     assertEquals(100, obj1.getY());
 
   }
@@ -138,6 +140,8 @@ public class CollisionTest {
     obj2.setY(50);
 
     myCollisionSystem.update(.01);
+    String dir = myCollisionSystem.detectCollisionDirection(obj1,obj2);
+    myCollisionSystem.rectifyCollision(obj1,obj2,dir);
     assertEquals(0, obj1.getX());
 
   }
