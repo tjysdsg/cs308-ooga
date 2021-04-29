@@ -14,6 +14,9 @@ import ooga.model.managers.SystemManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Baseclass of all systems. Manage input keymaps, action maps, and statistics maps.
+ */
 public abstract class BaseSystem {
 
   private static final Logger logger = LogManager.getLogger(BaseSystem.class);
@@ -41,10 +44,20 @@ public abstract class BaseSystem {
     statsSuppliers = new HashMap<>();
   }
 
+  /**
+   * Set the system manager. This method should be only called by SystemManager
+   */
   public void setSystemManager(SystemManager systemManager) {
     this.systemManager = systemManager;
   }
 
+  /**
+   * Get the system of specified type. This API is useful because it provides an interface for
+   * cross-system communication.
+   *
+   * @param systemClass The class of the system being requested.
+   * @param <T>         The system instance type
+   */
   protected <T extends BaseSystem> T getSystem(Class<? extends BaseSystem> systemClass) {
     if (systemManager == null) {
       logger.error(
@@ -75,14 +88,29 @@ public abstract class BaseSystem {
     statsSuppliers.put(stats, supplier);
   }
 
+  /**
+   * Register all input keymappings.
+   * <p>
+   * This must be called for a system to receive and handle input events.
+   */
   public void registerAllInputs(InputManager inputManager) {
     keymaps.forEach(inputManager::registerInput);
   }
 
+  /**
+   * Register all action mappings.
+   * <p>
+   * This must be called for a system to receive and handle action events.
+   */
   public void registerAllActions(ActionManager actionManager) {
     actionMaps.forEach(actionManager::registerAction);
   }
 
+  /**
+   * Register all statistics mappings.
+   * <p>
+   * This must be called for a system to supply its statistics to view.
+   */
   public void registerAllStats(StatsManager statsManager) {
     this.statsManager = statsManager;
     statsSuppliers.forEach(statsManager::registerStatsSupplier);
@@ -101,5 +129,8 @@ public abstract class BaseSystem {
     }
   }
 
+  /**
+   * Called per-frame to update the game data.
+   */
   public abstract void update(double deltaTime);
 }
