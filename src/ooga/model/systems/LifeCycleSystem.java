@@ -7,7 +7,8 @@ import ooga.model.objects.GameObject;
 import ooga.model.objects.ObjectInstance;
 
 /**
- * Provide two collision actions:
+ * This system is intended to provide actions that can be used to spawn or destroy objects. Two
+ * collision actions are provided:
  *
  * <ol>
  *   <li>
