@@ -3,8 +3,6 @@ package ooga.model;
 import com.squareup.moshi.Json;
 import java.util.ArrayList;
 import java.util.List;
-
-
 import java.util.function.Consumer;
 import ooga.model.managers.ECManager;
 import ooga.model.managers.SystemManager;
@@ -18,11 +16,8 @@ import ooga.model.systems.BaseSystem;
 import ooga.model.systems.CollisionSystem;
 import ooga.model.systems.HealthSystem;
 import ooga.model.systems.LifeCycleSystem;
-
 import ooga.model.systems.ScoreSystem;
-
 import ooga.model.systems.MovementSystem;
-
 import ooga.model.systems.TransformSystem;
 import ooga.model.systems.WinSystem;
 import ooga.model.systems.creature.AttackSystem;
@@ -30,7 +25,6 @@ import ooga.model.systems.creature.NPCSystem;
 import ooga.model.systems.creature.PlayerSystem;
 import ooga.model.systems.creature.SampleEnemySystem;
 
-// TODO: implement methods
 class GameLevel implements Level, ObservableLevel {
 
   // Moshi Items (add anything that is needed)

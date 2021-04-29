@@ -35,7 +35,4 @@ public class ActionInfo {
     return this.actions;
   }
 
-//  public String getPayload() {
-//    return payload;
-//  }
 }
