@@ -44,11 +44,12 @@ public class LevelFactoryTest {
   @Test
   void buildBasicLevelTest() throws URISyntaxException, IOException {
     assertEquals(basicLevelObjectsCount, basicLevel.generateObjects().size());
-    assertEquals(basicLevelObjectsCount, newObjectsCount);
   }
 
   @Test
   void assertCorrectObjects() {
+    basicLevel.generateObjects().forEach(this::incrementObjectsCount);
+
     int goombaCount = 1;
     String goombaName = "goomba";
     int marioCount = 1;
