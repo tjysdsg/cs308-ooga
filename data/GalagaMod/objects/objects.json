@@ -66,6 +66,7 @@
       },
       {
         "type": "PlayerComponent",
+        "DEFAULT_MAX_SPEED": 300,
         "actionMappings" : [
           {
             "action" : "MoveRight",
@@ -83,8 +84,7 @@
         ]
       },
       {
-        "type" : "MovementComponent",
-        "maxSpeed": 300
+        "type" : "MovementComponent"
       },
       {
         "type": "ScoreComponent"
@@ -107,44 +107,8 @@
     "name" : "camera",
     "height" : 25,
     "width" : 25,
-    "imageID" : "floor",
+    "imageID" : "white",
     "collidable" : false
-  },
-  {
-    "name" : "explosion",
-    "height" : 50,
-    "width" : 50,
-    "imageID" : "explosion",
-    "onCollide" : [
-      {
-        "with" : [
-          "explosion_trigger"
-        ],
-        "actions" : [
-          {
-            "action" : "destroy_object"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "name" : "explosion_trigger",
-    "height" : 1,
-    "width" : 1,
-    "imageID" : "floor",
-    "onCollide" : [
-      {
-        "with" : [
-          "explosion"
-        ],
-        "actions" : [
-          {
-            "action" : "destroy_object"
-          }
-        ]
-      }
-    ]
   },
   {
     "name" : "enemy",
@@ -153,54 +117,12 @@
     "imageID" : "basice",
     "onCollide" : [
       {
-        "with" : ["wall"],
-        "actions": [
-          {
-            "action": "blocked_left"
-          }
-        ],
-        "positions": [
-          "left"
-        ]
-      },
-      {
-        "with" : ["wall"],
-        "actions": [
-          {
-            "action": "blocked_right"
-          }
-        ],
-        "positions": [
-          "right"
-        ]
-      },
-      {
         "with" : [
           "bullet"
         ],
         "actions": [
           {
             "action": "destroy_object"
-          },
-          {
-            "action" : "spawn_object",
-            "payload": {
-              "which": "explosion",
-              "offsetX": "0",
-              "offsetY": "0",
-              "velocityX": "0",
-              "velocityY": "0"
-            }
-          },
-          {
-            "action" : "spawn_object",
-            "payload": {
-              "which": "explosion_trigger",
-              "offsetX": "0",
-              "offsetY": "-5",
-              "velocityX": "0",
-              "velocityY": "5"
-            }
           }
         ]
       }
@@ -226,24 +148,6 @@
             "action" : "stand_still"
           },
           {
-            "action" : "stand_still"
-          },
-          {
-            "action" : "stand_still"
-          },
-          {
-            "action" : "stand_still"
-          },
-          {
-            "action" : "stand_still"
-          },
-          {
-            "action" : "stand_still"
-          },
-          {
-            "action" : "stand_still"
-          },
-          {
             "action" : "spawn_object",
             "payload" : "enemyBullet,0,0,1"
           },
@@ -254,61 +158,19 @@
             "action" : "stand_still"
           },
           {
-            "action" : "stand_still"
-          },
-          {
-            "action" : "stand_still"
-          },
-          {
-            "action" : "stand_still"
-          },
-          {
-            "action" : "stand_still"
-          },
-          {
-            "action" : "stand_still"
-          },
-          {
-            "action" : "stand_still"
-          },
-          {
             "action" : "move_right"
-          },
-          {
-            "action" : "stand_still"
-          },
-          {
-            "action" : "stand_still"
-          },
-          {
-            "action" : "stand_still"
-          },
-          {
-            "action" : "stand_still"
-          },
-          {
-            "action" : "stand_still"
-          },
-          {
-            "action" : "stand_still"
-          },
-          {
-            "action" : "stand_still"
-          },
-          {
-            "action" : "stand_still"
           }
         ],
         "actionTime" : [
-          1, -1, -1, -1, -1,-1, -1, -1, -1, 0, -1,-1, -1, -1, -1,-1, -1, -1, 1, -1,-1, -1, -1, -1,-1, -1, -1
+          -1, -1, -1, 0, -1, -1, -1
         ]
       }
     ]
   },
   {
     "name" : "bullet",
-    "height" : 25,
-    "width" : 15,
+    "height" : 10,
+    "width" : 10,
     "imageID" : "laser",
     "onCollide" : [
       {
@@ -335,9 +197,9 @@
   },
   {
     "name" : "enemyBullet",
-    "height" : 25,
-    "width" : 15,
-    "imageID" : "enemylaser",
+    "height" : 10,
+    "width" : 10,
+    "imageID" : "laser",
     "onCollide" : [
       {
         "with" : [
