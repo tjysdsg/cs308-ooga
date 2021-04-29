@@ -120,9 +120,6 @@ public class Model implements ObservableModel {
     currentLevel.update(deltaTime);
   }
 
-  public void advanceLevel() {
-
-  }
 
   @Override
   public void setOnLevelChange(Consumer<ObservableLevel> callback) {
@@ -134,13 +131,6 @@ public class Model implements ObservableModel {
 
   }
 
-  public void play() {
-
-  }
-
-  private void checkCollisions() {
-
-  }
 
   public void setOnGameEnd(Consumer<Boolean> callback) {
     endGameCallback = callback;
