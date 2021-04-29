@@ -105,17 +105,6 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
   }
 
   @Override
-  public int getMode() {
-    return 0;
-  }
-
-  @Override
-  public boolean isVisible() {
-    return false;
-  }
-
-
-  @Override
   public int getID() {
     return this.id;
   }
