@@ -29,7 +29,7 @@ public class SplashScreen extends Scene {
     this.root.setId("splash-screen");
     VBox vbox = new VBox();
 
-    Label title = new Label("Ting & Friends");
+    Label title = new Label("Liam & Friends");
     title.getStyleClass().add("splash_title");
     vbox.getStyleClass().add("splashscreen");
 
