@@ -45,7 +45,10 @@ public class ScoreSystemTest {
   void testChangeScore() {
     scoreComponent.changeScore(-10, true);
     assertEquals(-10, scoreComponent.getScore());
-    scoreSystem.changeScore(new CollisionAction(go, null, Map.of("amount","10")));
+    scoreSystem.changeScore(new CollisionAction(go, null, Map.of(
+        "amount", "10",
+        "whose", "test entity"
+    )));
     assertEquals(0, scoreComponent.getScore());
   }
 
@@ -54,7 +57,9 @@ public class ScoreSystemTest {
     statsManager.setOnStatisticUpdate("score", info -> stats = info);
     assertTrue(statsManager.getTrackableStatistics().contains("score"));
 
-    scoreSystem.changeScore(new CollisionAction(go, null, Map.of("amount","10")));
+    scoreSystem.changeScore(new CollisionAction(go, null, Map.of(
+        "amount", "10", "whose", "test entity"
+    )));
     assertEquals(1, stats.size());
     assertEquals(10, Double.parseDouble(stats.get(0).value()));
   }

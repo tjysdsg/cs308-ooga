@@ -10,15 +10,22 @@ import ooga.model.components.WinComponent;
 import ooga.model.components.enemy.HateComponent;
 import ooga.model.managers.ECManager;
 
+
 /**
  * @author Robert Barnette This class checks the win or loss status of a particular level and ends
  * the level when a win or loss condition is met
  */
-@Track({PlayerComponent.class, HealthComponent.class, ScoreComponent.class, WinComponent.class,
-    HateComponent.class})
+
+@Track({HealthComponent.class, ScoreComponent.class, WinComponent.class, HateComponent.class})
 public class WinSystem extends ComponentBasedSystem {
 
-  private ComponentMapper<PlayerComponent> playerMapper;
+  private static final String LOSE_GAME_ACTION = "lose_game";
+  private static final String WIN_GAME_ACTION = "win_game";
+  private static final String SCORE_CONDITION_NAME = "score";
+  private static final String HEALTH_CONDITION_NAME = "health";
+  private static final String ENEMY_CONDITION_NAME = "enemy";
+
+
   private ComponentMapper<HealthComponent> healthMapper;
   private ComponentMapper<ScoreComponent> scoreMapper;
   private ComponentMapper<WinComponent> winMapper;
@@ -33,19 +40,19 @@ public class WinSystem extends ComponentBasedSystem {
    */
   public WinSystem(ECManager ecManager) {
     super(ecManager);
-    playerMapper = getComponentMapper(PlayerComponent.class);
+
     healthMapper = getComponentMapper(HealthComponent.class);
     scoreMapper = getComponentMapper(ScoreComponent.class);
     winMapper = getComponentMapper(WinComponent.class);
     hateMapper = getComponentMapper(HateComponent.class);
 
     addCollisionMapping(
-        "lose_game",
+        LOSE_GAME_ACTION,
         event -> loseGame()
     );
 
     addCollisionMapping(
-        "win_game",
+        WIN_GAME_ACTION,
         event -> winGame()
     );
   }
@@ -78,17 +85,19 @@ public class WinSystem extends ComponentBasedSystem {
     List<WinCondition> winConditions = w.getWinConds();
     for (WinCondition wCond : winConditions) {
 
-      if (wCond.getCondition().equals("score")) {
+
+      if (wCond.getCondition().equals(SCORE_CONDITION_NAME)) {
         double score = scoreMapper.get(w.getOwner().getId()).getScore();
         boolean comp = wCond.checkCondition(score);
         executeWinOrLose(comp, wCond);
         return;
-      } else if (wCond.getCondition().equals("health")) {
+
+      } else if (wCond.getCondition().equals(HEALTH_CONDITION_NAME)) {
         double health = healthMapper.get(w.getOwner().getId()).getHealth();
         boolean comp = wCond.checkCondition(health);
         executeWinOrLose(comp, wCond);
         return;
-      } else if (wCond.getCondition().equals("enemy")) {
+      } else if (wCond.getCondition().equals(ENEMY_CONDITION_NAME)) {
         boolean comp = wCond.checkCondition(hateMapper.getComponents().size());
         executeWinOrLose(comp, wCond);
         return;
@@ -96,6 +105,7 @@ public class WinSystem extends ComponentBasedSystem {
     }
 
   }
+
 
   /**
    * @param setOnLevelEnd is the callback that is called when a win or lose condition is triggered
@@ -120,6 +130,7 @@ public class WinSystem extends ComponentBasedSystem {
     }
   }
 
+
   /**
    * Ends the level when a lose condition is triggered
    */
@@ -129,7 +140,6 @@ public class WinSystem extends ComponentBasedSystem {
       setOnLevelEnd.accept(false);
     }
   }
-
   /**
    * Ends the level when a win condition is triggered
    */

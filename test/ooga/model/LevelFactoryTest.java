@@ -36,8 +36,9 @@ public class LevelFactoryTest {
   }
 
   private void incrementObjectsCount(ObservableObject observableObject) {
-    objectsCount.putIfAbsent(observableObject.getName(), 0);
-    objectsCount.put(observableObject.getName(), objectsCount.get(observableObject.getName()) + 1);
+    // FIXME:
+    //  objectsCount.putIfAbsent(observableObject.getName(), 0);
+    //  objectsCount.put(observableObject.getName(), objectsCount.get(observableObject.getName()) + 1);
   }
 
 
