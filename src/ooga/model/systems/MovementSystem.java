@@ -77,6 +77,9 @@ public class MovementSystem extends ComponentBasedSystem {
 
   protected void handleHorizontalMovement(int entityId, boolean run, int direction) {
     MovementComponent p = movementMapper.get(entityId);
+    if(p==null){
+      return;
+    }
     p.setDirection(direction);
     if (run) {
       p.setHorizontalStatus(HorizontalMovementStatus.RUNNING);
