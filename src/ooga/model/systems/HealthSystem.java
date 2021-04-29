@@ -7,12 +7,16 @@ import ooga.model.actions.CollisionAction;
 import ooga.model.annotations.Track;
 import ooga.model.components.HealthComponent;
 import ooga.model.managers.ECManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Managing the Health System and the destroy detection.
  */
 @Track(HealthComponent.class)
 public class HealthSystem extends ComponentBasedSystem {
+
+  private static final Logger logger = LogManager.getLogger(HealthSystem.class);
 
   private static final String HEALTH_STATS_NAME = "health";
   private static final String CHANGE_HEALTH_ACTION_NAME = "change_health";
@@ -48,8 +52,17 @@ public class HealthSystem extends ComponentBasedSystem {
    * @param delta    Health to add, can be negative
    */
   public void changeHealth(int entityId, double delta, boolean increase) {
-    componentMapper.get(entityId).healthIncrement(delta, increase);
+    HealthComponent comp = componentMapper.get(entityId);
+    if (comp == null) {
+      logger.warn("Cannot find a health component of entity with id: {}", entityId);
+      return;
+    }
+    comp.healthIncrement(delta, increase);
 
+    logger.info(
+        "Health of {} is changed by {}, its remaining health is {}", entityId, delta,
+        comp.getHealth()
+    );
     triggerStatsUpdate(HEALTH_STATS_NAME);
   }
 

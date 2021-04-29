@@ -14,10 +14,11 @@ import ooga.model.managers.ECManager;
 import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
 import ooga.model.systems.HealthSystem;
-import org.checkerframework.checker.units.qual.A;
 
 @Track({WeaponComponent.class, MovementComponent.class, HateComponent.class, HealthComponent.class,  AttackComponent.class,CriticalHitMultiplier.class})
 public class AttackSystem extends ComponentBasedSystem {
+
+  private static final String ATTACK_ACTION_NAME = "attack";
 
   private ComponentMapper<WeaponComponent> weaponMapper;
   private ComponentMapper<MovementComponent> movementMapper;
@@ -34,7 +35,7 @@ public class AttackSystem extends ComponentBasedSystem {
     attackMapper=getComponentMapper(AttackComponent.class);
     criticalHitMapper=getComponentMapper(CriticalHitMultiplier.class);
 
-    addMapping("Attack", this::attack);
+    addMapping(ATTACK_ACTION_NAME, this::attack);
   }
 
   public void attack(boolean on) {

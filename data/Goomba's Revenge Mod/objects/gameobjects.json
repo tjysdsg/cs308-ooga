@@ -57,24 +57,6 @@
             "action": "win_game"
           }
         ]
-      },
-      {
-        "with": [
-          "mario"
-        ],
-        "actions": [
-          {
-            "action": "change_health",
-            "payload": {
-              "amount": "-5"
-            }
-          }
-        ],
-        "positions": [
-          "right",
-          "left",
-          "top"
-        ]
       }
     ],
     "components": [
@@ -92,10 +74,6 @@
           {
             "action": "Jump",
             "input": "jump"
-          },
-          {
-            "action": "Attack",
-            "input": "attack"
           }
         ]
       },
@@ -133,7 +111,7 @@
       },
       {
         "type": "WeaponComponent",
-        "payload": -100,
+        "payLoad": -100,
         "attackRange": 1000
       }
     ]
