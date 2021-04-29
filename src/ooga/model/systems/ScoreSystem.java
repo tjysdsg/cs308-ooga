@@ -23,6 +23,7 @@ public class ScoreSystem extends ComponentBasedSystem {
   private static final Logger logger = LogManager.getLogger(ScoreSystem.class);
   private static final String SCORE_STATS_NAME = "score";
   private static final String WHOSE_PAYLOAD_KEY = "whose";
+  private static final String AMOUNT_PAYLOAD_KEY = "amount";
 
   private ComponentMapper<ScoreComponent> scoreMapper;
 
@@ -50,7 +51,7 @@ public class ScoreSystem extends ComponentBasedSystem {
 
         double delta = 1;
         try {
-          delta = Double.parseDouble(payload.get("amount"));
+          delta = Double.parseDouble(payload.get(AMOUNT_PAYLOAD_KEY));
         } catch (NullPointerException | NumberFormatException e) {
           logger.error(
               "Cannot parse payload of 'change_score' action as a double: {}",
