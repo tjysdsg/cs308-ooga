@@ -10,7 +10,7 @@
     "onCollide": [
       {
         "with": [
-          "floor", "platform", "smallblock", "gridblock" , "gridblockthick"
+          "floor", "platform", "smallblock", "gridblock" , "gridblockthick", "pinkfloor", "medblock", "tallblock"
         ],
         "actions": [
           {
@@ -23,7 +23,7 @@
       },
       {
         "with": [
-          "floor", "platform", "smallblock", "gridblock" , "gridblockthick"
+          "floor", "platform", "smallblock", "gridblock" , "gridblockthick", "pinkfloor", "medblock", "tallblock"
         ],
         "actions": [
           {
@@ -39,7 +39,7 @@
       },
       {
         "with": [
-          "floor", "platform", "smallblock", "gridblock" , "gridblockthick"
+          "floor", "platform", "smallblock", "gridblock" , "gridblockthick", "pinkfloor", "medblock", "tallblock"
         ],
         "actions": [
           {
@@ -55,7 +55,7 @@
       },
       {
         "with": [
-          "floor", "platform", "smallblock", "gridblock" , "gridblockthick"
+          "floor", "platform", "smallblock", "gridblock" , "gridblockthick", "pinkfloor", "medblock", "tallblock"
         ],
         "actions": [
           {
@@ -286,6 +286,15 @@
     ]
   },
   {
+    "name": "pinkfloor",
+    "height": "50",
+    "width": "500",
+    "imageID": "pinkfloor",
+    "isA": [
+      "pinkfloor"
+    ]
+  },
+  {
     "name": "smallblock",
     "height": 50,
     "width": 50,
@@ -305,7 +314,7 @@
   },
   {
     "name": "tallblock",
-    "height": 600,
+    "height": 150,
     "width": 50,
     "imageID": "tallblock",
     "isA": [
@@ -356,6 +365,15 @@
     "imageID": "pinkspikes",
     "isA": [
       "pinkspikes"
+    ]
+  },
+  {
+    "name" : "shortspike",
+    "height" : 25,
+    "width" : 50,
+    "imageID": "spike",
+    "isA": [
+      "spike"
     ]
   },
   {
