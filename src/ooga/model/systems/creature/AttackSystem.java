@@ -1,5 +1,7 @@
 package ooga.model.systems.creature;
 
+import java.util.Map;
+import java.util.function.BiConsumer;
 import ooga.model.Vector;
 import ooga.model.annotations.Track;
 import ooga.model.components.AttackComponent;
@@ -22,6 +24,7 @@ public class AttackSystem extends ComponentBasedSystem {
   private ComponentMapper<HateComponent> enemyMapper;
   private ComponentMapper<AttackComponent> attackMapper;
   private ComponentMapper<CriticalHitMultiplier> criticalHitMapper;
+
 
   public AttackSystem(ECManager ecManager) {
     super(ecManager);
@@ -48,7 +51,6 @@ public class AttackSystem extends ComponentBasedSystem {
       }
     }
   }
-
 
   private boolean withinRange(WeaponComponent w, HateComponent h) {
     return (Vector.difference(w.getOwner().getLocation(), h.getOwner().getLocation()) < w
