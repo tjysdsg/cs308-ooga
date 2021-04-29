@@ -111,7 +111,10 @@
         "type": "WinComponent",
         "winConds": [
           {
-            "condition": "none"
+            "condition": "health",
+            "threshold": 0.1,
+            "win": false,
+            "operator": "lt"
           }
         ]
       }
