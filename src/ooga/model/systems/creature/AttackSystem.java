@@ -1,5 +1,7 @@
 package ooga.model.systems.creature;
 
+import java.util.Map;
+import java.util.function.BiConsumer;
 import ooga.model.Vector;
 import ooga.model.annotations.Track;
 import ooga.model.components.AttackComponent;
@@ -12,16 +14,18 @@ import ooga.model.managers.ECManager;
 import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
 import ooga.model.systems.HealthSystem;
-import org.checkerframework.checker.units.qual.A;
 
 @Track({WeaponComponent.class, MovementComponent.class, HateComponent.class, HealthComponent.class,  AttackComponent.class,CriticalHitMultiplier.class})
 public class AttackSystem extends ComponentBasedSystem {
+
+  private static final String ATTACK_ACTION_NAME = "attack";
 
   private ComponentMapper<WeaponComponent> weaponMapper;
   private ComponentMapper<MovementComponent> movementMapper;
   private ComponentMapper<HateComponent> enemyMapper;
   private ComponentMapper<AttackComponent> attackMapper;
   private ComponentMapper<CriticalHitMultiplier> criticalHitMapper;
+
 
   public AttackSystem(ECManager ecManager) {
     super(ecManager);
@@ -31,7 +35,7 @@ public class AttackSystem extends ComponentBasedSystem {
     attackMapper=getComponentMapper(AttackComponent.class);
     criticalHitMapper=getComponentMapper(CriticalHitMultiplier.class);
 
-    addMapping("Attack", this::attack);
+    addMapping(ATTACK_ACTION_NAME, this::attack);
   }
 
   public void attack(boolean on) {
@@ -48,7 +52,6 @@ public class AttackSystem extends ComponentBasedSystem {
       }
     }
   }
-
 
   private boolean withinRange(WeaponComponent w, HateComponent h) {
     return (Vector.difference(w.getOwner().getLocation(), h.getOwner().getLocation()) < w

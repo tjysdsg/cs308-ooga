@@ -58,7 +58,7 @@ public class PlayerSystem extends ComponentBasedSystem {
       if (mapping.getAction().equals("SpawnObject")) {
         ObjectSpawner spawner = new ObjectSpawner(mapping.getPayload(), getECManager());
         addMapping(mapping.getInput(), on -> spawner.handleSpawn(goId, on));
-      }  else {
+      } else if(movementActionExecutors.containsKey(mapping.getAction())) {
         BiConsumer<Integer, Boolean> executor = movementActionExecutors.get(mapping.getAction());
         addMapping(mapping.getInput(), on -> executor.accept(goId, on));
       }

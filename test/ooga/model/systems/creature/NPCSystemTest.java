@@ -2,6 +2,7 @@ package ooga.model.systems.creature;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import ooga.model.Vector;
 import ooga.model.actions.NPCAction;
@@ -23,9 +24,11 @@ class NPCSystemTest {
   NPCSystem npcSystem;
   TransformSystem transformSystem;
   GameObject go;
+  NPCAction a1;
+  NPCAction a2;
 
   @BeforeEach
-  void setup(){
+  void setup() throws NoSuchFieldException, IllegalAccessException {
     ecManager =  new ECManager(null);
     go = ecManager.createEntity("test");
     movementComponent= ecManager.createComponent(go,MovementComponent.class);
@@ -35,8 +38,14 @@ class NPCSystemTest {
     transformSystem=new TransformSystem(ecManager);
     List<NPCAction> moves=movementSquenceComponent.getActionSequence();
     List<Double> times=movementSquenceComponent.getActionTime();
-    moves.add(new NPCAction("move_right"));
-    moves.add(new NPCAction("move_left"));
+    a1=new NPCAction("a1");
+    a2=new NPCAction("a1");
+    moves.add(a1);
+    moves.add(a2);
+    Field npcActionName=NPCAction.class.getDeclaredField("action");
+    npcActionName.setAccessible(true);
+    npcActionName.set(a1,"move_right");
+    npcActionName.set(a2,"move_left");
     times.add(1.0);
     times.add(1.0);
 

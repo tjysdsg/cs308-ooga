@@ -17,27 +17,35 @@ import ooga.model.objects.ObjectInstance;
  *   <li>'destroy_object': will destroy itself</li>
  * </ol>
  */
-public class LifeCircleSystem extends GameObjectBasedSystem {
+public class LifeCycleSystem extends GameObjectBasedSystem {
 
-  public LifeCircleSystem(ECManager entityManager) {
+  private static final String SPAWN_OBJECT_ACTION_NAME = "spawn_object";
+  private static final String DESTROY_OBJECT_ACTION_NAME = "destroy_object";
+  private static final String WHICH_PAYLOAD_KEY = "which";
+  private static final String OFFSET_X_PAYLOAD_KEY = "offsetX";
+  private static final String OFFSET_Y_PAYLOAD_KEY = "offsetY";
+  private static final String VELOCITY_X_PAYLOAD_KEY = "velocityX";
+  private static final String VELOCITY_Y_PAYLOAD_KEY = "velocityY";
+
+  public LifeCycleSystem(ECManager entityManager) {
     super(entityManager);
     addCollisionMapping(
-        "spawn_object",
+        SPAWN_OBJECT_ACTION_NAME,
         event -> spawnObject(event.getSelf(), event.getPayload())
     );
 
     addCollisionMapping(
-        "destroy_object",
+        DESTROY_OBJECT_ACTION_NAME,
         event -> destroyObject(event.getSelf().getId())
     );
   }
 
   private void spawnObject(GameObject self, Map<String, String> payload) {
-    String which = payload.get("which");
-    double x = self.getX() + Double.parseDouble(payload.getOrDefault("offsetX", "0"));
-    double y = self.getY() + Double.parseDouble(payload.getOrDefault("offsetY", "0"));
-    double vx = Double.parseDouble(payload.getOrDefault("velocityX", "0"));
-    double vy = Double.parseDouble(payload.getOrDefault("velocityY", "0"));
+    String which = payload.get(WHICH_PAYLOAD_KEY);
+    double x = self.getX() + Double.parseDouble(payload.getOrDefault(OFFSET_X_PAYLOAD_KEY, "0"));
+    double y = self.getY() + Double.parseDouble(payload.getOrDefault(OFFSET_Y_PAYLOAD_KEY, "0"));
+    double vx = Double.parseDouble(payload.getOrDefault(VELOCITY_X_PAYLOAD_KEY, "0"));
+    double vy = Double.parseDouble(payload.getOrDefault(VELOCITY_Y_PAYLOAD_KEY, "0"));
     Vector v = new Vector(vx, vy);
     System.out.println("Creating object " + which + "at" + x + ", " + y + " with velocity " + v);
     ecManager.addEntity(new ObjectInstance(which, x, y, v));

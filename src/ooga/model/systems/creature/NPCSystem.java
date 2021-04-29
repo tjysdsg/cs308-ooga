@@ -71,7 +71,7 @@ public class NPCSystem extends ComponentBasedSystem {
   private void unitUpdate(double deltaTime,MovementComponent m, MovementSequenceComponent ms){
     double cumTime= ms.getCumTime();
     List<NPCAction> actionSequence=ms.getActionSequence();
-    List<Double> actionTime=ms.getActionTime();
+    List<Double> actionTime=ms.getActualActionTime();
     int actionIndex = ms.getActionIndex();
     if (cumTime < actionTime.get(actionIndex)) {
       cumTime += deltaTime;
