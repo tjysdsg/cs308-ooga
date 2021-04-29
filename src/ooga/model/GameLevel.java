@@ -5,22 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import com.squareup.moshi.Json;
 import java.util.function.Consumer;
 import ooga.model.managers.ECManager;
 import ooga.model.managers.SystemManager;
 import ooga.model.managers.ActionManager;
-import ooga.model.managers.ECManager;
 import ooga.model.managers.InputManager;
 import ooga.model.managers.StatsManager;
-import ooga.model.managers.SystemManager;
 import ooga.model.objects.GameObject;
 import ooga.model.observables.ObservableLevel;
 import ooga.model.observables.ObservableObject;
 import ooga.model.systems.BaseSystem;
 import ooga.model.systems.CollisionSystem;
 import ooga.model.systems.HealthSystem;
-import ooga.model.systems.LifeCircleSystem;
+import ooga.model.systems.LifeCycleSystem;
 
 import ooga.model.systems.ScoreSystem;
 
@@ -62,7 +59,7 @@ class GameLevel implements Level, ObservableLevel {
     // MUST be created AFTER ecManger is init by Moshi
     systemManager = new SystemManager();
     systemManager.createSystem(HealthSystem.class, ecManager);
-    systemManager.createSystem(LifeCircleSystem.class, ecManager);
+    systemManager.createSystem(LifeCycleSystem.class, ecManager);
     systemManager.createSystem(CollisionSystem.class, ecManager, actionManager);
     systemManager.createSystem(PlayerSystem.class, ecManager);
     systemManager.createSystem(MovementSystem.class, ecManager);
@@ -71,7 +68,7 @@ class GameLevel implements Level, ObservableLevel {
     systemManager.createSystem(NPCSystem.class, ecManager);
     systemManager.createSystem(WinSystem.class, ecManager);
     systemManager.createSystem(ScoreSystem.class, ecManager);
-    systemManager.createSystem(AttackSystem.class,ecManager);
+    systemManager.createSystem(AttackSystem.class, ecManager);
     systems = systemManager.getAllSystems();
 
     //ecManager.registerExistingComponents(ecManager.getEntities());
@@ -205,8 +202,9 @@ class GameLevel implements Level, ObservableLevel {
   public List<? extends ObservableObject> getAvailableGameObjects() {
     return ecManager.getEntities();
   }
+
   @Override
-  public int getLevelNumber(){
+  public int getLevelNumber() {
     return levelNumber;
   }
 }

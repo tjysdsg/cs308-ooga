@@ -17,9 +17,9 @@ import ooga.model.objects.ObjectInstance;
  *   <li>'destroy_object': will destroy itself</li>
  * </ol>
  */
-public class LifeCircleSystem extends GameObjectBasedSystem {
+public class LifeCycleSystem extends GameObjectBasedSystem {
 
-  public LifeCircleSystem(ECManager entityManager) {
+  public LifeCycleSystem(ECManager entityManager) {
     super(entityManager);
     addCollisionMapping(
         "spawn_object",

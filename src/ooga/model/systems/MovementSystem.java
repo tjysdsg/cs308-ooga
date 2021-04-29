@@ -40,8 +40,10 @@ public class MovementSystem extends ComponentBasedSystem {
    */
   private void obstacleOnBottom(GameObject go, GameObject other) {
     MovementComponent p = movementMapper.get(go.getId());
-    p.setVerticalStatus(VerticalMovementStatus.GROUNDED);
-    p.setObstacle(MovementComponent.OBSTACLE_KEY_BOTTOM, other);
+    if (p != null) {
+      p.setVerticalStatus(VerticalMovementStatus.GROUNDED);
+      p.setObstacle(MovementComponent.OBSTACLE_KEY_BOTTOM, other);
+    }
   }
 
   private void obstacleOnTop(GameObject go, GameObject other) {
@@ -125,7 +127,7 @@ public class MovementSystem extends ComponentBasedSystem {
 
       // update vertical velocity according to vertical movement status
       if (p.getVerticalStatus() != VerticalMovementStatus.GROUNDED) {
-        go.setVelocityY(go.getVelocity().getY()-p.getGravAccel());
+        go.setVelocityY(go.getVelocity().getY() - p.getGravAccel());
       }
         /*
         if (p.getJumpTimer() >= p.getJumpTime()) {
