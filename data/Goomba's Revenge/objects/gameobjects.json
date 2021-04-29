@@ -57,6 +57,24 @@
             "action": "win_game"
           }
         ]
+      },
+      {
+        "with": [
+          "mario"
+        ],
+        "actions": [
+          {
+            "action": "change_health",
+            "payload": {
+              "amount": "-5"
+            }
+          }
+        ],
+        "positions": [
+          "right",
+          "left",
+          "top"
+        ]
       }
     ],
     "components": [
@@ -84,7 +102,7 @@
       },
       {
         "type": "HealthComponent",
-        "health": "100.0"
+        "health": 100.0
       },
       {
         "type": "ScoreComponent"
