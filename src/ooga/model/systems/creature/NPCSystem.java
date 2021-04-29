@@ -1,4 +1,7 @@
 package ooga.model.systems.creature;
+/**
+ * @author Tinglong Zhu
+ */
 
 import java.util.List;
 import ooga.model.actions.NPCAction;
@@ -12,6 +15,9 @@ import ooga.model.managers.ECManager;
 import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
 
+/**
+ * Logic for executing the NPC actions
+ */
 @Track({MovementSequenceComponent.class, PlayerComponent.class, MovementComponent.class})
 public class NPCSystem extends ComponentBasedSystem {
 

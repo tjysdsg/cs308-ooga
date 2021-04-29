@@ -1,4 +1,7 @@
 package ooga.model.components.enemy;
+/**
+ * @author Tinglong Zhu
+ */
 
 import ooga.model.components.Component;
 import ooga.model.objects.GameObject;

@@ -1,4 +1,7 @@
 package ooga.model.components;
+/**
+ * @author Jiyang Tang, Tinglong Zhu
+ */
 
 import java.util.HashMap;
 import java.util.Map;

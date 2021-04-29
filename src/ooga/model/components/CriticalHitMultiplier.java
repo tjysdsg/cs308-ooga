@@ -1,7 +1,13 @@
 package ooga.model.components;
+/**
+ * @author Tinglong Zhu
+ */
 
 import ooga.model.objects.GameObject;
 
+/**
+ * Used for critical hit multiplication
+ */
 public class CriticalHitMultiplier extends Component {
 
   private double multiplier = 2;
@@ -16,6 +22,10 @@ public class CriticalHitMultiplier extends Component {
     return CriticalHitMultiplier.class.getName();
   }
 
+  /**
+   * determine whether it is a critical hit
+   * @return   1 for normal attack multiplier for critical attack
+   */
   public double getMultiplier() {
     if(Math.random()<chance){
       return multiplier;
@@ -23,10 +33,11 @@ public class CriticalHitMultiplier extends Component {
     else return 1;
   }
 
-  public void setMultiplier(double multiplier) {
-    this.multiplier = multiplier;
-  }
 
+  /**
+   * Set the probability for the critical hit
+   * @param chance    probability
+   */
   public void setChance(double chance){
     this.chance=chance;
   }
