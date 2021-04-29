@@ -13,7 +13,6 @@ public interface ObservableObject {
   double getWidth();
 
   int getID();
-  String getName();
 
   String getImageID();
 }

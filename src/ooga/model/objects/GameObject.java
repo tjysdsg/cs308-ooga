@@ -109,7 +109,6 @@ public class GameObject implements ObservableObject, Comparable<GameObject> {
     return this.id;
   }
 
-  @Override
   public String getName() {
     return name;
   }
