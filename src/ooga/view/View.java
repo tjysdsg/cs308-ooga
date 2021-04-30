@@ -1,7 +1,6 @@
 package ooga.view;
 
 import com.jfoenix.controls.JFXDialog;
-import fr.brouillard.oss.cssfx.CSSFX;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -55,7 +54,6 @@ public class View {
   private String currentGameDir;
 
   public View(Stage stage) {
-    CSSFX.start();
     this.stage = stage;
     String defaultConfig = "";
     try {
