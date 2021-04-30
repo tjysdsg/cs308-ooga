@@ -12,7 +12,6 @@ import ooga.model.Model;
  * */
 public class Controller implements ModelController {
 
-  // code -> actions
   private Map<KeyCode, String> code2action =
       Map.of(KeyCode.A, "left", KeyCode.D, "right", KeyCode.SPACE, "jump", KeyCode.ESCAPE, "pause");
   private Model model;
@@ -26,13 +25,11 @@ public class Controller implements ModelController {
     this.model = model;
   }
 
-  // TODO: proxy model
   @Override
   public void setCurrentLevel(String levelName) throws FileNotFoundException {
     model.setCurrentLevel(levelName);
   }
 
-  // TODO:Wait for the model
   @Override
   public void handleKeyPress(KeyCode code) {
     System.out.println(code);
@@ -44,7 +41,6 @@ public class Controller implements ModelController {
     model.handleCode(code2action.get(code), false);
   }
 
-  // from model
   @Override
   public List<String> getAvailableActions() {
     return null;
@@ -55,16 +51,13 @@ public class Controller implements ModelController {
     this.code2action = map;
   }
 
-  // Self
   @Override
   public void setStrokeMapping(KeyCode code, String action) {
     code2action.put(code, action);
   }
 
-  // proxy: model
   @Override
   public List<String> getLevels() {
-    // return model.getLevels();
     return null;
   }
 

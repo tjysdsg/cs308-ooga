@@ -75,7 +75,6 @@ public class View {
     this.resources = viewConfiguration.getResources();
     splashScreen = new SplashScreen(HEIGHT, WIDTH, resources);
     gameSelection = new GSelectionScene(HEIGHT, WIDTH, resources);
-    // this.modelController = model.getController();
     final URL cssFileURL = getClass().getResource(RESOURCES + "main.css");
     if (cssFileURL != null) {
       this.cssFile = cssFileURL.toExternalForm();
@@ -86,7 +85,6 @@ public class View {
     }
     createAnimations();
     setScene(splashScreen);
-    // startGame("data/Goomba's Revenge/");
     gameSelection.setOnGameSelected(this::startGame);
     exitApplication =
         () -> {
@@ -184,8 +182,6 @@ public class View {
   private void startGame(String directory) {
     logger.info("Game Selected {}", directory);
     this.currentGameDir = directory;
-    // TODO: Have a check if a game is currently playing and ask
-    // if want to quit
     currentGame = new GameScene(directory, resources);
     currentGame.setOnEnd(
         b -> {
@@ -200,7 +196,6 @@ public class View {
         (e) -> {
           currentGame.pauseGame();
           pauseDialog.show(e);
-          // e.getChildren().add(settingsModule);
         });
 
     setScene(currentGame);

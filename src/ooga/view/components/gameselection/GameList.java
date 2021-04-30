@@ -91,7 +91,6 @@ public class GameList extends FlowPane {
    * @param directory - The directory to be added.
    */
   public void createItem(String directory) {
-    // TODO: Add check for directories without games.
     if (presentDirectories.contains(directory)) {
       return;
     }
@@ -99,7 +98,6 @@ public class GameList extends FlowPane {
     boolean correctDir = ModelFactory.verifyGameDirectory(gameDir);
     if (!correctDir) {
       JFXDialog dialog = DialogFactory.createErrorDialog("Error Loading Directory", resources);
-      // TODO: Move to setOnError Callback
       dialog.show(dialogPane);
       logger.info("Invalid directory specified {}", directory);
       return;

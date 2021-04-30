@@ -45,8 +45,6 @@ public class SettingsPane extends AnchorPane {
    */
   public void addModule(SettingsModule module) {
     Tab tab = new Tab("System", module);
-    // tab.textProperty().bind(module.moduleBinding());
-    // tab.setText("OKOKO");
     this.modules.getTabs().add(tab);
   }
 
