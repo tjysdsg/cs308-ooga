@@ -12,6 +12,13 @@ import ooga.model.components.Component;
 import ooga.model.exceptions.TypeNotFoundException;
 import ooga.model.managers.IDManager;
 
+/**
+ * This class creates a new object from presets specified in the data file
+ *
+ * It is used by the EC Manager to create new objects without needing to know how it is made
+ *
+ * @author Oliver Rodas
+ */
 public class ObjectFactory {
 
   private final JsonAdapter<GameObject> objectAdapter;
@@ -19,6 +26,10 @@ public class ObjectFactory {
   private IDManager idManager = new IDManager();
   private Map<String, GameObject> presetMap;
 
+  /**
+   * Create a new object factory using a preset map
+   * @param presetMap a map containing the names and the presets of each object that can be made
+   */
   public ObjectFactory(Map<String, GameObject> presetMap) {
     this.presetMap = Preconditions.checkNotNull(presetMap, "Preset Map shouldn't be null");
     PolymorphicJsonAdapterFactory<Component> componentAdapter = LevelFactory
@@ -27,6 +38,12 @@ public class ObjectFactory {
     this.objectAdapter = moshi.adapter(GameObject.class);
   }
 
+  /**
+   * Builds a new object from an object instance
+   * @param instance an object instance from a level file
+   * @return A newly created game object
+   * @throws TypeNotFoundException if the type was not defined correctly
+   */
   public GameObject buildObject(ObjectInstance instance) {
     String name = instance.getName();
     GameObject toClone = presetMap.get(name);
