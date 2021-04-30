@@ -48,7 +48,6 @@ public class StatsView extends HBox {
 
   /** @return The stats currently being tracked. */
   public Collection<String> getTrackedStats() {
-    System.out.println(stats.keySet());
     return stats.keySet();
   }
 

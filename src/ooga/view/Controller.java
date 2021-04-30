@@ -32,7 +32,6 @@ public class Controller implements ModelController {
 
   @Override
   public void handleKeyPress(KeyCode code) {
-    System.out.println(code);
     model.handleCode(code2action.get(code), true);
   }
 

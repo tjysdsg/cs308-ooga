@@ -160,7 +160,6 @@ public class GameScene extends Scene {
       return;
     }
     controller.handleKeyPress(code);
-    System.out.println("THI SIS: " + KeyCode.getKeyCode(" "));
   }
 
   private void handleRelease(KeyCode code) {

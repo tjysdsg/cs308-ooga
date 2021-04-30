@@ -29,7 +29,6 @@ public class ObjectView extends StackPane {
     }
     setHeight(gameObject.getHeight());
     setWidth(gameObject.getWidth());
-    System.out.println(gameObject.getWidth());
     obj.setOnPositionUpdate(this::refreshPosition);
     refreshPosition();
     getChildren().add(playerImage);
