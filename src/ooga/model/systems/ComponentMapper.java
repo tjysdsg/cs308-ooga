@@ -5,6 +5,12 @@ import ooga.model.components.Component;
 import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 
+/**
+ * Component mapper is a helper for accessing, updating, and deleting components that are associated
+ * with game objects
+ *
+ * @param <T> Type of the component being tracked
+ */
 public class ComponentMapper<T extends Component> {
 
   private ECManager ecManager;
@@ -60,6 +66,9 @@ public class ComponentMapper<T extends Component> {
     }
   }
 
+  /**
+   * Get all components that are of type T in the current game level
+   */
   public List<T> getComponents() {
     // NOTE: putting method call here can make sure that newly added components mid-game are included
     return ecManager.getComponents(componentClass);

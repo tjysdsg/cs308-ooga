@@ -1,4 +1,7 @@
 package ooga.model.components;
+/**
+ * @author Tinglong Zhu
+ */
 
 import ooga.model.objects.GameObject;
 

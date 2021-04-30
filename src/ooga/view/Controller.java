@@ -1,3 +1,6 @@
+/**
+ * @author Tinglong Zhu
+ */
 package ooga.view;
 
 import java.io.File;
@@ -20,14 +23,17 @@ public class Controller implements ModelController {
     this.model = model;
   }
 
-  // TODO: proxy model
+  /**
+   * Proxy Model
+   * @param levelName
+   * @throws FileNotFoundException
+   */
   @Override
   public void setCurrentLevel(String levelName) throws FileNotFoundException {
     model.setCurrentLevel(levelName);
   }
 
 
-  // TODO:Wait for the model
   @Override
   public void handleKeyPress(KeyCode code) {
     System.out.println(code);
@@ -39,26 +45,26 @@ public class Controller implements ModelController {
     model.handleCode(code2action.get(code), false);
   }
 
-  // from model
   @Override
   public List<String> getAvailableActions() {
     return null;
   }
 
+  /**
+   * Set key map for the level.
+   * @param map keymap for actions
+   */
   public void setKeyMap(Map<KeyCode, String> map) {
     this.code2action = map;
   }
 
-  // Self
   @Override
   public void setStrokeMapping(KeyCode code, String action) {
     code2action.put(code, action);
   }
 
-  // proxy: model
   @Override
   public List<String> getLevels() {
-    // return model.getLevels();
     return null;
   }
 

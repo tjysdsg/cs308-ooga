@@ -1,4 +1,7 @@
 package ooga.model.systems.creature;
+/**
+ * @author Tinglong Zhu
+ */
 
 
 import java.util.HashMap;

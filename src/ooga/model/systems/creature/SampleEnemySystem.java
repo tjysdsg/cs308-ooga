@@ -1,4 +1,7 @@
 package ooga.model.systems.creature;
+/**
+ * @author Tinglong Zhu
+ */
 
 import javafx.util.Pair;
 import ooga.model.annotations.Track;
@@ -8,6 +11,9 @@ import ooga.model.components.enemy.HateComponent;
 import ooga.model.managers.ECManager;
 import ooga.model.systems.ComponentMapper;
 
+/**
+ * Logic for executing the enemy attacks
+ */
 @Track({HateComponent.class, HealthComponent.class, PlayerComponent.class})
 public class SampleEnemySystem extends EnemySystems {
 

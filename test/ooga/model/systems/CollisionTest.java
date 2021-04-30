@@ -2,9 +2,9 @@ package ooga.model.systems;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
+import java.util.ArrayList;
+import ooga.model.actions.ActionInfo;
 import ooga.model.managers.ActionManager;
 import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
@@ -21,7 +21,7 @@ public class CollisionTest {
   private GameObject obj2;
 
   @BeforeEach
-  void setUp(){
+  void setUp() {
     myECManager = new ECManager(null);
     myActionManager = new ActionManager();
     myCollisionSystem = new CollisionSystem(myECManager, myActionManager);
@@ -37,7 +37,7 @@ public class CollisionTest {
   }
 
   @Test
-  void testNoCollisionX(){
+  void testNoCollisionX() {
     obj1.setX(0);
     obj1.setY(50);
 
@@ -50,7 +50,7 @@ public class CollisionTest {
   }
 
   @Test
-  void testNoCollisionY(){
+  void testNoCollisionY() {
     obj1.setX(0);
     obj1.setY(50);
 
@@ -63,59 +63,60 @@ public class CollisionTest {
   }
 
   @Test
-  void testCollisionLeft(){
+  void testCollisionLeft() {
     obj1.setX(49);
     obj1.setY(50);
 
     obj2.setX(0);
     obj2.setY(50);
 
-    String direction = myCollisionSystem.detectCollisionDirection(obj1,obj2);
+    String direction = myCollisionSystem.detectCollisionDirection(obj1, obj2);
 
-    assertEquals("left",direction);
+    assertEquals("left", direction);
 
   }
 
   @Test
-  void testCollisionRight(){
+  void testCollisionRight() {
     obj1.setX(49);
     obj1.setY(50);
 
     obj2.setX(0);
     obj2.setY(50);
 
-    String direction = myCollisionSystem.detectCollisionDirection(obj2,obj1);
+    String direction = myCollisionSystem.detectCollisionDirection(obj2, obj1);
 
-    assertEquals("right",direction);
+    assertEquals("right", direction);
   }
 
   @Test
-  void testCollisionBottom(){
+  void testCollisionBottom() {
     obj1.setX(49);
     obj1.setY(89);
 
     obj2.setX(50);
     obj2.setY(50);
 
-    String direction = myCollisionSystem.detectCollisionDirection(obj1,obj2);
+    String direction = myCollisionSystem.detectCollisionDirection(obj1, obj2);
 
-    assertEquals("bottom",direction);
+    assertEquals("bottom", direction);
   }
+
   @Test
-  void testCollisionTop(){
+  void testCollisionTop() {
     obj1.setX(49);
     obj1.setY(89);
 
     obj2.setX(50);
     obj2.setY(50);
 
-    String direction = myCollisionSystem.detectCollisionDirection(obj2,obj1);
+    String direction = myCollisionSystem.detectCollisionDirection(obj2, obj1);
 
-    assertEquals("top",direction);
+    assertEquals("top", direction);
   }
 
   @Test
-  void testCollisionRectificationBottom(){
+  void testCollisionRectificationBottom() {
     obj1.setX(49);
     obj1.setY(89);
     obj1.setVelocityY(-1);
@@ -131,7 +132,7 @@ public class CollisionTest {
   }
 
   @Test
-  void testCollisionRectificationRight(){
+  void testCollisionRectificationRight() {
     obj1.setX(5);
     obj1.setY(50);
     obj1.setVelocityX(1);

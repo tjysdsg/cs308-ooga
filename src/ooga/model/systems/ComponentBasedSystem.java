@@ -6,6 +6,10 @@ import ooga.model.annotations.Track;
 import ooga.model.components.Component;
 import ooga.model.managers.ECManager;
 
+/**
+ * Baseclass of all systems that manage data in the components. Uses reflection to handle @Track *
+ * annotations, and provides component mappers.
+ */
 public abstract class ComponentBasedSystem extends BaseSystem {
 
   private ECManager ecManager;
@@ -34,6 +38,11 @@ public abstract class ComponentBasedSystem extends BaseSystem {
     }
   }
 
+  /**
+   * Get the component mapper that tracks a certain component type.
+   *
+   * @param componentClass The class of the component type
+   */
   public <T extends Component> ComponentMapper<T> getComponentMapper(Class<T> componentClass) {
     ComponentMapper<T> ret = (ComponentMapper<T>) componentMappers.get(componentClass);
     if (ret == null) {

@@ -321,4 +321,42 @@ settings pretty dope, Java isn't that bad lol.
 
 ## Tinglong 
 
-1. Game dev writes a health system for the game, 
+1. Game dev writes a health system for the game and add it to the GameObject.
+    
+    The game will load the health points from the config file and set it for the GameObject.
+
+2. Game dev writes an attack system for the game.
+
+    The player can use keyboard to execute the attack to the enemies in the certain game.
+   
+3. User get close to the enemies.
+
+    The enemy will attack the user in a fixed frequency and fixed damage, which will cause the loss of player's health.
+   
+4. The player use a weapon to attack.
+
+    The weapon's health will decrease and the player will carry greater damage to the target.
+   
+5. The player kill all the enemies.
+
+    The player will win the game and choose whether to get to the next level.
+   
+6. The player triggers a critical attack.
+
+    The attack damage carried to the enemies would be x times comparing to the normal attack.
+
+7. The player finished a certain action (collecing a crown) that can directly make him/her to win the game.
+
+    The player win the game.
+   
+8. The player press jump and left-arrow key at the same time.
+
+    The player would jump leftward.
+   
+9. The enemies are allowed to move in a random sequence.
+
+    The enemies would change their time for executing each action after each cycle.
+   
+10. When the enemies detect the player's existence.
+
+    The enemies would move towards the player to execute attack.
