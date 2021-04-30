@@ -3,6 +3,9 @@ package ooga.model.objects;
 import com.squareup.moshi.FromJson;
 import com.squareup.moshi.ToJson;
 
+/**
+ * This cla
+ */
 public class GameObjectAdapter {
 
   private ObjectFactory objectFactory;
