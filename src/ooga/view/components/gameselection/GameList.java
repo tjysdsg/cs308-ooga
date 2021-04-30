@@ -86,7 +86,11 @@ public class GameList extends FlowPane {
         });
   }
 
-  private void createItem(String directory) {
+  /**
+   * Add an item to the list of games.
+   * @param directory - The directory to be added.
+   */
+  public void createItem(String directory) {
     // TODO: Add check for directories without games.
     if (presentDirectories.contains(directory)) {
       return;
