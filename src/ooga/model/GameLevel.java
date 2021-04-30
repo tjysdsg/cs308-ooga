@@ -25,6 +25,14 @@ import ooga.model.systems.creature.NPCSystem;
 import ooga.model.systems.creature.PlayerSystem;
 import ooga.model.systems.creature.SampleEnemySystem;
 
+/**
+ * Game Level is Meant to Implement and manage a game level
+ *
+ * It is created using a level factory and is returned as a Level
+ * It implements the observable level interface in order to be represented by the view
+ *
+ * @author Oliver Rodas
+ */
 class GameLevel implements Level, ObservableLevel {
 
   // Moshi Items (add anything that is needed)
@@ -45,10 +53,15 @@ class GameLevel implements Level, ObservableLevel {
   private transient SystemManager systemManager;
   private transient Consumer<ObservableObject> focusChangeCallback;
 
-  // MUST BE HERE!!! MOSHI USES THIS
+  /**
+   * Create a new game level with default values
+   */
   public GameLevel() {
   }
 
+  /**
+   * Initialize the level and create the systems
+   */
   public void init() {
     // MUST be created AFTER ecManger is init by Moshi
     systemManager = new SystemManager();
@@ -87,6 +100,11 @@ class GameLevel implements Level, ObservableLevel {
     }
   }
 
+  /**
+   * Handle a code from the controller as an input
+   * @param k the input
+   * @param on if the input was on or off
+   */
   public void handleCode(String k, boolean on) {
     inputManager.handleCode(k, on);
   }
@@ -170,14 +188,26 @@ class GameLevel implements Level, ObservableLevel {
     return ecManager;
   }
 
+  /**
+   * Get the stats manager
+   * @return
+   */
   public StatsManager getStatsManager() {
     return statsManager;
   }
 
+  /**
+   * Get the input manager
+   * @return
+   */
   public InputManager getInputManager() {
     return inputManager;
   }
 
+  /**
+   * Get the action manager
+   * @return
+   */
   public ActionManager getActionManager() {
     return actionManager;
   }
