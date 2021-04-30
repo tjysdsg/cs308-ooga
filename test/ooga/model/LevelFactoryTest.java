@@ -1,11 +1,11 @@
 package ooga.model;
 
+import com.squareup.moshi.JsonDataException;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
-import ooga.model.components.Component;
-import ooga.model.managers.ECManager;
+import ooga.model.exceptions.NotADirectoryException;
 import ooga.model.objects.GameObject;
-import ooga.model.observables.ObservableObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class LevelFactoryTest {
 
@@ -22,24 +23,36 @@ public class LevelFactoryTest {
   String objectDirectory = exampleDir + "objects";
   Map<String, Integer> objectsCount;
 
+  String badLevelFile = exampleDir + "levels/level2.json";
   String basicLevelFile = exampleDir + "levels/level1.json";
   int basicLevelObjectsCount = 42;
+  int newObjectsCount;
   Level basicLevel;
 
   @BeforeEach
   void setup() throws IOException, URISyntaxException {
     objectsCount = new HashMap<>();
+    newObjectsCount = 0;
     factory = new LevelFactory(getFile(objectDirectory));
-    basicLevel = factory.buildLevel(getFile(basicLevelFile));
   }
 
+  private void incrementObjectsCount(GameObject object) {
+      objectsCount.putIfAbsent(object.getName(), 0);
+      objectsCount.put(object.getName(), objectsCount.get(object.getName()) + 1);
+  }
+
+
   @Test
-  void buildBasicLevelTest() throws URISyntaxException, IOException {
+  void buildBasicLevelTest() throws URISyntaxException, FileNotFoundException {
+    basicLevel = factory.buildLevel(getFile(basicLevelFile));
     assertEquals(basicLevelObjectsCount, basicLevel.generateObjects().size());
   }
 
   @Test
-  void assertCorrectObjects() {
+  void assertCorrectObjects() throws URISyntaxException, FileNotFoundException {
+    basicLevel = factory.buildLevel(getFile(basicLevelFile));
+    basicLevel.generateObjects().forEach(this::incrementObjectsCount);
+
     int goombaCount = 1;
     String goombaName = "goomba";
     int marioCount = 1;
@@ -51,13 +64,21 @@ public class LevelFactoryTest {
     int blockCount = 34;
     String blockName = "block";
 
-    ECManager ecManager = basicLevel.getECManager();
+    assertEquals(goombaCount, objectsCount.get(goombaName));
+    assertEquals(marioCount, objectsCount.get(marioName));
+    assertEquals(qBlockCount, objectsCount.get(qBlockName));
+    assertEquals(brickCount, objectsCount.get(brickName));
+    assertEquals(blockCount, objectsCount.get(blockName));
+  }
 
-    assertEquals(goombaCount, ecManager.getEntities(goombaName).size());
-    assertEquals(marioCount, ecManager.getEntities(marioName).size());
-    assertEquals(qBlockCount, ecManager.getEntities(qBlockName).size());
-    assertEquals(brickCount, ecManager.getEntities(brickName).size());
-    assertEquals(blockCount, ecManager.getEntities(blockName).size());
+  @Test
+  void assertIncorrectObjects() {
+    assertThrows(JsonDataException.class, () -> factory.buildLevel(getFile(badLevelFile)));
+  }
+
+  @Test
+  void assertNotADirectory() {
+    assertThrows(NotADirectoryException.class, () -> new LevelFactory(getFile(badLevelFile)));
   }
 
   File getFile(String fileName) throws URISyntaxException {

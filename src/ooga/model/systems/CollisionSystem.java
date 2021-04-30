@@ -9,27 +9,43 @@ import ooga.model.managers.ActionManager;
 import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 
+/**
+ * @author Robert Barnette This class handles directional collision detection between GameObjects
+ * and rectifies object positions when they are collided
+ */
 public class CollisionSystem extends GameObjectBasedSystem {
 
   private ActionManager myActionManager;
 
 
+  /**
+   * @param ecmanager     is the ECManager used to initialize the systems for this level
+   * @param actionManager is the ActionManager that handles collision actions when they occur
+   */
   public CollisionSystem(ECManager ecmanager, ActionManager actionManager) {
     super(ecmanager);
     myActionManager = actionManager;
   }
 
+  /**
+   * @param deltaTime is the time that has elapsed since the last iteration of the game loop This
+   *                  method is run every iteration of the GameLoop and detects collisions, their
+   *                  direction, and attempts to rectify them
+   */
   @Override
   public void update(double deltaTime) {
     checkCollisions();
   }
 
+  /**
+   * This method checks if GameObjects are collidable and then sorts collidable objects by their
+   * x-coordinate
+   */
   private void checkCollisions() {
     List<GameObject> objects = getTrackedGameObjects();
     List<GameObject> collidableObjects = new ArrayList<>();
 
     for (GameObject gameObject : objects) {
-      //System.out.println("GameObject Name: "+ gameObject.getName()+ " X cord: "+ gameObject.getX() + " Y Cord: " + gameObject.getY() + " Width: " + gameObject.getWidth() + " Height: " + gameObject.getHeight() + " Velocity: "+ gameObject.getVelocity().magnitude());
       if (gameObject.isCollidable()) {
         collidableObjects.add(gameObject);
       }
@@ -38,12 +54,22 @@ public class CollisionSystem extends GameObjectBasedSystem {
     findCollisions(collidableObjects);
   }
 
+  /**
+   * @param collidableObjects is the list of collidable objects in the level This method loops
+   *                          through the collidable objects and intelligently checks to see if they
+   *                          collide with other objects.
+   */
   private void findCollisions(List<GameObject> collidableObjects) {
     for (int k = 0; k < collidableObjects.size() - 1; k++) {
       executeCollisions(k, collidableObjects);
     }
   }
 
+  /**
+   * @param index             is the index of the list where the object being checked is contained
+   * @param collidableObjects is the list of collidable objects in the level This method checks to
+   *                          see if a given object has collided with other objects
+   */
   private void executeCollisions(int index, List<GameObject> collidableObjects) {
     GameObject collidingObject = collidableObjects.get(index);
     double width = collidingObject.getWidth();
@@ -64,17 +90,15 @@ public class CollisionSystem extends GameObjectBasedSystem {
     }
   }
 
+  /**
+   * @param self  is one of the collided objects
+   * @param other is the other collided object This method calls the action handlers to manage the
+   *              collision when a collision is detected
+   */
   private void collide(GameObject self, GameObject other) {
     String selfDirection = detectCollisionDirection(self, other);
     String otherDirection = detectCollisionDirection(other, self);
-/*
-    if(self.getName().equals("playerblock")){
-      System.out.println(selfDirection);
-    }
-    else if(other.getName().equals("playerblock")){
-      System.out.println(otherDirection);
-    }
-*/
+
     self.setCollided(true);
     other.setCollided(true);
 
@@ -87,7 +111,7 @@ public class CollisionSystem extends GameObjectBasedSystem {
     //   return;
     // }
 
-    if(self.getVelocity().magnitude() >= other.getVelocity().magnitude()){
+    if (self.getVelocity().magnitude() >= other.getVelocity().magnitude()) {
       rectifyCollision(self, other, selfDirection);
     } else {
       rectifyCollision(other, self, otherDirection);
@@ -106,7 +130,14 @@ public class CollisionSystem extends GameObjectBasedSystem {
     return false;
   }
 
-  private void rectifyCollision(GameObject self, GameObject other, String selfDirection) {
+  /**
+   * @param self          is one of the collided objects
+   * @param other         is the other collided object
+   * @param selfDirection is the direction of collision relative to the self object This method
+   *                      un-collides objects when they are collided to prevent objects from
+   *                      occupying the same space on the screen
+   */
+  public void rectifyCollision(GameObject self, GameObject other, String selfDirection) {
     if (self.getVelocity().magnitude() == 0) {
       return;
     }
@@ -118,14 +149,19 @@ public class CollisionSystem extends GameObjectBasedSystem {
         self.setX(other.getX() - self.getWidth());
         break;
       case "top":
-        self.setY(other.getY()-self.getHeight());
+        self.setY(other.getY() - self.getHeight());
         break;
       case "bottom":
-        self.setY(other.getY()+other.getHeight());
+        self.setY(other.getY() + other.getHeight());
         break;
     }
   }
 
+  /**
+   * @param collidingObject is one of the collided objects
+   * @param collidedObject  is the other collided object
+   * @returns the direction of the collision
+   */
   public String detectCollisionDirection(GameObject collidingObject, GameObject collidedObject) {
     double x = collidedObject.getX();
     double y = collidedObject.getY();
@@ -169,6 +205,13 @@ public class CollisionSystem extends GameObjectBasedSystem {
     return calculateCollisionDirection(lComp, rComp, tComp, bComp);
   }
 
+  /**
+   * @param lComp is the length of the left component of the collision
+   * @param rComp is the length of the right component of the collision
+   * @param tComp is the length of the top component of the collision
+   * @param bComp is the length of the bottom component of the collision
+   * @returns the direction of the collision
+   */
   private String calculateCollisionDirection(double lComp, double rComp, double tComp,
       double bComp) {
     if (lComp >= rComp && lComp >= tComp && lComp >= bComp) {
