@@ -1,4 +1,7 @@
 package ooga.model.systems.creature;
+/**
+ * @author Tinglong Zhu
+ */
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +16,9 @@ import ooga.model.managers.ECManager;
 import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
 
+/**
+ * Logic for the hate of the enemy
+ */
 @Track({PlayerComponent.class, HateComponent.class})
 public abstract class EnemySystems extends ComponentBasedSystem {
 
@@ -65,6 +71,10 @@ public abstract class EnemySystems extends ComponentBasedSystem {
     private int counter = 0;
     private boolean attack = false;
 
+    /**
+     * determine whether the enemy is able to attack
+     * @param frequency   the attack frequency of the enemy
+     */
     public void determineAttack(int frequency) {
       if (hate) {
         if (counter == 0) {

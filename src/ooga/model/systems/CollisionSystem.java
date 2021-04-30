@@ -105,9 +105,11 @@ public class CollisionSystem extends GameObjectBasedSystem {
     CollisionInfo selfInfo = new CollisionInfo(self, other, selfDirection);
     CollisionInfo otherInfo = new CollisionInfo(other, self, otherDirection);
 
-    if (!(canCollide(self, selfInfo) || canCollide(other, otherInfo))) {
-      return;
-    }
+    // FIXME: this make testing impossible, since there's no way of setting ActionInfo inside
+    //  a manually created GameObject
+    // if (!(canCollide(self, selfInfo) || canCollide(other, otherInfo))) {
+    //   return;
+    // }
 
     if (self.getVelocity().magnitude() >= other.getVelocity().magnitude()) {
       rectifyCollision(self, other, selfDirection);

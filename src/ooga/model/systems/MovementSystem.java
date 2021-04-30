@@ -8,6 +8,10 @@ import ooga.model.components.MovementComponent.VerticalMovementStatus;
 import ooga.model.managers.ECManager;
 import ooga.model.objects.GameObject;
 
+/**
+ * This system handles movements (either active or passive). It can be used to move horizontally or
+ * vertically, its collision actions can also be used to automatically stop at obstacles.
+ */
 @Track(MovementComponent.class)
 public class MovementSystem extends ComponentBasedSystem {
 
@@ -40,9 +44,6 @@ public class MovementSystem extends ComponentBasedSystem {
     );
   }
 
-  /**
-   * Callback when the player touches ground
-   */
   private void obstacleOnBottom(GameObject go, GameObject other) {
     MovementComponent p = movementMapper.get(go.getId());
     if (p != null) {
@@ -67,17 +68,29 @@ public class MovementSystem extends ComponentBasedSystem {
     p.setObstacle(MovementComponent.OBSTACLE_KEY_RIGHT, other);
   }
 
+  /**
+   * Handles move left key presses
+   *
+   * @param entityId The id of the entity
+   * @param on       Whether the move left key is pressed or released
+   */
   public void moveLeft(int entityId, boolean on) {
     handleHorizontalMovement(entityId, on, MovementComponent.LEFT_DIRECTION);
   }
 
+  /**
+   * Handles move right key presses
+   *
+   * @param entityId The id of the entity
+   * @param on       Whether the move right key is pressed or released
+   */
   public void moveRight(int entityId, boolean on) {
     handleHorizontalMovement(entityId, on, MovementComponent.RIGHT_DIRECTION);
   }
 
-  protected void handleHorizontalMovement(int entityId, boolean run, int direction) {
+  private void handleHorizontalMovement(int entityId, boolean run, int direction) {
     MovementComponent p = movementMapper.get(entityId);
-    if(p==null){
+    if (p == null) {
       return;
     }
     p.setDirection(direction);
@@ -104,6 +117,9 @@ public class MovementSystem extends ComponentBasedSystem {
     }
   }
 
+  /**
+   * Update the object's horizontal and vertical velocity according to the movement status
+   */
   @Override
   public void update(double deltaTime) {
     List<MovementComponent> comps = movementMapper.getComponents();

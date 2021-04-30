@@ -1,4 +1,7 @@
 package ooga.model.systems.creature;
+/**
+ * @author Tinglong Zhu
+ */
 
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -15,6 +18,9 @@ import ooga.model.systems.ComponentBasedSystem;
 import ooga.model.systems.ComponentMapper;
 import ooga.model.systems.HealthSystem;
 
+/**
+ * Logic for attack
+ */
 @Track({WeaponComponent.class, MovementComponent.class, HateComponent.class, HealthComponent.class,  AttackComponent.class,CriticalHitMultiplier.class})
 public class AttackSystem extends ComponentBasedSystem {
 
@@ -38,6 +44,10 @@ public class AttackSystem extends ComponentBasedSystem {
     addMapping(ATTACK_ACTION_NAME, this::attack);
   }
 
+  /**
+   * Executing the attack
+   * @param on  callbacks needed var
+   */
   public void attack(boolean on) {
     for (WeaponComponent w : weaponMapper.getComponents()) {
       AttackComponent attacker=attackMapper.get(w.getOwner().getId());

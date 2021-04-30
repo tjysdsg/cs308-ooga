@@ -1,12 +1,14 @@
 package ooga.model.components.equipment;
+/**
+ * @author Tinglong Zhu
+ */
 
 import ooga.model.components.Component;
 import ooga.model.components.HealthComponent;
 import ooga.model.objects.GameObject;
 
 /**
- * The weapon needs AP(attack power), and the health of the weapon, When health==0, the weapon will
- * be destroyed
+ * The weapon/armor needs AP(attack power)
  */
 public class EquipmentComponent extends Component {
 
@@ -21,10 +23,17 @@ public class EquipmentComponent extends Component {
     return EquipmentComponent.class.getName();
   }
 
+  /**
+   * Get the payload (damage for weapon, defense for armor) of the equipment.
+   * @return
+   */
   public double getPayLoad() {
     return payLoad;
   }
 
+  /**
+   * Set the payload (damage for weapon, defense for armor) of the equipment.
+   */
   public void setPayLoad(double payLoad) {
     this.payLoad = payLoad;
   }
