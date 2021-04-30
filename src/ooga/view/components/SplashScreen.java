@@ -10,13 +10,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import ooga.view.util.ObservableResource;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+/** A special scene for the start of the game */
 public class SplashScreen extends Scene {
 
-  private static final Logger logger = LogManager.getLogger(SplashScreen.class);
   private StackPane root;
   private Runnable exitCallback;
   private Button exitGame;
@@ -69,23 +67,38 @@ public class SplashScreen extends Scene {
           }
         });
 
-    settings.setOnAction(e -> {
-      if(settingsCallback != null) {
-        settingsCallback.accept(root);
-      }
-    });
+    settings.setOnAction(
+        e -> {
+          if (settingsCallback != null) {
+            settingsCallback.accept(root);
+          }
+        });
 
     root.getChildren().add(vbox);
   }
 
+  /**
+   * Set the callback for when the application has been exited.
+   *
+   * @param run
+   */
   public void setOnExit(Runnable run) {
     this.exitCallback = run;
   }
-
+  /**
+   * Set the callback for when the user requests to play the game.
+   *
+   * @param run - The callback to be called
+   */
   public void setOnPlay(Runnable run) {
     this.runCallback = run;
   }
 
+  /**
+   * Set the callback for when the user requests to view the settings
+   *
+   * @param run - The callback to be called
+   */
   public void setOnSettings(Consumer<StackPane> callback) {
     this.settingsCallback = callback;
   }

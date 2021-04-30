@@ -1,6 +1,5 @@
 package ooga.view.components;
 
-
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -8,7 +7,9 @@ import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.layout.AnchorPane;
 import ooga.view.util.ObservableResource;
 
-
+/**
+ * A pane to organize settings modules.
+ * */
 public class SettingsPane extends AnchorPane {
   private TabPane modules;
   private Runnable closeCallback;
@@ -38,6 +39,10 @@ public class SettingsPane extends AnchorPane {
     }
   }
 
+  /**
+   * Add a module tab.
+   * @param module - The module to add
+   */
   public void addModule(SettingsModule module) {
     Tab tab = new Tab("System", module);
     // tab.textProperty().bind(module.moduleBinding());
@@ -45,6 +50,10 @@ public class SettingsPane extends AnchorPane {
     this.modules.getTabs().add(tab);
   }
 
+  /**
+   * Define an action to be run when the pane closes.
+   * @param run
+   */
   public void setOnClose(Runnable run) {
     this.closeCallback = run;
   }

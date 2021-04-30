@@ -1,7 +1,6 @@
 package ooga.view.components;
 
 import com.jfoenix.controls.JFXComboBox;
-
 import com.jfoenix.controls.JFXTextField;
 import java.util.List;
 import javafx.beans.binding.StringBinding;
@@ -16,6 +15,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
+/**
+ * A system component within {@link SettingsPane} To allow for groupped settings.
+ * */
 public class SettingsModule extends StackPane {
 
   private FlowPane area;
@@ -29,6 +31,7 @@ public class SettingsModule extends StackPane {
     getChildren().addAll(area);
   }
 
+  /** @return The title binding of this module. */
   public StringBinding moduleBinding() {
     return this.moduleName;
   }
@@ -36,7 +39,7 @@ public class SettingsModule extends StackPane {
   /**
    * Add a setting to the settings pane and return a binding to track its updates.
    *
-   * @param label - The label lol
+   * @param text - The label.
    */
   public StringBinding addFieldSettings(StringBinding text) {
     Label label = new Label();
@@ -44,6 +47,13 @@ public class SettingsModule extends StackPane {
     return null;
   }
 
+  /**
+   * Add a choicebox list setting to the module.
+   *
+   * @param text - The title of the setting
+   * @param list - The list of options for the setting
+   * @return - A trackable property of when this setting updates.
+   */
   public ReadOnlyObjectProperty<String> addListSetting(
       StringBinding text, ObservableList<String> list) {
     JFXComboBox<String> comboBox = new JFXComboBox<>(list);
@@ -53,6 +63,12 @@ public class SettingsModule extends StackPane {
     return comboBox.getSelectionModel().selectedItemProperty();
   }
 
+  /**
+   * Add a special keymapping settings option.
+   *
+   * @param keyMap - The current capable keymaps.
+   * @param codes - The codes possible within a game.
+   */
   public void addKeysOption(ObservableMap<KeyCode, String> keyMap, List<String> codes) {
     JFXComboBox<String> availableKeys = new JFXComboBox<>(FXCollections.observableList(codes));
     availableKeys.setPromptText("...");

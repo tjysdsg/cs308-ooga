@@ -13,20 +13,26 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/** Meta information about a game. */
 public class MetaGame {
 
   private static final Logger logger = LogManager.getLogger(MetaGame.class);
-  private static final JsonAdapter<MetaGame> adapter = new Moshi.Builder().build()
-      .adapter(MetaGame.class);
+  private static final JsonAdapter<MetaGame> adapter =
+      new Moshi.Builder().build().adapter(MetaGame.class);
   private String author = "Unknown";
   private String dateCreated = "Unknown";
   private List<String> levels = new ArrayList<>();
   private List<String> tags = new ArrayList<>();
 
   // Do not remove! Moshi needs this :).
-  public MetaGame() {
-  }
+  public MetaGame() {}
 
+  /**
+   * Create meta information of a game off of a file.
+   *
+   * @param directory - The file containing the meta data in JSON format.
+   * @return Meta information on the game.
+   */
   public static MetaGame createMetaDataFromDirectory(File directory) {
     Preconditions.checkArgument(directory != null);
     try {
@@ -40,14 +46,17 @@ public class MetaGame {
     }
   }
 
+  /** @return - The date the game was created. */
   public String getDateCreated() {
     return dateCreated;
   }
 
+  /** @return - The levels of the game */
   public List<String> getLevels() {
     return levels;
   }
 
+  /** @return - The tags of the game */
   public List<String> getTags() {
     return tags;
   }
@@ -62,6 +71,7 @@ public class MetaGame {
         .toString();
   }
 
+  /** @return - The author of the game */
   public String getAuthor() {
     return this.author;
   }

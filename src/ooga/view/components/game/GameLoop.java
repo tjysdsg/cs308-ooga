@@ -3,6 +3,7 @@ package ooga.view.components.game;
 import java.util.function.Consumer;
 import javafx.animation.AnimationTimer;
 
+/** Manage time and allow games to pause and play. */
 public class GameLoop extends AnimationTimer {
 
   private Consumer<Double> callback;
@@ -20,17 +21,21 @@ public class GameLoop extends AnimationTimer {
     prevTime = currentNanoTime;
   }
 
-
+  /** Stop the gameloop. */
   public void pause() {
     this.isPaused = true;
   }
 
+  /** Start the gameloop/ */
   public void play() {
     this.isPaused = false;
   }
 
-  public void setUpdateTime(long timeInNano) {}
-
+  /**
+   * Notify the specified caller when time has changed.
+   *
+   * @param run - The callback that will be called every time change.
+   */
   public void setOnUpdate(Consumer<Double> run) {
     this.callback = run;
   }

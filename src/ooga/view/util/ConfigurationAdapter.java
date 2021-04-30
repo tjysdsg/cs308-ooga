@@ -11,34 +11,35 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.scene.input.KeyCode;
 
+/** Helps translate inputs from json into coresponding classes */
 public class ConfigurationAdapter {
 
   @FromJson
-  ObservableMap<KeyCode, String> objectFromJson(Map<String, String> keyMaps) {
+  private ObservableMap<KeyCode, String> objectFromJson(Map<String, String> keyMaps) {
     Map<KeyCode, String> convertedMap = new HashMap<>();
     keyMaps.forEach((key, val) -> convertedMap.put(KeyCode.getKeyCode(val), key));
     return FXCollections.observableMap(convertedMap);
   }
 
   @ToJson
-  Map<String, String> objectToJson(ObservableMap<KeyCode, String> keyMaps) {
+  private Map<String, String> objectToJson(ObservableMap<KeyCode, String> keyMaps) {
     Map<String, String> newMap = new HashMap<>();
     keyMaps.forEach((key, value) -> newMap.put(key.getName(), value));
     return newMap;
   }
 
   @FromJson
-  ObservableList<String> objectFromJson(List<String> stats) {
+  private ObservableList<String> objectFromJson(List<String> stats) {
     return FXCollections.observableList(stats);
   }
 
   @ToJson
-  List<String> objectFromJson(ObservableList<String> stats) {
+  private List<String> objectFromJson(ObservableList<String> stats) {
     return stats;
   }
 
   @FromJson
-  ObservableResource objectFromJson(String language) {
+  private ObservableResource objectFromJson(String language) {
     ObservableResource resources = new ObservableResource();
     ResourceBundle res = ResourceBundle.getBundle(ViewConfiguration.DEFAULT_RESOURCES + language);
     resources.setResources(res);
@@ -46,7 +47,7 @@ public class ConfigurationAdapter {
   }
 
   @ToJson
-  String objectFromJson(ObservableResource resources) {
+  private String objectFromJson(ObservableResource resources) {
     return resources.getLanguage();
   }
 }

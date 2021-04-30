@@ -1,6 +1,5 @@
 package ooga.view.components.game;
 
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -9,7 +8,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * A view component which can track with a given gameobject.
+ * A view component which can track with a given observable object.
+ *
+ * <p>This class can track and update itself whenever its observable updates
  */
 public class ObjectView extends StackPane {
 
@@ -40,10 +41,20 @@ public class ObjectView extends StackPane {
     setTranslateY(-gameObject.getY());
   }
 
+  /**
+   * Determine if this view is tracking this observable object.
+   *
+   * @param o - The object to request comparison to
+   */
   protected boolean isObject(ObservableObject o) {
     return o == this.gameObject;
   }
 
+  /**
+   * Determine if this view is tracking this observable object.
+   *
+   * @param objectID - The id of the object to verify.
+   */
   protected boolean isObject(int objectID) {
     return gameObject.getID() == objectID;
   }

@@ -14,6 +14,11 @@ import javafx.scene.image.Image;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * The configuration for images within a game.
+ *
+ * <p>This class contains the mapping of the location to images corresponding to their image code.
+ */
 public class ImageConfiguration {
 
   private static final Logger logger = LogManager.getLogger(ImageConfiguration.class);
@@ -36,6 +41,14 @@ public class ImageConfiguration {
     }
   }
 
+  /**
+   * Get the corresponding image from a code.
+   *
+   * @param mode - The code which to fetch an image from.
+   * @param width - The width of the image.
+   * @param height - The height of the image.
+   * @return The image mapped from the code
+   */
   public Image getImage(String mode, double width, double height) {
     Image image;
     String fileName = codeToPath.get(mode);
@@ -44,10 +57,7 @@ public class ImageConfiguration {
   }
 
   private Image getImageFile(String mode, double width, double height) {
-    String fileName = codeToPath.get(mode);
-    System.out.println(width);
     try {
-      System.out.println(new File(directory, mode).toURI().toURL().toExternalForm());
       Image image =
           new Image(
               new File(directory, mode).toURI().toURL().toExternalForm(),

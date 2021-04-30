@@ -4,17 +4,15 @@ import com.jfoenix.controls.JFXDialog;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
-
-import javafx.animation.*;
+import javafx.animation.FadeTransition;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.util.*;
+import javafx.util.Duration;
 import ooga.view.components.GenericMenu;
-
 import ooga.view.components.SettingsModule;
 import ooga.view.components.SettingsPane;
 import ooga.view.components.SplashScreen;
@@ -26,6 +24,11 @@ import ooga.view.util.ViewConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * A class that manages everything that the user sees.
+ *
+ * <p>This class initializes and displays the screens and scenes the user views.
+ */
 public class View {
 
   public static final int HEIGHT = 700;
@@ -53,6 +56,11 @@ public class View {
   private GenericMenu endScreen;
   private String currentGameDir;
 
+  /**
+   * Construt a view
+   *
+   * @param stage - The stage to display game scenes.
+   */
   public View(Stage stage) {
     this.stage = stage;
     String defaultConfig = "";
@@ -77,8 +85,8 @@ public class View {
       logger.warn("Css file could not be loaded");
     }
     createAnimations();
-     setScene(splashScreen);
-    //startGame("data/Goomba's Revenge/");
+    setScene(splashScreen);
+    // startGame("data/Goomba's Revenge/");
     gameSelection.setOnGameSelected(this::startGame);
     exitApplication =
         () -> {
@@ -95,10 +103,10 @@ public class View {
 
     splashScreen.setOnExit(exitApplication);
     splashScreen.setOnPlay(() -> setScene(gameSelection));
-    splashScreen.setOnSettings( e -> {
-      pauseDialog.show(e);
-    });
-
+    splashScreen.setOnSettings(
+        e -> {
+          pauseDialog.show(e);
+        });
 
     logger.info("Displaying Splash Screen");
     stage.show();
@@ -116,10 +124,8 @@ public class View {
       nextPlay = resources.getStringBinding("PlayAgain");
     }
     this.endScreen = new GenericMenu(title);
-    endScreen.addOption(nextPlay, () -> startGame(this.currentGameDir),
-        "secondary", "play");
-    endScreen.addOption(exit, () -> setScene(splashScreen),
-        "secondary", "play");
+    endScreen.addOption(nextPlay, () -> startGame(this.currentGameDir), "secondary", "play");
+    endScreen.addOption(exit, () -> setScene(splashScreen), "secondary", "play");
   }
 
   private void setupSettings() {
@@ -181,14 +187,10 @@ public class View {
     // TODO: Have a check if a game is currently playing and ask
     // if want to quit
     currentGame = new GameScene(directory, resources);
-    currentGame.setOnEnd( b -> {
-      setupEndscreen(b);
-      currentGame.getRootCover().getChildren().add(endScreen);
-    });
-    currentGame.setOnResize(
-        (height, width) -> {
-          stage.setHeight(height);
-          stage.setWidth(width);
+    currentGame.setOnEnd(
+        b -> {
+          setupEndscreen(b);
+          currentGame.getRootCover().getChildren().add(endScreen);
         });
     if (!cssFile.isBlank()) {
       currentGame.getStylesheets().add(cssFile);
