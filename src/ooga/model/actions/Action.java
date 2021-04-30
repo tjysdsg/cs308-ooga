@@ -12,6 +12,8 @@ import java.util.Map;
  *
  * By creating this item and adding it to a collision list for a game object, the action information
  * can be used to by the collision system to dictate what action to implement.
+ *
+ * @author Oliver Rodas
  */
 public class Action {
 

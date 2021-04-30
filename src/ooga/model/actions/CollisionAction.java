@@ -5,6 +5,8 @@ import ooga.model.objects.GameObject;
 
 /**
  * This class is meant to be passed to an action handler to perform the action specified by an action
+ *
+ * @author Oliver Rodas
  */
 public class CollisionAction {
 

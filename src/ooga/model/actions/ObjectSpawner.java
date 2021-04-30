@@ -8,6 +8,8 @@ import ooga.model.objects.ObjectInstance;
  * Object Spawner is meant to be used to have any action create arbitrary objects.
  *
  * It is meant to be instantiated using the the ecManager to be able to create the objects
+ *
+ * @author Oliver Rodas
  */
 public class ObjectSpawner {
   private String payload;

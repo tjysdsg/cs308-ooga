@@ -2,6 +2,7 @@ package ooga.model.actions;
 
 /**
  * Describes the action for an NPC to do.
+ * @author Oliver Rodas
  */
 public class NPCAction {
   private String action;

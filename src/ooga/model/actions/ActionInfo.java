@@ -7,6 +7,8 @@ import java.util.Set;
 /**
  * Action Info is the main object used in collisions. It encompasses actions to create an object
  * that collisions can use.
+ *
+ * @author Oliver Rodas
  */
 public class ActionInfo {
 
