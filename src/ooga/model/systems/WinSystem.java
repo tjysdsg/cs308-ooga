@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.function.Consumer;
 import ooga.model.annotations.Track;
 import ooga.model.components.HealthComponent;
-import ooga.model.components.PlayerComponent;
 import ooga.model.components.ScoreComponent;
 import ooga.model.components.WinComponent;
 import ooga.model.components.enemy.HateComponent;
@@ -13,7 +12,10 @@ import ooga.model.managers.ECManager;
 
 /**
  * @author Robert Barnette This class checks the win or loss status of a particular level and ends
- * the level when a win or loss condition is met
+ * the level when a win or loss condition is met. This class is well designed because it has a very
+ * clear purpose and executes it well. It is also relatively extensible to adding new win conditions
+ * and tracking additional components to check these conditions. WinSystem also greatly utilizes
+ * inheritance to access components and execute win/loss conditions.
  */
 
 @Track({HealthComponent.class, ScoreComponent.class, WinComponent.class, HateComponent.class})
@@ -85,7 +87,6 @@ public class WinSystem extends ComponentBasedSystem {
     List<WinCondition> winConditions = w.getWinConds();
     for (WinCondition wCond : winConditions) {
 
-
       if (wCond.getCondition().equals(SCORE_CONDITION_NAME)) {
         double score = scoreMapper.get(w.getOwner().getId()).getScore();
         boolean comp = wCond.checkCondition(score);
@@ -140,6 +141,7 @@ public class WinSystem extends ComponentBasedSystem {
       setOnLevelEnd.accept(false);
     }
   }
+
   /**
    * Ends the level when a win condition is triggered
    */
