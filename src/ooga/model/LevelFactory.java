@@ -7,11 +7,13 @@ import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import ooga.model.actions.PlayerAction;
 import ooga.model.components.Component;
 import ooga.model.exceptions.InvalidDataFileException;
 import ooga.model.exceptions.NotADirectoryException;
@@ -35,7 +37,8 @@ public class LevelFactory {
     Map<String, GameObject> presetMap = new HashMap<>();
 
     PolymorphicJsonAdapterFactory<Component> componentAdapter = createComponentAdapter();
-    Moshi moshi = new Moshi.Builder().add(componentAdapter).build();
+    PolymorphicJsonAdapterFactory playerAdapter = createAdapter(PlayerAction.class, "action");
+    Moshi moshi = new Moshi.Builder().add(componentAdapter).add(playerAdapter).build();
 
     Type type = Types.newParameterizedType(List.class, GameObject.class);
     JsonAdapter<List<GameObject>> adapter = moshi.adapter(type);
@@ -55,6 +58,17 @@ public class LevelFactory {
     Reflections reflections = new Reflections(Component.class.getPackageName());
     for (Class subclass : reflections.getSubTypesOf(Component.class)) {
       adapter = adapter.withSubtype(subclass, subclass.getSimpleName());
+    }
+    return adapter;
+  }
+
+  public static PolymorphicJsonAdapterFactory<Component> createAdapter(Class superClass, String label) {
+    PolymorphicJsonAdapterFactory adapter = PolymorphicJsonAdapterFactory.of(superClass, label);
+    Reflections reflections = new Reflections(superClass.getPackageName());
+    for (Object subclass : reflections.getSubTypesOf(superClass)) {
+      Class subClazz = (Class) subclass;
+      if (!Modifier.isAbstract(subClazz.getModifiers()))
+        adapter = adapter.withSubtype(subClazz, subClazz.getSimpleName());
     }
     return adapter;
   }

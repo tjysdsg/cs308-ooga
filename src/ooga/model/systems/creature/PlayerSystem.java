@@ -4,12 +4,14 @@ package ooga.model.systems.creature;
  */
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import ooga.model.actions.ObjectSpawner;
+import ooga.model.actions.PlayerAction;
 import ooga.model.annotations.Track;
 import ooga.model.components.MovementComponent;
 import ooga.model.components.PlayerComponent;
@@ -25,14 +27,11 @@ import org.apache.logging.log4j.Logger;
 @Track({PlayerComponent.class, MovementComponent.class})
 public class PlayerSystem extends ComponentBasedSystem {
 
+  private Map<String, List<PlayerAction>> handlers = new HashMap<>();
   private static final Logger logger = LogManager.getLogger(PlayerSystem.class);
 
   protected ComponentMapper<PlayerComponent> playerMapper;
   protected ComponentMapper<MovementComponent> movementMapper;
-  private final Map<String, BiConsumer<Integer, Boolean>> movementActionExecutors = Map.of(
-      "MoveLeft", this::moveLeft,
-      "MoveRight", this::moveRight,
-      "Jump", this::jump);
 
   // TODO: support active and inactive players
 
@@ -47,48 +46,22 @@ public class PlayerSystem extends ComponentBasedSystem {
   }
 
   private void registerAction(PlayerComponent player) {
-    for (ActionPair mapping : player.getActionMapping()) {
+    for (PlayerAction mapping : player.getActionMapping()) {
+      String input = mapping.getInput();
+
       int goId = player.getOwner().getId();
-      MovementComponent movementComp = movementMapper.get(goId);
-      if (movementComp == null) {
-        logger.error(
-            "PlayerComponent requires a MovementComponent on the its game object, but object {} doesn't",
-            goId
-        );
-      }
+      mapping.setOwner(movementMapper.get(goId));
+      mapping.setManager(getECManager());
 
-      // Getting around the hardcoded methods
-      if (mapping.getAction().equals("SpawnObject")) {
-        ObjectSpawner spawner = new ObjectSpawner(mapping.getPayload(), getECManager());
-        addMapping(mapping.getInput(), on -> spawner.handleSpawn(goId, on));
-      } else if(movementActionExecutors.containsKey(mapping.getAction())) {
-        BiConsumer<Integer, Boolean> executor = movementActionExecutors.get(mapping.getAction());
-        addMapping(mapping.getInput(), on -> executor.accept(goId, on));
-      }
+      handlers.putIfAbsent(input, new ArrayList<>());
+      handlers.get(input).add(mapping);
+
+      addMapping(input, (on) -> {
+        handlers.get(input).forEach( (currHandler) -> currHandler.handleAction(on));
+      });
     }
+
   }
-
-  public void moveLeft(int entityId, boolean on) {
-    MovementSystem movementSystem = getSystem(MovementSystem.class);
-    movementSystem.moveLeft(entityId, on);
-  }
-
-  public void moveRight(int entityId, boolean on) {
-    MovementSystem movementSystem = getSystem(MovementSystem.class);
-    movementSystem.moveRight(entityId, on);
-  }
-
-  public void jump(int entityId, boolean on) {
-    MovementSystem movementSystem = getSystem(MovementSystem.class);
-    movementSystem.jump(entityId, on);
-  }
-
-  public List<PlayerComponent> getPlayers() {
-    return playerMapper.getComponents();
-  }
-
-
-
   @Override
   public void update(double deltaTime) {
 

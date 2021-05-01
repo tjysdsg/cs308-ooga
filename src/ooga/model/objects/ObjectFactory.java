@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Map;
 import ooga.model.LevelFactory;
 import ooga.model.Vector;
+import ooga.model.actions.PlayerAction;
 import ooga.model.components.Component;
 import ooga.model.exceptions.TypeNotFoundException;
 import ooga.model.managers.IDManager;
@@ -34,7 +35,8 @@ public class ObjectFactory {
     this.presetMap = Preconditions.checkNotNull(presetMap, "Preset Map shouldn't be null");
     PolymorphicJsonAdapterFactory<Component> componentAdapter = LevelFactory
         .createComponentAdapter();
-    Moshi moshi = new Moshi.Builder().add(componentAdapter).build();
+    PolymorphicJsonAdapterFactory playerAdapter = LevelFactory.createAdapter(PlayerAction.class, "action");
+    Moshi moshi = new Moshi.Builder().add(componentAdapter).add(playerAdapter).build();
     this.objectAdapter = moshi.adapter(GameObject.class);
   }
 
