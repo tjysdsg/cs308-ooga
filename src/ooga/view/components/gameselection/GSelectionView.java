@@ -17,9 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.javafx.FontIcon;
 
-/**
- * Manages the selection of games.
- * */
+/** Manages the selection of games. */
 class GSelectionView extends VBox {
 
   private static final Logger logger = LogManager.getLogger(GSelectionView.class);
@@ -28,7 +26,7 @@ class GSelectionView extends VBox {
   private final LabelPair gameAuthorLabel;
   private final LabelPair gameLevelsLabel;
   private final LabelPair gameTagsLabel;
-  private String directory = "/home/joshu/Pictures/";
+  private String directory;
   private ImageView thumbnail;
   private Label gameTitleLabel;
   private ObservableResource resources;

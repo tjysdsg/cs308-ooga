@@ -88,6 +88,7 @@ public class GameList extends FlowPane {
 
   /**
    * Add an item to the list of games.
+   *
    * @param directory - The directory to be added.
    */
   public void createItem(String directory) {
@@ -109,20 +110,16 @@ public class GameList extends FlowPane {
     newGame.setOnDelete(
         (path) -> {
           presentDirectories.remove(path);
+          String gameDirs = prefs.get(GAME_DIRS_KEY, "");
+          gameDirs = gameDirs.replace(path, "");
 
-          String game_dirs = prefs.get(GAME_DIRS_KEY, "");
-          game_dirs = game_dirs.replace(path, "");
-
-          while (!game_dirs.replaceAll("::", ":").equals(game_dirs)) {
-            game_dirs = game_dirs.replaceAll("::", ":");
+          while (!gameDirs.replaceAll("::", ":").equals(gameDirs)) {
+            gameDirs = gameDirs.replaceAll("::", ":");
           }
 
-          game_dirs = game_dirs.replaceAll("^:|:$", "");
-
-          logger.debug("Game Directories is now: {}", game_dirs);
-
-          prefs.put(GAME_DIRS_KEY, game_dirs);
-
+          gameDirs = gameDirs.replaceAll("^:|:$", "");
+          logger.debug("Game Directories is now: {}", gameDirs);
+          prefs.put(GAME_DIRS_KEY, gameDirs);
           getChildren().remove(newGame);
         });
     newGame.setOnRun(this::notifyRun);
