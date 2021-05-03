@@ -6,20 +6,20 @@ import javafx.scene.control.Label;
 import ooga.view.util.ObservableResource;
 import org.kordamp.ikonli.javafx.FontIcon;
 
-
+/** Generate dialogs. */
 public class DialogFactory {
 
+  /**
+   * Creates an error dialog
+   *
+   * @param text - The subtext of the dialog
+   * @param resources - Resources needed for localization
+   * @return A dialog that can be displayed on stackpanes.
+   */
   public static JFXDialog createErrorDialog(String text, ObservableResource resources) {
     Label bodyLabel = new Label(text);
     Label headingLabel = new Label();
     headingLabel.textProperty().bind(resources.getStringBinding("Error"));
-    configureLabels(headingLabel, bodyLabel);
-    return createDialog(headingLabel, bodyLabel);
-  }
-
-  public static JFXDialog showException(String message) {
-    Label headingLabel = new Label("Error");
-    Label bodyLabel = new Label(message);
     configureLabels(headingLabel, bodyLabel);
     return createDialog(headingLabel, bodyLabel);
   }

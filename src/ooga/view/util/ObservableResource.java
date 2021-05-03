@@ -13,7 +13,7 @@ public class ObservableResource {
 
   private ObjectProperty<ResourceBundle> resources = new SimpleObjectProperty<>();
 
-  public ObjectProperty<ResourceBundle> resourcesProperty() {
+  private ObjectProperty<ResourceBundle> resourcesProperty() {
     return resources;
   }
 
@@ -21,10 +21,16 @@ public class ObservableResource {
     return resourcesProperty().get();
   }
 
+  /**
+   * Set the localization to be updated among all bindings.
+   *
+   * @param resources
+   */
   public void setResources(ResourceBundle resources) {
     resourcesProperty().set(resources);
   }
 
+  /** @return The language of the currently active resource */
   public String getLanguage() {
     ResourceBundle res = resourcesProperty().get();
     if (res != null) {
@@ -33,6 +39,12 @@ public class ObservableResource {
     return null;
   }
 
+  /**
+   * Get an autoupdating binding for whatever localization set.
+   *
+   * @param key - The string to get localization for
+   * @return - The observable string tto bind to text properties.
+   */
   public StringBinding getStringBinding(String key) {
     return new StringBinding() {
       {

@@ -13,6 +13,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+/** A portion of the game selection scene. */
 public class GameItem extends VBox {
 
   private Consumer<String> onClick;
@@ -38,9 +39,12 @@ public class GameItem extends VBox {
     VBox.setVgrow(game, Priority.ALWAYS);
     Label label = new Label();
     if (!gamePath.isEmpty()) {
-      game.setStyle(new StringBuilder().append("-fx-background-image: url('")
-          .append(encodedPath.replaceAll("'", "%27"))
-          .append("thumbnail.jpg');").toString());
+      game.setStyle(
+          new StringBuilder()
+              .append("-fx-background-image: url('")
+              .append(encodedPath.replaceAll("'", "%27"))
+              .append("thumbnail.jpg');")
+              .toString());
       label.setText(gameLabel);
     }
     game.setOnAction(e -> notifyAction());
@@ -59,30 +63,46 @@ public class GameItem extends VBox {
   private MenuItem createMenuItem(String run) {
     MenuItem item = new MenuItem(run);
     item.getStyleClass().addAll("game-context-menu-item");
-    item.setOnAction((e) -> {
-      try {
-        Method handler = getClass().getDeclaredMethod("handle" + run);
-        handler.setAccessible(true);
-        handler.invoke(this);
-      } catch (NoSuchMethodException noSuchMethodException) {
-        noSuchMethodException.printStackTrace();
-      } catch (IllegalAccessException illegalAccessException) {
-        illegalAccessException.printStackTrace();
-      } catch (InvocationTargetException invocationTargetException) {
-        invocationTargetException.printStackTrace();
-      }
-    });
+    item.setOnAction(
+        (e) -> {
+          try {
+            Method handler = getClass().getDeclaredMethod("handle" + run);
+            handler.setAccessible(true);
+            handler.invoke(this);
+          } catch (NoSuchMethodException noSuchMethodException) {
+            noSuchMethodException.printStackTrace();
+          } catch (IllegalAccessException illegalAccessException) {
+            illegalAccessException.printStackTrace();
+          } catch (InvocationTargetException invocationTargetException) {
+            invocationTargetException.printStackTrace();
+          }
+        });
     return item;
   }
 
+  /**
+   * Set the event listener for when a game has been selected.
+   *
+   * @param callback
+   */
   public void setOnAction(Consumer<String> callback) {
     this.onClick = callback;
   }
 
+  /**
+   * Set the event listener for when a game has been deleted.
+   *
+   * @param callback
+   */
   public void setOnDelete(Consumer<String> callback) {
     onDelete = callback;
   }
 
+  /**
+   * Set the event listener for when a game has been selected to run.
+   *
+   * @param callback
+   */
   public void setOnRun(Consumer<String> callback) {
     onRun = callback;
   }
@@ -111,10 +131,5 @@ public class GameItem extends VBox {
 
   private void handleDelete() {
     notifyDelete();
-  }
-
-
-  private String getDirectory() {
-    return this.directory;
   }
 }

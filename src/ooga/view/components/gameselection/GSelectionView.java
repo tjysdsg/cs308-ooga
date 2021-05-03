@@ -17,6 +17,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+/**
+ * Manages the selection of games.
+ * */
 class GSelectionView extends VBox {
 
   private static final Logger logger = LogManager.getLogger(GSelectionView.class);
@@ -53,7 +56,13 @@ class GSelectionView extends VBox {
     VBox.setVgrow(playGame, Priority.ALWAYS);
     gameTitleLabel.getStyleClass().add("game-selection-title");
     getChildren()
-        .addAll(gameTitleLabel, thumbnail, playGame, gameAuthorLabel, gameDateLabel, gameTagsLabel,
+        .addAll(
+            gameTitleLabel,
+            thumbnail,
+            playGame,
+            gameAuthorLabel,
+            gameDateLabel,
+            gameTagsLabel,
             gameLevelsLabel);
   }
 
@@ -79,10 +88,20 @@ class GSelectionView extends VBox {
     gameTagsLabel.setValue(metadata.getTags().toString());
   }
 
+  /**
+   * Set the callback for when a game has been requested to be played
+   *
+   * @param callback - A function that's ppassed the directory of the game
+   */
   public void setOnPlayRequested(Consumer<String> callback) {
     this.playRequestedCallback = callback;
   }
 
+  /**
+   * Set the directory this view will display information about.
+   *
+   * @param directory - The directory to display information about.
+   */
   public void setDirectory(String directory) {
     this.directory = directory;
     File gameDirectory = new File(directory);

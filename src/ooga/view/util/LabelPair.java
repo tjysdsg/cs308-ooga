@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
+/** A component that pairs labels together. */
 public class LabelPair extends HBox {
 
   private Label value;
@@ -21,6 +22,11 @@ public class LabelPair extends HBox {
     getChildren().addAll(labelName, value);
   }
 
+  /**
+   * Set the value of the second label in the label pair.
+   *
+   * @param labelValue - The new value for the second label.
+   */
   public void setValue(String labelValue) {
     value.setText(labelValue);
   }

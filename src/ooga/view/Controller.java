@@ -1,6 +1,3 @@
-/**
- * @author Tinglong Zhu
- */
 package ooga.view;
 
 import java.io.File;
@@ -10,33 +7,31 @@ import java.util.Map;
 import javafx.scene.input.KeyCode;
 import ooga.model.Model;
 
+/** 
+ * A concrete implementation of the {@link ModelController} interface.
+ * */
 public class Controller implements ModelController {
 
-  // code -> actions
-  private Map<KeyCode, String> code2action = Map.of(
-      KeyCode.A, "left", KeyCode.D, "right",
-      KeyCode.SPACE, "jump", KeyCode.ESCAPE, "pause"
-  );
+  private Map<KeyCode, String> code2action =
+      Map.of(KeyCode.A, "left", KeyCode.D, "right", KeyCode.SPACE, "jump", KeyCode.ESCAPE, "pause");
   private Model model;
 
+  /**
+   * Construct a controler to manage a specific game.
+   *
+   * @param model - The game in which the controller will manage
+   */
   public Controller(Model model) {
     this.model = model;
   }
 
-  /**
-   * Proxy Model
-   * @param levelName
-   * @throws FileNotFoundException
-   */
   @Override
   public void setCurrentLevel(String levelName) throws FileNotFoundException {
     model.setCurrentLevel(levelName);
   }
 
-
   @Override
   public void handleKeyPress(KeyCode code) {
-    System.out.println(code);
     model.handleCode(code2action.get(code), true);
   }
 
@@ -50,10 +45,7 @@ public class Controller implements ModelController {
     return null;
   }
 
-  /**
-   * Set key map for the level.
-   * @param map keymap for actions
-   */
+  @Override
   public void setKeyMap(Map<KeyCode, String> map) {
     this.code2action = map;
   }

@@ -53,7 +53,6 @@ public class LifeCycleSystem extends GameObjectBasedSystem {
   }
 
   private void destroyObject(int entityId) {
-    // System.out.println("Deleting object " + entityId);
     ecManager.deleteGameObject(entityId);
   }
 

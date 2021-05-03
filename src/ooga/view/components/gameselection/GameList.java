@@ -21,6 +21,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+/** Organize the game library for the users. */
 public class GameList extends FlowPane {
 
   private static final Logger logger = LogManager.getLogger(GameList.class);
@@ -85,8 +86,11 @@ public class GameList extends FlowPane {
         });
   }
 
+  /**
+   * Add an item to the list of games.
+   * @param directory - The directory to be added.
+   */
   public void createItem(String directory) {
-    // TODO: Add check for directories without games.
     if (presentDirectories.contains(directory)) {
       return;
     }
@@ -94,7 +98,6 @@ public class GameList extends FlowPane {
     boolean correctDir = ModelFactory.verifyGameDirectory(gameDir);
     if (!correctDir) {
       JFXDialog dialog = DialogFactory.createErrorDialog("Error Loading Directory", resources);
-      // TODO: Move to setOnError Callback
       dialog.show(dialogPane);
       logger.info("Invalid directory specified {}", directory);
       return;
@@ -103,24 +106,25 @@ public class GameList extends FlowPane {
 
     getChildren().add(0, newGame);
     newGame.setOnAction(this::notifySelection);
-    newGame.setOnDelete((path) -> {
-      presentDirectories.remove(path);
+    newGame.setOnDelete(
+        (path) -> {
+          presentDirectories.remove(path);
 
-      String game_dirs = prefs.get(GAME_DIRS_KEY, "");
-      game_dirs = game_dirs.replace(path, "");
+          String game_dirs = prefs.get(GAME_DIRS_KEY, "");
+          game_dirs = game_dirs.replace(path, "");
 
-      while (!game_dirs.replaceAll("::", ":").equals(game_dirs)) {
-        game_dirs = game_dirs.replaceAll("::", ":");
-      }
+          while (!game_dirs.replaceAll("::", ":").equals(game_dirs)) {
+            game_dirs = game_dirs.replaceAll("::", ":");
+          }
 
-      game_dirs = game_dirs.replaceAll("^:|:$", "");
+          game_dirs = game_dirs.replaceAll("^:|:$", "");
 
-      logger.debug("Game Directories is now: {}", game_dirs);
+          logger.debug("Game Directories is now: {}", game_dirs);
 
-      prefs.put(GAME_DIRS_KEY, game_dirs);
+          prefs.put(GAME_DIRS_KEY, game_dirs);
 
-      getChildren().remove(newGame);
-    });
+          getChildren().remove(newGame);
+        });
     newGame.setOnRun(this::notifyRun);
     presentDirectories.add(directory);
     notifySelection(directory);
@@ -155,10 +159,16 @@ public class GameList extends FlowPane {
     }
   }
 
+  /**
+   * Set the callback for when a game has been selected
+   *
+   * @param selectionCallback
+   */
   public void setOnSelection(Consumer<String> selectionCallback) {
     this.selectionCallback = selectionCallback;
   }
 
+  /** Set the callback for when a game has been selected to run. */
   public void setOnRun(Consumer<String> runCallback) {
     this.onRun = runCallback;
   }
