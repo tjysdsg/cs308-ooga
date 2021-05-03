@@ -36,17 +36,4 @@ class PlayerSystemTest {
     movementComponent=ecManager.createComponent(go, MovementComponent.class);
   }
 
-
-  @Test
-  void moveLeft() {
-    playerSystem.moveLeft(go.getId(),true);
-    assertEquals(movementComponent.getDirection(), -1);
-  }
-
-  @Test
-  void moveRight() {
-    playerSystem.moveRight(go.getId(),true);
-    assertEquals(movementComponent.getDirection(), 1);
-  }
-
 }

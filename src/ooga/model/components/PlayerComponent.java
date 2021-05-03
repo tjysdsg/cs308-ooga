@@ -5,6 +5,7 @@ package ooga.model.components;
 
 import java.util.ArrayList;
 import java.util.List;
+import ooga.model.actions.PlayerAction;
 import ooga.model.objects.GameObject;
 import ooga.model.systems.creature.ActionPair;
 
@@ -12,7 +13,7 @@ public class PlayerComponent extends Component {
 
   protected PlayerType playerType = PlayerType.PLAYER;
   protected CharacterStatus characterStatus = CharacterStatus.Active;
-  private List<ActionPair> actionMappings = new ArrayList<>();
+  private List<PlayerAction> actionMappings = new ArrayList<>();
   // only for moshi
   protected PlayerComponent() {
     super();
@@ -21,7 +22,7 @@ public class PlayerComponent extends Component {
     super(id, owner);
   }
 
-  public List<ActionPair> getActionMapping() {
+  public List<PlayerAction> getActionMapping() {
     return actionMappings;
   }
 
