@@ -1,3 +1,6 @@
+/**
+ * This is an example of how easily a ComponentBasedSystem can be implemented
+ */
 package ooga.model.systems;
 
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ import org.apache.logging.log4j.Logger;
 public class ScoreSystem extends ComponentBasedSystem {
 
   private static final Logger logger = LogManager.getLogger(ScoreSystem.class);
+  private static final String CHANGE_SCORE_ACTION_NAME = "change_score";
   private static final String SCORE_STATS_NAME = "score";
   private static final String WHOSE_PAYLOAD_KEY = "whose";
   private static final String AMOUNT_PAYLOAD_KEY = "amount";
@@ -29,7 +33,7 @@ public class ScoreSystem extends ComponentBasedSystem {
 
   public ScoreSystem(ECManager ecManager) {
     super(ecManager);
-    addCollisionMapping("change_score", this::changeScore);
+    addCollisionMapping(CHANGE_SCORE_ACTION_NAME, this::changeScore);
     scoreMapper = getComponentMapper(ScoreComponent.class);
 
     addStatsSupplier(SCORE_STATS_NAME, this::scoreStatsSupplier);
@@ -43,6 +47,9 @@ public class ScoreSystem extends ComponentBasedSystem {
     return ret;
   }
 
+  /**
+   * 'change_score' Collision action handler
+   */
   public void changeScore(CollisionAction event) {
     Map<String, String> payload = event.getPayload();
     if (payload.containsKey(WHOSE_PAYLOAD_KEY)) {

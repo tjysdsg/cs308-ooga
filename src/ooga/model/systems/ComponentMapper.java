@@ -1,3 +1,8 @@
+/**
+ * This class is the main gateway for systems and components to communicate. This component mapper
+ * allows systems to access, create, update, or delete data in batches or individually (using entity
+ * ids and component ids).
+ */
 package ooga.model.systems;
 
 import java.util.List;

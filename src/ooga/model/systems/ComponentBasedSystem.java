@@ -1,3 +1,10 @@
+/**
+ * We provide a unified way for systems to access/modify data in the components. And it doesn't
+ * require any boilerplate when writing a new system (except the `@Track`).
+ * <p>
+ * This class uses reflections to recognize @Track annotations, and provide methods to obtain the
+ * component mappers that track those component classes
+ */
 package ooga.model.systems;
 
 import java.util.HashMap;
@@ -55,6 +62,7 @@ public abstract class ComponentBasedSystem extends BaseSystem {
     return ret;
   }
 
+  // get the ECManager
   protected ECManager getECManager() {
     return ecManager;
   }
