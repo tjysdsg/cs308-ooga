@@ -14,6 +14,19 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
+ * Why it is designed well:
+ * 1. It used the observer pattern(callbacks + reflections) to notify the death of the object immediately, so that it will not have
+ * logical errors like player killed the enemy first and then enemy still cause damage on player even it
+ * is already died. Also the update of the health will immediately told the View for display updates
+ *
+ * 2. The change health logic is cool. There's bug for league of legends that sometimes the attack
+ * damage is positive, so that the one who got attack will actually gain health other than reduce health
+ * I add a boolean for determine whether the health should be decrease/increase. So that it will prevent
+ * bugs like this.
+ *
+ * 3. The object destroy and the health update are public, so that they can be called through
+ * systemManager to detect whether the object is dead after some process.
+ *
  * Managing the Health System and the destroy detection.
  */
 @Track(HealthComponent.class)
