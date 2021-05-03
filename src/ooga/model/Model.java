@@ -16,6 +16,11 @@ import ooga.model.observables.ObservableModel;
 import ooga.model.observables.ObservableObject;
 import ooga.model.util.FileReader;
 
+/**
+ * This is the main model class. It is essentially the game being run.
+ *
+ * @author Oliver Rodas
+ */
 public class Model implements ObservableModel {
 
   private Level currentLevel;
@@ -30,10 +35,19 @@ public class Model implements ObservableModel {
   private Consumer<ObservableLevel> levelChangeCallback;
   private Consumer<Boolean> endGameCallback;
 
+  /**
+   * Creates a new model object
+   */
   public Model() {
     String name = Preconditions.checkNotNull("osjfa");
   }
 
+  /**
+   * Set the current game to play
+   * @param directory the directory of the game
+   * @throws FileNotFoundException If the file is not found
+   * @throws InvalidDataFileException If the file is invalid
+   */
   public void setGame(File directory) throws FileNotFoundException, InvalidDataFileException {
     if (!directory.isDirectory()) {
       throw new NotADirectoryException(directory.getName());
@@ -76,6 +90,12 @@ public class Model implements ObservableModel {
     setCurrentLevel(config.getStartLevel());
   }
 
+  /**
+   * Set the current level to play
+   * @param levelName The name of the level to play
+   * @throws FileNotFoundException If the file is not found
+   * @throws InvalidDataFileException If the file is invalid
+   */
   public void setCurrentLevel(String levelName)
       throws FileNotFoundException, InvalidDataFileException {
     File levelFile = FileReader.getFile(levelsDir, levelName + FILE_EXTENSION);
@@ -111,11 +131,19 @@ public class Model implements ObservableModel {
     }
   }
 
+  /**
+   * Handle a code from the controller as an input
+   * @param k the input
+   * @param on if the input was on or off
+   */
   public void handleCode(String k, boolean on) {
     currentLevel.handleCode(k, on);
   }
 
-
+  /**
+   * Update the time for given time
+   * @param deltaTime
+   */
   public void step(double deltaTime) {
     currentLevel.update(deltaTime);
   }
@@ -131,7 +159,7 @@ public class Model implements ObservableModel {
 
   }
 
-
+  @Override
   public void setOnGameEnd(Consumer<Boolean> callback) {
     endGameCallback = callback;
   }

@@ -100,11 +100,7 @@ class GameLevel implements Level, ObservableLevel {
     }
   }
 
-  /**
-   * Handle a code from the controller as an input
-   * @param k the input
-   * @param on if the input was on or off
-   */
+  @Override
   public void handleCode(String k, boolean on) {
     inputManager.handleCode(k, on);
   }

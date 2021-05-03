@@ -22,11 +22,21 @@ import ooga.model.observables.ObservableObject;
 import ooga.model.util.FileReader;
 import org.reflections.Reflections;
 
+/**
+ * The level factory creates a level out of a json object. It must be given a directory and it will read every object in the directory defined in a data file
+ *
+ * @author Oliver Rodas
+ */
 public class LevelFactory {
 
   private JsonAdapter<GameLevel> levelAdapter;
   private ObjectFactory objectFactory;
 
+  /**
+   * Creates a new level factory with the defined items
+   * @param objectsDir the directory containing the objects
+   * @throws FileNotFoundException IF the file is not found
+   */
   public LevelFactory(File objectsDir) throws FileNotFoundException {
     if (!objectsDir.isDirectory()) {
       throw new NotADirectoryException(objectsDir.getName());
@@ -49,6 +59,11 @@ public class LevelFactory {
     objectFactory = new ObjectFactory(presetMap);
   }
 
+  /**
+   * Create a component adapter
+   * Note: this method did not exist when I refactored the code, but my team deleted those commits so it is back here
+   * @return A new component adapter
+   */
   public static PolymorphicJsonAdapterFactory<Component> createComponentAdapter() {
     PolymorphicJsonAdapterFactory<Component> adapter = PolymorphicJsonAdapterFactory
         .of(Component.class, "type");
@@ -75,7 +90,14 @@ public class LevelFactory {
     }
   }
 
-  Level buildLevel(File levelFile) throws FileNotFoundException, InvalidDataFileException {
+  /**
+   * Create a level from a level file
+   * @param levelFile the file to use for the level
+   * @return a new level
+   * @throws FileNotFoundException if the file is not found
+   * @throws InvalidDataFileException If the file is invalid
+   */
+  public Level buildLevel(File levelFile) throws FileNotFoundException, InvalidDataFileException {
     EntityManagerAdapter entityManagerAdapter = new EntityManagerAdapter(objectFactory);
     Moshi objectMoshi = new Moshi.Builder().add(entityManagerAdapter).build();
     JsonAdapter<GameLevel> levelAdapter = objectMoshi.adapter(GameLevel.class);
