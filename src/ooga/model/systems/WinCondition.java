@@ -2,7 +2,8 @@ package ooga.model.systems;
 
 /**
  * @author Robert Barnette This class is used to represent a particular win or loss condition for a
- * WinComponent
+ * WinComponent. This class is well designed because it allows for a very large variety of win
+ * conditions to be specified and makes it easy to determine if a condition is satisfied or not.
  */
 public class WinCondition {
 

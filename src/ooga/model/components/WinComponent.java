@@ -7,7 +7,9 @@ import ooga.model.systems.WinCondition;
 
 /**
  * @author Robert Barnette This class defines the behavior of WinComponents which can be given to
- * GameObjects to set their win and loss conditions
+ * GameObjects to set their win and loss conditions. This class is well designed in that is very
+ * simple and has a clear behavior. The simplicity also makes it much easier to specify a
+ * WinComponent in the JSON file as there is only one field that needs to be set.
  */
 public class WinComponent extends Component {
 
